@@ -1,0 +1,283 @@
+{% comment %}
+  Section: Live Sales Notification (Glassmorphic)
+  Version: 1.3.0 - Production Ready
+
+  Features:
+  - Beautiful glassmorphic design
+  - Dynamic sale notifications via blocks
+  - Customizable timing and appearance
+  - Added background transparency control
+  - Master enable/disable switch
+  - Corrected schema for Shopify range limits (step value)
+  - Custom color for customer names
+{% endcomment %}
+
+{%- if section.settings.enable_notifications and section.blocks.size > 0 -%}
+  {%- style -%}
+    .sales-notification-{{ section.id }} {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      color: {{ section.settings.text_color }};
+      padding: 14px 22px;
+      border-radius: {{ section.settings.border_radius }}px;
+      font-size: 14px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      z-index: 9999;
+      max-width: 90vw;
+      word-wrap: break-word;
+
+      /* The Glassmorphism Effect */
+      background: {{ section.settings.background_color | color_modify: 'alpha', section.settings.background_transparency }};
+      -webkit-backdrop-filter: blur({{ section.settings.blur_intensity }}px);
+      backdrop-filter: blur({{ section.settings.blur_intensity }}px);
+      border: 1px solid {{ section.settings.border_color | color_modify: 'alpha', section.settings.background_transparency }};
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+
+      /* Animation State */
+      transform: translateY(20px);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.5s ease, visibility 0.6s;
+    }
+
+    /* State when the notification is visible */
+    .sales-notification-{{ section.id }}.sales-visible {
+      opacity: 1;
+      transform: translateY(0);
+      visibility: visible;
+      pointer-events: auto;
+    }
+
+    .sales-notification-{{ section.id }} p {
+      margin: 0;
+    }
+    
+    /* Custom color for customer names */
+    .sales-notification-{{ section.id }} strong {
+      font-weight: 700;
+      color: {{ section.settings.name_color }};
+    }
+
+    @media (max-width: 600px) {
+      .sales-notification-{{ section.id }} {
+        left: 10px;
+        right: 10px;
+        width: auto;
+        font-size: 13px;
+      }
+    }
+  {%- endstyle -%}
+
+  <!-- Live Sales Notification HTML -->
+  <div id="sale-notification-{{ section.id }}" class="sales-notification-{{ section.id }}">
+    <p>
+      <strong id="customer-name-{{ section.id }}"></strong> just purchased the <span id="product-name-{{ section.id }}"></span>!
+    </p>
+  </div>
+
+  <script>
+    (function() {
+      const notifications = [
+        {%- for block in section.blocks -%}
+          {
+            name: {{ block.settings.customer_name | json }},
+            product: {{ block.settings.product_name | json }}
+          },
+        {%- endfor -%}
+      ];
+
+      if (notifications.length === 0) {
+        return;
+      }
+
+      const notificationElement = document.getElementById('sale-notification-{{ section.id }}');
+      const nameElement = document.getElementById('customer-name-{{ section.id }}');
+      const productElement = document.getElementById('product-name-{{ section.id }}');
+
+      const displayDuration = {{ section.settings.display_duration }} * 1000;
+      const minDelay = {{ section.settings.min_delay }} * 1000;
+      const maxDelay = {{ section.settings.max_delay }} * 1000;
+      const initialDelay = {{ section.settings.initial_delay }} * 1000;
+
+      function showNotification() {
+        const randomSale = notifications[Math.floor(Math.random() * notifications.length)];
+        nameElement.textContent = randomSale.name;
+        productElement.textContent = randomSale.product;
+
+        // Animate in
+        notificationElement.classList.add('sales-visible');
+
+        // Schedule animation out
+        setTimeout(() => {
+          notificationElement.classList.remove('sales-visible');
+        }, displayDuration);
+
+        // Schedule the next notification
+        const nextDelay = Math.floor(Math.random() * (maxDelay - minDelay + 1)) + minDelay;
+        setTimeout(showNotification, displayDuration + nextDelay);
+      }
+
+      // Start the first notification after the initial delay
+      setTimeout(showNotification, initialDelay);
+    })();
+  </script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Live Sales (Glass)",
+  "class": "shopify-section-live-sales",
+  "settings": [
+    {
+      "type": "header",
+      "content": "General Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_notifications",
+      "label": "Enable Live Sales Notifications",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Timing (in seconds)"
+    },
+    {
+      "type": "range",
+      "id": "initial_delay",
+      "min": 1,
+      "max": 20,
+      "step": 1,
+      "unit": "s",
+      "label": "Initial Delay",
+      "info": "How long to wait before showing the first notification.",
+      "default": 5
+    },
+    {
+      "type": "range",
+      "id": "display_duration",
+      "min": 3,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "label": "Display Duration",
+      "info": "How long each notification stays on screen.",
+      "default": 5
+    },
+    {
+      "type": "range",
+      "id": "min_delay",
+      "min": 5,
+      "max": 60,
+      "step": 1,
+      "unit": "s",
+      "label": "Minimum Time Between Popups",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "max_delay",
+      "min": 10,
+      "max": 120,
+      "step": 5,
+      "unit": "s",
+      "label": "Maximum Time Between Popups",
+      "default": 25
+    },
+    {
+      "type": "header",
+      "content": "Glassmorphic Design"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Glass Background Tint",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "background_transparency",
+      "min": 0,
+      "max": 1,
+      "step": 0.1,
+      "label": "Background Transparency",
+      "info": "Controls the opacity of the glass background and border. 0 is fully transparent, 1 is fully opaque.",
+      "default": 0.2
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "name_color",
+      "label": "Customer Name Color",
+      "info": "The color of the customer name in bold",
+      "default": "#FFD700"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Glass Border Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "blur_intensity",
+      "min": 2,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Background Blur",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "min": 4,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Corner Radius",
+      "default": 12
+    }
+  ],
+  "blocks": [
+    {
+      "type": "sale_item",
+      "name": "Sale Notification",
+      "settings": [
+        {
+          "type": "text",
+          "id": "customer_name",
+          "label": "Customer Name",
+          "default": "John D."
+        },
+        {
+          "type": "text",
+          "id": "product_name",
+          "label": "Product Name",
+          "default": "ELITE VENDOR BUNDLE"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Live Sales (Glass)",
+      "blocks": [
+        { "type": "sale_item", "settings": { "customer_name": "Landon L.", "product_name": "Spyder Hoodie Vendor" } },
+        { "type": "sale_item", "settings": { "customer_name": "Emiliano G.", "product_name": "Pod Vendor" } },
+        { "type": "sale_item", "settings": { "customer_name": "Christian", "product_name": "ELITE VENDOR BUNDLE" } },
+        { "type": "sale_item", "settings": { "customer_name": "Aurora", "product_name": "Colognes Vendor" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

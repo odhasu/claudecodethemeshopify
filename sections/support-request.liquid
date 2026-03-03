@@ -1,0 +1,387 @@
+{% comment %}
+  Section: Support Request Form with Discord Integration
+  File: sections/support-request.liquid
+  Version: 2.0 - Simplified
+  
+  Features:
+  - Discord webhook integration
+  - Beautiful dark theme design
+  - Minimal configuration needed
+  - Anti-spam protection
+{% endcomment %}
+
+{%- liquid
+  # Colors with defaults
+  assign accent_color = section.settings.accent_color | default: '#70CBFF'
+  assign text_color = '#F1F1F1'
+  assign background_color = '#151515'
+  assign border_color = '#f9f9f9'
+  
+  # Convert accent color to RGB
+  assign accent_r = accent_color | color_extract: 'red'
+  assign accent_g = accent_color | color_extract: 'green'
+  assign accent_b = accent_color | color_extract: 'blue'
+-%}
+
+{%- style -%}
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+  
+  .support-section-{{ section.id }} {
+    padding: 60px 0;
+    background-color: transparent;
+  }
+  
+  .support-container-{{ section.id }} {
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+    background-color: {{ background_color }};
+    padding: 40px;
+    border-radius: 12px;
+    max-width: 700px;
+    margin: auto;
+    border: 0;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+  }
+  
+  .support-container-{{ section.id }}:hover {
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  }
+  
+  .support-container-{{ section.id }} h2 {
+    font-size: 24px;
+    font-weight: 700;
+    color: {{ text_color }};
+    margin-bottom: 10px;
+  }
+  
+  .support-subtext-{{ section.id }} {
+    font-size: 16px;
+    color: #E9E9E9;
+    font-weight: 500;
+    margin-bottom: 30px;
+    line-height: 1.5;
+  }
+  
+  .support-form-{{ section.id }} {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+  }
+  
+  .support-container-{{ section.id }} input,
+  .support-container-{{ section.id }} textarea {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid {{ border_color }};
+    border-radius: 8px;
+    background: transparent;
+    color: {{ text_color }};
+    font-size: 16px;
+    font-family: 'Poppins', sans-serif;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+  }
+  
+  .support-container-{{ section.id }} input::placeholder,
+  .support-container-{{ section.id }} textarea::placeholder {
+    color: rgba(241, 241, 241, 0.5);
+  }
+  
+  .support-container-{{ section.id }} input:focus,
+  .support-container-{{ section.id }} textarea:focus {
+    outline: none;
+    border-color: {{ accent_color }};
+    box-shadow: 0 0 0 3px rgba({{ accent_r }}, {{ accent_g }}, {{ accent_b }}, 0.2);
+  }
+  
+  .support-container-{{ section.id }} textarea {
+    height: 100px;
+    resize: none;
+  }
+  
+  .submit-button-{{ section.id }} {
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: 700;
+    color: {{ accent_color }};
+    border: 2px solid {{ accent_color }};
+    border-radius: 8px;
+    background: transparent;
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .submit-button-{{ section.id }}:hover {
+    background-color: rgba({{ accent_r }}, {{ accent_g }}, {{ accent_b }}, 0.15);
+    box-shadow: 0 0 20px rgba({{ accent_r }}, {{ accent_g }}, {{ accent_b }}, 1);
+    transform: scale(1.05);
+  }
+  
+  .submit-button-{{ section.id }}:active {
+    transform: scale(0.98);
+  }
+  
+  .submit-button-{{ section.id }}:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+  
+  .submit-button-{{ section.id }}:disabled:hover {
+    transform: none;
+    box-shadow: none;
+  }
+  
+  .form-response-{{ section.id }} {
+    margin-top: 20px;
+    font-size: 16px;
+    font-weight: 600;
+    min-height: 24px;
+    transition: all 0.3s ease;
+  }
+  
+  .form-response-{{ section.id }}.success {
+    color: #22c55e;
+  }
+  
+  .form-response-{{ section.id }}.error {
+    color: #ef4444;
+  }
+  
+  /* Loading spinner */
+  .spinner-{{ section.id }} {
+    display: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid transparent;
+    border-top-color: {{ accent_color }};
+    border-radius: 50%;
+    animation: spin-{{ section.id }} 0.8s linear infinite;
+    margin: 0 auto;
+  }
+  
+  @keyframes spin-{{ section.id }} {
+    to { transform: rotate(360deg); }
+  }
+  
+  .submit-button-{{ section.id }}.loading .button-text-{{ section.id }} {
+    display: none;
+  }
+  
+  .submit-button-{{ section.id }}.loading .spinner-{{ section.id }} {
+    display: inline-block;
+  }
+  
+  /* Mobile optimization */
+  @media (max-width: 600px) {
+    .support-container-{{ section.id }} {
+      padding: 30px 20px;
+      margin: 0 15px;
+    }
+    
+    .support-container-{{ section.id }} h2 {
+      font-size: 20px;
+    }
+    
+    .support-subtext-{{ section.id }} {
+      font-size: 14px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="support-section-{{ section.id }}">
+  <div class="support-container-{{ section.id }}">
+    <h2>{{ section.settings.heading }}</h2>
+    <p class="support-subtext-{{ section.id }}">{{ section.settings.subtext }}</p>
+    
+    <form id="supportForm-{{ section.id }}" class="support-form-{{ section.id }}">
+      <input 
+        type="text" 
+        id="supportName-{{ section.id }}" 
+        name="supportName" 
+        placeholder="Full Name" 
+        required
+      >
+      
+      <input 
+        type="tel" 
+        id="supportPhone-{{ section.id }}" 
+        name="supportPhone" 
+        placeholder="Phone Number" 
+        required
+      >
+      
+      <textarea 
+        id="supportIssue-{{ section.id }}" 
+        name="supportIssue" 
+        placeholder="Describe your issue..." 
+        required
+      ></textarea>
+      
+      <button type="submit" class="submit-button-{{ section.id }}">
+        <span class="button-text-{{ section.id }}">{{ section.settings.button_text }}</span>
+        <span class="spinner-{{ section.id }}"></span>
+      </button>
+    </form>
+    
+    <p id="formResponse-{{ section.id }}" class="form-response-{{ section.id }}"></p>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById("supportForm-{{ section.id }}");
+    const responseElement = document.getElementById("formResponse-{{ section.id }}");
+    const submitButton = form.querySelector('.submit-button-{{ section.id }}');
+    
+    // Anti-spam: Track submission time
+    let lastSubmissionTime = 0;
+    const minTimeBetweenSubmissions = 30000; // 30 seconds
+    
+    form.addEventListener("submit", function(event) {
+      event.preventDefault();
+      
+      // Check rate limiting
+      const now = Date.now();
+      if (now - lastSubmissionTime < minTimeBetweenSubmissions) {
+        const waitTime = Math.ceil((minTimeBetweenSubmissions - (now - lastSubmissionTime)) / 1000);
+        responseElement.textContent = `⏱️ Please wait ${waitTime} seconds before submitting again.`;
+        responseElement.className = 'form-response-{{ section.id }} error';
+        return;
+      }
+      
+      // Clear previous messages
+      responseElement.textContent = '';
+      responseElement.className = 'form-response-{{ section.id }}';
+      
+      // Get form data
+      const name = document.getElementById("supportName-{{ section.id }}").value.trim();
+      const phone = document.getElementById("supportPhone-{{ section.id }}").value.trim();
+      const issue = document.getElementById("supportIssue-{{ section.id }}").value.trim();
+      
+      // Show loading state
+      submitButton.classList.add('loading');
+      submitButton.disabled = true;
+      
+      // Webhook URL
+      const webhookURL = "{{ section.settings.webhook_url }}";
+      
+      if (!webhookURL) {
+        responseElement.textContent = "❌ Please configure webhook URL in theme settings.";
+        responseElement.className = 'form-response-{{ section.id }} error';
+        submitButton.classList.remove('loading');
+        submitButton.disabled = false;
+        return;
+      }
+      
+      // Discord embed color (convert hex to decimal)
+      const embedColor = parseInt('{{ accent_color }}'.replace('#', ''), 16);
+      
+      const payload = {
+        username: "Support Bot",
+        embeds: [{
+          title: "🛠️ New Support Request",
+          description: `**Name:** ${name}\n**Phone:** ${phone}\n**Issue:** ${issue}`,
+          color: embedColor,
+          footer: {
+            text: "{{ shop.name }} • " + new Date().toLocaleString()
+          }
+        }]
+      };
+      
+      // Send to Discord
+      fetch(webhookURL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      })
+      .then(response => {
+        if (response.ok) {
+          responseElement.textContent = "✅ Support request submitted!";
+          responseElement.className = 'form-response-{{ section.id }} success';
+          form.reset();
+          lastSubmissionTime = Date.now();
+        } else {
+          throw new Error('Network response was not ok');
+        }
+      })
+      .catch(error => {
+        console.error("Error:", error);
+        responseElement.textContent = "❌ Error sending request. Try again.";
+        responseElement.className = 'form-response-{{ section.id }} error';
+      })
+      .finally(() => {
+        submitButton.classList.remove('loading');
+        submitButton.disabled = false;
+      });
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Support Request Form",
+  "tag": "section",
+  "class": "support-request-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "📝 Content"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Need Help? Submit a Support Request"
+    },
+    {
+      "type": "text",
+      "id": "subtext",
+      "label": "Subtext",
+      "default": "Leave your details below, and our team will get back to you ASAP."
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "Submit Request"
+    },
+    {
+      "type": "header",
+      "content": "🔗 Discord Webhook"
+    },
+    {
+      "type": "text",
+      "id": "webhook_url",
+      "label": "Discord Webhook URL",
+      "info": "Create a webhook in Discord: Server Settings > Integrations > Webhooks"
+    },
+    {
+      "type": "header",
+      "content": "🎨 Design"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent Color",
+      "default": "#70CBFF",
+      "info": "Used for borders and highlights"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Support Request Form",
+      "settings": {
+        "heading": "Need Help? Submit a Support Request",
+        "subtext": "Leave your details below, and our team will get back to you ASAP.",
+        "button_text": "Submit Request",
+        "accent_color": "#70CBFF"
+      }
+    }
+  ]
+}
+{% endschema %}

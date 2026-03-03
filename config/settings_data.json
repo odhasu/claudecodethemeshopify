@@ -1,0 +1,589 @@
+{
+    "current": {
+        "scaled_api_key": "tk_c4aeb774dd22da83819ff2b289c90194",
+        "scaled_secret_key": "cb0dfa078b5d461f964e3fd78046018eb1bc90956fe78a6413a4a80c73ebc8c9",
+        "scaled_api_endpoint": "",
+        "logo": "shopify:\/\/shop_images\/OG_S_SUPPLIERS.jpg",
+        "logo_width": 120,
+        "favicon": "shopify:\/\/shop_images\/3dgifmaker64155.gif",
+        "type_header_font": "poppins_n4",
+        "heading_scale": 125,
+        "type_body_font": "poppins_n3",
+        "body_scale": 100,
+        "page_width": 1400,
+        "spacing_sections": 0,
+        "spacing_grid_horizontal": 20,
+        "spacing_grid_vertical": 4,
+        "animations_reveal_on_scroll": false,
+        "animations_hover_elements": "default",
+        "buttons_border_thickness": 1,
+        "buttons_border_opacity": 55,
+        "buttons_radius": 10,
+        "buttons_shadow_opacity": 0,
+        "buttons_shadow_horizontal_offset": 0,
+        "buttons_shadow_vertical_offset": 4,
+        "buttons_shadow_blur": 5,
+        "variant_pills_border_thickness": 0,
+        "variant_pills_border_opacity": 10,
+        "variant_pills_radius": 10,
+        "variant_pills_shadow_opacity": 0,
+        "variant_pills_shadow_horizontal_offset": 0,
+        "variant_pills_shadow_vertical_offset": 4,
+        "variant_pills_shadow_blur": 5,
+        "inputs_border_thickness": 1,
+        "inputs_border_opacity": 55,
+        "inputs_radius": 10,
+        "inputs_shadow_opacity": 0,
+        "inputs_shadow_horizontal_offset": 0,
+        "inputs_shadow_vertical_offset": 4,
+        "inputs_shadow_blur": 5,
+        "card_style": "standard",
+        "card_image_padding": 4,
+        "card_text_alignment": "center",
+        "card_color_scheme": "scheme-3",
+        "card_border_thickness": 1,
+        "card_border_opacity": 30,
+        "card_corner_radius": 12,
+        "card_shadow_opacity": 5,
+        "card_shadow_horizontal_offset": 10,
+        "card_shadow_vertical_offset": 10,
+        "card_shadow_blur": 35,
+        "collection_card_style": "card",
+        "collection_card_image_padding": 0,
+        "collection_card_text_alignment": "center",
+        "collection_card_color_scheme": "scheme-3",
+        "collection_card_border_thickness": 1,
+        "collection_card_border_opacity": 30,
+        "collection_card_corner_radius": 12,
+        "collection_card_shadow_opacity": 5,
+        "collection_card_shadow_horizontal_offset": 10,
+        "collection_card_shadow_vertical_offset": 10,
+        "collection_card_shadow_blur": 35,
+        "blog_card_style": "card",
+        "blog_card_image_padding": 0,
+        "blog_card_text_alignment": "center",
+        "blog_card_color_scheme": "scheme-3",
+        "blog_card_border_thickness": 1,
+        "blog_card_border_opacity": 30,
+        "blog_card_corner_radius": 12,
+        "blog_card_shadow_opacity": 5,
+        "blog_card_shadow_horizontal_offset": 10,
+        "blog_card_shadow_vertical_offset": 10,
+        "blog_card_shadow_blur": 35,
+        "text_boxes_border_thickness": 0,
+        "text_boxes_border_opacity": 10,
+        "text_boxes_radius": 24,
+        "text_boxes_shadow_opacity": 0,
+        "text_boxes_shadow_horizontal_offset": 10,
+        "text_boxes_shadow_vertical_offset": 12,
+        "text_boxes_shadow_blur": 20,
+        "media_border_thickness": 0,
+        "media_border_opacity": 10,
+        "media_radius": 12,
+        "media_shadow_opacity": 0,
+        "media_shadow_horizontal_offset": 10,
+        "media_shadow_vertical_offset": 12,
+        "media_shadow_blur": 20,
+        "popup_border_thickness": 1,
+        "popup_border_opacity": 30,
+        "popup_corner_radius": 12,
+        "popup_shadow_opacity": 10,
+        "popup_shadow_horizontal_offset": 10,
+        "popup_shadow_vertical_offset": 12,
+        "popup_shadow_blur": 20,
+        "drawer_border_thickness": 1,
+        "drawer_border_opacity": 10,
+        "drawer_shadow_opacity": 0,
+        "drawer_shadow_horizontal_offset": 0,
+        "drawer_shadow_vertical_offset": 4,
+        "drawer_shadow_blur": 5,
+        "badge_position": "bottom right",
+        "badge_corner_radius": 8,
+        "sale_badge_color_scheme": "scheme-4183a396-9fe2-410a-8ec3-5c41ce833dbe",
+        "sold_out_badge_color_scheme": "scheme-3",
+        "brand_headline": "",
+        "brand_description": "<p><\/p>",
+        "brand_image_width": 100,
+        "social_facebook_link": "",
+        "social_instagram_link": "",
+        "social_youtube_link": "",
+        "social_tiktok_link": "",
+        "social_twitter_link": "",
+        "social_snapchat_link": "",
+        "social_pinterest_link": "",
+        "social_tumblr_link": "",
+        "social_vimeo_link": "",
+        "predictive_search_enabled": true,
+        "predictive_search_show_vendor": false,
+        "predictive_search_show_price": true,
+        "currency_code_enabled": true,
+        "cart_type": "page",
+        "show_vendor": false,
+        "show_cart_note": false,
+        "cart_drawer_collection": "",
+        "cart_color_scheme": "scheme-1",
+        "sections": {
+            "main-password-header": {
+                "type": "main-password-header",
+                "settings": {
+                    "color_scheme": "scheme-1"
+                }
+            },
+            "main-password-footer": {
+                "type": "main-password-footer",
+                "settings": {
+                    "color_scheme": "scheme-1"
+                }
+            },
+            "custom-landing-page": {
+                "type": "custom-landing-page",
+                "blocks": {
+                    "feature_JgmHcB": {
+                        "type": "feature",
+                        "settings": {
+                            "feature_title": "5+ Hours of Reselling Guides",
+                            "feature_description": "Step-by-step tutorials and walkthroughs to help you scale faster."
+                        }
+                    },
+                    "feature_n8jHpk": {
+                        "type": "feature",
+                        "settings": {
+                            "feature_title": "Weekly Live Coaching",
+                            "feature_description": "Get real-time advice from experienced resellers."
+                        }
+                    },
+                    "feature_wp7ipT": {
+                        "type": "feature",
+                        "settings": {
+                            "feature_title": "30+ Top Vendors",
+                            "feature_description": "A deep vendor database updated weekly."
+                        }
+                    },
+                    "feature_TBbBXP": {
+                        "type": "feature",
+                        "settings": {
+                            "feature_title": "Reselling Bots & Tools",
+                            "feature_description": "Receipt generators, fee bots, and automation tools."
+                        }
+                    },
+                    "feature_jBhAJa": {
+                        "type": "feature",
+                        "settings": {
+                            "feature_title": "Exclusive Methods",
+                            "feature_description": "Updated insider strategies to increase your profits."
+                        }
+                    },
+                    "feature_VdcdhK": {
+                        "type": "feature",
+                        "settings": {
+                            "feature_title": "24\/7 Reseller Community",
+                            "feature_description": "Get support and network with advanced resellers."
+                        }
+                    },
+                    "testimonial_ri8ncQ": {
+                        "type": "testimonial",
+                        "settings": {
+                            "testimonial_text": "Best reselling group I've been in by far. Bought the monthly subscription a while back and made it back within a day."
+                        }
+                    },
+                    "testimonial_XCkyEL": {
+                        "type": "testimonial",
+                        "settings": {
+                            "testimonial_text": "Gave this a try after sitting on the fence for a while. Great group, super helpful for new starters. Earned my subscription fee back the first week! 5\/5"
+                        }
+                    },
+                    "testimonial_HzKbCK": {
+                        "type": "testimonial",
+                        "settings": {
+                            "testimonial_text": "At first I thought it was all a dream. 10000% recommend this if you're struggling with making money. Thank you Paidoff for allowing me to chase my bread a different way!"
+                        }
+                    },
+                    "testimonial_BCRwdd": {
+                        "type": "testimonial",
+                        "settings": {
+                            "testimonial_text": "Can't go wrong. Bro has tons of guides, bots, tools, everything you need. If you join and not make yo money back then something wrong with you."
+                        }
+                    },
+                    "faq_t8datH": {
+                        "type": "faq",
+                        "settings": {
+                            "question": "How Will This Community Help Me Make Money?",
+                            "answer": "We offer the BEST strategies, guides, methods, bots, and support of any reselling community, making success inevitable."
+                        }
+                    },
+                    "faq_YVYfPc": {
+                        "type": "faq",
+                        "settings": {
+                            "question": "Why is it so expensive?",
+                            "answer": "We offer the best community and resources of any group, and wanted to make it guaranteed you earn your money back + more."
+                        }
+                    },
+                    "faq_hNCnC4": {
+                        "type": "faq",
+                        "settings": {
+                            "question": "Do I Need Any Experience?",
+                            "answer": "None at all. We have hours of guides to help you at whatever level you're at - beginner or advanced."
+                        }
+                    },
+                    "faq_7qymE7": {
+                        "type": "faq",
+                        "settings": {
+                            "question": "Why Should I Join?",
+                            "answer": "We don't really want just anyone to join. Only if you're fully locked in, you should join to begin doing your first $10k months."
+                        }
+                    },
+                    "faq_ta6gAB": {
+                        "type": "faq",
+                        "settings": {
+                            "question": "What does this purchase get me?",
+                            "answer": "You will get instant access to a Discord community with everything needed to scale your reselling business to $10k \/ month."
+                        }
+                    }
+                },
+                "block_order": [
+                    "feature_JgmHcB",
+                    "feature_n8jHpk",
+                    "feature_wp7ipT",
+                    "feature_TBbBXP",
+                    "feature_jBhAJa",
+                    "feature_VdcdhK",
+                    "testimonial_ri8ncQ",
+                    "testimonial_XCkyEL",
+                    "testimonial_HzKbCK",
+                    "testimonial_BCRwdd",
+                    "faq_t8datH",
+                    "faq_YVYfPc",
+                    "faq_hNCnC4",
+                    "faq_7qymE7",
+                    "faq_ta6gAB"
+                ],
+                "settings": {
+                    "accent_color": "#39ff14",
+                    "gradient_color": "#000000",
+                    "text_color": "#ffffff",
+                    "background_color": "#000000",
+                    "enable_gradient": true,
+                    "enable_conversion_header": false,
+                    "enable_live_sales": true,
+                    "hero_image": "shopify:\/\/shop_images\/paidoffreselling.png",
+                    "hero_headline": "START YOUR RESELLING JOURNEY TODAY.",
+                    "hero_subheadline": "Trusted By 10,000+ Resellers",
+                    "user_count_text": "Join 10,000+ resellers",
+                    "rating_text": "4.96\/5 Stars",
+                    "features_title": "What Our Customers Say",
+                    "testimonial_title": "Customer Reviews",
+                    "faq_title": "Frequently Asked Questions",
+                    "premium_button_text": "BUY NOW",
+                    "show_premium_icon": false,
+                    "premium_button_icon": "shopify:\/\/shop_images\/paidoffreselling.png",
+                    "premium_direct_checkout": true,
+                    "premium_product": "premium-discord",
+                    "premium_button_link": "",
+                    "free_button_text": "Join Free Section",
+                    "free_button_link": "",
+                    "free_button_new_tab": true
+                }
+            }
+        },
+        "content_for_index": [],
+        "color_schemes": {
+            "scheme-1": {
+                "settings": {
+                    "background": "#000000",
+                    "background_gradient": "",
+                    "text": "#ffffff",
+                    "button": "#39ff14",
+                    "button_label": "#000000",
+                    "secondary_button_label": "#39ff14",
+                    "shadow": "#000000"
+                }
+            },
+            "scheme-2": {
+                "settings": {
+                    "background": "#000000",
+                    "background_gradient": "",
+                    "text": "#ffffff",
+                    "button": "#39ff14",
+                    "button_label": "#000000",
+                    "secondary_button_label": "#39ff14",
+                    "shadow": "#000000"
+                }
+            },
+            "scheme-3": {
+                "settings": {
+                    "background": "#151515",
+                    "background_gradient": "",
+                    "text": "#ffffff",
+                    "button": "#39ff14",
+                    "button_label": "#000000",
+                    "secondary_button_label": "#ffffff",
+                    "shadow": "#000000"
+                }
+            },
+            "scheme-4": {
+                "settings": {
+                    "background": "#000000",
+                    "background_gradient": "",
+                    "text": "#ffffff",
+                    "button": "#39ff14",
+                    "button_label": "#000000",
+                    "secondary_button_label": "#ffffff",
+                    "shadow": "#000000"
+                }
+            },
+            "scheme-5": {
+                "settings": {
+                    "background": "#000000",
+                    "background_gradient": "",
+                    "text": "#ffffff",
+                    "button": "#39ff14",
+                    "button_label": "#000000",
+                    "secondary_button_label": "#ffffff",
+                    "shadow": "#000000"
+                }
+            },
+            "scheme-4183a396-9fe2-410a-8ec3-5c41ce833dbe": {
+                "settings": {
+                    "background": "#000000",
+                    "background_gradient": "",
+                    "text": "#ffffff",
+                    "button": "#39ff14",
+                    "button_label": "#000000",
+                    "secondary_button_label": "#39ff14",
+                    "shadow": "#000000"
+                }
+            },
+            "scheme-76c44ef1-e68e-4882-99bc-54896e4838fe": {
+                "settings": {
+                    "background": "#000000",
+                    "background_gradient": "",
+                    "text": "#ffffff",
+                    "button": "#39ff14",
+                    "button_label": "#000000",
+                    "secondary_button_label": "#39ff14",
+                    "shadow": "#000000"
+                }
+            },
+            "scheme-a8c99805-572f-465b-a63b-8628ec05597d": {
+                "settings": {
+                    "background": "#000000",
+                    "background_gradient": "",
+                    "text": "#ffffff",
+                    "button": "#39ff14",
+                    "button_label": "#000000",
+                    "secondary_button_label": "#39ff14",
+                    "shadow": "#000000"
+                }
+            },
+            "scheme-3d2e18d1-a824-497b-b3fa-a373623a9c07": {
+                "settings": {
+                    "background": "#000000",
+                    "background_gradient": "",
+                    "text": "#ffffff",
+                    "button": "#39ff14",
+                    "button_label": "#000000",
+                    "secondary_button_label": "#39ff14",
+                    "shadow": "#000000"
+                }
+            }
+        }
+    },
+    "presets": {
+        "Default": {
+            "logo_width": 70,
+            "color_schemes": {
+                "scheme-1": {
+                    "settings": {
+                        "background": "#000000",
+                        "background_gradient": "",
+                        "text": "#ffffff",
+                        "button": "#39ff14",
+                        "button_label": "#000000",
+                        "secondary_button_label": "#39ff14",
+                        "shadow": "#000000"
+                    }
+                },
+                "scheme-2": {
+                    "settings": {
+                        "background": "#000000",
+                        "background_gradient": "",
+                        "text": "#ffffff",
+                        "button": "#39ff14",
+                        "button_label": "#000000",
+                        "secondary_button_label": "#39ff14",
+                        "shadow": "#000000"
+                    }
+                },
+                "scheme-3": {
+                    "settings": {
+                        "background": "#151515",
+                        "background_gradient": "",
+                        "text": "#ffffff",
+                        "button": "#39ff14",
+                        "button_label": "#000000",
+                        "secondary_button_label": "#ffffff",
+                        "shadow": "#000000"
+                    }
+                },
+                "scheme-4": {
+                    "settings": {
+                        "background": "#000000",
+                        "background_gradient": "",
+                        "text": "#ffffff",
+                        "button": "#39ff14",
+                        "button_label": "#000000",
+                        "secondary_button_label": "#ffffff",
+                        "shadow": "#000000"
+                    }
+                },
+                "scheme-5": {
+                    "settings": {
+                        "background": "#000000",
+                        "background_gradient": "",
+                        "text": "#ffffff",
+                        "button": "#39ff14",
+                        "button_label": "#000000",
+                        "secondary_button_label": "#ffffff",
+                        "shadow": "#000000"
+                    }
+                }
+            },
+            "type_header_font": "harmonia_sans_n6",
+            "heading_scale": 130,
+            "type_body_font": "harmonia_sans_n4",
+            "body_scale": 100,
+            "page_width": 1200,
+            "spacing_sections": 36,
+            "spacing_grid_horizontal": 40,
+            "spacing_grid_vertical": 40,
+            "animations_reveal_on_scroll": true,
+            "animations_hover_elements": "none",
+            "buttons_border_thickness": 1,
+            "buttons_border_opacity": 55,
+            "buttons_radius": 10,
+            "buttons_shadow_opacity": 0,
+            "buttons_shadow_horizontal_offset": 0,
+            "buttons_shadow_vertical_offset": 4,
+            "buttons_shadow_blur": 5,
+            "variant_pills_border_thickness": 0,
+            "variant_pills_border_opacity": 10,
+            "variant_pills_radius": 10,
+            "variant_pills_shadow_opacity": 0,
+            "variant_pills_shadow_horizontal_offset": 0,
+            "variant_pills_shadow_vertical_offset": 4,
+            "variant_pills_shadow_blur": 5,
+            "inputs_border_thickness": 1,
+            "inputs_border_opacity": 55,
+            "inputs_radius": 10,
+            "inputs_shadow_opacity": 0,
+            "inputs_shadow_horizontal_offset": 0,
+            "inputs_shadow_vertical_offset": 4,
+            "inputs_shadow_blur": 5,
+            "card_style": "card",
+            "card_image_padding": 0,
+            "card_text_alignment": "center",
+            "card_color_scheme": "scheme-3",
+            "card_border_thickness": 1,
+            "card_border_opacity": 30,
+            "card_corner_radius": 12,
+            "card_shadow_opacity": 5,
+            "card_shadow_horizontal_offset": 10,
+            "card_shadow_vertical_offset": 10,
+            "card_shadow_blur": 35,
+            "collection_card_style": "card",
+            "collection_card_image_padding": 0,
+            "collection_card_text_alignment": "center",
+            "collection_card_color_scheme": "scheme-3",
+            "collection_card_border_thickness": 1,
+            "collection_card_border_opacity": 30,
+            "collection_card_corner_radius": 12,
+            "collection_card_shadow_opacity": 5,
+            "collection_card_shadow_horizontal_offset": 10,
+            "collection_card_shadow_vertical_offset": 10,
+            "collection_card_shadow_blur": 35,
+            "blog_card_style": "card",
+            "blog_card_image_padding": 0,
+            "blog_card_text_alignment": "center",
+            "blog_card_color_scheme": "scheme-3",
+            "blog_card_border_thickness": 1,
+            "blog_card_border_opacity": 30,
+            "blog_card_corner_radius": 12,
+            "blog_card_shadow_opacity": 5,
+            "blog_card_shadow_horizontal_offset": 10,
+            "blog_card_shadow_vertical_offset": 10,
+            "blog_card_shadow_blur": 35,
+            "text_boxes_border_thickness": 0,
+            "text_boxes_border_opacity": 10,
+            "text_boxes_radius": 24,
+            "text_boxes_shadow_opacity": 0,
+            "text_boxes_shadow_horizontal_offset": 10,
+            "text_boxes_shadow_vertical_offset": 12,
+            "text_boxes_shadow_blur": 20,
+            "media_border_thickness": 0,
+            "media_border_opacity": 10,
+            "media_radius": 12,
+            "media_shadow_opacity": 10,
+            "media_shadow_horizontal_offset": 10,
+            "media_shadow_vertical_offset": 12,
+            "media_shadow_blur": 20,
+            "popup_border_thickness": 1,
+            "popup_border_opacity": 30,
+            "popup_corner_radius": 12,
+            "popup_shadow_opacity": 10,
+            "popup_shadow_horizontal_offset": 10,
+            "popup_shadow_vertical_offset": 12,
+            "popup_shadow_blur": 20,
+            "drawer_border_thickness": 1,
+            "drawer_border_opacity": 10,
+            "drawer_shadow_opacity": 0,
+            "drawer_shadow_horizontal_offset": 0,
+            "drawer_shadow_vertical_offset": 4,
+            "drawer_shadow_blur": 5,
+            "badge_position": "bottom left",
+            "badge_corner_radius": 20,
+            "sale_badge_color_scheme": "scheme-5",
+            "sold_out_badge_color_scheme": "scheme-3",
+            "brand_headline": "",
+            "brand_description": "<p><\/p>",
+            "brand_image_width": "100",
+            "social_twitter_link": "",
+            "social_facebook_link": "",
+            "social_pinterest_link": "",
+            "social_instagram_link": "",
+            "social_tiktok_link": "",
+            "social_tumblr_link": "",
+            "social_snapchat_link": "",
+            "social_youtube_link": "",
+            "social_vimeo_link": "",
+            "predictive_search_enabled": true,
+            "predictive_search_show_vendor": false,
+            "predictive_search_show_price": true,
+            "currency_code_enabled": true,
+            "cart_type": "notification",
+            "show_vendor": false,
+            "show_cart_note": true,
+            "cart_drawer_collection": "",
+            "cart_color_scheme": "scheme-1",
+            "sections": {
+                "main-password-header": {
+                    "type": "main-password-header",
+                    "settings": {
+                        "color_scheme": "scheme-1"
+                    }
+                },
+                "main-password-footer": {
+                    "type": "main-password-footer",
+                    "settings": {
+                        "color_scheme": "scheme-1"
+                    }
+                }
+            }
+        }
+    },
+    "platform_customizations": {
+        "custom_css": [
+            "\/* Hide mobile menu hamburger icon *\/.header__icon--menu {display: none !important;}",
+            " \/* Or if your theme uses different classes *\/.js-mobile-nav-toggle,.mobile-nav-trigger,.burger-icon {display: none !important;}"
+        ]
+    }
+}

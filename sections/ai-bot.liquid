@@ -1,0 +1,39 @@
+{% comment %}
+  Section: AI Chatbot Widget
+  Allows admins to paste arbitrary embed code and position it bottom-left.
+{% endcomment %}
+
+<style>
+  .ai-bot-widget-{{ section.id }} {
+    position: fixed !important;
+    bottom: 16px;
+    left: 16px;
+    z-index: 2147483646;
+  }
+</style>
+
+<div class="ai-bot-widget-{{ section.id }}">
+  {% if section.settings.bot_code != blank %}
+    <!-- user-provided embed code -->
+    {{ section.settings.bot_code | raw }}
+  {% endif %}
+</div>
+
+{% schema %}
+{
+  "name": "AI Chatbot",
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "bot_code",
+      "label": "Embed code / HTML",
+      "info": "Paste the script or HTML for your chat widget. It will be placed in a fixed box bottom-left."
+    }
+  ],
+  "presets": [
+    {
+      "name": "AI Chatbot"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,298 @@
+{% comment %}
+  Section: FAQ Accordion
+  Version: 1.0 - Production Ready
+  
+  Features:
+  - Fully customizable colors and spacing
+  - Dynamic FAQ items using blocks
+  - Rich text support for answers
+  - Self-contained and conflict-free
+{% endcomment %}
+
+{%- liquid
+  assign background_color = section.settings.background_color | default: 'transparent'
+  assign item_background_color = section.settings.item_background_color | default: '#1A1A1A'
+  assign item_hover_background_color = section.settings.item_hover_background_color | default: '#2A2A2A'
+  assign question_text_color = section.settings.question_text_color | default: '#FFFFFF'
+  assign answer_text_color = section.settings.answer_text_color | default: '#CCCCCC'
+  assign arrow_color = section.settings.arrow_color | default: '#CCCCCC'
+-%}
+
+{%- style -%}
+  .faq-section-{{ section.id }} {
+    background-color: {{ background_color }};
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+
+  .faq-section-{{ section.id }} .faq-container {
+    width: 90%;
+    max-width: {{ section.settings.max_width }}px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .faq-section-{{ section.id }} .faq-title {
+    font-size: {{ section.settings.headline_size }}px;
+    font-weight: 700;
+    color: {{ question_text_color }};
+    margin-bottom: 20px;
+  }
+
+  .faq-section-{{ section.id }} .faq-item {
+    margin-bottom: 10px;
+    overflow: hidden;
+    border-radius: 15px;
+    background: {{ item_background_color }};
+  }
+
+  .faq-section-{{ section.id }} .faq-question {
+    width: 100%;
+    padding: 14px;
+    font-size: 16px;
+    font-weight: 600;
+    text-align: left;
+    background: transparent;
+    color: {{ question_text_color }};
+    border: none;
+    cursor: pointer;
+    outline: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background 0.3s;
+  }
+
+  .faq-section-{{ section.id }} .faq-question:hover {
+    background: {{ item_hover_background_color }};
+  }
+
+  .faq-section-{{ section.id }} .faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    background: transparent;
+    color: {{ answer_text_color }};
+    font-size: 14px;
+    text-align: left;
+    padding: 0 14px;
+    transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+  }
+  
+  .faq-section-{{ section.id }} .faq-answer p {
+    margin: 0;
+  }
+  
+  .faq-section-{{ section.id }} .faq-answer p:not(:last-child) {
+    margin-bottom: 1em;
+  }
+
+  .faq-section-{{ section.id }} .faq-item.active .faq-answer {
+    max-height: 500px; /* Generous max-height for long answers */
+    padding: 12px 14px;
+  }
+
+  .faq-section-{{ section.id }} .faq-arrow {
+    transition: transform 0.3s ease-in-out;
+    font-size: 14px;
+    color: {{ arrow_color }};
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    margin-left: 10px;
+  }
+
+  .faq-section-{{ section.id }} .faq-item.active .faq-arrow {
+    transform: rotate(180deg);
+  }
+{%- endstyle -%}
+
+<div id="faq-section-{{ section.id }}" class="faq-section-{{ section.id }}">
+  <div class="faq-container">
+    {%- if section.settings.headline != blank -%}
+      <h2 class="faq-title">{{ section.settings.headline | escape }}</h2>
+    {%- endif -%}
+
+    {%- for block in section.blocks -%}
+      <div class="faq-item" {{ block.shopify_attributes }}>
+        <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-{{ forloop.index }}">
+          {{ block.settings.question | escape }}
+          <span class="faq-arrow" aria-hidden="true">⌄</span>
+        </button>
+        <div class="faq-answer" id="faq-answer-{{ forloop.index }}">
+          <div>{{ block.settings.answer }}</div>
+        </div>
+      </div>
+    {%- endfor -%}
+  </div>
+</div>
+
+<script>
+  (function() {
+    const sectionElement = document.querySelector('#faq-section-{{ section.id }}');
+    if (!sectionElement) return;
+
+    const faqItems = sectionElement.querySelectorAll(".faq-item");
+
+    faqItems.forEach((item) => {
+      const question = item.querySelector(".faq-question");
+      question.addEventListener("click", function () {
+        const wasActive = item.classList.contains("active");
+        item.classList.toggle("active");
+        question.setAttribute('aria-expanded', !wasActive);
+      });
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "FAQ Accordion",
+  "tag": "section",
+  "class": "shopify-section-faq",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Content"
+    },
+    {
+      "type": "text",
+      "id": "headline",
+      "label": "Headline",
+      "default": "Frequently Asked Questions"
+    },
+    {
+      "type": "header",
+      "content": "Color Settings"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Section Background",
+      "default": "rgba(0,0,0,0)"
+    },
+    {
+      "type": "color",
+      "id": "item_background_color",
+      "label": "Item Background",
+      "default": "#1A1A1A"
+    },
+    {
+      "type": "color",
+      "id": "item_hover_background_color",
+      "label": "Item Hover Background",
+      "default": "#2A2A2A"
+    },
+    {
+      "type": "color",
+      "id": "question_text_color",
+      "label": "Question & Headline Text",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "answer_text_color",
+      "label": "Answer Text",
+      "default": "#CCCCCC"
+    },
+    {
+      "type": "color",
+      "id": "arrow_color",
+      "label": "Arrow Color",
+      "default": "#CCCCCC"
+    },
+    {
+      "type": "header",
+      "content": "Layout & Spacing"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "min": 500,
+      "max": 1200,
+      "step": 20,
+      "unit": "px",
+      "label": "Max Width of Container",
+      "default": 700
+    },
+    {
+      "type": "range",
+      "id": "headline_size",
+      "min": 16,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Headline Font Size",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top Padding",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom Padding",
+      "default": 40
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq_item",
+      "name": "FAQ Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "What does buying a supplier get me?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer",
+          "default": "<p>Buying a supplier gives you instant access to a trusted, reliable supplier that sells quality products for cheap. This allows you to buy products for cheap and sell them for more, making a profit.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQ Accordion",
+      "blocks": [
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "What does buying a supplier get me?",
+            "answer": "<p>Buying a supplier gives you instant access to a trusted, reliable supplier that sells quality products for cheap. This allows you to buy products for cheap and sell them for more, making a profit.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "How will I receive access to the supplier?",
+            "answer": "<p>Once you complete your purchase, the supplier's phone number is INSTANTLY sent via email and will be available immediately on the order confirmation page.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "How long does the supplier take to ship?",
+            "answer": "<p>Shipping times range from 2-7 days, and rarely take longer. The most common shipment time is about a week. You can ask the suppliers for accurate shipment times.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,434 @@
+{% comment %}
+  Conversion Header Section for Shopify
+  Save as: sections/conversion-header.liquid
+{% endcomment %}
+
+{%- if section.settings.enable_section -%}
+<style>
+  .conversion-header-{{ section.id }} {
+    position: {{ section.settings.position }};
+    top: 0;
+    left: 0;
+    right: 0;
+    background: {{ section.settings.background_color }};
+    padding: 16px 0 12px 0;
+    z-index: 9999;
+    font-family: var(--font-body-family);
+    overflow: hidden;
+  }
+  
+  .carousel-wrapper-{{ section.id }} {
+    display: flex;
+    width: max-content;
+  }
+  
+  .conversion-carousel-{{ section.id }} {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    animation: scroll-{{ section.id }} {{ section.settings.scroll_speed }}s linear infinite;
+  }
+  
+  @keyframes scroll-{{ section.id }} {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+  
+  .carousel-track-{{ section.id }} {
+    display: flex;
+    align-items: center;
+  }
+  
+  .carousel-item-{{ section.id }} {
+    display: inline-flex;
+    align-items: center;
+    padding: 0 12px;
+    font-size: 14px;
+    color: {{ section.settings.text_color }};
+  }
+  
+  .metric-{{ section.id }} {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  
+  .highlight-number-{{ section.id }} {
+    font-weight: 700;
+    color: {{ section.settings.accent_color }};
+    font-size: 15px;
+  }
+  
+  .live-indicator-{{ section.id }} {
+    width: 6px;
+    height: 6px;
+    background: {{ section.settings.accent_color }};
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 5px;
+    animation: pulse-{{ section.id }} 2s ease-in-out infinite;
+  }
+  
+  @keyframes pulse-{{ section.id }} {
+    0%, 100% { 
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% { 
+      opacity: 0.5;
+      transform: scale(1.2);
+    }
+  }
+  
+  .stars-{{ section.id }} {
+    color: #FFD700;
+    font-size: 14px;
+    margin-left: 4px;
+  }
+  
+  .rating-text-{{ section.id }} {
+    font-weight: 600;
+  }
+  
+  .countdown-badge-{{ section.id }} {
+    background: {{ section.settings.badge_color }};
+    color: #ffffff;
+    padding: 4px 11px;
+    border-radius: 14px;
+    font-weight: 700;
+    font-size: 13px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin-left: 8px;
+  }
+  
+  .countdown-timer-{{ section.id }} {
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: #ffffff;
+  }
+  
+  .divider-line-{{ section.id }} {
+    width: 1px;
+    height: 16px;
+    background: rgba(255, 255, 255, 0.3);
+    display: inline-block;
+    margin: 0 12px;
+  }
+  
+  /* Mobile optimization */
+  @media (max-width: 768px) {
+    .carousel-item-{{ section.id }} {
+      font-size: 13px;
+      padding: 0 10px;
+    }
+    
+    .highlight-number-{{ section.id }} {
+      font-size: 14px;
+    }
+    
+    .divider-line-{{ section.id }} {
+      margin: 0 10px;
+      height: 14px;
+    }
+    
+    .countdown-badge-{{ section.id }} {
+      padding: 3px 9px;
+      font-size: 12px;
+    }
+  }
+  
+  /* Desktop adjustments */
+  @media (min-width: 768px) {
+    .conversion-header-{{ section.id }} {
+      padding: 18px 0 14px 0;
+    }
+    
+    .carousel-item-{{ section.id }} {
+      font-size: 15px;
+      padding: 0 15px;
+    }
+    
+    .highlight-number-{{ section.id }} {
+      font-size: 16px;
+    }
+    
+    .countdown-badge-{{ section.id }} {
+      font-size: 14px;
+      padding: 5px 12px;
+    }
+    
+    .stars-{{ section.id }} {
+      font-size: 15px;
+    }
+    
+    .divider-line-{{ section.id }} {
+      margin: 0 15px;
+      height: 18px;
+    }
+  }
+  
+  /* Pause on hover for better UX */
+  .conversion-carousel-{{ section.id }}:hover {
+    animation-play-state: paused;
+  }
+</style>
+
+<div class="conversion-header-{{ section.id }}">
+  {%- assign customers_text = section.settings.customers_text | default: 'happy customers' -%}
+  {%- assign vendors_text = section.settings.vendors_text | default: 'Best Vendors In The Game' -%}
+  {%- assign ratings_text = section.settings.ratings_text | default: 'Rated 4.98/5' -%}
+  {%- assign viewers_text = section.settings.live_viewers_text | default: 'live viewers' -%}
+  {%- assign price_text = section.settings.price_increase_text | default: 'Price increasing in:' -%}
+  <div class="carousel-wrapper-{{ section.id }}">
+    <div class="conversion-carousel-{{ section.id }}">
+      {% for track_i in (1..4) %}
+      <div class="carousel-track-{{ section.id }}">
+        <div class="carousel-item-{{ section.id }}">
+          <div class="metric-{{ section.id }}">
+            <span class="live-indicator-{{ section.id }}"></span>
+            <span><span class="highlight-number-{{ section.id }} customer-count">10,247</span> {{ customers_text }}</span>
+          </div>
+        </div>
+        <span class="divider-line-{{ section.id }}"></span>
+
+        <div class="carousel-item-{{ section.id }}">
+          <div class="metric-{{ section.id }}">
+            <span style="font-weight: 700;">{{ vendors_text }}</span>
+          </div>
+        </div>
+        <span class="divider-line-{{ section.id }}"></span>
+
+        <div class="carousel-item-{{ section.id }}">
+          <div class="metric-{{ section.id }}">
+            <span class="rating-text-{{ section.id }}">{{ ratings_text }}</span>
+            <span class="stars-{{ section.id }}">★★★★★</span>
+          </div>
+        </div>
+        <span class="divider-line-{{ section.id }}"></span>
+
+        <div class="carousel-item-{{ section.id }}">
+          <div class="metric-{{ section.id }}">
+            <span class="live-indicator-{{ section.id }}"></span>
+            <span><span style="font-weight: 700;" class="live-viewers" data-id="{{ track_i }}">73</span> {{ viewers_text }}</span>
+          </div>
+        </div>
+        <span class="divider-line-{{ section.id }}"></span>
+
+        <div class="carousel-item-{{ section.id }}">
+          <div class="metric-{{ section.id }}">
+            <span>{{ price_text }}</span>
+            <span class="countdown-badge-{{ section.id }}">
+              <span class="countdown-timer-{{ section.id }}">45:32</span>
+            </span>
+          </div>
+        </div>
+        <span class="divider-line-{{ section.id }}"></span>
+      </div>
+      {% endfor %}
+</div>
+
+<script>
+(function() {
+  const sectionId = '{{ section.id }}';
+  let customerCount = 10247;
+  let customerIncrement = 0;
+  let currentViewers = 73;
+  
+  // Update happy customers count
+  function updateCustomerCount() {
+    customerIncrement += Math.floor(Math.random() * 5) + 3;
+    const elements = document.querySelectorAll('.customer-count');
+    elements.forEach(el => {
+      el.textContent = (customerCount + customerIncrement).toLocaleString();
+    });
+  }
+  
+  // Update live viewers with small variations
+  function updateLiveViewers() {
+    // Random change between -3 and +3
+    const change = Math.floor(Math.random() * 7) - 3;
+    currentViewers += change;
+    
+    // Keep within 50-100 range
+    if (currentViewers < 50) currentViewers = 50;
+    if (currentViewers > 100) currentViewers = 100;
+    
+    const elements = document.querySelectorAll('.live-viewers');
+    elements.forEach(el => {
+      el.textContent = currentViewers;
+    });
+  }
+  
+  // Update countdown timer to end of hour
+  function updateCountdown() {
+    const now = new Date();
+    const endOfHour = new Date(now);
+    endOfHour.setHours(now.getHours() + 1, 0, 0, 0);
+    
+    const diff = endOfHour - now;
+    const minutes = Math.floor(diff / 60000);
+    const seconds = Math.floor((diff % 60000) / 1000);
+    
+    const timeString = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    
+    // Update all countdown timers
+    const elements = document.querySelectorAll('.countdown-timer-' + sectionId);
+    elements.forEach(el => {
+      el.textContent = timeString;
+    });
+  }
+  
+  // Initialize with random viewer count between 50-100
+  function initializeViewers() {
+    currentViewers = Math.floor(Math.random() * 51) + 50;
+    const elements = document.querySelectorAll('.live-viewers');
+    elements.forEach(el => {
+      el.textContent = currentViewers;
+    });
+  }
+  
+  // Initialize
+  initializeViewers();
+  updateCountdown();
+  
+  // Update intervals
+  setInterval(updateCountdown, 1000); // Update countdown every second
+  setInterval(updateLiveViewers, 4000); // Update viewers every 4 seconds
+  setInterval(updateCustomerCount, 30000); // Update customer count every 30 seconds
+})();
+
+// Add body padding if fixed position
+{% if section.settings.position == 'fixed' %}
+document.addEventListener('DOMContentLoaded', function() {
+  document.body.style.paddingTop = '48px';
+  if (window.innerWidth >= 768) {
+    document.body.style.paddingTop = '52px';
+  }
+});
+{% endif %}
+</script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Conversion Header",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable_section",
+      "label": "Show conversion header",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Position & Animation"
+    },
+    {
+      "type": "select",
+      "id": "position",
+      "label": "Header position",
+      "options": [
+        {
+          "value": "fixed",
+          "label": "Fixed at top (recommended)"
+        },
+        {
+          "value": "relative",
+          "label": "Normal position"
+        }
+      ],
+      "default": "fixed",
+      "info": "Fixed keeps the header visible when scrolling"
+    },
+    {
+      "type": "range",
+      "id": "scroll_speed",
+      "label": "Scroll speed",
+      "min": 10,
+      "max": 60,
+      "step": 5,
+      "default": 30,
+      "unit": "sec",
+      "info": "Time for one complete scroll cycle (lower = faster)"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent color",
+      "default": "#dc2626",
+      "info": "Used for numbers and live indicators"
+    },
+    {
+      "type": "text",
+      "id": "customers_text",
+      "label": "Customers text",
+      "default": "happy customers"
+    },
+    {
+      "type": "text",
+      "id": "vendors_text",
+      "label": "Vendors tagline",
+      "default": "Best Vendors In The Game"
+    },
+    {
+      "type": "text",
+      "id": "ratings_text",
+      "label": "Ratings text",
+      "default": "Rated 4.98/5"
+    },
+    {
+      "type": "text",
+      "id": "live_viewers_text",
+      "label": "Live viewers text",
+      "default": "live viewers",
+      "info": "Use {{count}} in your string to insert the number"
+    },
+    {
+      "type": "text",
+      "id": "price_increase_text",
+      "label": "Countdown label",
+      "default": "Price increasing in:"
+    },
+    {
+      "type": "color",
+      "id": "badge_color",
+      "label": "Countdown badge color",
+      "default": "#dc2626",
+      "info": "Background for the countdown timer"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Conversion Header",
+      "settings": {
+        "background_color": "#000000",
+        "text_color": "#ffffff",
+        "accent_color": "#dc2626",
+        "badge_color": "#dc2626"
+      }
+    }
+  ]
+}
+{% endschema %}

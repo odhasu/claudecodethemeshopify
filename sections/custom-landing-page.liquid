@@ -1,0 +1,1843 @@
+{% comment %}
+  Custom Landing Page Section
+  Version: 1.2
+  File: sections/custom-landing-page.liquid
+{% endcomment %}
+
+{%- liquid
+  # Core Colors from settings
+  assign accent_color = section.settings.accent_color
+  assign gradient_color = section.settings.gradient_color
+  assign text_color = section.settings.text_color
+  assign background_color = section.settings.background_color
+  
+  # Pre-configured color variations
+  assign heading_color = text_color
+  assign price_color = text_color
+  assign sale_price_color = accent_color
+  assign compare_price_color = text_color | color_modify: 'alpha', 0.6
+  
+  # Button colors
+  assign button_bg_color = accent_color
+  assign button_text_color = '#FFFFFF'
+  
+  # Glassmorphism settings
+  assign glass_intensity = 100
+  assign glass_transparency = 50
+  assign frost_color = '#FFFFFF'
+  assign frost_r = frost_color | color_extract: 'red'
+  assign frost_g = frost_color | color_extract: 'green'
+  assign frost_b = frost_color | color_extract: 'blue'
+  
+  # Glass calculations
+  assign glass_blur = glass_intensity | times: 0.25
+  
+  if glass_transparency >= 90
+    assign border_opacity = 0.5
+    assign glass_opacity_1 = 0.7
+    assign glass_opacity_2 = 0.65
+  elsif glass_transparency >= 70
+    assign border_opacity = 0.4
+    assign glass_opacity_1 = 0.4
+    assign glass_opacity_2 = 0.35
+  elsif glass_transparency >= 50
+    assign border_opacity = 0.3
+    assign glass_opacity_1 = 0.2
+    assign glass_opacity_2 = 0.15
+  elsif glass_transparency >= 30
+    assign border_opacity = 0.2
+    assign glass_opacity_1 = 0.08
+    assign glass_opacity_2 = 0.04
+  else
+    assign border_opacity = 0.15
+    assign glass_opacity_1 = 0.04
+    assign glass_opacity_2 = 0.02
+  endif
+  
+  assign card_border_color = 'rgba(255, 255, 255, 0.25)'
+  assign sale_badge_text = text_color
+-%}
+
+{%- style -%}
+  /* Import fonts */
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
+  
+  /* Reset and base styles */
+  .section-{{ section.id }} {
+    margin: 0;
+    padding: 0;
+    background-color: {{ background_color }};
+    color: {{ text_color }};
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  /* Conversion Header Styles */
+  {%- if section.settings.enable_conversion_header -%}
+  .conversion-header-{{ section.id }} {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: #ffffff;
+    padding: 16px 16px 12px 16px;
+    z-index: 9999;
+    font-family: var(--font-body-family);
+    border-bottom: 1px solid #e5e5e5;
+  }
+  
+  .conversion-content-{{ section.id }} {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: 14px;
+    line-height: 1.4;
+    color: #1a1a1a;
+    position: relative;
+  }
+  
+  .metric-{{ section.id }} {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  
+  .profit-amount-{{ section.id }} {
+    font-weight: 700;
+    color: {{ accent_color }};
+    font-size: 15px;
+  }
+  
+  .live-indicator-{{ section.id }} {
+    width: 6px;
+    height: 6px;
+    background: {{ accent_color }};
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 5px;
+    animation: pulse-{{ section.id }} 2s ease-in-out infinite;
+  }
+  
+  @keyframes pulse-{{ section.id }} {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+  }
+  
+  .divider-{{ section.id }} {
+    color: #d4d4d4;
+    font-size: 12px;
+  }
+  
+  .time-badge-{{ section.id }} {
+    background: #4EA0FF;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 13px;
+    color: #ffffff;
+  }
+  
+  .member-name-{{ section.id }} {
+    font-weight: 600;
+    color: #1a1a1a;
+  }
+  
+  .price-increase-{{ section.id }} {
+    background: #4EA0FF;
+    color: #ffffff;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 13px;
+  }
+  
+  .bonus-alert-{{ section.id }} {
+    color: {{ accent_color }};
+    font-weight: 600;
+  }
+  
+  /* Rotating messages */
+  .message-rotate-{{ section.id }} {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: opacity 0.3s ease;
+    white-space: nowrap;
+  }
+  
+  .message-hidden-{{ section.id }} {
+    opacity: 0;
+    pointer-events: none;
+  }
+  {%- endif -%}
+  
+  /* Live Sales Notification Styles */
+  {%- if section.settings.enable_live_sales -%}
+  .sales-notification-{{ section.id }} {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    color: {{ text_color }};
+    padding: 14px 22px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    z-index: 9999;
+    max-width: 90vw;
+    word-wrap: break-word;
+    background: rgba(255, 255, 255, 0.2);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    transform: translateY(20px);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.5s ease, visibility 0.6s;
+  }
+  
+  .sales-notification-{{ section.id }}.sales-visible {
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+    pointer-events: auto;
+  }
+  
+  .sales-notification-{{ section.id }} p {
+    margin: 0;
+  }
+  
+  .sales-notification-{{ section.id }} strong {
+    font-weight: 700;
+    color: {{ accent_color }};
+  }
+  {%- endif -%}
+  
+  /* Main content section with customizable padding */
+  .main-content-{{ section.id }} {
+    background-color: {{ background_color }};
+    {%- if section.settings.enable_gradient -%}
+    background-image:
+      radial-gradient(circle 800px at 10% 15%, {{ gradient_color | color_modify: 'alpha', 0.35 }} 0%, transparent 60%),
+      radial-gradient(circle 700px at 80% 25%, {{ gradient_color | color_modify: 'alpha', 0.32 }} 0%, transparent 65%),
+      radial-gradient(circle 900px at 90% 85%, {{ gradient_color | color_modify: 'alpha', 0.38 }} 0%, transparent 70%);
+    {%- endif -%}
+    background-repeat: no-repeat;
+    background-size: cover;
+    {%- if section.settings.enable_conversion_header -%}
+    padding-top: calc({{ section.settings.top_padding }}px + 52px);
+    {%- else -%}
+    padding-top: {{ section.settings.top_padding }}px;
+    {%- endif -%}
+    padding-bottom: 60px;
+    color: {{ text_color }};
+    overflow: hidden;
+    position: relative;
+  }
+  
+  /* Custom HTML content styles */
+  .large-image-container-{{ section.id }} {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    padding: 20px 0;
+  }
+  
+  .large-rounded-image-{{ section.id }} {
+    width: 80%;
+    max-width: 600px;
+    height: auto;
+    border-radius: 40px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    display: block;
+    margin: 0 auto;
+  }
+  
+  .reselling-heading-container-{{ section.id }} {
+    text-align: center;
+    margin: 40px auto;
+    max-width: 800px;
+    padding: 0 20px;
+  }
+  
+  .reselling-heading-{{ section.id }} {
+    font-size: 28px;
+    font-weight: 700;
+    color: {{ text_color }};
+    margin-bottom: 10px;
+  }
+  
+  .reselling-subheading-{{ section.id }} {
+    font-size: 15px;
+    font-weight: 550;
+    color: {{ text_color | color_modify: 'alpha', 0.9 }};
+    line-height: 1.5;
+    margin-bottom: 0;
+  }
+  
+  .join-user-container-{{ section.id }} {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin: 40px auto 20px auto;
+    width: 100%;
+  }
+  
+  .join-user-tile-{{ section.id }} {
+    background: #1A1A1A;
+    padding: 4px 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 90% !important;
+    max-width: 900px;
+  }
+  
+  .join-user-text-{{ section.id }} {
+    font-size: 14px;
+    font-weight: 600;
+    color: {{ text_color }};
+    margin-bottom: 12px;
+  }
+  
+  .join-user-image-{{ section.id }} {
+    width: 100px;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 4px;
+  }
+  
+  .join-user-rating-{{ section.id }} {
+    font-size: 18px;
+    font-weight: 600;
+    color: {{ text_color }};
+  }
+  
+  .stars-{{ section.id }} {
+    color: {{ accent_color }};
+  }
+  
+  /* Image slider styles */
+  .image-slider-{{ section.id }} {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    background: transparent;
+    padding: 10px 0;
+  }
+  
+  .slider-track-{{ section.id }} {
+    display: flex;
+    gap: 20px;
+    animation: slide-animation-{{ section.id }} 20s linear infinite;
+    width: calc(220px * 22);
+  }
+  
+  .slide-{{ section.id }} {
+    flex: 0 0 auto;
+    width: 220px;
+  }
+  
+  .slide-{{ section.id }} img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+  
+  @keyframes slide-animation-{{ section.id }} {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  
+  /* Features section */
+  .features-section-{{ section.id }} {
+    width: 90%;
+    max-width: 700px;
+    margin: 40px auto;
+    padding: 20px;
+    background: #1A1A1A;
+    border-radius: 12px;
+    text-align: left;
+  }
+  
+  .section-title-{{ section.id }} {
+    text-align: center;
+    font-size: 20px;
+    font-weight: 700;
+    color: {{ text_color }};
+    margin-bottom: 15px;
+  }
+  
+  .features-container-{{ section.id }} {
+    padding: 15px 20px;
+  }
+  
+  .features-list-{{ section.id }} {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .features-list-{{ section.id }} li {
+    font-size: 14px;
+    color: {{ text_color }};
+    margin-bottom: 4px;
+    padding: 8px 0;
+  }
+  
+  .features-list-{{ section.id }} strong {
+    color: {{ accent_color }};
+  }
+  
+  .features-list-{{ section.id }} hr {
+    border: none;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.2);
+    margin: 5px 0;
+  }
+  
+  /* Testimonial slider - Updated for continuous sliding */
+  .slider-title-{{ section.id }} {
+    text-align: center;
+    font-size: 18px;
+    font-weight: 700;
+    color: {{ text_color }};
+    margin-bottom: 15px;
+  }
+  
+  .exact-center-slider-container-{{ section.id }} {
+    width: 100%;
+    max-width: 900px;
+    margin: 40px auto;
+    position: relative;
+    overflow: hidden;
+    background: transparent; /* Removed background color */
+    padding: 20px 0;
+    /* Prevent touch interruption */
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    pointer-events: none;
+  }
+  
+  .exact-center-slider-track-{{ section.id }} {
+    display: flex;
+    animation: testimonial-slide-{{ section.id }} 15s linear infinite;
+    width: fit-content;
+    pointer-events: auto;
+  }
+  
+  @keyframes testimonial-slide-{{ section.id }} {
+    0% {
+      transform: translateX(-50%);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+  
+  .exact-center-slider-card-{{ section.id }} {
+    flex: 0 0 auto;
+    width: 300px;
+    margin: 0 10px;
+    background: #191919;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+    box-sizing: border-box;
+    color: {{ text_color }};
+    font-size: 14px;
+    line-height: 1.6;
+    pointer-events: none;
+  }
+  
+  .testimonial-stars-{{ section.id }} {
+    font-size: 18px;
+    color: {{ accent_color }};
+    margin-bottom: 15px;
+  }
+  
+  /* FAQ Styles */
+  .faq-container-{{ section.id }} {
+    width: 90%;
+    max-width: 700px;
+    margin: 40px auto;
+    text-align: center;
+    position: relative;
+    z-index: 10;
+  }
+  
+  .faq-title-{{ section.id }} {
+    font-size: 18px;
+    font-weight: 700;
+    color: {{ text_color }};
+    margin-bottom: 20px;
+  }
+  
+  .faq-item-{{ section.id }} {
+    margin-bottom: 10px;
+    overflow: hidden;
+    border-radius: 15px;
+    background: #1A1A1A;
+    pointer-events: all;
+    position: relative;
+  }
+  
+  .faq-question-{{ section.id }} {
+    width: 100%;
+    padding: 14px;
+    font-size: 16px;
+    font-weight: 600;
+    text-align: left;
+    background: transparent;
+    color: {{ text_color }};
+    border: none;
+    cursor: pointer;
+    outline: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background 0.3s;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    user-select: none;
+  }
+  
+  .faq-question-{{ section.id }}:hover {
+    background: #2A2A2A;
+  }
+  
+  .faq-answer-{{ section.id }} {
+    max-height: 0;
+    overflow: hidden;
+    background: transparent;
+    color: {{ text_color | color_modify: 'alpha', 0.8 }};
+    font-size: 14px;
+    text-align: left;
+    padding: 0 14px;
+    transition: max-height 0.3s ease, padding 0.3s ease, opacity 0.3s ease;
+    opacity: 0;
+  }
+  
+  .faq-answer-{{ section.id }} > div {
+    padding: 0;
+  }
+  
+  .faq-arrow-{{ section.id }} {
+    transition: transform 0.3s ease-in-out;
+    font-size: 14px;
+    color: {{ text_color | color_modify: 'alpha', 0.8 }};
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    margin-left: 10px;
+    pointer-events: none;
+  }
+  
+  /* Subscribe buttons */
+  .subscribe-container-{{ section.id }} {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+    margin-bottom: 0;
+  }
+  
+  /* Subscribe buttons below FAQ */
+  .subscribe-container-bottom-{{ section.id }} {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 40px;
+    margin-bottom: 40px;
+  }
+  
+  .subscribe-button-{{ section.id }} {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 25px;
+    font-size: 16px;
+    font-weight: 700;
+    color: #ffffff;
+    background: {{ button_bg_color }} !important;
+    border-radius: 12px;
+    text-decoration: none;
+    border: none;
+    transition: all 0.3s ease-in-out;
+    text-align: center;
+    min-width: 200px;
+    box-sizing: border-box;
+  }
+  
+  .subscribe-button-{{ section.id }}:hover {
+    cursor: pointer;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  }
+  
+  .subscribe-button-{{ section.id }}:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+  
+  .subscribe-button-{{ section.id }}:disabled:hover {
+    transform: none;
+    box-shadow: none;
+  }
+  
+  .subscribe-image-{{ section.id }} {
+    height: 30px;
+    width: auto;
+    margin-right: 10px;
+    border-radius: 6px;
+  }
+  
+  .discord-button-{{ section.id }} {
+    margin-top: 15px;
+    background: #212121 !important;
+  }
+  
+  /* Reviews section */
+  .reviews-container-{{ section.id }} {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    background: #101010;
+    padding: 25px;
+    border-radius: 12px;
+    max-width: 750px;
+    margin: 40px auto;
+  }
+  
+  .review-item-{{ section.id }} {
+    background: #191919;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .review-header-{{ section.id }} {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  .review-avatar-{{ section.id }} {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
+  .review-meta-{{ section.id }} {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .review-name-stars-{{ section.id }} {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  
+  .review-name-{{ section.id }} {
+    font-size: 15px;
+    font-weight: 700;
+    color: {{ text_color }};
+  }
+  
+  .review-stars-{{ section.id }} {
+    font-size: 14px;
+    color: {{ accent_color }};
+    margin: 0;
+  }
+  
+  .review-text-{{ section.id }} {
+    font-size: 14px;
+    color: {{ text_color | color_modify: 'alpha', 0.8 }};
+    line-height: 1.4;
+    margin-top: 8px;
+  }
+  
+  /* Mobile Responsive */
+  @media (max-width: 767px) {
+    {%- if section.settings.enable_conversion_header -%}
+    .conversion-header-{{ section.id }} {
+      padding: 10px 10px 8px 10px;
+    }
+    
+    .conversion-content-{{ section.id }} {
+      font-size: 13px;
+    }
+    
+    .profit-amount-{{ section.id }} {
+      font-size: 14px;
+    }
+    {%- endif -%}
+    
+    .main-content-{{ section.id }} {
+      {%- if section.settings.enable_conversion_header -%}
+      padding-top: calc({{ section.settings.mobile_top_padding }}px + 44px);
+      {%- else -%}
+      padding-top: {{ section.settings.mobile_top_padding }}px;
+      {%- endif -%}
+    }
+    
+    .large-rounded-image-{{ section.id }} {
+      width: 90%;
+      border-radius: 25px;
+    }
+    
+    .reselling-heading-{{ section.id }} {
+      font-size: 24px;
+    }
+    
+    .reselling-subheading-{{ section.id }} {
+      font-size: 14px;
+    }
+    
+    .join-user-tile-{{ section.id }} {
+      width: 90% !important;
+      padding: 8px 15px;
+    }
+    
+    .subscribe-container-{{ section.id }}, .subscribe-container-bottom-{{ section.id }} {
+      margin-top: 20px;
+    }
+    
+    .join-user-text-{{ section.id }} {
+      font-size: 16px;
+    }
+    
+    .join-user-image-{{ section.id }} {
+      width: 290px;
+    }
+    
+    .join-user-rating-{{ section.id }} {
+      font-size: 14px;
+    }
+    
+    .features-section-{{ section.id }} {
+      width: 90%;
+      padding: 12px 16px;
+    }
+    
+    .features-list-{{ section.id }} li {
+      font-size: 13px;
+    }
+    
+    {%- if section.settings.enable_live_sales -%}
+    .sales-notification-{{ section.id }} {
+      left: 10px;
+      right: 10px;
+      width: auto;
+      font-size: 13px;
+    }
+    {%- endif -%}
+    
+    .reviews-container-{{ section.id }} {
+      padding: 15px;
+      max-width: 95%;
+    }
+    
+    .review-item-{{ section.id }} {
+      padding: 12px;
+    }
+    
+    .review-avatar-{{ section.id }} {
+      width: 45px;
+      height: 45px;
+    }
+    
+    .review-text-{{ section.id }} {
+      font-size: 13px;
+    }
+    
+    .exact-center-slider-card-{{ section.id }} {
+      width: 280px;
+      margin: 0 8px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="section-{{ section.id }}">
+  {%- if section.settings.enable_conversion_header -%}
+  {% comment %} Conversion Header {% endcomment %}
+  <div class="conversion-header-{{ section.id }}">
+    <div class="conversion-content-{{ section.id }}">
+      <!-- Message 1: Recent profit -->
+      <div id="message1-{{ section.id }}" class="message-rotate-{{ section.id }}">
+        <div class="metric-{{ section.id }}">
+          <span class="live-indicator-{{ section.id }}"></span>
+          <span><span class="member-name-{{ section.id }}" id="memberName-{{ section.id }}">Tyler K.</span> made <span class="profit-amount-{{ section.id }}" id="profitAmount-{{ section.id }}">$1,847</span> today</span>
+          <span class="divider-{{ section.id }}">•</span>
+          <span class="time-badge-{{ section.id }}" id="timeAgo-{{ section.id }}">3 mins ago</span>
+        </div>
+      </div>
+      
+      <!-- Message 2: Active members -->
+      <div id="message2-{{ section.id }}" class="message-rotate-{{ section.id }} message-hidden-{{ section.id }}">
+        <div class="metric-{{ section.id }}">
+          <span><span style="font-weight: 700;" id="activeMembers-{{ section.id }}">1,247</span> members active now</span>
+          <span class="divider-{{ section.id }}">•</span>
+          <span>Supplier from IG video</span>
+        </div>
+      </div>
+      
+      <!-- Message 3: Price urgency -->
+      <div id="message3-{{ section.id }}" class="message-rotate-{{ section.id }} message-hidden-{{ section.id }}">
+        <div class="metric-{{ section.id }}">
+          <span>Next price increase:</span>
+          <span class="price-increase-{{ section.id }}">Tonight at midnight</span>
+        </div>
+      </div>
+      
+      <!-- Message 4: Lost opportunity -->
+      <div id="message4-{{ section.id }}" class="message-rotate-{{ section.id }} message-hidden-{{ section.id }}">
+        <div class="metric-{{ section.id }}">
+          <span class="bonus-alert-{{ section.id }}">$<span id="lostAmount-{{ section.id }}">487</span></span>
+          <span>lost every day without access</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  {%- endif -%}
+
+  {%- if section.settings.enable_live_sales -%}
+  {% comment %} Live Sales Notification {% endcomment %}
+  <div id="sale-notification-{{ section.id }}" class="sales-notification-{{ section.id }}">
+    <p>
+      <strong id="customer-name-{{ section.id }}"></strong> just purchased the <span id="product-name-{{ section.id }}"></span>!
+    </p>
+  </div>
+  {%- endif -%}
+
+  {% comment %} Main Content Section {% endcomment %}
+  <div class="main-content-{{ section.id }}">
+    {% comment %} Custom HTML Content {% endcomment %}
+    <div class="large-image-container-{{ section.id }}">
+      {%- if section.settings.hero_image != blank -%}
+        <img src="{{ section.settings.hero_image | image_url: width: 1200 }}"
+             alt="{{ section.settings.hero_headline | escape }}"
+             class="large-rounded-image-{{ section.id }}">
+      {%- else -%}
+        <img src="https://cdn.shopify.com/s/files/1/0931/2210/1558/files/resellerswide.png?v=1749162786"
+             alt="Profit Portal Premium"
+             class="large-rounded-image-{{ section.id }}">
+      {%- endif -%}
+    </div>
+
+    <div class="reselling-heading-container-{{ section.id }}">
+      <h2 class="reselling-heading-{{ section.id }}">{{ section.settings.hero_headline }}</h2>
+      <p class="reselling-subheading-{{ section.id }}">{{ section.settings.hero_subheadline }}</p>
+    </div>
+
+    {% comment %} Subscribe Buttons - Top {% endcomment %}
+    <div class="subscribe-container-{{ section.id }}">
+      {%- if section.settings.premium_direct_checkout and section.settings.premium_product != blank -%}
+        {%- assign premium_variant = section.settings.premium_product.selected_or_first_available_variant -%}
+        <a href="/cart/{{ premium_variant.id }}:1" class="subscribe-button-{{ section.id }} premium-button-{{ section.id }}">
+          {%- if section.settings.show_premium_icon -%}
+            {%- if section.settings.premium_button_icon != blank -%}
+              <img src="{{ section.settings.premium_button_icon | image_url: width: 60 }}" class="subscribe-image-{{ section.id }}">
+            {%- else -%}
+              <img src="https://cdn.shopify.com/s/files/1/0931/2210/1558/files/Screenshot_2025-06-04_at_1.21.27_PM-gigapixel-low_resolution_v2-2x.png?v=1749074372" class="subscribe-image-{{ section.id }}">
+            {%- endif -%}
+          {%- endif -%}
+          {{ section.settings.premium_button_text }}
+        </a>
+      {%- elsif section.settings.premium_button_link != blank -%}
+        <a href="{{ section.settings.premium_button_link }}" class="subscribe-button-{{ section.id }} premium-button-{{ section.id }}">
+          {%- if section.settings.show_premium_icon -%}
+            {%- if section.settings.premium_button_icon != blank -%}
+              <img src="{{ section.settings.premium_button_icon | image_url: width: 60 }}" class="subscribe-image-{{ section.id }}">
+            {%- else -%}
+              <img src="https://cdn.shopify.com/s/files/1/0931/2210/1558/files/Screenshot_2025-06-04_at_1.21.27_PM-gigapixel-low_resolution_v2-2x.png?v=1749074372" class="subscribe-image-{{ section.id }}">
+            {%- endif -%}
+          {%- endif -%}
+          {{ section.settings.premium_button_text }}
+        </a>
+      {%- else -%}
+        <button type="button" class="subscribe-button-{{ section.id }} premium-button-{{ section.id }}" disabled>
+          {%- if section.settings.show_premium_icon -%}
+            {%- if section.settings.premium_button_icon != blank -%}
+              <img src="{{ section.settings.premium_button_icon | image_url: width: 60 }}" class="subscribe-image-{{ section.id }}">
+            {%- else -%}
+              <img src="https://cdn.shopify.com/s/files/1/0931/2210/1558/files/Screenshot_2025-06-04_at_1.21.27_PM-gigapixel-low_resolution_v2-2x.png?v=1749074372" class="subscribe-image-{{ section.id }}">
+            {%- endif -%}
+          {%- endif -%}
+          {{ section.settings.premium_button_text }}
+        </button>
+      {%- endif -%}
+
+      {%- if section.settings.free_button_link != blank -%}
+        <a href="{{ section.settings.free_button_link }}" 
+           {%- if section.settings.free_button_new_tab -%}target="_blank" rel="noopener noreferrer"{%- endif -%}
+           class="subscribe-button-{{ section.id }} discord-button-{{ section.id }}">
+          {{ section.settings.free_button_text }}
+        </a>
+      {%- else -%}
+        <button type="button" class="subscribe-button-{{ section.id }} discord-button-{{ section.id }}" disabled>
+          {{ section.settings.free_button_text }}
+        </button>
+      {%- endif -%}
+    </div>
+
+    <div class="join-user-container-{{ section.id }}">
+      <div class="join-user-tile-{{ section.id }}">
+        <p class="join-user-text-{{ section.id }}">{{ section.settings.user_count_text }}</p>
+        {%- if section.settings.user_avatars_image != blank -%}
+          <img class="join-user-image-{{ section.id }}" src="{{ section.settings.user_avatars_image | image_url: width: 300 }}" alt="Join Users">
+        {%- else -%}
+          <img class="join-user-image-{{ section.id }}" src="https://cdn.shopify.com/s/files/1/0686/0750/8620/files/joinuser.png?v=1738302219" alt="Join Users">
+        {%- endif -%}
+        <p class="join-user-rating-{{ section.id }}">
+          <span class="stars-{{ section.id }}">★★★★★</span> {{ section.settings.rating_text }}
+        </p>
+      </div>
+    </div>
+
+    <div class="image-slider-{{ section.id }}">
+      <div class="slider-track-{{ section.id }}">
+        {% assign images = "
+          https://cdn.shopify.com/s/files/1/0686/0750/8620/files/IMG_3787_2.jpg?v=1738272283,
+          https://cdn.shopify.com/s/files/1/0686/0750/8620/files/IMG_3786_2.jpg?v=1738272283,
+          https://cdn.shopify.com/s/files/1/0686/0750/8620/files/IMG_3785_2.jpg?v=1738272283,
+          https://cdn.shopify.com/s/files/1/0686/0750/8620/files/IMG_3783_2.jpg?v=1738272279,
+          https://cdn.shopify.com/s/files/1/0686/0750/8620/files/IMG_3784_2.jpg?v=1738272279,
+          https://cdn.shopify.com/s/files/1/0686/0750/8620/files/IMG_3781_2.jpg?v=1738272279,
+          https://cdn.shopify.com/s/files/1/0686/0750/8620/files/IMG_3780_2.jpg?v=1738272279,
+          https://cdn.shopify.com/s/files/1/0686/0750/8620/files/IMG_3776_2.jpg?v=1738272273,
+          https://cdn.shopify.com/s/files/1/0686/0750/8620/files/IMG_3778_2.jpg?v=1738272273,
+          https://cdn.shopify.com/s/files/1/0686/0750/8620/files/IMG_3777_2.jpg?v=1738272273,
+          https://cdn.shopify.com/s/files/1/0686/0750/8620/files/IMG_3779_2.jpg?v=1738272273
+        " | split: "," %}
+        {% for image in images %}
+          <div class="slide-{{ section.id }}">
+            <img src="{{ image | strip }}" alt="Sliding Image">
+          </div>
+        {% endfor %}
+        {% comment %} Duplicate for infinite scroll {% endcomment %}
+        {% for image in images %}
+          <div class="slide-{{ section.id }}">
+            <img src="{{ image | strip }}" alt="Sliding Image">
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- Features Section -->
+    <div class="features-section-{{ section.id }}">
+      <h2 class="section-title-{{ section.id }}">{{ section.settings.features_title }}</h2>
+      <div class="features-container-{{ section.id }}">
+        <ul class="features-list-{{ section.id }}">
+          {%- for block in section.blocks -%}
+            {%- case block.type -%}
+              {%- when 'feature' -%}
+                <li><strong>{{ block.settings.feature_title }}</strong><br>{{ block.settings.feature_description }}</li>
+                {%- unless forloop.last -%}<hr>{%- endunless -%}
+            {%- endcase -%}
+          {%- endfor -%}
+        </ul>
+      </div>
+    </div>
+
+    <!-- Testimonial Slider - Updated for continuous sliding -->
+    <div class="exact-center-slider-container-{{ section.id }}">
+      <h2 class="slider-title-{{ section.id }}">{{ section.settings.testimonial_title }}</h2>
+      <div class="exact-center-slider-track-{{ section.id }}">
+        {%- for block in section.blocks -%}
+          {%- case block.type -%}
+            {%- when 'testimonial' -%}
+              <div class="exact-center-slider-card-{{ section.id }}">
+                <p class="testimonial-stars-{{ section.id }}">★★★★★</p>
+                <p>{{ block.settings.testimonial_text }}</p>
+                <img src="https://cdn.shopify.com/s/files/1/0686/0750/8620/files/verifiedbywhop.png?v=1737765799" alt="Verified by Whop" style="width:140px; margin-top:10px;">
+              </div>
+          {%- endcase -%}
+        {%- endfor -%}
+        {% comment %} Duplicate testimonials for continuous loop {% endcomment %}
+        {%- for block in section.blocks -%}
+          {%- case block.type -%}
+            {%- when 'testimonial' -%}
+              <div class="exact-center-slider-card-{{ section.id }}">
+                <p class="testimonial-stars-{{ section.id }}">★★★★★</p>
+                <p>{{ block.settings.testimonial_text }}</p>
+                <img src="https://cdn.shopify.com/s/files/1/0686/0750/8620/files/verifiedbywhop.png?v=1737765799" alt="Verified by Whop" style="width:140px; margin-top:10px;">
+              </div>
+          {%- endcase -%}
+        {%- endfor -%}
+      </div>
+    </div>
+
+    {% comment %} FAQ Section {% endcomment %}
+    <div class="faq-container-{{ section.id }}">
+      <h2 class="faq-title-{{ section.id }}">{{ section.settings.faq_title }}</h2>
+
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when 'faq' -%}
+            <div class="faq-item-{{ section.id }}">
+              <div class="faq-question-{{ section.id }}">
+                <span>{{ block.settings.question }}</span>
+                <span class="faq-arrow-{{ section.id }}">⌄</span>
+              </div>
+              <div class="faq-answer-{{ section.id }}" style="max-height: 0px !important; padding: 0 14px !important; opacity: 0 !important;" data-open="false">
+                <div>{{ block.settings.answer }}</div>
+              </div>
+            </div>
+        {%- endcase -%}
+      {%- endfor -%}
+    </div>
+
+    {% comment %} Subscribe Buttons - Bottom (after FAQ) {% endcomment %}
+    <div class="subscribe-container-bottom-{{ section.id }}">
+      {%- if section.settings.premium_direct_checkout and section.settings.premium_product != blank -%}
+        {%- assign premium_variant = section.settings.premium_product.selected_or_first_available_variant -%}
+        <a href="/cart/{{ premium_variant.id }}:1" class="subscribe-button-{{ section.id }} premium-button-{{ section.id }}">
+          {%- if section.settings.show_premium_icon -%}
+            {%- if section.settings.premium_button_icon != blank -%}
+              <img src="{{ section.settings.premium_button_icon | image_url: width: 60 }}" class="subscribe-image-{{ section.id }}">
+            {%- else -%}
+              <img src="https://cdn.shopify.com/s/files/1/0931/2210/1558/files/Screenshot_2025-06-04_at_1.21.27_PM-gigapixel-low_resolution_v2-2x.png?v=1749074372" class="subscribe-image-{{ section.id }}">
+            {%- endif -%}
+          {%- endif -%}
+          {{ section.settings.premium_button_text }}
+        </a>
+      {%- elsif section.settings.premium_button_link != blank -%}
+        <a href="{{ section.settings.premium_button_link }}" class="subscribe-button-{{ section.id }} premium-button-{{ section.id }}">
+          {%- if section.settings.show_premium_icon -%}
+            {%- if section.settings.premium_button_icon != blank -%}
+              <img src="{{ section.settings.premium_button_icon | image_url: width: 60 }}" class="subscribe-image-{{ section.id }}">
+            {%- else -%}
+              <img src="https://cdn.shopify.com/s/files/1/0931/2210/1558/files/Screenshot_2025-06-04_at_1.21.27_PM-gigapixel-low_resolution_v2-2x.png?v=1749074372" class="subscribe-image-{{ section.id }}">
+            {%- endif -%}
+          {%- endif -%}
+          {{ section.settings.premium_button_text }}
+        </a>
+      {%- else -%}
+        <button type="button" class="subscribe-button-{{ section.id }} premium-button-{{ section.id }}" disabled>
+          {%- if section.settings.show_premium_icon -%}
+            {%- if section.settings.premium_button_icon != blank -%}
+              <img src="{{ section.settings.premium_button_icon | image_url: width: 60 }}" class="subscribe-image-{{ section.id }}">
+            {%- else -%}
+              <img src="https://cdn.shopify.com/s/files/1/0931/2210/1558/files/Screenshot_2025-06-04_at_1.21.27_PM-gigapixel-low_resolution_v2-2x.png?v=1749074372" class="subscribe-image-{{ section.id }}">
+            {%- endif -%}
+          {%- endif -%}
+          {{ section.settings.premium_button_text }}
+        </button>
+      {%- endif -%}
+
+      {%- if section.settings.free_button_link != blank -%}
+        <a href="{{ section.settings.free_button_link }}" 
+           {%- if section.settings.free_button_new_tab -%}target="_blank" rel="noopener noreferrer"{%- endif -%}
+           class="subscribe-button-{{ section.id }} discord-button-{{ section.id }}">
+          {{ section.settings.free_button_text }}
+        </a>
+      {%- else -%}
+        <button type="button" class="subscribe-button-{{ section.id }} discord-button-{{ section.id }}" disabled>
+          {{ section.settings.free_button_text }}
+        </button>
+      {%- endif -%}
+    </div>
+
+    {% comment %} Reviews Section {% endcomment %}
+    <div class="reviews-container-{{ section.id }}">
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when 'review' -%}
+            <div class="review-item-{{ section.id }}">
+              <div class="review-header-{{ section.id }}">
+                {%- if block.settings.reviewer_image != blank -%}
+                  <img src="{{ block.settings.reviewer_image | image_url: width: 100 }}" alt="{{ block.settings.reviewer_name }}" class="review-avatar-{{ section.id }}">
+                {%- else -%}
+                  <img src="https://cdn.shopify.com/s/files/1/0686/0750/8620/files/1_c409fd2c-3376-4fb5-a0bd-d1ff042a1033.png?v=1738305854" alt="{{ block.settings.reviewer_name }}" class="review-avatar-{{ section.id }}">
+                {%- endif -%}
+                <div class="review-meta-{{ section.id }}">
+                  <div class="review-name-stars-{{ section.id }}">
+                    <p class="review-name-{{ section.id }}">{{ block.settings.reviewer_name }}</p>
+                    <p class="review-stars-{{ section.id }}">★★★★★</p>
+                  </div>
+                </div>
+              </div>
+              <p class="review-text-{{ section.id }}">{{ block.settings.review_text }}</p>
+            </div>
+        {%- endcase -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+<script>
+  (function() {
+    const sectionId = '{{ section.id }}';
+    
+    {%- if section.settings.enable_conversion_header -%}
+    // Conversion Header Script
+    const members = [
+      {%- assign has_header_members = false -%}
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'header_member' -%}
+          {%- assign has_header_members = true -%}
+          { name: '{{ block.settings.member_name | escape }}', profit: '{{ block.settings.member_profit | escape }}' },
+        {%- endif -%}
+      {%- endfor -%}
+      {%- unless has_header_members -%}
+        { name: 'Tyler K.', profit: '$1,847' },
+        { name: 'Marcus R.', profit: '$2,392' },
+        { name: 'Jordan T.', profit: '$984' },
+        { name: 'Blake M.', profit: '$3,126' },
+        { name: 'Connor S.', profit: '$1,563' }
+      {%- endunless -%}
+    ];
+    
+    const timeFrames = ['2 mins ago', '3 mins ago', '7 mins ago', '11 mins ago', '14 mins ago', '18 mins ago'];
+    
+    let memberIndex = 0;
+    let currentMessage = 1;
+    const totalMessages = 4;
+    
+    function updateProfitDisplay() {
+      memberIndex = (memberIndex + 1) % members.length;
+      const member = members[memberIndex];
+      
+      const nameEl = document.getElementById('memberName-' + sectionId);
+      const profitEl = document.getElementById('profitAmount-' + sectionId);
+      const timeEl = document.getElementById('timeAgo-' + sectionId);
+      
+      if (nameEl) nameEl.textContent = member.name;
+      if (profitEl) profitEl.textContent = member.profit;
+      if (timeEl) timeEl.textContent = timeFrames[Math.floor(Math.random() * timeFrames.length)];
+    }
+    
+    function updateActiveMembers() {
+      const hour = new Date().getHours();
+      const isEvening = hour >= 17 && hour <= 23;
+      const base = isEvening ? 1200 : 800;
+      const variance = Math.floor(Math.random() * 200);
+      
+      const el = document.getElementById('activeMembers-' + sectionId);
+      if (el) el.textContent = (base + variance).toLocaleString();
+    }
+    
+    function updateLostAmount() {
+      const avgProfit = 487 + Math.floor(Math.random() * 200);
+      const el = document.getElementById('lostAmount-' + sectionId);
+      if (el) el.textContent = avgProfit;
+    }
+    
+    function rotateMessages() {
+      document.getElementById(`message${currentMessage}-${sectionId}`).classList.add('message-hidden-' + sectionId);
+      currentMessage = currentMessage % totalMessages + 1;
+      document.getElementById(`message${currentMessage}-${sectionId}`).classList.remove('message-hidden-' + sectionId);
+      
+      switch(currentMessage) {
+        case 1:
+          setTimeout(updateProfitDisplay, 100);
+          break;
+        case 2:
+          updateActiveMembers();
+          break;
+        case 4:
+          updateLostAmount();
+          break;
+      }
+    }
+    
+    updateProfitDisplay();
+    updateActiveMembers();
+    updateLostAmount();
+    
+    setInterval(rotateMessages, 4500);
+    setInterval(updateActiveMembers, 30000);
+    setInterval(() => {
+      if (currentMessage === 1 && Math.random() < 0.3) {
+        updateProfitDisplay();
+      }
+    }, 15000);
+    {%- endif -%}
+
+    {%- if section.settings.enable_live_sales -%}
+    // Live Sales Notification Script
+    const notifications = [
+      {%- assign has_live_sales = false -%}
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'live_sale' -%}
+          {%- assign has_live_sales = true -%}
+          { name: '{{ block.settings.customer_name | escape }}', product: '{{ block.settings.product_name | escape }}' },
+        {%- endif -%}
+      {%- endfor -%}
+      {%- unless has_live_sales -%}
+        { name: 'Landon L.', product: 'Spyder Hoodie Vendor' },
+        { name: 'Emiliano G.', product: 'Pod Vendor' },
+        { name: 'Christian', product: 'ELITE VENDOR BUNDLE' },
+        { name: 'Aurora', product: 'Colognes Vendor' }
+      {%- endunless -%}
+    ];
+
+    const notificationElement = document.getElementById('sale-notification-' + sectionId);
+    const nameElement = document.getElementById('customer-name-' + sectionId);
+    const productElement = document.getElementById('product-name-' + sectionId);
+
+    function showNotification() {
+      const randomSale = notifications[Math.floor(Math.random() * notifications.length)];
+      nameElement.textContent = randomSale.name;
+      productElement.textContent = randomSale.product;
+
+      notificationElement.classList.add('sales-visible');
+
+      setTimeout(() => {
+        notificationElement.classList.remove('sales-visible');
+      }, 5000);
+
+      const nextDelay = Math.floor(Math.random() * 15000) + 10000;
+      setTimeout(showNotification, 5000 + nextDelay);
+    }
+
+    setTimeout(showNotification, 5000);
+    {%- endif -%}
+
+    // Add body padding for fixed header
+    {%- if section.settings.enable_conversion_header -%}
+    document.addEventListener('DOMContentLoaded', function() {
+      document.body.style.paddingTop = '52px';
+      if (window.innerWidth >= 768) {
+        document.body.style.paddingTop = '56px';
+      }
+    });
+    {%- endif -%}
+
+    // FAQ Accordion - Fixed and Simplified
+    function initializeFAQ() {
+      var questions = document.querySelectorAll('.faq-question-{{ section.id }}');
+      
+      questions.forEach(function(question) {
+        question.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          
+          var item = this.parentElement;
+          var answer = item.querySelector('.faq-answer-{{ section.id }}');
+          var arrow = this.querySelector('.faq-arrow-{{ section.id }}');
+          
+          if (!answer) return;
+          
+          var isOpen = answer.getAttribute('data-open') === 'true';
+          
+          if (!isOpen) {
+            // Calculate height
+            answer.style.cssText = 'max-height: none; opacity: 1; visibility: visible;';
+            var height = answer.scrollHeight;
+            answer.style.cssText = 'max-height: 0px !important; padding: 0 14px !important; opacity: 0 !important;';
+            
+            // Force reflow
+            answer.offsetHeight;
+            
+            // Open
+            answer.style.cssText = 'max-height: ' + height + 'px !important; padding: 12px 14px !important; opacity: 1 !important; overflow: hidden !important;';
+            answer.setAttribute('data-open', 'true');
+            if (arrow) arrow.style.transform = 'rotate(180deg)';
+            
+            // Set overflow after transition
+            setTimeout(function() {
+              if (answer.getAttribute('data-open') === 'true') {
+                answer.style.overflow = 'visible';
+                answer.style.maxHeight = 'none';
+              }
+            }, 300);
+          } else {
+            // Close
+            answer.style.overflow = 'hidden';
+            answer.style.maxHeight = answer.scrollHeight + 'px';
+            answer.offsetHeight; // Force reflow
+            answer.style.cssText = 'max-height: 0px !important; padding: 0 14px !important; opacity: 0 !important; overflow: hidden !important;';
+            answer.setAttribute('data-open', 'false');
+            if (arrow) arrow.style.transform = 'rotate(0)';
+          }
+        });
+      });
+    }
+    
+    // Initialize FAQ when DOM is ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initializeFAQ);
+    } else {
+      initializeFAQ();
+    }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Custom Landing Page",
+  "tag": "section",
+  "class": "custom-landing-page",
+  "settings": [
+    {
+      "type": "header",
+      "content": "🎨 Colors"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent Color",
+      "default": "#C6A701",
+      "info": "Used for text highlights, stars, buttons, and important elements"
+    },
+    {
+      "type": "color",
+      "id": "gradient_color",
+      "label": "Background Gradient Color",
+      "default": "#39ff14",
+      "info": "Used for background gradient effects"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Main Text Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#050208"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_gradient",
+      "label": "Enable Background Gradient",
+      "default": true,
+      "info": "Adds a gradient overlay using the accent color"
+    },
+    {
+      "type": "header",
+      "content": "📐 Spacing"
+    },
+    {
+      "type": "range",
+      "id": "top_padding",
+      "label": "Top Padding (Desktop)",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 40,
+      "info": "Space above the hero image on desktop"
+    },
+    {
+      "type": "range",
+      "id": "mobile_top_padding",
+      "label": "Top Padding (Mobile)",
+      "min": 0,
+      "max": 60,
+      "step": 5,
+      "unit": "px",
+      "default": 20,
+      "info": "Space above the hero image on mobile"
+    },
+    {
+      "type": "header",
+      "content": "⚙️ Features"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_conversion_header",
+      "label": "Show Conversion Header",
+      "default": true,
+      "info": "Shows rotating member profit messages at top"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_live_sales",
+      "label": "Show Live Sales Notifications",
+      "default": true,
+      "info": "Shows popup notifications of recent purchases"
+    },
+    {
+      "type": "header",
+      "content": "📝 Hero Content"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero Image"
+    },
+    {
+      "type": "text",
+      "id": "hero_headline",
+      "label": "Hero Headline",
+      "default": "Build A Profitable Reselling Business In 30 Days."
+    },
+    {
+      "type": "textarea",
+      "id": "hero_subheadline",
+      "label": "Hero Subheadline",
+      "default": "We provide the resources, suppliers, strategies, and support you NEED to build a $10k/month reselling business. Success Guaranteed."
+    },
+    {
+      "type": "header",
+      "content": "👥 Social Proof"
+    },
+    {
+      "type": "text",
+      "id": "user_count_text",
+      "label": "User Count Text",
+      "default": "Join 3000+ people"
+    },
+    {
+      "type": "text",
+      "id": "rating_text",
+      "label": "Rating Text",
+      "default": "4.9 Stars (354)"
+    },
+    {
+      "type": "image_picker",
+      "id": "user_avatars_image",
+      "label": "User Avatars Image",
+      "info": "Optional: Replace the default avatars image"
+    },
+    {
+      "type": "header",
+      "content": "📋 Section Titles"
+    },
+    {
+      "type": "text",
+      "id": "features_title",
+      "label": "Features Title",
+      "default": "What's inside this discord?"
+    },
+    {
+      "type": "text",
+      "id": "testimonial_title",
+      "label": "Testimonial Title",
+      "default": "See what people are saying"
+    },
+    {
+      "type": "text",
+      "id": "faq_title",
+      "label": "FAQ Title",
+      "default": "Frequently Asked Questions"
+    },
+    {
+      "type": "header",
+      "content": "🔘 Premium Button (Top)"
+    },
+    {
+      "type": "text",
+      "id": "premium_button_text",
+      "label": "Button Text",
+      "default": "Join Premium Now"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_premium_icon",
+      "label": "Show Button Icon",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "premium_button_icon",
+      "label": "Button Icon",
+      "info": "Small icon to show in the premium button (60px wide recommended)"
+    },
+    {
+      "type": "checkbox",
+      "id": "premium_direct_checkout",
+      "label": "Direct to Checkout",
+      "default": false,
+      "info": "Skip cart and go directly to checkout"
+    },
+    {
+      "type": "product",
+      "id": "premium_product",
+      "label": "Product (for checkout)",
+      "info": "Select product if using direct checkout"
+    },
+    {
+      "type": "url",
+      "id": "premium_button_link",
+      "label": "Custom Link (if not using checkout)",
+      "info": "This is ignored if direct checkout is enabled"
+    },
+    {
+      "type": "header",
+      "content": "🔗 Free/Discord Button (Bottom)"
+    },
+    {
+      "type": "text",
+      "id": "free_button_text",
+      "label": "Button Text",
+      "default": "Join Free Section"
+    },
+    {
+      "type": "url",
+      "id": "free_button_link",
+      "label": "Discord/External Link",
+      "info": "Your Discord invite link or other URL (e.g., https://discord.gg/YOUR-INVITE-CODE)"
+    },
+    {
+      "type": "checkbox",
+      "id": "free_button_new_tab",
+      "label": "Open in New Tab",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "header_member",
+      "name": "💰 Header Member Profit",
+      "settings": [
+        {
+          "type": "text",
+          "id": "member_name",
+          "label": "Member Name",
+          "default": "Tyler K.",
+          "info": "Name shown in conversion header"
+        },
+        {
+          "type": "text",
+          "id": "member_profit",
+          "label": "Profit Amount",
+          "default": "$1,847",
+          "info": "Include the $ symbol"
+        }
+      ]
+    },
+    {
+      "type": "live_sale",
+      "name": "🔔 Live Sale Notification",
+      "settings": [
+        {
+          "type": "text",
+          "id": "customer_name",
+          "label": "Customer Name",
+          "default": "Landon L.",
+          "info": "Name for live sale popup"
+        },
+        {
+          "type": "text",
+          "id": "product_name",
+          "label": "Product Name",
+          "default": "Spyder Hoodie Vendor",
+          "info": "Product purchased"
+        }
+      ]
+    },
+    {
+      "type": "feature",
+      "name": "📋 Feature Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "feature_title",
+          "label": "Feature Title",
+          "default": "5+ Hours of Reselling Guides",
+          "info": "The bold headline for this feature"
+        },
+        {
+          "type": "textarea",
+          "id": "feature_description",
+          "label": "Feature Description",
+          "default": "Step-by-step tutorials and walkthroughs to help you scale faster.",
+          "info": "Detailed description of this feature"
+        }
+      ]
+    },
+    {
+      "type": "testimonial",
+      "name": "💬 Testimonial",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "testimonial_text",
+          "label": "Testimonial Text",
+          "default": "Best reselling group I've been in by far. Bought the monthly subscription a while back and made it back within a day.",
+          "info": "Customer testimonial - keep it authentic!"
+        }
+      ]
+    },
+    {
+      "type": "faq",
+      "name": "❓ FAQ Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "How Will This Community Help Me Make Money?",
+          "info": "The question your customers are asking"
+        },
+        {
+          "type": "textarea",
+          "id": "answer",
+          "label": "Answer",
+          "default": "We offer the BEST strategies, guides, methods, bots, and support of any reselling community, making success inevitable.",
+          "info": "Detailed answer to the question"
+        }
+      ]
+    },
+    {
+      "type": "review",
+      "name": "⭐ Customer Review",
+      "settings": [
+        {
+          "type": "text",
+          "id": "reviewer_name",
+          "label": "Reviewer Name",
+          "default": "Sophie",
+          "info": "Customer's name"
+        },
+        {
+          "type": "image_picker",
+          "id": "reviewer_image",
+          "label": "Reviewer Avatar",
+          "info": "Customer photo (50x50px recommended)"
+        },
+        {
+          "type": "textarea",
+          "id": "review_text",
+          "label": "Review Text",
+          "default": "Super super helpful, I'm a girl in the reselling space and sometimes it's hard to find people willing to actually help me.",
+          "info": "Full review text"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Landing Page",
+      "settings": {
+        "accent_color": "#C6A701",
+        "gradient_color": "#39ff14",
+        "text_color": "#FFFFFF",
+        "background_color": "#050208",
+        "enable_gradient": true,
+        "top_padding": 40,
+        "mobile_top_padding": 20,
+        "enable_conversion_header": true,
+        "enable_live_sales": true,
+        "hero_headline": "Build A Profitable Reselling Business In 30 Days.",
+        "hero_subheadline": "We provide the resources, suppliers, strategies, and support you NEED to build a $10k/month reselling business. Success Guaranteed.",
+        "user_count_text": "Join 3000+ people",
+        "rating_text": "4.9 Stars (354)",
+        "features_title": "What's inside this discord?",
+        "testimonial_title": "See what people are saying",
+        "faq_title": "Frequently Asked Questions",
+        "premium_button_text": "Join Premium Now",
+        "show_premium_icon": true,
+        "free_button_text": "Join Free Section",
+        "free_button_new_tab": true
+      },
+      "blocks": [
+        {
+          "type": "header_member",
+          "settings": {
+            "member_name": "Tyler K.",
+            "member_profit": "$1,847"
+          }
+        },
+        {
+          "type": "header_member",
+          "settings": {
+            "member_name": "Marcus R.",
+            "member_profit": "$2,392"
+          }
+        },
+        {
+          "type": "header_member",
+          "settings": {
+            "member_name": "Jordan T.",
+            "member_profit": "$984"
+          }
+        },
+        {
+          "type": "live_sale",
+          "settings": {
+            "customer_name": "Landon L.",
+            "product_name": "Spyder Hoodie Vendor"
+          }
+        },
+        {
+          "type": "live_sale",
+          "settings": {
+            "customer_name": "Emiliano G.",
+            "product_name": "Pod Vendor"
+          }
+        },
+        {
+          "type": "live_sale",
+          "settings": {
+            "customer_name": "Christian",
+            "product_name": "ELITE VENDOR BUNDLE"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "feature_title": "5+ Hours of Reselling Guides",
+            "feature_description": "Step-by-step tutorials and walkthroughs to help you scale faster."
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "feature_title": "Live Weekly Coaching",
+            "feature_description": "Get real-time advice from experienced resellers."
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "feature_title": "70+ Top Suppliers",
+            "feature_description": "A deep supplier database updated weekly."
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "feature_title": "Reselling Bots & Tools",
+            "feature_description": "Receipt generators, fee bots, view bots and automation tools."
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "feature_title": "Exclusive Methods",
+            "feature_description": "Updated insider strategies to increase your profits."
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "feature_title": "24/7 Reseller Community",
+            "feature_description": "Get support and network with advanced resellers."
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "testimonial_text": "Best reselling group I've been in by far. Bought the monthly subscription a while back and made it back within a day. Thought it was a scam but it actually works!"
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "testimonial_text": "Community is goated, not only are the vendors actually good and not trash like 99% of other scams, but the community is genuine. Can't put a price on that and the people you meet inside."
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "testimonial_text": "Gave this a try after sitting on the fence for a while. Great group, super helpful for new starters. Earned my subscription fee back the first week! 5/5"
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "testimonial_text": "At first I thought it was all a dream. 10000% recommend this if you're struggling with making money. Thank you for allowing me to chase my bread a different way!"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "How Will This Community Help Me Make Money?",
+            "answer": "We offer the BEST strategies, guides, methods, bots, and support of any reselling community, making success inevitable."
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "Why is it so expensive?",
+            "answer": "We offer the best community and resources of any group, and wanted to make it guaranteed you earn your money back + more."
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "Do I Need Any Experience?",
+            "answer": "None at all. We have hours of guides to help you at whatever level you're at - beginner or advanced."
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "Why Should I Join?",
+            "answer": "We don't really want just anyone to join. Only if you're fully locked in, you should join to begin doing your first $10k months."
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "What does this purchase get me?",
+            "answer": "You will get instant access to a Discord community with everything needed to scale your reselling business to $10k / month."
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "How can I cancel my membership?",
+            "answer": "We make it extremely easy to cancel your membership. To cancel, message support for cancelation. We will cancel your membership immediately."
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "reviewer_name": "Sophie",
+            "review_text": "Super super helpful, I'm a girl in the reselling space and sometimes it's hard to find people willing to actually help me, but everyone in here is actually chill and willing to help."
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "reviewer_name": "Fredrick",
+            "review_text": "Dude's a goat, he's calm and cool and his methods are legit. Pleasure joining."
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "reviewer_name": "Gelo",
+            "review_text": "Fast communication, always on his grind, legit methods at such a great value for what you pay. I sell out all my products with the receipt generator now lol."
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "reviewer_name": "Luc",
+            "review_text": "W man, I was lowkey down bad before joining. Spent my last money on this, but it all worked out. Can't thank bro enough."
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "reviewer_name": "Kai",
+            "review_text": "Super legit methods, the bots are cool, just gonna keep paying 'cause I make it back every month."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

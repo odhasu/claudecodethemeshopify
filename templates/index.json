@@ -1,0 +1,617 @@
+{
+    "sections": {
+        "custom_eUHBak": {
+            "type": "custom",
+            "blocks": {
+                "highlight_H8qTEE": {
+                    "type": "highlight",
+                    "settings": {
+                        "word": "BEST",
+                        "color": "#39ff14"
+                    }
+                },
+                "product_NeynTJ": {
+                    "type": "product",
+                    "settings": {
+                        "product": "all-vendor-bundle",
+                        "custom_title": "",
+                        "custom_compare_at_price": "$34.99 USD",
+                        "show_sale_badge": true,
+                        "direct_to_checkout": true,
+                        "custom_description": "Get instant access to the all supplier bundle:\n\nThis comes with all of our suppliers put into one file aswell as guides on how to resell.\n\nThe product varies from $10-$900, the supplier is instantly available once you purchase, you will see \"Download Now\" and get an email download link sent to your email.\n\nNOTE: This is not a PHYSICAL product, it is the suppliers that I get my products from."
+                    }
+                },
+                "product_hCiQtm": {
+                    "type": "product",
+                    "disabled": true,
+                    "settings": {
+                        "product": "vendor-bundle-copy-copy-copy-copy",
+                        "custom_title": "All Vendor Bundle",
+                        "custom_compare_at_price": "$99.99 USD",
+                        "show_sale_badge": true,
+                        "direct_to_checkout": true,
+                        "custom_description": "This bundle comes with EVERY single vendor bundle, the Elite Vendor Bundle is best deal but this is the runner up.\n\nLinks are sent straight to your email, please enter a valid email address at checkout, if you forgot to add it or didn't receive it, JOIN MY DISCORD AND MAKE A TICKET WITH PROOF OF PURCHASE, please do not waste my time."
+                    }
+                },
+                "product_YAHEEJ": {
+                    "type": "product",
+                    "settings": {
+                        "product": "reselling-guide",
+                        "custom_title": "",
+                        "custom_compare_at_price": "$9.99 USD",
+                        "show_sale_badge": true,
+                        "direct_to_checkout": true,
+                        "custom_description": "READ BEFORE YOU BUY!\n\nGet instant access to our exact guide on how to make 10k\/month flipping products!"
+                    }
+                },
+                "product_paggPC": {
+                    "type": "product",
+                    "settings": {
+                        "product": "supplier-bundle-copy-2",
+                        "custom_title": "",
+                        "custom_compare_at_price": "$24.99 USD",
+                        "show_sale_badge": true,
+                        "direct_to_checkout": true,
+                        "custom_description": "READ BEFORE YOU BUY!\n\nThis bundle contains Passing 1:1 Suppliers\n\nThe supplier is instantly available once you purchase, you will see \"Download Now\" and get an email download link sent to your email.\n\nNOTE: This is not a PHYSICAL product, it is the suppliers that I get my products from."
+                    }
+                },
+                "product_cHk3ew": {
+                    "type": "product",
+                    "settings": {
+                        "product": "supplier-bundle-copy-3",
+                        "custom_title": "",
+                        "custom_compare_at_price": "$24.99 USD",
+                        "show_sale_badge": true,
+                        "direct_to_checkout": true,
+                        "custom_description": "READ BEFORE YOU BUY!\n\nThis bundle contains every single cologne vendor.\n\nThe supplier is instantly available once you purchase, you will see \"Download Now\" and get an email download link sent to your email.\n\nNOTE: This is not a PHYSICAL product, it is the suppliers that I get my products from."
+                    }
+                },
+                "product_w3UkmD": {
+                    "type": "product",
+                    "settings": {
+                        "product": "cologne-vendor-bundle",
+                        "custom_title": "",
+                        "custom_compare_at_price": "$14.99 USD",
+                        "show_sale_badge": true,
+                        "direct_to_checkout": true,
+                        "custom_description": "READ BEFORE YOU BUY!\n\nThe supplier is instantly available once you purchase, you will see \"Download Now\" and get an email download link sent to your email.\n\nNOTE: This is not a PHYSICAL product, it is the suppliers that I get my products from."
+                    }
+                },
+                "product_3nKabk": {
+                    "type": "product",
+                    "settings": {
+                        "product": "electronic",
+                        "custom_title": "",
+                        "custom_compare_at_price": "$14.99 USD",
+                        "show_sale_badge": true,
+                        "direct_to_checkout": true,
+                        "custom_description": "READ BEFORE YOU BUY!\n\nThis bundle contains every single electronic vendor.\n\nThe supplier is instantly available once you purchase, you will see \"Download Now\" and get an email download link sent to your email.\n\nNOTE: This is not a PHYSICAL product, it is the suppliers that I get my products from."
+                    }
+                },
+                "product_HcJH9q": {
+                    "type": "product",
+                    "disabled": true,
+                    "settings": {
+                        "product": "vendor-bundle-copy",
+                        "custom_title": "",
+                        "custom_compare_at_price": "$19.99 USD",
+                        "show_sale_badge": true,
+                        "direct_to_checkout": true,
+                        "custom_description": "This bundle contains every single moissanite vendor.\n\nLinks are sent straight to your email, please enter a valid email addressat checkout, if you forgot to add it or didn't receive it, JOIN MY DISCORD AND MAKE A TICKET WITH PROOF OF PURCHASE, please do not waste my time."
+                    }
+                },
+                "product_xxBkDc": {
+                    "type": "product",
+                    "settings": {
+                        "product": "supplier-bundle-copy",
+                        "custom_title": "",
+                        "custom_compare_at_price": "$14.99 USD",
+                        "show_sale_badge": true,
+                        "direct_to_checkout": true,
+                        "custom_description": "READ BEFORE YOU BUY!\n\nThis bundle contains every single shoe vendor\n\nThe supplier is instantly available once you purchase, you will see \"Download Now\" and get an email download link sent to your email.\n\nNOTE: This is not a PHYSICAL product, it is the suppliers that I get my products from."
+                    }
+                },
+                "product_GXYRGd": {
+                    "type": "product",
+                    "disabled": true,
+                    "settings": {
+                        "product": "vendor-bundle-copy-copy-1",
+                        "custom_title": "labbou vendor",
+                        "custom_compare_at_price": "$29.99 USD",
+                        "show_sale_badge": true,
+                        "direct_to_checkout": true,
+                        "custom_description": "This bundle contains every single labbou vendor.\n\nLinks are sent straight to your email, please enter a valid email addressat checkout, if you forgot to add it or didn't receive it, JOIN MY DISCORD AND MAKE A TICKET WITH PROOF OF PURCHASE, please do not waste my time."
+                    }
+                },
+                "product_VPcijr": {
+                    "type": "product",
+                    "settings": {
+                        "product": "shoe-vendor",
+                        "custom_title": "",
+                        "custom_compare_at_price": "$14.99 USD",
+                        "show_sale_badge": true,
+                        "direct_to_checkout": true,
+                        "custom_description": "READ BEFORE YOU BUY!\n\nThe supplier is instantly available once you purchase, you will see \"Download Now\" and get an email download link sent to your email.\n\nNOTE: This is not a PHYSICAL product, it is the suppliers that I get my products from."
+                    }
+                },
+                "product_ehacMM": {
+                    "type": "product",
+                    "settings": {
+                        "product": "designer-bracelet-vendor",
+                        "custom_title": "",
+                        "custom_compare_at_price": "$14.99 USD",
+                        "show_sale_badge": true,
+                        "direct_to_checkout": true,
+                        "custom_description": "READ BEFORE YOU BUY!\n\nThe supplier is instantly available once you purchase, you will see \"Download Now\" and get an email download link sent to your email.\n\nNOTE: This is not a PHYSICAL product, it is the suppliers that I get my products from."
+                    }
+                },
+                "highlight_Qkdw9c": {
+                    "type": "highlight",
+                    "settings": {
+                        "word": "",
+                        "color": "#39ff14"
+                    }
+                }
+            },
+            "block_order": [
+                "highlight_H8qTEE",
+                "product_NeynTJ",
+                "product_hCiQtm",
+                "product_YAHEEJ",
+                "product_paggPC",
+                "product_cHk3ew",
+                "product_w3UkmD",
+                "product_3nKabk",
+                "product_HcJH9q",
+                "product_xxBkDc",
+                "product_GXYRGd",
+                "product_VPcijr",
+                "product_ehacMM",
+                "highlight_Qkdw9c"
+            ],
+            "custom_css": [],
+            "name": "Main Product Section",
+            "settings": {
+                "accent_color": "#39ff14",
+                "text_color": "#ffffff",
+                "background_color": "#000000",
+                "enable_gradient": true,
+                "gradient_color": "#39ff14",
+                "gradient_style": "radial",
+                "button_bg_color": "#39ff14",
+                "button_text_color": "#000000",
+                "button_hover_color": "#2dd60f",
+                "heading_color": "#ffffff",
+                "price_color": "#39ff14",
+                "sale_price_color": "#39ff14",
+                "compare_price_color": "#ffffff",
+                "compare_price_opacity": 45,
+                "section_padding": 0,
+                "glass_intensity": 150,
+                "glass_transparency": 100,
+                "frost_color": "#101010",
+                "products_per_row": "3",
+                "hero_headline": "ACCESS THE Best SUPPLIERS THAT MADE ME RICH",
+                "hero_top_padding": 10,
+                "hero_bottom_padding": 20,
+                "hero_image_link": "",
+                "show_featured_product": false,
+                "featured_product": "",
+                "featured_custom_title": "",
+                "featured_description": "",
+                "featured_direct_checkout": false,
+                "button_text": "BUY NOW",
+                "view_product_text": "See More",
+                "sale_badge_text": "Sale",
+                "badge_bg_color": "#ffffff",
+                "badge_text_color": "#000000",
+                "badge_transparency": 5,
+                "badge_blur": 4,
+                "modal_background_color": "#101010",
+                "modal_text_color": "#ffffff",
+                "modal_transparency": 90,
+                "modal_blur_intensity": 50,
+                "modal_border_color": "#ffffff",
+                "modal_backdrop_opacity": 0,
+                "modal_backdrop_blur": 4,
+                "modal_shadow_color": "#000000",
+                "modal_shadow_opacity": 45
+            }
+        },
+        "1755542302d75355fc": {
+            "type": "apps",
+            "settings": {
+                "include_margins": true
+            }
+        },
+        "faq_accordian_zfD7hC": {
+            "type": "faq-accordian",
+            "blocks": {
+                "faq_item_WP6mBJ": {
+                    "type": "faq_item",
+                    "settings": {
+                        "question": "What does buying a vendor bundle get me?",
+                        "answer": "<p>Buying a vendor bundle gets you instant access to several trusted, reliable suppliers that sells quality products at competitive prices. This allows you to source items efficiently for your needs.<\/p>"
+                    }
+                },
+                "faq_item_VM7BeA": {
+                    "type": "faq_item",
+                    "settings": {
+                        "question": "How will I receive access to the vendor?",
+                        "answer": "<p>Once you complete your purchase, the supplier's contact is INSTANTLY sent via email and will be available immediately on the order confirmation page.<\/p>"
+                    }
+                },
+                "faq_item_8tmnrb": {
+                    "type": "faq_item",
+                    "settings": {
+                        "question": "How long does the vendor take to ship?",
+                        "answer": "<p>Shipping times range from 2-7 days, and rarely take longer. The most common shipment time is about a week. You can ask the vendors for accurate shipment times.<\/p>"
+                    }
+                },
+                "faq_item_yP4J3m": {
+                    "type": "faq_item",
+                    "settings": {
+                        "question": "Do the vendors ship worldwide?",
+                        "answer": "<p>Yes! These suppliers ship worldwide, no matter where you're located. You don't have to worry about not being able to access them in your country.<\/p>"
+                    }
+                },
+                "faq_item_qezeQf": {
+                    "type": "faq_item",
+                    "settings": {
+                        "question": "How much do the vendors charge for a product?",
+                        "answer": "<p>The vendors charge anywhere from $10-$100 per product. Some are cheaper than others.<\/p>"
+                    }
+                },
+                "faq_item_RyeLE8": {
+                    "type": "faq_item",
+                    "settings": {
+                        "question": "What if I can't find my order?",
+                        "answer": "<p>Your order will be available for download directly after checkout and an email containing the vendor will be sent to you immediately.<\/p><p>If you still can't find them, open a ticket in my discord and I will personally help you.<\/p>"
+                    }
+                }
+            },
+            "block_order": [
+                "faq_item_WP6mBJ",
+                "faq_item_VM7BeA",
+                "faq_item_8tmnrb",
+                "faq_item_yP4J3m",
+                "faq_item_qezeQf",
+                "faq_item_RyeLE8"
+            ],
+            "name": "FAQ Accordion",
+            "settings": {
+                "headline": "Frequently Asked Questions",
+                "background_color": "rgba(0,0,0,0)",
+                "item_background_color": "#191919",
+                "item_hover_background_color": "#191919",
+                "question_text_color": "#ffffff",
+                "answer_text_color": "#ffffff",
+                "arrow_color": "#ffffff",
+                "max_width": 700,
+                "headline_size": 18,
+                "padding_top": 0,
+                "padding_bottom": 0
+            }
+        },
+        "image_marquee_YF66iP": {
+            "type": "image-marquee",
+            "blocks": {
+                "image_slide_CGQCJE": {
+                    "type": "image_slide",
+                    "settings": {
+                        "image": "shopify:\/\/shop_images\/IMG_0459.webp"
+                    }
+                },
+                "image_slide_EVRJR9": {
+                    "type": "image_slide",
+                    "settings": {
+                        "image": "shopify:\/\/shop_images\/IMG_0461.webp"
+                    }
+                },
+                "image_slide_mymctY": {
+                    "type": "image_slide",
+                    "settings": {
+                        "image": "shopify:\/\/shop_images\/IMG_0462.webp"
+                    }
+                },
+                "image_slide_PnTdjB": {
+                    "type": "image_slide",
+                    "settings": {
+                        "image": "shopify:\/\/shop_images\/Photo_Sep_10_2025_3_43_37_PM.webp"
+                    }
+                },
+                "image_slide_NM3Vdt": {
+                    "type": "image_slide",
+                    "settings": {
+                        "image": "shopify:\/\/shop_images\/IMG_0468.webp"
+                    }
+                },
+                "image_slide_9tnYDn": {
+                    "type": "image_slide",
+                    "settings": {
+                        "image": "shopify:\/\/shop_images\/b5d9dc5ba0bec1c95a19fc045f726b74.jpg"
+                    }
+                },
+                "image_slide_KMqDg6": {
+                    "type": "image_slide",
+                    "settings": {
+                        "image": "shopify:\/\/shop_images\/IMG_7281.webp"
+                    }
+                },
+                "image_slide_yrY8hb": {
+                    "type": "image_slide",
+                    "settings": {
+                        "image": "shopify:\/\/shop_images\/IMG_0467.webp"
+                    }
+                },
+                "image_slide_9CJxfR": {
+                    "type": "image_slide",
+                    "settings": {
+                        "image": "shopify:\/\/shop_images\/3e51884a71daea267e8a457dfd1a8b89.webp"
+                    }
+                },
+                "image_slide_7mRrHj": {
+                    "type": "image_slide",
+                    "settings": {
+                        "image": "shopify:\/\/shop_images\/IMG_0457.webp"
+                    }
+                },
+                "image_slide_hmT4yd": {
+                    "type": "image_slide",
+                    "disabled": true,
+                    "settings": {}
+                },
+                "image_slide_L3Bjbh": {
+                    "type": "image_slide",
+                    "disabled": true,
+                    "settings": {}
+                },
+                "image_slide_y8UDEm": {
+                    "type": "image_slide",
+                    "disabled": true,
+                    "settings": {}
+                },
+                "image_slide_EEqXQJ": {
+                    "type": "image_slide",
+                    "disabled": true,
+                    "settings": {}
+                },
+                "image_slide_VEd6hR": {
+                    "type": "image_slide",
+                    "disabled": true,
+                    "settings": {}
+                },
+                "image_slide_8zfVTy": {
+                    "type": "image_slide",
+                    "disabled": true,
+                    "settings": {}
+                },
+                "image_slide_wpQUyy": {
+                    "type": "image_slide",
+                    "disabled": true,
+                    "settings": {}
+                },
+                "image_slide_DngP8c": {
+                    "type": "image_slide",
+                    "disabled": true,
+                    "settings": {}
+                }
+            },
+            "block_order": [
+                "image_slide_CGQCJE",
+                "image_slide_EVRJR9",
+                "image_slide_mymctY",
+                "image_slide_PnTdjB",
+                "image_slide_NM3Vdt",
+                "image_slide_9tnYDn",
+                "image_slide_KMqDg6",
+                "image_slide_yrY8hb",
+                "image_slide_9CJxfR",
+                "image_slide_7mRrHj",
+                "image_slide_hmT4yd",
+                "image_slide_L3Bjbh",
+                "image_slide_y8UDEm",
+                "image_slide_EEqXQJ",
+                "image_slide_VEd6hR",
+                "image_slide_8zfVTy",
+                "image_slide_wpQUyy",
+                "image_slide_DngP8c"
+            ],
+            "name": "Testimonial Section",
+            "settings": {
+                "headline": "Proof Its Not That Hard...",
+                "container_width": 900,
+                "animation_duration": 20,
+                "image_height_desktop": 250,
+                "image_height_mobile": 180,
+                "image_gap": 20,
+                "background_color": "rgba(0,0,0,0)",
+                "headline_color": "#ffffff",
+                "padding_top": 40,
+                "padding_bottom": 40
+            }
+        },
+        "live_sales_glass_PwE7gR": {
+            "type": "live-sales-glass",
+            "blocks": {
+                "sale_item_zcFYtw": {
+                    "type": "sale_item",
+                    "settings": {
+                        "customer_name": "Landon L.",
+                        "product_name": "Elite Supplier Bundle"
+                    }
+                },
+                "sale_item_mQWpeF": {
+                    "type": "sale_item",
+                    "settings": {
+                        "customer_name": "Johnathan B.",
+                        "product_name": "Shoe Supplier Bundle"
+                    }
+                },
+                "sale_item_ixEDaB": {
+                    "type": "sale_item",
+                    "settings": {
+                        "customer_name": "John D.",
+                        "product_name": "Watch Supplier Bundle"
+                    }
+                },
+                "sale_item_hVqAkd": {
+                    "type": "sale_item",
+                    "settings": {
+                        "customer_name": "Emiliano G.",
+                        "product_name": "Electronic Supplier Bundle"
+                    }
+                },
+                "sale_item_VagUmV": {
+                    "type": "sale_item",
+                    "settings": {
+                        "customer_name": "Elijah N.",
+                        "product_name": "Cologne Supplier Bundle"
+                    }
+                },
+                "sale_item_mGAPiX": {
+                    "type": "sale_item",
+                    "settings": {
+                        "customer_name": "Christian A.",
+                        "product_name": "Elite Reselling Guide"
+                    }
+                },
+                "sale_item_r4kDKM": {
+                    "type": "sale_item",
+                    "settings": {
+                        "customer_name": "Aurora L.",
+                        "product_name": "Cologne Supplier Bundle"
+                    }
+                }
+            },
+            "block_order": [
+                "sale_item_zcFYtw",
+                "sale_item_mQWpeF",
+                "sale_item_ixEDaB",
+                "sale_item_hVqAkd",
+                "sale_item_VagUmV",
+                "sale_item_mGAPiX",
+                "sale_item_r4kDKM"
+            ],
+            "name": "Sales Notifications",
+            "settings": {
+                "enable_notifications": true,
+                "initial_delay": 18,
+                "display_duration": 5,
+                "min_delay": 60,
+                "max_delay": 80,
+                "background_color": "#636363",
+                "background_transparency": 0.2,
+                "text_color": "#ffffff",
+                "name_color": "#39ff14",
+                "border_color": "#ffffff",
+                "blur_intensity": 5,
+                "border_radius": 20
+            }
+        },
+        "bogo_sticky_widget_9W7wbx": {
+            "type": "bogo-sticky-widget",
+            "blocks": {
+                "product_dFMqbF": {
+                    "type": "product",
+                    "settings": {
+                        "product": "cologne-vendor-bundle",
+                        "custom_name": "Cologne Bundle"
+                    }
+                },
+                "product_nC3LM8": {
+                    "type": "product",
+                    "settings": {
+                        "product": "electronic-vendor-bundle",
+                        "custom_name": "Electronic Bundle"
+                    }
+                },
+                "product_GeDkQF": {
+                    "type": "product",
+                    "settings": {
+                        "product": "clothing-vendor-bundle",
+                        "custom_name": "Clothing Bundle"
+                    }
+                },
+                "product_k7kMYX": {
+                    "type": "product",
+                    "settings": {
+                        "product": "moissanite-vendor-bundle",
+                        "custom_name": "Moissanite Bundle"
+                    }
+                }
+            },
+            "block_order": [
+                "product_dFMqbF",
+                "product_nC3LM8",
+                "product_GeDkQF",
+                "product_k7kMYX"
+            ],
+            "disabled": true,
+            "name": "BOGO Sticky Widget",
+            "settings": {
+                "enable_widget": true,
+                "position": "right",
+                "tab_layout": "horizontal",
+                "discount_code": "BOGO50",
+                "clear_cart_first": true,
+                "tab_text": "DISCOUNT",
+                "panel_title": "Buy One Get One 50% OFF",
+                "panel_subtitle": "Choose any two products and save 50% on the cheaper item!",
+                "second_badge_text": "50% OFF",
+                "tab_bg_color": "#101010",
+                "tab_text_color": "#ffffff",
+                "tab_border_color": "#ffffff4d",
+                "panel_bg_color": "#0f0f0f",
+                "card_bg_color": "#1a1a1a",
+                "border_color": "#ffffff1a",
+                "text_color": "#ffffff",
+                "label_text_color": "#ffffff",
+                "price_text_color": "#ffffff",
+                "discount_text_color": "#39ff14",
+                "muted_text_color": "#ffffff80",
+                "accent_color": "#ffffff",
+                "button_hover_color": "#2dd60f",
+                "selected_border_color": "#39ff14",
+                "button_text_color": "#000000",
+                "badge_text_color": "#000000",
+                "overlay_bg_color": "#000000"
+            }
+        },
+        "start_making_money_today_zWtUzF": {
+            "type": "start-making-money-today",
+            "name": "Start Making Money Today",
+            "settings": {
+                "heading": "Start Making Money Today",
+                "subtext": "Get access to the world's best vendors.",
+                "bg_color": "#000000",
+                "text_color": "#ffffff",
+                "cta_label": "Get Access",
+                "cta_color": "#39ff14",
+                "cta_text_color": "#000000",
+                "heading_size_mobile": 28,
+                "heading_size_desktop": 44,
+                "subtext_size_mobile": 15,
+                "subtext_size_desktop": 18,
+                "btn_text_size_mobile": 16,
+                "btn_text_size_desktop": 18,
+                "btn_full_width_mobile": false,
+                "btn_width_mobile": 240,
+                "btn_width_desktop": 260,
+                "padding_top_mobile": 24,
+                "padding_bottom_mobile": 24,
+                "padding_top_desktop": 32,
+                "padding_bottom_desktop": 32
+            }
+        }
+    },
+    "order": [
+        "custom_eUHBak",
+        "1755542302d75355fc",
+        "faq_accordian_zfD7hC",
+        "image_marquee_YF66iP",
+        "live_sales_glass_PwE7gR",
+        "bogo_sticky_widget_9W7wbx",
+        "start_making_money_today_zWtUzF"
+    ]
+}

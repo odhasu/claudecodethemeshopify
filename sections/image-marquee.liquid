@@ -1,0 +1,277 @@
+{% comment %}
+  Section: Image Marquee (Infinite)
+  Version: 2.1 - Production Ready
+  
+  Features:
+  - Customizable content width
+  - Truly infinite scroll with no "jump"
+  - Customizable headline
+  - Dynamic image blocks
+  - Adjustable animation speed, image height, and spacing
+{% endcomment %}
+
+{%- style -%}
+  .image-marquee-section-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    background: {{ section.settings.background_color }};
+    font-family: sans-serif;
+  }
+
+  /* NEW: This container controls the overall width of the content */
+  .image-marquee-section-{{ section.id }} .marquee-container {
+    max-width: {{ section.settings.container_width }}px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 20px; /* Adds space on mobile */
+    padding-right: 20px;
+  }
+
+  .image-marquee-section-{{ section.id }} .headline {
+    text-align: center;
+    color: {{ section.settings.headline_color }};
+    font-size: 24px;
+    font-weight: 600;
+    margin: 0 auto 25px auto;
+  }
+
+  .image-marquee-section-{{ section.id }} .image-slider {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    padding: 10px 0;
+    -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  }
+
+  .image-marquee-section-{{ section.id }} .slider-track {
+    display: flex;
+    gap: {{ section.settings.image_gap }}px;
+    animation: slide-animation-{{ section.id }} {{ section.settings.animation_duration }}s linear infinite;
+    align-items: center;
+    width: fit-content; 
+  }
+
+  .image-marquee-section-{{ section.id }} .slide {
+    flex: 0 0 auto;
+    height: {{ section.settings.image_height_desktop }}px;
+    display: flex;
+    align-items: center;
+  }
+
+  .image-marquee-section-{{ section.id }} .slide img {
+    height: 100%;
+    width: auto;
+    max-width: 400px;
+    object-fit: contain;
+    border-radius: 10px;
+  }
+
+  @keyframes slide-animation-{{ section.id }} {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .image-marquee-section-{{ section.id }} .slide {
+      height: {{ section.settings.image_height_mobile }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="image-marquee-section-{{ section.id }}">
+  <div class="marquee-container">
+    {%- if section.settings.headline != blank -%}
+      <h2 class="headline">{{ section.settings.headline | escape }}</h2>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="image-slider">
+        <div class="slider-track">
+          {%- comment -%} Render the images the first time {%- endcomment -%}
+          {%- for block in section.blocks -%}
+            <div class="slide" {{ block.shopify_attributes }}>
+              {%- if block.settings.image != blank -%}
+                <img 
+                  src="{{ block.settings.image | image_url: height: 500 }}" 
+                  alt="{{ block.settings.image.alt | default: 'Sliding image' | escape }}"
+                  loading="lazy"
+                  height="{{ section.settings.image_height_desktop }}"
+                  width="{{ section.settings.image_height_desktop | times: block.settings.image.aspect_ratio | round }}"
+                >
+              {%- else -%}
+                <div style="width: 200px; height: 100%; display: flex; align-items: center; justify-content: center; background-color: #333; border-radius: 10px;">
+                  {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                </div>
+              {%- endif -%}
+            </div>
+          {%- endfor -%}
+
+          {%- comment -%} Render the images a second time (the duplicate set) {%- endcomment -%}
+          {%- for block in section.blocks -%}
+            <div class="slide" aria-hidden="true">
+              {%- if block.settings.image != blank -%}
+                <img 
+                  src="{{ block.settings.image | image_url: height: 500 }}" 
+                  alt="{{ block.settings.image.alt | default: 'Sliding image' | escape }}"
+                  loading="lazy"
+                  height="{{ section.settings.image_height_desktop }}"
+                  width="{{ section.settings.image_height_desktop | times: block.settings.image.aspect_ratio | round }}"
+                >
+              {%- else -%}
+                <div style="width: 200px; height: 100%; display: flex; align-items: center; justify-content: center; background-color: #333; border-radius: 10px;">
+                  {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                </div>
+              {%- endif -%}
+            </div>
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Image Marquee (Infinite)",
+  "tag": "section",
+  "class": "shopify-section-image-marquee",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "headline",
+      "label": "Headline",
+      "default": "Our Happy Customers"
+    },
+    {
+      "type": "header",
+      "content": "Layout & Animation"
+    },
+    {
+      "type": "range",
+      "id": "container_width",
+      "min": 800,
+      "max": 1800,
+      "step": 50,
+      "unit": "px",
+      "label": "Content Width",
+      "default": 1200,
+      "info": "Set the maximum width of the content on the page."
+    },
+    {
+      "type": "range",
+      "id": "animation_duration",
+      "min": 10,
+      "max": 150,
+      "step": 5,
+      "unit": "s",
+      "label": "Animation Duration",
+      "default": 40,
+      "info": "A longer duration means a slower scroll speed."
+    },
+    {
+      "type": "range",
+      "id": "image_height_desktop",
+      "min": 100,
+      "max": 400,
+      "step": 10,
+      "unit": "px",
+      "label": "Image Height (Desktop)",
+      "default": 250
+    },
+    {
+      "type": "range",
+      "id": "image_height_mobile",
+      "min": 80,
+      "max": 250,
+      "step": 10,
+      "unit": "px",
+      "label": "Image Height (Mobile)",
+      "default": 180
+    },
+    {
+      "type": "range",
+      "id": "image_gap",
+      "min": 10,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "label": "Gap Between Images",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Section Styling"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "rgba(0,0,0,0)"
+    },
+    {
+      "type": "color",
+      "id": "headline_color",
+      "label": "Headline Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top Padding",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom Padding",
+      "default": 40
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image_slide",
+      "name": "Image Slide",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Image Marquee (Infinite)",
+      "blocks": [
+        { "type": "image_slide" },
+        { "type": "image_slide" },
+        { "type": "image_slide" },
+        { "type": "image_slide" },
+        { "type": "image_slide" },
+        { "type": "image_slide" },
+        { "type": "image_slide" },
+        { "type": "image_slide" }
+      ]
+    }
+  ]
+}
+{% endschema %}
