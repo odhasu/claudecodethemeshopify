@@ -7,65 +7,7 @@
     "theme_documentation_url": "https://help.shopify.com/manual/online-store/themes",
     "theme_support_url": "https://support.shopify.com/"
   },
-  {
-    "name": "🔐 Scaled.info Authentication",
-    "settings": [
-      {
-        "type": "header",
-        "content": "⚠️ THEME LOCKED - API CREDENTIALS REQUIRED"
-      },
-      {
-        "type": "paragraph",
-        "content": "This theme is protected and cannot be used or edited without valid Scaled.info API credentials. Enter your API key and secret key below to unlock all features."
-      },
-      {
-        "type": "text",
-        "id": "scaled_api_key",
-        "label": "API Key *",
-        "placeholder": "sk_test_...",
-        "info": "Required: Your Scaled.info API key starting with 'sk_'"
-      },
-      {
-        "type": "text",
-        "id": "scaled_secret_key",
-        "label": "Secret Key *",
-        "placeholder": "secret_...",
-        "info": "Required: Your Scaled.info secret key for secure authentication"
-      },
-      {
-        "type": "text",
-        "id": "scaled_api_endpoint",
-        "label": "API Endpoint (Optional)",
-        "placeholder": "https://scaled.info/api/v1/theme-keys/validate",
-        "info": "Leave blank to use the default endpoint",
-        "default": "https://scaled.info/api/v1/theme-keys/validate"
-      },
-      {
-        "type": "header",
-        "content": "Authentication Status"
-      },
-      {
-        "type": "paragraph",
-        "content": "After entering your API credentials, save the settings and refresh your store to validate authentication. The theme will remain locked until valid credentials are provided."
-      },
-      {
-        "type": "header",
-        "content": "Important Notes"
-      },
-      {
-        "type": "paragraph",
-        "content": "• This theme cannot be used without authentication\n• Theme editor access requires valid API keys\n• All pages and features are protected\n• Authentication is validated every 10 seconds"
-      },
-      {
-        "type": "header",
-        "content": "Support"
-      },
-      {
-        "type": "paragraph",
-        "content": "Need API keys? Contact support@scaled.info or visit [Scaled.info Documentation](https://scaled.info/docs/themes)"
-      }
-    ]
-  },
+
   {
     "name": "t:settings_schema.logo.name",
     "settings": [
