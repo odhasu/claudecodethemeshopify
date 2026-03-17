@@ -84,7 +84,7 @@
         --font-h3-size: {{ settings.font_h3_size }}px;
         --font-heading-transform: {{ settings.font_heading_transform }};
         --font-body-size: {{ settings.font_body_size }}px;
-        --font-body-line-height: {{ settings.font_body_line_height }};
+        --font-body-line-height: {{ settings.font_body_line_height | divided_by: 10.0 }};
 
         /* Buttons */
         --btn-primary-bg: {{ settings.btn_primary_bg }};

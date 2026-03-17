@@ -22,7 +22,7 @@
     "font_h3_size": 24,
     "font_heading_transform": "uppercase",
     "font_body_size": 16,
-    "font_body_line_height": 1.6,
+    "font_body_line_height": 16,
     "btn_primary_bg": "#39ff14",
     "btn_primary_hover": "#2ecc0f",
     "btn_primary_text": "#000000",
