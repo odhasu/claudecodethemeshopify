@@ -19,7 +19,11 @@
 
 <style>
   .header-pill-wrapper {
+    {%- if section.settings.sticky_header -%}
     position: sticky;
+    {%- else -%}
+    position: relative;
+    {%- endif -%}
     top: 0;
     z-index: 99;
     display: flex;
@@ -268,6 +272,7 @@
     { "type": "color", "id": "dropdown_text_color", "label": "Dropdown text color", "default": "#ffffff" },
     { "type": "color", "id": "dropdown_hover_color", "label": "Dropdown hover color", "default": "#39ff14" },
     { "type": "header", "content": "Layout" },
+    { "type": "checkbox", "id": "sticky_header", "label": "Sticky header (stays on top when scrolling)", "default": true },
     { "type": "range", "id": "pill_width", "label": "Pill width (px)", "min": 280, "max": 600, "step": 10, "default": 380 },
     { "type": "range", "id": "icon_size", "label": "Icon button size (px)", "min": 30, "max": 56, "step": 2, "default": 40 },
     { "type": "range", "id": "brand_font_size", "label": "Brand font size (px)", "min": 12, "max": 28, "step": 1, "default": 16 },
