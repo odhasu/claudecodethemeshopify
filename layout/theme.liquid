@@ -49,6 +49,12 @@
       {{ settings.font_heading | font_face: font_display: 'swap' }}
 
       :root {
+        /* Sense theme compatibility (RGB triplets) */
+        {%- assign page_bg = settings.color_page_bg | default: '#0a0a0a' -%}
+        {%- assign text_primary = settings.color_text_primary | default: '#ffffff' -%}
+        --color-background: {{ page_bg | color_extract: 'red' }}, {{ page_bg | color_extract: 'green' }}, {{ page_bg | color_extract: 'blue' }};
+        --color-foreground: {{ text_primary | color_extract: 'red' }}, {{ text_primary | color_extract: 'green' }}, {{ text_primary | color_extract: 'blue' }};
+
         /* Colors */
         --color-accent: {{ settings.color_accent }};
         --color-accent-hover: {{ settings.color_accent_hover }};
@@ -225,6 +231,19 @@
     </style>
 
     {{ 'base.css' | asset_url | stylesheet_tag }}
+
+    <style>
+      /* Dark theme overrides (after base.css) */
+      body,
+      .shopify-section,
+      .section-template--*,
+      main#MainContent {
+        background-color: var(--color-page-bg) !important;
+        color: var(--color-text-primary);
+      }
+      h1, h2, h3, h4, h5, h6 { color: var(--color-text-primary); }
+      a { color: inherit; }
+    </style>
 
     {%- if settings.custom_css != blank -%}
       <style>{{ settings.custom_css }}</style>
