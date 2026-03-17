@@ -39,7 +39,7 @@
   {%- endif -%}
   .hero-content { position: relative; z-index: 1; }
   .hero-title {
-    font-family: var(--font-heading);
+    font-family: '{{ section.settings.hero_font | default: 'Satoshi' }}', var(--font-heading);
     font-size: clamp({{ title_size_mobile }}px, 6vw, {{ title_size_desktop }}px);
     font-weight: 900;
     text-transform: uppercase;
@@ -124,6 +124,8 @@
   "name": "Hero",
   "tag": "section",
   "settings": [
+    { "type": "header", "content": "Font" },
+    { "type": "text", "id": "hero_font", "label": "Hero font family", "default": "Satoshi", "info": "Font for the hero headline. E.g. Satoshi, Anton, Inter" },
     { "type": "header", "content": "Headline" },
     { "type": "text", "id": "title_before", "label": "Text before highlight", "default": "START YOUR" },
     { "type": "text", "id": "title_highlight", "label": "Highlighted word(s)", "default": "RESELLING" },

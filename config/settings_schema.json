@@ -30,8 +30,10 @@
   {
     "name": "Typography",
     "settings": [
-      { "type": "text", "id": "heading_font", "label": "Heading font family", "default": "Anton" },
-      { "type": "text", "id": "body_font", "label": "Body font family", "default": "system-ui, -apple-system, sans-serif" }
+      { "type": "text", "id": "heading_font", "label": "Heading font family", "default": "Satoshi", "info": "Main heading font. E.g. Satoshi, Anton, Inter, Bebas Neue" },
+      { "type": "text", "id": "body_font", "label": "Body font family", "default": "system-ui, -apple-system, sans-serif", "info": "Body text font" },
+      { "type": "text", "id": "header_font", "label": "Header/Pill font", "default": "Satoshi", "info": "Font for the nav pill and dropdown" },
+      { "type": "text", "id": "hero_font", "label": "Hero headline font", "default": "Satoshi", "info": "Font for the hero section title" }
     ]
   },
   {

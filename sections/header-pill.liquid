@@ -10,6 +10,11 @@
   assign header_padding = section.settings.padding_y | default: 12
   assign badge_bg = section.settings.badge_bg | default: '#39ff14'
   assign badge_color = section.settings.badge_text_color | default: '#000000'
+  assign pill_font = section.settings.pill_font | default: 'Satoshi'
+  assign dropdown_bg = section.settings.dropdown_bg | default: '#0a0a0a'
+  assign dropdown_border = section.settings.dropdown_border | default: '#2a2a2a'
+  assign dropdown_text = section.settings.dropdown_text_color | default: '#ffffff'
+  assign dropdown_hover = section.settings.dropdown_hover_color | default: '#39ff14'
 -%}
 
 <style>
@@ -18,8 +23,9 @@
     top: 0;
     z-index: 99;
     display: flex;
-    justify-content: center;
-    padding: {{ header_padding }}px 20px;
+    flex-direction: column;
+    align-items: center;
+    padding: {{ header_padding }}px 20px 0;
     background: transparent;
     pointer-events: none;
   }
@@ -36,6 +42,7 @@
     pointer-events: all;
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
+    position: relative;
   }
   .header-icon-btn {
     width: {{ icon_size }}px;
@@ -57,7 +64,7 @@
   }
   .header-icon-btn svg { width: 18px; height: 18px; }
   .header-brand {
-    font-family: var(--font-heading);
+    font-family: '{{ pill_font }}', var(--font-heading);
     font-size: {{ brand_size }}px;
     font-weight: 900;
     text-transform: uppercase;
@@ -84,56 +91,60 @@
   }
   .cart-count-badge.has-items { display: flex; }
 
-  /* Drawer */
-  .header-drawer-overlay {
-    position: fixed; inset: 0;
-    background: rgba(0,0,0,0.6);
-    z-index: 200;
-    opacity: 0; visibility: hidden;
-    transition: opacity 0.3s, visibility 0.3s;
+  /* Dropdown menu — appears under pill, same width */
+  .header-dropdown {
+    width: {{ pill_width }}px;
+    max-width: 95vw;
+    background: {{ dropdown_bg }};
+    border: 1px solid {{ dropdown_border }};
+    border-radius: 16px;
+    margin-top: 8px;
+    padding: 8px 0;
+    pointer-events: all;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+    transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s;
+    overflow: hidden;
   }
-  .header-drawer-overlay.open { opacity: 1; visibility: visible; }
-  .header-drawer {
-    position: fixed;
-    top: 0; right: 0;
-    width: 320px; max-width: 85vw;
-    height: 100vh;
-    background: {{ section.settings.drawer_bg | default: '#0a0a0a' }};
-    z-index: 201;
-    transform: translateX(100%);
-    transition: transform 0.3s ease;
-    padding: 24px;
-    overflow-y: auto;
+  .header-dropdown.open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
   }
-  .header-drawer.open { transform: translateX(0); }
-  .drawer-close {
-    width: 40px; height: 40px;
-    border-radius: 50%;
-    background: {{ icon_bg }};
-    border: 1px solid {{ pill_border }};
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #fff;
-    margin-bottom: 24px;
-    margin-left: auto;
+  .header-dropdown nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
   }
-  .drawer-nav { list-style: none; }
-  .drawer-nav li { border-bottom: 1px solid {{ pill_border }}; }
-  .drawer-nav a {
+  .header-dropdown nav li {
+    border-bottom: 1px solid {{ dropdown_border }};
+  }
+  .header-dropdown nav li:last-child { border-bottom: none; }
+  .header-dropdown nav a {
     display: block;
-    padding: 16px 0;
-    font-family: var(--font-heading);
-    font-size: 18px;
+    padding: 14px 20px;
+    font-family: '{{ pill_font }}', var(--font-heading);
+    font-size: 15px;
+    font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    color: {{ section.settings.drawer_text_color | default: '#ffffff' }};
-    transition: color 0.2s;
+    color: {{ dropdown_text }};
+    transition: color 0.2s, padding-left 0.2s;
+    text-align: center;
   }
-  .drawer-nav a:hover { color: var(--color-accent); }
+  .header-dropdown nav a:hover {
+    color: {{ dropdown_hover }};
+    padding-left: 28px;
+  }
+
+  /* Hamburger animation */
+  .menu-toggle-icon { transition: transform 0.3s; }
+  .menu-toggle-icon.active { transform: rotate(90deg); }
 
   @media (max-width: 768px) {
     .header-pill { width: 95vw; }
+    .header-dropdown { width: 95vw; }
     .header-brand { font-size: {{ brand_size | minus: 2 }}px; }
   }
 </style>
@@ -160,52 +171,60 @@
     </span>
 
     <button class="header-icon-btn" id="menu-toggle" aria-label="Menu">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+      <svg class="menu-toggle-icon" id="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
         <line x1="4" y1="7" x2="20" y2="7"/>
         <line x1="4" y1="12" x2="20" y2="12"/>
         <line x1="4" y1="17" x2="20" y2="17"/>
       </svg>
     </button>
   </div>
-</div>
 
-<!-- Mobile Drawer -->
-<div class="header-drawer-overlay" id="drawer-overlay"></div>
-<div class="header-drawer" id="header-drawer">
-  <button class="drawer-close" id="drawer-close" aria-label="Close menu">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-  </button>
-  <nav>
-    <ul class="drawer-nav">
-      {%- for link in section.settings.menu.links -%}
-        <li><a href="{{ link.url }}">{{ link.title }}</a></li>
-      {%- endfor -%}
-      {%- if section.settings.menu == blank -%}
-        <li><a href="/">Home</a></li>
-        <li><a href="/collections/all">Shop</a></li>
-        <li><a href="/pages/contact">Contact</a></li>
-      {%- endif -%}
-    </ul>
-  </nav>
+  <!-- Dropdown menu — same width as pill, appears below -->
+  <div class="header-dropdown" id="header-dropdown">
+    <nav>
+      <ul>
+        {%- for link in section.settings.menu.links -%}
+          <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+        {%- endfor -%}
+        {%- if section.settings.menu == blank -%}
+          <li><a href="/">Home</a></li>
+          <li><a href="/collections/all">Shop</a></li>
+          <li><a href="/pages/contact">Contact</a></li>
+        {%- endif -%}
+      </ul>
+    </nav>
+  </div>
 </div>
 
 <script>
   (function(){
     var toggle = document.getElementById('menu-toggle');
-    var drawer = document.getElementById('header-drawer');
-    var overlay = document.getElementById('drawer-overlay');
-    var close = document.getElementById('drawer-close');
-    function open(){ drawer.classList.add('open'); overlay.classList.add('open'); document.body.style.overflow='hidden'; }
-    function shut(){ drawer.classList.remove('open'); overlay.classList.remove('open'); document.body.style.overflow=''; }
-    if(toggle) toggle.addEventListener('click', open);
-    if(close) close.addEventListener('click', shut);
-    if(overlay) overlay.addEventListener('click', shut);
+    var dropdown = document.getElementById('header-dropdown');
+    var icon = document.getElementById('menu-icon');
+    var isOpen = false;
+
+    function toggleMenu() {
+      isOpen = !isOpen;
+      dropdown.classList.toggle('open', isOpen);
+      icon.classList.toggle('active', isOpen);
+    }
+
+    if(toggle) toggle.addEventListener('click', toggleMenu);
+
+    // Close when clicking outside
+    document.addEventListener('click', function(e) {
+      if (isOpen && !e.target.closest('.header-pill-wrapper')) {
+        isOpen = false;
+        dropdown.classList.remove('open');
+        icon.classList.remove('active');
+      }
+    });
 
     // Cart count
     fetch('/cart.js').then(r=>r.json()).then(c=>{
       var badge = document.getElementById('cart-count-badge');
       if(badge && c.item_count > 0){ badge.textContent = c.item_count; badge.classList.add('has-items'); }
-    }).catch(()=>{});
+    }).catch(function(){});
   })();
 </script>
 
@@ -219,6 +238,8 @@
     { "type": "image_picker", "id": "logo", "label": "Logo image" },
     { "type": "range", "id": "logo_height", "label": "Logo height (px)", "min": 16, "max": 60, "step": 2, "default": 30 },
     { "type": "text", "id": "brand_text", "label": "Brand text (if no logo)", "default": "OGVENDORS" },
+    { "type": "header", "content": "Font" },
+    { "type": "text", "id": "pill_font", "label": "Header font family", "default": "Satoshi", "info": "Font for brand text and dropdown. E.g. Satoshi, Anton, Inter" },
     { "type": "header", "content": "Colors" },
     { "type": "color", "id": "pill_bg", "label": "Pill background", "default": "#000000" },
     { "type": "color", "id": "pill_border", "label": "Pill border", "default": "#2a2a2a" },
@@ -228,16 +249,18 @@
     { "type": "color", "id": "icon_hover_border", "label": "Icon hover border", "default": "#444444" },
     { "type": "color", "id": "badge_bg", "label": "Cart badge background", "default": "#39ff14" },
     { "type": "color", "id": "badge_text_color", "label": "Cart badge text", "default": "#000000" },
+    { "type": "header", "content": "Dropdown Menu" },
+    { "type": "color", "id": "dropdown_bg", "label": "Dropdown background", "default": "#0a0a0a" },
+    { "type": "color", "id": "dropdown_border", "label": "Dropdown border", "default": "#2a2a2a" },
+    { "type": "color", "id": "dropdown_text_color", "label": "Dropdown text color", "default": "#ffffff" },
+    { "type": "color", "id": "dropdown_hover_color", "label": "Dropdown hover color", "default": "#39ff14" },
     { "type": "header", "content": "Layout" },
     { "type": "range", "id": "pill_width", "label": "Pill width (px)", "min": 280, "max": 600, "step": 10, "default": 380 },
     { "type": "range", "id": "icon_size", "label": "Icon button size (px)", "min": 30, "max": 56, "step": 2, "default": 40 },
     { "type": "range", "id": "brand_font_size", "label": "Brand font size (px)", "min": 12, "max": 28, "step": 1, "default": 16 },
     { "type": "range", "id": "padding_y", "label": "Vertical padding (px)", "min": 4, "max": 24, "step": 2, "default": 12 },
     { "type": "header", "content": "Navigation" },
-    { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu" },
-    { "type": "header", "content": "Drawer" },
-    { "type": "color", "id": "drawer_bg", "label": "Drawer background", "default": "#0a0a0a" },
-    { "type": "color", "id": "drawer_text_color", "label": "Drawer text color", "default": "#ffffff" }
+    { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu" }
   ],
   "presets": [
     { "name": "Header Pill" }
