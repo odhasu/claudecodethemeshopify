@@ -7,7 +7,7 @@
   assign brand_text = section.settings.brand_text | default: shop.name
   assign brand_color = section.settings.brand_color | default: '#ffffff'
   assign brand_size = section.settings.brand_font_size | default: 16
-  assign header_padding = section.settings.padding_y | default: 12
+  assign header_padding = section.settings.padding_y | default: 0
   assign badge_bg = section.settings.badge_bg | default: '#39ff14'
   assign badge_color = section.settings.badge_text_color | default: '#000000'
   assign pill_font = section.settings.pill_font | default: 'Satoshi'
@@ -271,7 +271,7 @@
     { "type": "range", "id": "pill_width", "label": "Pill width (px)", "min": 280, "max": 600, "step": 10, "default": 380 },
     { "type": "range", "id": "icon_size", "label": "Icon button size (px)", "min": 30, "max": 56, "step": 2, "default": 40 },
     { "type": "range", "id": "brand_font_size", "label": "Brand font size (px)", "min": 12, "max": 28, "step": 1, "default": 16 },
-    { "type": "range", "id": "padding_y", "label": "Top padding (px)", "min": 0, "max": 150, "step": 2, "default": 12 },
+    { "type": "range", "id": "padding_y", "label": "Top padding (px)", "min": 0, "max": 150, "step": 2, "default": 0 },
     { "type": "range", "id": "padding_bottom", "label": "Bottom padding (px)", "min": 0, "max": 150, "step": 2, "default": 0 },
     { "type": "header", "content": "Navigation" },
     { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu" }
