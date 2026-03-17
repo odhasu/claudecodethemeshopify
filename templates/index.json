@@ -17,7 +17,7 @@
         "title_after": "JOURNEY TODAY",
         "title_color": "#ffffff",
         "highlight_color": "#39ff14",
-        "title_size_desktop": 48,
+        "title_size_desktop": 40,
         "title_size_mobile": 28,
         "trust_prefix": "Trusted By",
         "trust_count": "10,000+",
@@ -26,10 +26,10 @@
         "trust_text_color": "#9ca3af",
         "trust_font_size": 20,
         "show_avatars": true,
-        "avatar_size": 32,
+        "avatar_size": 30,
         "show_glow": true,
         "glow_color": "#39ff14",
-        "padding_top": 80,
+        "padding_top": 30,
         "padding_bottom": 20
       }
     },
@@ -64,39 +64,25 @@
         "buy_btn_text_color": "#1a1a1a",
         "cart_btn_bg": "#1a1a1a",
         "cart_btn_border": "#2a2a2a",
+        "cart_btn_hover_border": "#ffffff",
+        "cart_btn_hover_bg": "#1a1a1a",
+        "cart_btn_hover_color": "#ffffff",
+        "cart_btn_incart_bg": "#22c55e",
+        "cart_btn_incart_border": "#22c55e",
         "show_glow": true,
         "glow_color": "#39ff14",
         "padding_top": 40,
-        "padding_bottom": 60
+        "padding_bottom": 20
       }
     },
     "testimonials": {
       "type": "testimonials",
-      "blocks": {
-        "image_tY96cB": {
-          "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/IMG_0457.webp",
-            "alt": ""
-          }
-        },
-        "image_W7CaEV": {
-          "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/3e51884a71daea267e8a457dfd1a8b89.webp",
-            "alt": ""
-          }
-        }
-      },
-      "block_order": [
-        "image_tY96cB",
-        "image_W7CaEV"
-      ],
       "settings": {
         "title": "What Our Customers Say",
         "title_color": "#ffffff",
         "bg_color": "#000000",
         "scroll_speed": 20,
+        "max_width": 1400,
         "image_height": 250,
         "image_height_mobile": 180,
         "image_radius": 12,
