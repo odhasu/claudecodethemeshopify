@@ -221,18 +221,30 @@
             {%- endif -%}
 
             {%- assign first_var = product.first_available_variant -%}
-            {%- if first_var.compare_at_price > first_var.price and section.settings.show_sale_badge -%}
-              <span class="product-card-badge">{{ section.settings.sale_badge_label | default: 'SALE' }}</span>
+            {%- assign has_compare = false -%}
+            {%- if first_var.compare_at_price != nil and first_var.compare_at_price != blank and first_var.compare_at_price != 0 and first_var.compare_at_price > first_var.price -%}
+              {%- assign has_compare = true -%}
+            {%- elsif product.compare_at_price != nil and product.compare_at_price != blank and product.compare_at_price != 0 and product.compare_at_price > product.price -%}
+              {%- assign has_compare = true -%}
+            {%- endif -%}
+
+            {%- if section.settings.show_sale_badge -%}
+              {%- if has_compare or section.settings.always_show_sale_badge -%}
+                <span class="product-card-badge">{{ section.settings.sale_badge_label | default: 'SALE' }}</span>
+              {%- endif -%}
             {%- endif -%}
           </a>
 
           <div class="product-card-info">
             <h3 class="product-card-title"><a href="{{ product.url }}">{{ product.title }}</a></h3>
             <div class="product-card-prices">
-              {%- assign variant = product.first_available_variant -%}
-              <span class="price-sale">{{ variant.price | money }}</span>
-              {%- if variant.compare_at_price > variant.price -%}
-                <span class="price-compare">{{ variant.compare_at_price | money }}</span>
+              <span class="price-sale">{{ first_var.price | money }}</span>
+              {%- if has_compare -%}
+                {%- if first_var.compare_at_price > first_var.price -%}
+                  <span class="price-compare">{{ first_var.compare_at_price | money }}</span>
+                {%- elsif product.compare_at_price > product.price -%}
+                  <span class="price-compare">{{ product.compare_at_price | money }}</span>
+                {%- endif -%}
               {%- endif -%}
             </div>
             <div class="product-card-actions">
@@ -333,6 +345,7 @@
     { "type": "range", "id": "overlay_font_size", "label": "Overlay font size (px)", "min": 10, "max": 22, "step": 1, "default": 14 },
     { "type": "header", "content": "Sale Badge" },
     { "type": "checkbox", "id": "show_sale_badge", "label": "Show sale badge", "default": true },
+    { "type": "checkbox", "id": "always_show_sale_badge", "label": "Always show badge (even without compare price)", "default": false },
     { "type": "text", "id": "sale_badge_label", "label": "Badge text", "default": "SALE" },
     { "type": "color", "id": "sale_badge_bg", "label": "Badge background", "default": "#000000" },
     { "type": "color", "id": "sale_badge_text_color", "label": "Badge text color", "default": "#ffffff" },
