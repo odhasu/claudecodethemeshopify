@@ -25,7 +25,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: {{ header_padding }}px 20px 0;
+    padding: {{ header_padding }}px 20px {{ section.settings.padding_bottom | default: 8 }}px;
     background: transparent;
     pointer-events: none;
   }
@@ -239,7 +239,20 @@
     { "type": "range", "id": "logo_height", "label": "Logo height (px)", "min": 16, "max": 60, "step": 2, "default": 30 },
     { "type": "text", "id": "brand_text", "label": "Brand text (if no logo)", "default": "OGVENDORS" },
     { "type": "header", "content": "Font" },
-    { "type": "text", "id": "pill_font", "label": "Header font family", "default": "Satoshi", "info": "Font for brand text and dropdown. E.g. Satoshi, Anton, Inter" },
+    { "type": "select", "id": "pill_font", "label": "Header font", "default": "Satoshi", "options": [
+      { "value": "Satoshi", "label": "Satoshi (like Luke's Vendors)" },
+      { "value": "Anton", "label": "Anton" },
+      { "value": "Inter", "label": "Inter" },
+      { "value": "Bebas Neue", "label": "Bebas Neue" },
+      { "value": "Poppins", "label": "Poppins" },
+      { "value": "Montserrat", "label": "Montserrat" },
+      { "value": "Oswald", "label": "Oswald" },
+      { "value": "Outfit", "label": "Outfit" },
+      { "value": "Space Grotesk", "label": "Space Grotesk" },
+      { "value": "DM Sans", "label": "DM Sans" },
+      { "value": "Rubik", "label": "Rubik" },
+      { "value": "Raleway", "label": "Raleway" }
+    ]},
     { "type": "header", "content": "Colors" },
     { "type": "color", "id": "pill_bg", "label": "Pill background", "default": "#000000" },
     { "type": "color", "id": "pill_border", "label": "Pill border", "default": "#2a2a2a" },
@@ -258,7 +271,8 @@
     { "type": "range", "id": "pill_width", "label": "Pill width (px)", "min": 280, "max": 600, "step": 10, "default": 380 },
     { "type": "range", "id": "icon_size", "label": "Icon button size (px)", "min": 30, "max": 56, "step": 2, "default": 40 },
     { "type": "range", "id": "brand_font_size", "label": "Brand font size (px)", "min": 12, "max": 28, "step": 1, "default": 16 },
-    { "type": "range", "id": "padding_y", "label": "Vertical padding (px)", "min": 4, "max": 24, "step": 2, "default": 12 },
+    { "type": "range", "id": "padding_y", "label": "Top padding (px)", "min": 4, "max": 24, "step": 2, "default": 12 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding (px)", "min": 0, "max": 24, "step": 2, "default": 8 },
     { "type": "header", "content": "Navigation" },
     { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu" }
   ],

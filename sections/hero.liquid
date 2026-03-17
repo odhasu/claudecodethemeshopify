@@ -125,7 +125,20 @@
   "tag": "section",
   "settings": [
     { "type": "header", "content": "Font" },
-    { "type": "text", "id": "hero_font", "label": "Hero font family", "default": "Satoshi", "info": "Font for the hero headline. E.g. Satoshi, Anton, Inter" },
+    { "type": "select", "id": "hero_font", "label": "Hero font", "default": "Satoshi", "options": [
+      { "value": "Satoshi", "label": "Satoshi (like Luke's Vendors)" },
+      { "value": "Anton", "label": "Anton" },
+      { "value": "Inter", "label": "Inter" },
+      { "value": "Bebas Neue", "label": "Bebas Neue" },
+      { "value": "Poppins", "label": "Poppins" },
+      { "value": "Montserrat", "label": "Montserrat" },
+      { "value": "Oswald", "label": "Oswald" },
+      { "value": "Outfit", "label": "Outfit" },
+      { "value": "Space Grotesk", "label": "Space Grotesk" },
+      { "value": "DM Sans", "label": "DM Sans" },
+      { "value": "Rubik", "label": "Rubik" },
+      { "value": "Raleway", "label": "Raleway" }
+    ]},
     { "type": "header", "content": "Headline" },
     { "type": "text", "id": "title_before", "label": "Text before highlight", "default": "START YOUR" },
     { "type": "text", "id": "title_highlight", "label": "Highlighted word(s)", "default": "RESELLING" },

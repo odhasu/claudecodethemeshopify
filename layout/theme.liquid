@@ -44,7 +44,15 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Satoshi:wght@400;500;700;900&display=swap" rel="stylesheet">
+  {%- liquid
+    assign gfonts = 'Anton,Satoshi,Inter,Bebas+Neue,Poppins,Montserrat,Oswald,Outfit,Space+Grotesk,DM+Sans,Rubik,Raleway'
+    assign gfonts_arr = gfonts | split: ','
+    assign load_fonts = ''
+    for f in gfonts_arr
+      assign load_fonts = load_fonts | append: 'family=' | append: f | append: ':wght@400;500;700;900&'
+    endfor
+  -%}
+  <link href="https://fonts.googleapis.com/css2?{{ load_fonts }}display=swap" rel="stylesheet">
 
   <style>
     :root {

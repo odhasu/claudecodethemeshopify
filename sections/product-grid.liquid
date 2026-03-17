@@ -220,7 +220,8 @@
               </div>
             {%- endif -%}
 
-            {%- if product.compare_at_price_max > product.price and section.settings.show_sale_badge -%}
+            {%- assign first_var = product.first_available_variant -%}
+            {%- if first_var.compare_at_price > first_var.price and section.settings.show_sale_badge -%}
               <span class="product-card-badge">{{ section.settings.sale_badge_label | default: 'SALE' }}</span>
             {%- endif -%}
           </a>
@@ -228,9 +229,10 @@
           <div class="product-card-info">
             <h3 class="product-card-title"><a href="{{ product.url }}">{{ product.title }}</a></h3>
             <div class="product-card-prices">
-              <span class="price-sale">{{ product.price | money }}</span>
-              {%- if product.compare_at_price_max > product.price -%}
-                <span class="price-compare">{{ product.compare_at_price_max | money }}</span>
+              {%- assign variant = product.first_available_variant -%}
+              <span class="price-sale">{{ variant.price | money }}</span>
+              {%- if variant.compare_at_price > variant.price -%}
+                <span class="price-compare">{{ variant.compare_at_price | money }}</span>
               {%- endif -%}
             </div>
             <div class="product-card-actions">
