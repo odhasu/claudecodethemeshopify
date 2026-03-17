@@ -1,39 +1,212 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero": {
       "type": "hero",
-      "settings": {}
+      "settings": {
+        "title_before": "START YOUR",
+        "title_highlight": "RESELLING",
+        "title_after": "JOURNEY TODAY",
+        "title_color": "#ffffff",
+        "highlight_color": "#39ff14",
+        "title_size_desktop": 48,
+        "title_size_mobile": 28,
+        "trust_prefix": "Trusted By",
+        "trust_count": "10,000+",
+        "trust_suffix": "Resellers",
+        "trust_count_color": "#fbbf24",
+        "trust_text_color": "#9ca3af",
+        "trust_font_size": 15,
+        "show_avatars": true,
+        "avatar_size": 36,
+        "show_glow": true,
+        "glow_color": "#39ff14",
+        "padding_top": 80,
+        "padding_bottom": 60
+      }
     },
     "product-grid": {
       "type": "product-grid",
-      "settings": {}
+      "settings": {
+        "collection": "",
+        "title": "",
+        "max_products": 16,
+        "columns_desktop": 4,
+        "columns_mobile": 2,
+        "card_bg": "#111111",
+        "card_border": "#2a2a2a",
+        "card_hover_border": "#39ff14",
+        "image_bg": "#0a0a0a",
+        "title_color": "#ffffff",
+        "show_overlay_title": true,
+        "overlay_title_green_color": "#39ff14",
+        "overlay_title_white_color": "#ffffff",
+        "overlay_font_size": 14,
+        "show_sale_badge": true,
+        "sale_badge_label": "SALE",
+        "sale_badge_bg": "#000000",
+        "sale_badge_text_color": "#ffffff",
+        "price_color": "#39ff14",
+        "compare_price_color": "#6b7280",
+        "buy_btn_label": "BUY NOW",
+        "buy_btn_action": "product",
+        "buy_btn_bg": "#39ff14",
+        "buy_btn_text_color": "#1a1a1a",
+        "cart_btn_bg": "#1a1a1a",
+        "cart_btn_border": "#2a2a2a",
+        "show_glow": true,
+        "glow_color": "#39ff14",
+        "padding_top": 40,
+        "padding_bottom": 60
+      }
     },
     "testimonials": {
       "type": "testimonials",
-      "settings": {},
-      "blocks": {}
+      "settings": {
+        "title": "What Our Customers Say",
+        "title_color": "#ffffff",
+        "bg_color": "#000000",
+        "scroll_speed": 20,
+        "image_height": 250,
+        "image_height_mobile": 180,
+        "image_radius": 12,
+        "gap": 16,
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
     },
     "reviews": {
       "type": "reviews",
-      "settings": {},
       "blocks": {
-        "review-1": { "type": "review", "settings": { "name": "Alex M.", "date": "1 week ago", "stars": 5, "text": "Best vendor list I've ever purchased. Made my money back in the first week!" } },
-        "review-2": { "type": "review", "settings": { "name": "Sarah K.", "date": "2 weeks ago", "stars": 5, "text": "Incredible value. The suppliers are legit and the prices are unbeatable." } },
-        "review-3": { "type": "review", "settings": { "name": "Mike R.", "date": "3 weeks ago", "stars": 5, "text": "Was skeptical at first but these vendors are 100% real. Already made sales!" } }
+        "review-1": {
+          "type": "review",
+          "settings": {
+            "name": "Alex M.",
+            "date": "1 week ago",
+            "stars": 5,
+            "text": "Best vendor list I've ever purchased. Made my money back in the first week!"
+          }
+        },
+        "review-2": {
+          "type": "review",
+          "settings": {
+            "name": "Sarah K.",
+            "date": "2 weeks ago",
+            "stars": 5,
+            "text": "Incredible value. The suppliers are legit and the prices are unbeatable."
+          }
+        },
+        "review-3": {
+          "type": "review",
+          "settings": {
+            "name": "Mike R.",
+            "date": "3 weeks ago",
+            "stars": 5,
+            "text": "Was skeptical at first but these vendors are 100% real. Already made sales!"
+          }
+        }
       },
-      "block_order": ["review-1", "review-2", "review-3"]
+      "block_order": [
+        "review-1",
+        "review-2",
+        "review-3"
+      ],
+      "settings": {
+        "title": "Customer Reviews",
+        "subtitle": "See what our customers are saying",
+        "rating": "4.9",
+        "review_count": "15",
+        "title_color": "#ffffff",
+        "subtitle_color": "#9ca3af",
+        "star_color": "#fbbf24",
+        "card_bg": "#111111",
+        "card_border": "#2a2a2a",
+        "avatar_bg": "#39ff14",
+        "avatar_text_color": "#000000",
+        "write_btn_bg": "#39ff14",
+        "write_btn_text_color": "#000000",
+        "columns": 3,
+        "avatar_size": 40,
+        "card_padding": 20,
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
     },
     "faq": {
       "type": "faq",
-      "settings": {},
       "blocks": {
-        "faq-1": { "type": "question", "settings": { "question": "Is this legit?", "answer": "<p>Yes! I personally use these suppliers and have verified every single one. These are real, working vendor contacts.</p>" } },
-        "faq-2": { "type": "question", "settings": { "question": "How will I receive the vendors?", "answer": "<p>Once you purchase, vendor links are INSTANTLY sent through email. You'll have access within minutes.</p>" } },
-        "faq-3": { "type": "question", "settings": { "question": "Can I get a refund?", "answer": "<p>Due to the digital nature of the product, all sales are final. However, we stand behind our product 100%.</p>" } },
-        "faq-4": { "type": "question", "settings": { "question": "How many vendors are included?", "answer": "<p>Each bundle contains multiple verified vendors with contact information and pricing details.</p>" } }
+        "faq-1": {
+          "type": "question",
+          "settings": {
+            "question": "Is this legit?",
+            "answer": "<p>Yes! I personally use these suppliers and have verified every single one. These are real, working vendor contacts.</p>"
+          }
+        },
+        "faq-2": {
+          "type": "question",
+          "settings": {
+            "question": "How will I receive the vendors?",
+            "answer": "<p>Once you purchase, vendor links are INSTANTLY sent through email. You'll have access within minutes.</p>"
+          }
+        },
+        "faq-3": {
+          "type": "question",
+          "settings": {
+            "question": "Can I get a refund?",
+            "answer": "<p>Due to the digital nature of the product, all sales are final. However, we stand behind our product 100%.</p>"
+          }
+        },
+        "faq-4": {
+          "type": "question",
+          "settings": {
+            "question": "How many vendors are included?",
+            "answer": "<p>Each bundle contains multiple verified vendors with contact information and pricing details.</p>"
+          }
+        }
       },
-      "block_order": ["faq-1", "faq-2", "faq-3", "faq-4"]
+      "block_order": [
+        "faq-1",
+        "faq-2",
+        "faq-3",
+        "faq-4"
+      ],
+      "settings": {
+        "title": "Frequently Asked Questions",
+        "title_color": "#ffffff",
+        "card_bg": "#111111",
+        "card_border": "#2a2a2a",
+        "card_border_open": "#39ff14",
+        "card_radius": 12,
+        "card_padding": 18,
+        "item_gap": 12,
+        "max_width": 700,
+        "question_color": "#ffffff",
+        "answer_color": "#9ca3af",
+        "question_font_size": 15,
+        "answer_font_size": 14,
+        "toggle_size": 32,
+        "toggle_bg": "#1a1a1a",
+        "toggle_bg_open": "#39ff14",
+        "toggle_icon_color": "#ffffff",
+        "toggle_icon_open": "#1a1a1a",
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
     }
   },
-  "order": ["hero", "product-grid", "testimonials", "reviews", "faq"]
+  "order": [
+    "hero",
+    "product-grid",
+    "testimonials",
+    "reviews",
+    "faq"
+  ]
 }
