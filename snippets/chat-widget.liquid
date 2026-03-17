@@ -190,7 +190,7 @@
     <button class="chat-close-btn" id="chat-close">&times;</button>
   </div>
   <div class="chat-messages" id="chat-messages">
-    <div class="chat-msg bot">{{ settings.chat_greeting | default: "Hey! 👋 Got questions about our vendor lists? I'm here to help you decide." }}</div>
+    <div class="chat-msg bot">{{ settings.chat_greeting | default: "yooo whats good! u looking to start reselling? lmk if u need help picking the right suppliers 🔥" }}</div>
   </div>
   <div class="chat-input-area">
     <input class="chat-input" id="chat-input" placeholder="{{ settings.chat_placeholder | default: 'Ask me anything...' }}" onkeypress="if(event.key==='Enter')sendChatMsg()">
@@ -208,59 +208,159 @@
   fab.addEventListener('click', function() { win.classList.toggle('open'); });
   close.addEventListener('click', function() { win.classList.remove('open'); });
 
-  /* ── Smart Chatbot Engine ── */
+  /* ── Custom context from theme settings ── */
+  var customContext = {{ settings.chat_context | default: '' | json }};
+  var sellingPoints = {{ settings.chat_selling_points | default: '' | json }};
+  var customKeywords = {{ settings.chat_custom_keywords | default: '' | json }};
+
+  /* ── Parse custom keywords from settings ── */
+  var extraKeywords = {};
+  if (customKeywords) {
+    var lines = customKeywords.split('\n');
+    for (var i = 0; i < lines.length; i++) {
+      var parts = lines[i].split('|');
+      if (parts.length >= 2) {
+        var trigger = parts[0].trim().toLowerCase();
+        var response = parts.slice(1).join('|').trim();
+        if (trigger && response) extraKeywords[trigger] = response;
+      }
+    }
+  }
+
+  /* ── Smart Chatbot Engine — talks like a real person ── */
   var keywords = {
     // Greetings
-    'hello|hi|hey|yo|sup|whats up|wassup': "Hey! 👋 What's good? Looking to start reselling or got questions about a specific bundle?",
+    'hello|hi|hey|yo|sup|whats up|wassup|whats good': [
+      "yooo whats good! u looking to get into reselling or u already in the game?",
+      "ayy whats up! need help picking the right suppliers? im here for u",
+      "heyyy! welcome, u tryna start making money reselling? lmk what u need 💪"
+    ],
     // Price / cost
-    'price|cost|how much|expensive|cheap|afford|money|pay': "Our bundles range from budget-friendly to premium! Check out our <a href='/collections/all'>full collection</a> — there's something for every budget. What category interests you?",
+    'price|cost|how much|expensive|cheap|afford|money|pay|worth': [
+      "bro the prices are crazy good for what u get.. like actual verified suppliers that nobody else has. check em out <a href='/collections/all'>right here</a>",
+      "honestly its a steal for the value.. most ppl spend way more finding suppliers on their own. <a href='/collections/all'>peep the options</a> and see what fits ur budget",
+      "trust me the ROI on these is insane.. u make back what u paid on literally ur first flip 🔥"
+    ],
     // Legit / scam / trust
-    'legit|scam|trust|real|fake|honest|reliable': "100% legit! Every single vendor is personally verified and tested. We've helped thousands of resellers get started. Check our reviews section — real customers, real results 💯",
+    'legit|scam|trust|real|fake|honest|reliable|sketchy|cap': [
+      "nah bro this is 100% legit no cap.. every single supplier is personally verified and tested. peep the reviews if u dont believe me 💯",
+      "i get it u gotta be careful out here.. but fr every supplier we list is tested and verified. thousands of ppl already using em successfully",
+      "yo thats valid to ask.. we wouldnt put our name on anything thats not legit. all suppliers are personally verified and working rn"
+    ],
     // Refund / return
-    'refund|return|money back|cancel': "Since these are digital products, all sales are final. But we stand behind our lists 100% — the vendors are verified and working. You won't need a refund 🔥",
+    'refund|return|money back|cancel': [
+      "since its digital theres no refunds but fr u wont need one.. the suppliers are all verified and working. ur gonna love it",
+      "no refunds on digital products but tbh nobody asks for em cuz the lists actually work 😤 check the reviews"
+    ],
     // Delivery / receive / how
-    'deliver|receive|get|how do i|access|download|email|instant': "Instant delivery! Once you purchase, vendor links are sent straight to your email within minutes. No waiting around ⚡",
+    'deliver|receive|get|how do i|access|download|email|instant|when': [
+      "its instant bro! soon as u buy, supplier links hit ur email right away. no waiting around ⚡",
+      "u get everything sent to ur email instantly after purchase.. like literally within minutes. easy as that"
+    ],
     // Which / recommend / best / popular
-    'which|recommend|best|popular|suggest|what should|starter|beginner': "For beginners, I'd recommend starting with a single category bundle to test the waters. Our most popular is the Elite bundle — it covers multiple categories. What are you interested in reselling?",
+    'which|recommend|best|popular|suggest|what should|starter|beginner|first': [
+      "if ur just starting out id say go with a single category first to test it out.. whats ur vibe? clothing? tech? accessories?",
+      "honestly our most popular one covers multiple categories so u can figure out what works best for u. what are u tryna resell?",
+      "depends what ur into fr.. lmk what category interests u and ill point u to the right one 🎯"
+    ],
     // Clothing / fashion
-    'cloth|fashion|shirt|hoodie|shoe|sneaker|apparel|wear': "Great choice! Our clothing vendor bundles include verified suppliers for streetwear, designer pieces, and sneakers. <a href='/collections/all'>Check them out here →</a>",
+    'cloth|fashion|shirt|hoodie|shoe|sneaker|apparel|wear|drip|fit': [
+      "yooo clothing is goated for reselling rn.. streetwear, designer, sneakers - margins are crazy. <a href='/collections/all'>check our clothing suppliers</a> 🔥",
+      "bro clothing reselling is where its at.. our suppliers got stuff that retails for 10x what u pay wholesale. <a href='/collections/all'>peep em here</a>"
+    ],
     // Electronics / tech
-    'electronic|tech|phone|laptop|headphone|airpod|watch|gadget': "Electronics is huge for reselling! Our tech bundles include suppliers for watches, headphones, phones, and more. <a href='/collections/all'>Browse bundles →</a>",
+    'electronic|tech|phone|laptop|headphone|airpod|watch|gadget': [
+      "tech is huge rn bro.. watches, airpods, headphones all flip for crazy margins. <a href='/collections/all'>check the tech suppliers</a> 💰",
+      "electronics reselling hits different.. our suppliers got stuff u cant find anywhere else. <a href='/collections/all'>take a look</a>"
+    ],
     // Jewelry / accessories
-    'jewel|accessor|bracelet|necklace|ring|chain|moissanite|cologne|perfume': "Accessories and jewelry have insane margins! Our bundles cover moissanite, designer jewelry, cologne, and more. <a href='/collections/all'>See what's available →</a>",
-    // All / everything / bundle
-    'all|everything|every|complete|full|mega|ultimate': "Want it all? Our All Vendor Bundle gives you access to every supplier across all categories. Best value for serious resellers! <a href='/collections/all'>Check it out →</a>",
+    'jewel|accessor|bracelet|necklace|ring|chain|moissanite|cologne|perfume': [
+      "accessories and jewelry got insane margins bro.. moissanite especially. ppl pay retail and u get it for pennies. <a href='/collections/all'>see whats available</a>",
+      "cologne and jewelry is easy money fr.. low investment high return. <a href='/collections/all'>check the suppliers</a> 🔥"
+    ],
+    // All / everything
+    'all|everything|every|complete|full|mega|ultimate': [
+      "if u want the whole bag just grab the full supplier list.. covers every single category. best value by far <a href='/collections/all'>right here</a> 💪",
+      "go big or go home right? 😤 the full list gives u access to everything. <a href='/collections/all'>check it out</a>"
+    ],
     // How to start / reselling
-    'start|begin|new|resell|flip|sell|hustle|side': "Starting is easy! 1) Pick a bundle that matches your interest, 2) Purchase it, 3) Get instant access to verified vendors, 4) Start ordering and reselling! Want help choosing a bundle?",
+    'start|begin|new|resell|flip|sell|hustle|side|how to': [
+      "its easy fr.. 1) grab a supplier list 2) pick products u like 3) list em on ur own store or marketplace 4) profit 💰 want help choosing?",
+      "bro starting is the easiest part.. just pick a category u fw, grab the suppliers, and start listing. most ppl overthink it tbh"
+    ],
     // Profit / earnings
-    'profit|earn|make money|income|roi|margin': "Our resellers typically see 2-5x margins on products! The key is finding the right niche. Our vendor lists give you access to wholesale prices that most people can't find. Ready to start?",
+    'profit|earn|make money|income|roi|margin': [
+      "our resellers see 2-5x margins easy.. some ppl making $1k+ their first month no cap. its all about picking the right niche",
+      "the margins are crazy bro.. u buy wholesale for like $5-10 and sell retail for $30-50. do the math 📈"
+    ],
     // Thanks / bye
-    'thank|thanks|thx|bye|later|peace|cya': "You're welcome! Good luck with your reselling journey 🚀 If you need anything else, I'm always here. Let's get it! 💪",
+    'thank|thanks|thx|bye|later|peace|cya|appreciate': [
+      "ayy no problem! good luck with the reselling bro lets get this bread 🍞💰",
+      "bet! lmk if u ever need anything else. go make that money 🚀",
+      "aye anytime! rooting for u fr 💪 go get it"
+    ],
     // Yes / sure / ok
-    '^yes$|^yeah$|^sure$|^ok$|^yep$|^yea$': "Awesome! Head over to our <a href='/collections/all'>bundles page</a> and pick the one that fits your goals. Any questions, just ask! 🔥",
+    '^yes$|^yeah$|^sure$|^ok$|^yep$|^yea$|^bet$|^fs$|^fasho$': [
+      "bet! <a href='/collections/all'>check out the suppliers</a> and grab what fits ur goals 🎯",
+      "lessgo! head over to <a href='/collections/all'>the collection</a> and pick ur favorite 🔥"
+    ],
     // No / nah
-    '^no$|^nah$|^nope$': "No worries! Feel free to browse around. I'm here whenever you need help. 🤙",
+    '^no$|^nah$|^nope$|^im good$|^nvm$': [
+      "aight no worries bro just browsing is cool too.. im here if u change ur mind 🤙",
+      "all good! take ur time and lmk if u got questions later 💪"
+    ],
     // Support / help / contact
-    'support|help|contact|issue|problem|question': "I'm here to help! What's your question? If you need direct support, you can reach out through our contact page. What do you need?"
+    'support|help|contact|issue|problem|question': [
+      "yo what do u need help with? im right here.. if its something specific u can also hit up our contact page",
+      "bro lmk whats going on ill try to help u out rn 🤝"
+    ],
+    // Urgency / FOMO
+    'think about|maybe later|not sure|idk|deciding': [
+      "i feel u but fr prices go up soon and 99% of ppl just browse and never take action... dont be that guy 😭",
+      "ngl bro the longer u wait the more money ur leaving on the table.. just sayin 📉",
+      "take ur time but real talk.. most successful resellers started by just going for it. u got this 💪"
+    ]
   };
 
   var fallbacks = [
-    "Interesting! Tell me more — are you looking to get into reselling? I can help you pick the right bundle.",
-    "I hear you! Our vendor lists cover tons of categories. What are you most interested in reselling?",
-    "Got it! If you want to check out what we offer, head to our <a href='/collections/all'>bundles page</a>. Anything specific you're looking for?",
-    "For sure! We've got bundles for clothing, electronics, jewelry, accessories and more. What catches your eye?",
-    "Nice! Our vendor lists are all personally verified — real suppliers, real products. Want me to recommend a bundle for you?"
+    "yo you need help picking the right supplier? lmk what category ur interested in 🎯",
+    "yo whats good, u looking to get into reselling? i can help u figure out where to start",
+    "aight bet, if u want to check out what we got head to <a href='/collections/all'>the collection</a>. anything specific ur looking for?",
+    "bro lmk if u have any questions, im here 💪 what category interests u most?",
+    "99% of people just browse and never take action... dont be that guy 😭 lmk how i can help u get started"
   ];
 
   var fallbackIndex = 0;
+  var conversationHistory = [];
+
+  function pickRandom(arr) {
+    if (typeof arr === 'string') return arr;
+    return arr[Math.floor(Math.random() * arr.length)];
+  }
 
   function findResponse(text) {
     var lower = text.toLowerCase().replace(/[^a-z0-9\s]/g, '');
-    for (var pattern in keywords) {
-      if (new RegExp(pattern, 'i').test(lower)) {
-        return keywords[pattern];
+    conversationHistory.push(lower);
+
+    /* Check custom keywords from settings first */
+    for (var trigger in extraKeywords) {
+      if (lower.indexOf(trigger) !== -1) {
+        return extraKeywords[trigger];
       }
     }
+
+    /* Check built-in keyword patterns */
+    for (var pattern in keywords) {
+      if (new RegExp(pattern, 'i').test(lower)) {
+        return pickRandom(keywords[pattern]);
+      }
+    }
+
+    /* If custom context exists, use it as context-aware fallback */
+    if (customContext && conversationHistory.length <= 3) {
+      return "yo good question! " + customContext.split('.')[0].toLowerCase().trim() + ".. lmk if u want more details 🔥";
+    }
+
     var resp = fallbacks[fallbackIndex % fallbacks.length];
     fallbackIndex++;
     return resp;

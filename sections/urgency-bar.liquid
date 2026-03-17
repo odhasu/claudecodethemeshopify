@@ -166,18 +166,26 @@
     updateCountdown();
     setInterval(updateCountdown, 60000);
 
-    // Random viewer count
+    // Realistic viewer count — drifts ±2-3 every 1-3 minutes
     var min = {{ min_viewers }};
     var max = {{ max_viewers }};
-    function updateViewers() {
-      var count = Math.floor(Math.random() * (max - min + 1)) + min;
+    var currentViewers = Math.floor(Math.random() * (max - min + 1)) + min;
+    function setViewerText(count) {
       var el1 = document.getElementById('urgency-viewers');
       var el2 = document.getElementById('urgency-viewers-dup');
       if (el1) el1.textContent = count;
       if (el2) el2.textContent = count;
     }
-    updateViewers();
-    setInterval(updateViewers, 5000);
+    setViewerText(currentViewers);
+    function driftViewers() {
+      var change = Math.floor(Math.random() * 4) - 1; // -1 to +2 drift
+      if (Math.random() < 0.3) change = -Math.abs(change); // 30% chance down
+      currentViewers = Math.max(min, Math.min(max, currentViewers + change));
+      setViewerText(currentViewers);
+      var nextUpdate = (60 + Math.floor(Math.random() * 120)) * 1000; // 1-3 minutes
+      setTimeout(driftViewers, nextUpdate);
+    }
+    setTimeout(driftViewers, (60 + Math.floor(Math.random() * 120)) * 1000);
   })();
 </script>
 
