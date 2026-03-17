@@ -19,6 +19,11 @@
   assign btn_action = section.settings.buy_btn_action | default: 'product'
   assign cart_btn_bg = section.settings.cart_btn_bg | default: '#1a1a1a'
   assign cart_btn_border = section.settings.cart_btn_border | default: '#2a2a2a'
+  assign cart_btn_hover_border = section.settings.cart_btn_hover_border | default: '#ffffff'
+  assign cart_btn_hover_bg = section.settings.cart_btn_hover_bg | default: '#1a1a1a'
+  assign cart_btn_hover_color = section.settings.cart_btn_hover_color | default: '#ffffff'
+  assign cart_btn_incart_bg = section.settings.cart_btn_incart_bg | default: '#22c55e'
+  assign cart_btn_incart_border = section.settings.cart_btn_incart_border | default: '#22c55e'
   assign overlay_title_green = section.settings.overlay_title_green_color | default: '#39ff14'
   assign overlay_title_white = section.settings.overlay_title_white_color | default: '#ffffff'
   assign title_color = section.settings.title_color | default: '#ffffff'
@@ -116,9 +121,7 @@
     letter-spacing: 0.02em;
     color: {{ title_color }};
     margin-bottom: 8px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    line-height: 1.3;
   }
   .product-card-prices {
     display: flex;
@@ -145,9 +148,14 @@
     transition: background 0.2s, border-color 0.2s;
     flex-shrink: 0;
   }
-  .btn-cart-icon:hover, .btn-cart-icon.in-cart {
-    background: #22c55e;
-    border-color: #22c55e;
+  .btn-cart-icon:hover {
+    background: {{ cart_btn_hover_bg }};
+    border-color: {{ cart_btn_hover_border }};
+    color: {{ cart_btn_hover_color }};
+  }
+  .btn-cart-icon.in-cart {
+    background: {{ cart_btn_incart_bg }};
+    border-color: {{ cart_btn_incart_border }};
     color: #fff;
   }
   .btn-cart-icon svg { width: 18px; height: 18px; }
@@ -164,10 +172,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    box-shadow: 0 2px 12px rgba({{ btn_bg | color_extract: 'red' }}, {{ btn_bg | color_extract: 'green' }}, {{ btn_bg | color_extract: 'blue' }}, 0.35);
     transition: box-shadow 0.3s, transform 0.2s;
   }
   .btn-buy:hover {
-    box-shadow: 0 4px 15px rgba({{ glow_color | color_extract: 'red' }}, {{ glow_color | color_extract: 'green' }}, {{ glow_color | color_extract: 'blue' }}, 0.4);
+    box-shadow: 0 4px 20px rgba({{ btn_bg | color_extract: 'red' }}, {{ btn_bg | color_extract: 'green' }}, {{ btn_bg | color_extract: 'blue' }}, 0.55);
     transform: translateY(-1px);
   }
 
@@ -321,6 +330,11 @@
     { "type": "header", "content": "Cart Icon Button" },
     { "type": "color", "id": "cart_btn_bg", "label": "Cart button background", "default": "#1a1a1a" },
     { "type": "color", "id": "cart_btn_border", "label": "Cart button border", "default": "#2a2a2a" },
+    { "type": "color", "id": "cart_btn_hover_border", "label": "Cart hover border", "default": "#ffffff" },
+    { "type": "color", "id": "cart_btn_hover_bg", "label": "Cart hover background", "default": "#1a1a1a" },
+    { "type": "color", "id": "cart_btn_hover_color", "label": "Cart hover icon color", "default": "#ffffff" },
+    { "type": "color", "id": "cart_btn_incart_bg", "label": "Cart 'in cart' background", "default": "#22c55e" },
+    { "type": "color", "id": "cart_btn_incart_border", "label": "Cart 'in cart' border", "default": "#22c55e" },
     { "type": "header", "content": "Glow Effect" },
     { "type": "checkbox", "id": "show_glow", "label": "Show radial glow", "default": true },
     { "type": "color", "id": "glow_color", "label": "Glow color", "default": "#39ff14" },

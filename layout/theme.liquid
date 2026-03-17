@@ -42,6 +42,10 @@
     assign body_font = settings.body_font | default: 'system-ui, -apple-system, sans-serif'
   -%}
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+
   <style>
     :root {
       --color-accent: {{ accent }};
@@ -63,8 +67,6 @@
       --section-spacing: {{ settings.section_spacing | default: 60 }}px;
       --grid-gap: {{ settings.grid_gap | default: 16 }}px;
     }
-
-    @import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
