@@ -46,7 +46,7 @@
       "settings": {
         "logo_height": 54,
         "brand_text": "Lukesvendor",
-        "pill_font": "Satoshi",
+        "pill_font": "Inter",
         "pill_bg": "#181818",
         "pill_border": "#2a2a2a",
         "brand_color": "#ffffff",
