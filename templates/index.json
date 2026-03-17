@@ -54,6 +54,8 @@
         "sale_badge_label": "SALE",
         "sale_badge_bg": "#000000",
         "sale_badge_text_color": "#ffffff",
+        "sale_badge_position_y": "bottom",
+        "sale_badge_position_x": "right",
         "price_color": "#39ff14",
         "compare_price_color": "#6b7280",
         "buy_btn_label": "BUY NOW",
