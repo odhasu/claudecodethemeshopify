@@ -1,0 +1,215 @@
+<style>
+  .footer-section-{{ section.id }} {
+    background: {{ settings.footer_bg }};
+    border-top: 1px solid {{ settings.footer_border }};
+    padding: 48px 0 32px;
+  }
+  .footer-container-{{ section.id }} {
+    max-width: {{ settings.page_max_width }}px;
+    margin: 0 auto;
+    padding: 0 {{ settings.page_side_padding }}px;
+    text-align: center;
+  }
+  .footer-brand-{{ section.id }} {
+    margin-bottom: 24px;
+  }
+  .footer-brand-{{ section.id }} img {
+    height: 40px;
+    width: auto;
+  }
+  .footer-brand-text-{{ section.id }} {
+    font-size: 24px;
+    font-weight: 800;
+    color: {{ settings.color_text_primary }};
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-family: {{ settings.font_heading.family }}, {{ settings.font_heading.fallback_families }};
+  }
+  .footer-links-{{ section.id }} {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px 24px;
+    margin-bottom: 24px;
+    list-style: none;
+    padding: 0;
+    margin-top: 0;
+  }
+  .footer-links-{{ section.id }} a {
+    color: {{ settings.footer_link_color }};
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.3s;
+  }
+  .footer-links-{{ section.id }} a:hover {
+    color: {{ settings.footer_link_hover }};
+  }
+  .footer-social-{{ section.id }} {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .footer-social-link-{{ section.id }} {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: {{ settings.color_card_bg }};
+    border: 1px solid {{ settings.color_border }};
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: {{ settings.color_text_muted }};
+    text-decoration: none;
+    transition: border-color 0.3s, color 0.3s, background 0.3s;
+  }
+  .footer-social-link-{{ section.id }}:hover {
+    border-color: {{ settings.color_accent }};
+    color: {{ settings.color_accent }};
+  }
+  .footer-social-link-{{ section.id }} svg {
+    width: 18px;
+    height: 18px;
+  }
+  .footer-design-btn-{{ section.id }} {
+    display: inline-block;
+    background: {{ settings.footer_design_btn_bg }};
+    color: {{ settings.footer_design_btn_text_color }};
+    padding: 10px 28px;
+    border-radius: {{ settings.btn_radius }}px;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 24px;
+    transition: transform 0.3s, opacity 0.3s;
+  }
+  .footer-design-btn-{{ section.id }}:hover {
+    opacity: 0.9;
+    {% if settings.btn_hover_lift %}transform: translateY(-2px);{% endif %}
+  }
+  .footer-copyright-{{ section.id }} {
+    font-size: 13px;
+    color: {{ settings.footer_text }};
+    margin: 0;
+  }
+  @media (max-width: 600px) {
+    .footer-section-{{ section.id }} {
+      padding: 36px 0 24px;
+    }
+    .footer-links-{{ section.id }} {
+      gap: 6px 16px;
+    }
+  }
+</style>
+
+<footer class="footer-section-{{ section.id }}">
+  <div class="footer-container-{{ section.id }}">
+    <div class="footer-brand-{{ section.id }}">
+      {% if settings.footer_logo %}
+        <img src="{{ settings.footer_logo | image_url: width: 200 }}" alt="{{ shop.name }}" loading="lazy">
+      {% else %}
+        <span class="footer-brand-text-{{ section.id }}">{{ settings.footer_brand_text | default: shop.name }}</span>
+      {% endif %}
+    </div>
+
+    {% if section.settings.link_list != blank %}
+      {% assign footer_menu = linklists[section.settings.link_list] %}
+      {% if footer_menu.links.size > 0 %}
+        <ul class="footer-links-{{ section.id }}">
+          {% for link in footer_menu.links %}
+            <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% else %}
+      {% if shop.policies.size > 0 %}
+        <ul class="footer-links-{{ section.id }}">
+          {% for policy in shop.policies %}
+            {% if policy %}
+              <li><a href="{{ policy.url }}">{{ policy.title }}</a></li>
+            {% endif %}
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endif %}
+
+    {% if section.settings.show_social %}
+      <div class="footer-social-{{ section.id }}">
+        {% if settings.social_instagram != blank %}
+          <a href="{{ settings.social_instagram }}" class="footer-social-link-{{ section.id }}" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg>
+          </a>
+        {% endif %}
+        {% if settings.social_tiktok != blank %}
+          <a href="{{ settings.social_tiktok }}" class="footer-social-link-{{ section.id }}" target="_blank" rel="noopener" aria-label="TikTok">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 00-.79-.05A6.34 6.34 0 003.15 15.2a6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.34-6.34V8.75a8.28 8.28 0 004.76 1.5v-3.4a4.85 4.85 0 01-1-.16z"/></svg>
+          </a>
+        {% endif %}
+        {% if settings.social_youtube != blank %}
+          <a href="{{ settings.social_youtube }}" class="footer-social-link-{{ section.id }}" target="_blank" rel="noopener" aria-label="YouTube">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.19a3.02 3.02 0 00-2.12-2.14C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.38.55A3.02 3.02 0 00.5 6.19 31.67 31.67 0 000 12a31.67 31.67 0 00.5 5.81 3.02 3.02 0 002.12 2.14c1.88.55 9.38.55 9.38.55s7.5 0 9.38-.55a3.02 3.02 0 002.12-2.14A31.67 31.67 0 0024 12a31.67 31.67 0 00-.5-5.81zM9.75 15.02V8.98L15.5 12l-5.75 3.02z"/></svg>
+          </a>
+        {% endif %}
+        {% if settings.social_twitter != blank %}
+          <a href="{{ settings.social_twitter }}" class="footer-social-link-{{ section.id }}" target="_blank" rel="noopener" aria-label="Twitter / X">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </a>
+        {% endif %}
+        {% if settings.social_facebook != blank %}
+          <a href="{{ settings.social_facebook }}" class="footer-social-link-{{ section.id }}" target="_blank" rel="noopener" aria-label="Facebook">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          </a>
+        {% endif %}
+        {% if settings.social_snapchat != blank %}
+          <a href="{{ settings.social_snapchat }}" class="footer-social-link-{{ section.id }}" target="_blank" rel="noopener" aria-label="Snapchat">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.206.793c.99 0 4.347.276 5.93 3.821.529 1.193.403 3.219.299 4.847l-.003.06c-.012.18-.022.345-.03.51.075.045.203.09.401.09.3-.016.659-.12.922-.214a.71.71 0 01.209-.036c.285 0 .507.195.507.42 0 .18-.105.36-.3.48-.525.33-1.2.54-1.725.69a.48.48 0 00-.345.465c0 .045.015.105.03.15.57 1.29 1.38 2.34 2.46 3.12.18.12.33.225.42.33.09.105.135.24.135.39 0 .54-.975 1.005-2.31 1.275-.18.03-.33.15-.39.33l-.06.24c-.045.18-.075.3-.135.42-.06.105-.165.165-.3.165-.06 0-.135-.015-.225-.045a4.19 4.19 0 00-.645-.12 5.77 5.77 0 00-.6-.045c-.36 0-.705.06-1.035.18-.48.165-.93.42-1.44.69-.78.42-1.68.9-2.94.9h-.06c-1.26 0-2.16-.48-2.94-.9-.51-.27-.96-.525-1.44-.69a3.34 3.34 0 00-1.035-.18c-.225 0-.42.015-.6.045-.195.03-.42.075-.63.12-.105.03-.18.045-.24.045-.18 0-.285-.105-.33-.225a1.86 1.86 0 01-.105-.375l-.06-.24c-.06-.18-.21-.3-.39-.33C1.98 18.405 1.005 17.94 1.005 17.4c0-.15.045-.285.135-.39.09-.105.24-.21.42-.33 1.08-.78 1.89-1.83 2.46-3.12.015-.045.03-.105.03-.15a.48.48 0 00-.345-.465c-.525-.15-1.2-.36-1.725-.69a.49.49 0 01-.3-.48c0-.225.225-.42.51-.42a.72.72 0 01.21.036c.27.1.62.213.92.213.2 0 .33-.045.405-.09a22.4 22.4 0 01-.033-.57c-.104-1.628-.23-3.654.3-4.847C5.86 1.069 9.216.793 10.206.793h2z"/></svg>
+          </a>
+        {% endif %}
+        {% if settings.social_discord != blank %}
+          <a href="{{ settings.social_discord }}" class="footer-social-link-{{ section.id }}" target="_blank" rel="noopener" aria-label="Discord">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.79 19.79 0 00-4.885-1.515.07.07 0 00-.075.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 00-5.487 0 12.64 12.64 0 00-.617-1.25.07.07 0 00-.075-.037A19.74 19.74 0 003.677 4.37a.06.06 0 00-.03.024C.533 9.046-.32 13.58.099 18.057a.08.08 0 00.031.057 19.9 19.9 0 005.993 3.03.08.08 0 00.084-.028c.462-.63.874-1.295 1.226-1.994a.08.08 0 00-.041-.106 13.1 13.1 0 01-1.872-.892.08.08 0 01-.008-.128c.126-.094.252-.192.372-.291a.07.07 0 01.078-.01c3.928 1.793 8.18 1.793 12.062 0a.07.07 0 01.079.008c.12.099.246.199.373.293a.08.08 0 01-.006.127 12.3 12.3 0 01-1.873.892.08.08 0 00-.041.107c.36.698.772 1.362 1.225 1.993a.08.08 0 00.084.028 19.84 19.84 0 006.002-3.03.08.08 0 00.032-.054c.5-5.177-.838-9.674-3.549-13.66a.06.06 0 00-.031-.026zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+          </a>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    {% if settings.footer_show_design_btn and settings.footer_design_btn_url != blank %}
+      <div style="margin-bottom: 24px;">
+        <a href="{{ settings.footer_design_btn_url }}" class="footer-design-btn-{{ section.id }}">{{ settings.footer_design_btn_text }}</a>
+      </div>
+    {% endif %}
+
+    {% if settings.footer_show_copyright %}
+      <p class="footer-copyright-{{ section.id }}">&copy; {{ 'now' | date: '%Y' }} {{ shop.name | upcase }}. All rights reserved.</p>
+    {% endif %}
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "tag": "section",
+  "class": "section-footer",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "link_list",
+      "label": "Navigation links",
+      "info": "Leave empty to show shop policies"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_social",
+      "label": "Show social media icons",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "Footer"
+    }
+  ]
+}
+{% endschema %}

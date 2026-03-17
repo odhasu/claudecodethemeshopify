@@ -1,0 +1,330 @@
+<header class="header-pill-wrapper" data-section-id="{{ section.id }}">
+  <nav class="header-pill" role="navigation" aria-label="Main navigation">
+    <!-- Cart Icon -->
+    <a href="{{ routes.cart_url }}" class="pill-icon pill-cart" aria-label="Cart">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+      </svg>
+      {%- if settings.cart_show_badge -%}
+        <span class="cart-badge" data-cart-count>{{ cart.item_count }}</span>
+      {%- endif -%}
+    </a>
+
+    <!-- Logo -->
+    <div class="pill-logo">
+      <a href="{{ routes.root_url }}" aria-label="{{ shop.name }}">
+        {%- if settings.header_logo != blank -%}
+          <img
+            src="{{ settings.header_logo | image_url: height: settings.header_logo_height }}"
+            alt="{{ settings.header_logo.alt | default: shop.name | escape }}"
+            height="{{ settings.header_logo_height }}"
+            loading="eager"
+          >
+        {%- else -%}
+          <span class="pill-logo-text">{{ settings.header_logo_text | default: shop.name }}</span>
+        {%- endif -%}
+      </a>
+    </div>
+
+    <!-- Menu Toggle -->
+    <button class="pill-icon pill-menu-toggle" aria-label="Open menu" aria-expanded="false" data-menu-toggle>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <line x1="3" y1="6" x2="21" y2="6"/>
+        <line x1="3" y1="12" x2="21" y2="12"/>
+        <line x1="3" y1="18" x2="21" y2="18"/>
+      </svg>
+    </button>
+  </nav>
+</header>
+
+<!-- Drawer Overlay -->
+<div class="drawer-overlay" data-drawer-overlay>
+  <div class="drawer-panel" data-drawer-panel>
+    <div class="drawer-header">
+      <span class="drawer-title">Menu</span>
+      <button class="drawer-close" aria-label="Close menu" data-menu-close>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+    <nav class="drawer-nav" aria-label="Mobile navigation">
+      {%- for link in linklists[settings.header_menu].links -%}
+        <a href="{{ link.url }}" class="drawer-link">{{ link.title }}</a>
+      {%- endfor -%}
+    </nav>
+  </div>
+</div>
+
+<style>
+  .header-pill-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    padding: var(--header-padding) var(--page-side-padding);
+    pointer-events: none;
+    transition: transform 0.3s ease;
+  }
+
+  .header-pill-wrapper.header-hidden {
+    transform: translateY(-100%);
+  }
+
+  .header-pill {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: var(--header-pill-width);
+    background: var(--header-pill-bg);
+    border: 1px solid var(--header-pill-border);
+    border-radius: 50px;
+    padding: 6px 6px;
+    pointer-events: all;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  .pill-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--header-icon-size);
+    height: var(--header-icon-size);
+    border-radius: 50%;
+    background: var(--header-icon-bg);
+    color: var(--color-text-primary);
+    border: none;
+    cursor: pointer;
+    position: relative;
+    transition: background 0.2s ease, transform 0.2s ease;
+    flex-shrink: 0;
+  }
+
+  .pill-icon:hover {
+    background: var(--color-accent);
+    color: var(--color-page-bg);
+    transform: scale(1.05);
+  }
+
+  .cart-badge {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    background: var(--cart-badge-bg);
+    color: var(--cart-badge-text);
+    font-size: 10px;
+    font-weight: 700;
+    min-width: 18px;
+    height: 18px;
+    border-radius: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 4px;
+    line-height: 1;
+  }
+
+  .pill-logo {
+    flex: 1;
+    text-align: center;
+    min-width: 0;
+  }
+
+  .pill-logo a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .pill-logo img {
+    height: var(--header-logo-height);
+    width: auto;
+    object-fit: contain;
+  }
+
+  .pill-logo-text {
+    font-family: var(--font-heading-family);
+    font-weight: var(--font-heading-weight);
+    font-size: 16px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--color-text-primary);
+    white-space: nowrap;
+  }
+
+  .pill-menu-toggle {
+    font-family: inherit;
+  }
+
+  /* Drawer */
+  .drawer-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: rgba(0, 0, 0, 0.7);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+
+  .drawer-overlay.drawer-open {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .drawer-panel {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 320px;
+    max-width: 85vw;
+    height: 100%;
+    background: var(--header-drawer-bg);
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+  }
+
+  .drawer-open .drawer-panel {
+    transform: translateX(0);
+  }
+
+  .drawer-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .drawer-title {
+    font-family: var(--font-heading-family);
+    font-weight: var(--font-heading-weight);
+    font-size: 18px;
+    color: var(--header-drawer-text);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .drawer-close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: transparent;
+    border: 1px solid var(--color-border);
+    color: var(--header-drawer-text);
+    cursor: pointer;
+    transition: background 0.2s ease, border-color 0.2s ease;
+  }
+
+  .drawer-close:hover {
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+    color: var(--color-page-bg);
+  }
+
+  .drawer-nav {
+    display: flex;
+    flex-direction: column;
+    padding: 16px 0;
+  }
+
+  .drawer-link {
+    padding: 14px 24px;
+    color: var(--header-drawer-text);
+    font-family: var(--font-heading-family);
+    font-size: 16px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: color 0.2s ease, padding-left 0.2s ease;
+  }
+
+  .drawer-link:hover {
+    color: var(--color-accent);
+    padding-left: 32px;
+  }
+</style>
+
+<script>
+  (function() {
+    var wrapper = document.querySelector('[data-section-id="{{ section.id }}"]');
+    var overlay = document.querySelector('[data-drawer-overlay]');
+    var toggle = document.querySelector('[data-menu-toggle]');
+    var close = document.querySelector('[data-menu-close]');
+
+    if (!wrapper || !overlay || !toggle) return;
+
+    function openDrawer() {
+      overlay.classList.add('drawer-open');
+      toggle.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeDrawer() {
+      overlay.classList.remove('drawer-open');
+      toggle.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    }
+
+    toggle.addEventListener('click', openDrawer);
+    if (close) close.addEventListener('click', closeDrawer);
+
+    overlay.addEventListener('click', function(e) {
+      if (e.target === overlay) closeDrawer();
+    });
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeDrawer();
+    });
+
+    /* Scroll hide/show */
+    var lastScrollY = window.scrollY;
+    var ticking = false;
+
+    function onScroll() {
+      var currentScrollY = window.scrollY;
+      if (currentScrollY > lastScrollY && currentScrollY > 80) {
+        wrapper.classList.add('header-hidden');
+      } else {
+        wrapper.classList.remove('header-hidden');
+      }
+      lastScrollY = currentScrollY;
+      ticking = false;
+    }
+
+    window.addEventListener('scroll', function() {
+      if (!ticking) {
+        requestAnimationFrame(onScroll);
+        ticking = true;
+      }
+    }, { passive: true });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Header Pill",
+  "tag": "div",
+  "class": "header-pill-section",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Header Pill"
+    }
+  ]
+}
+{% endschema %}

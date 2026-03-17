@@ -1,0 +1,317 @@
+<style>
+  .faq-section-{{ section.id }} {
+    padding: 80px 0;
+    background: {{ settings.color_page_bg }};
+  }
+  .faq-container-{{ section.id }} {
+    max-width: {{ section.settings.max_width }}px;
+    margin: 0 auto;
+    padding: 0 {{ settings.page_side_padding }}px;
+  }
+  .faq-title-{{ section.id }} {
+    text-align: center;
+    font-size: {{ settings.font_h2_size }}px;
+    color: {{ settings.color_text_primary }};
+    text-transform: {{ settings.font_heading_transform }};
+    font-weight: 700;
+    margin: 0 0 48px;
+    font-family: {{ settings.font_heading.family }}, {{ settings.font_heading.fallback_families }};
+  }
+  .faq-list-{{ section.id }} {
+    display: flex;
+    flex-direction: column;
+    gap: {{ section.settings.item_gap }}px;
+  }
+  .faq-item-{{ section.id }} {
+    background: {{ section.settings.item_bg }};
+    border: 1px solid {{ section.settings.item_border }};
+    border-radius: {{ settings.card_radius }}px;
+    overflow: hidden;
+    transition: border-color 0.3s;
+  }
+  .faq-item-{{ section.id }}:hover {
+    border-color: {{ settings.card_hover_border }};
+  }
+  .faq-question-{{ section.id }} {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 20px 24px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    gap: 16px;
+    font-family: inherit;
+  }
+  .faq-question-text-{{ section.id }} {
+    font-size: 17px;
+    font-weight: 600;
+    color: {{ section.settings.question_color }};
+    line-height: 1.4;
+  }
+  .faq-toggle-{{ section.id }} {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: {{ section.settings.toggle_bg }};
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: transform 0.3s;
+  }
+  .faq-toggle-icon-{{ section.id }} {
+    width: 16px;
+    height: 16px;
+    color: {{ section.settings.toggle_icon_color }};
+    transition: transform 0.3s;
+  }
+  .faq-item-{{ section.id }}[data-open="true"] .faq-toggle-icon-{{ section.id }} {
+    transform: rotate(45deg);
+  }
+  .faq-answer-{{ section.id }} {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+  }
+  .faq-answer-inner-{{ section.id }} {
+    padding: 0 24px 20px;
+    font-size: {{ settings.font_body_size }}px;
+    color: {{ section.settings.answer_color }};
+    line-height: {{ settings.font_body_line_height }};
+  }
+  .faq-answer-inner-{{ section.id }} p {
+    margin: 0 0 12px;
+  }
+  .faq-answer-inner-{{ section.id }} p:last-child {
+    margin-bottom: 0;
+  }
+  @media (max-width: 600px) {
+    .faq-title-{{ section.id }} {
+      font-size: {{ settings.font_h1_mobile_size }}px;
+    }
+    .faq-question-{{ section.id }} {
+      padding: 16px 18px;
+    }
+    .faq-answer-inner-{{ section.id }} {
+      padding: 0 18px 16px;
+    }
+    .faq-section-{{ section.id }} {
+      padding: 48px 0;
+    }
+  }
+</style>
+
+<section class="faq-section-{{ section.id }}">
+  <div class="faq-container-{{ section.id }}">
+    {% if section.settings.title != blank %}
+      <h2 class="faq-title-{{ section.id }}">{{ section.settings.title }}</h2>
+    {% endif %}
+
+    <div class="faq-list-{{ section.id }}" data-single-open="{{ section.settings.single_open }}">
+      {% for block in section.blocks %}
+        {% if block.type == 'faq' %}
+          <div class="faq-item-{{ section.id }}" data-open="false" {{ block.shopify_attributes }}>
+            <button class="faq-question-{{ section.id }}" aria-expanded="false" aria-controls="faq-answer-{{ section.id }}-{{ block.id }}">
+              <span class="faq-question-text-{{ section.id }}">{{ block.settings.question }}</span>
+              <span class="faq-toggle-{{ section.id }}">
+                <svg class="faq-toggle-icon-{{ section.id }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                  <line x1="12" y1="5" x2="12" y2="19"></line>
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+              </span>
+            </button>
+            <div class="faq-answer-{{ section.id }}" id="faq-answer-{{ section.id }}-{{ block.id }}" role="region">
+              <div class="faq-answer-inner-{{ section.id }}">
+                {{ block.settings.answer }}
+              </div>
+            </div>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<script>
+  (function() {
+    var sectionId = '{{ section.id }}';
+    var list = document.querySelector('.faq-list-' + sectionId);
+    if (!list) return;
+    var singleOpen = list.getAttribute('data-single-open') === 'true';
+    var items = list.querySelectorAll('.faq-item-' + sectionId);
+
+    items.forEach(function(item) {
+      var btn = item.querySelector('.faq-question-' + sectionId);
+      var answer = item.querySelector('.faq-answer-' + sectionId);
+      if (!btn || !answer) return;
+
+      btn.addEventListener('click', function() {
+        var isOpen = item.getAttribute('data-open') === 'true';
+
+        if (singleOpen && !isOpen) {
+          items.forEach(function(other) {
+            if (other !== item && other.getAttribute('data-open') === 'true') {
+              other.setAttribute('data-open', 'false');
+              other.querySelector('.faq-question-' + sectionId).setAttribute('aria-expanded', 'false');
+              var otherAnswer = other.querySelector('.faq-answer-' + sectionId);
+              otherAnswer.style.maxHeight = '0';
+            }
+          });
+        }
+
+        if (isOpen) {
+          item.setAttribute('data-open', 'false');
+          btn.setAttribute('aria-expanded', 'false');
+          answer.style.maxHeight = '0';
+        } else {
+          item.setAttribute('data-open', 'true');
+          btn.setAttribute('aria-expanded', 'true');
+          answer.style.maxHeight = answer.scrollHeight + 'px';
+        }
+      });
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "FAQ Section",
+  "tag": "section",
+  "class": "section-faq",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Frequently Asked Questions"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Max width (px)",
+      "min": 600,
+      "max": 1200,
+      "step": 20,
+      "default": 800,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "item_gap",
+      "label": "Item gap (px)",
+      "min": 4,
+      "max": 24,
+      "step": 2,
+      "default": 12,
+      "unit": "px"
+    },
+    {
+      "type": "color",
+      "id": "item_bg",
+      "label": "Item background",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "color",
+      "id": "item_border",
+      "label": "Item border",
+      "default": "#333333"
+    },
+    {
+      "type": "color",
+      "id": "question_color",
+      "label": "Question text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "answer_color",
+      "label": "Answer text color",
+      "default": "#999999"
+    },
+    {
+      "type": "color",
+      "id": "toggle_bg",
+      "label": "Toggle button background",
+      "default": "#39ff14"
+    },
+    {
+      "type": "color",
+      "id": "toggle_icon_color",
+      "label": "Toggle icon color",
+      "default": "#000000"
+    },
+    {
+      "type": "checkbox",
+      "id": "single_open",
+      "label": "Only one item open at a time",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq",
+      "name": "FAQ Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "How does this work?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer",
+          "default": "<p>We provide comprehensive vendor lists with verified supplier contacts and wholesale pricing information.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQ Section",
+      "blocks": [
+        {
+          "type": "faq",
+          "settings": {
+            "question": "What is included in the vendor list?",
+            "answer": "<p>Each vendor list includes verified supplier contact information, wholesale pricing details, minimum order quantities, product categories, and direct links to order from each vendor.</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "How will I receive my vendor list?",
+            "answer": "<p>After purchase, you will receive instant digital access to your vendor list. It will be delivered to your email and available for download in your account dashboard immediately.</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "Do you offer refunds?",
+            "answer": "<p>Due to the digital nature of our products, all sales are final. However, if you experience any issues accessing your purchase, our support team is available to help resolve any problems.</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "Are the vendors verified and legitimate?",
+            "answer": "<p>Yes, every vendor on our lists has been personally vetted and verified. We regularly update our lists to ensure all contacts are active and the pricing information is current.</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "Can I resell the products I source from these vendors?",
+            "answer": "<p>Absolutely! That is the entire purpose of our vendor lists. You can source products at wholesale prices and resell them on platforms like eBay, Amazon, Poshmark, your own store, and more.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

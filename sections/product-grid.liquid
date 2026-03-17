@@ -1,0 +1,407 @@
+{%- liquid
+  assign collection_handle = section.settings.collection
+  assign coll = collections[collection_handle]
+  assign columns = section.settings.columns | default: 3
+  assign columns_mobile = section.settings.columns_mobile | default: 1
+  assign limit = columns
+  if section.settings.show_second_row
+    assign limit = columns | times: 2
+  endif
+-%}
+
+<section class="product-grid-section" data-section-id="{{ section.id }}" style="padding: var(--section-spacing) 0;">
+  <div class="product-grid-container">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="product-grid-heading{% if settings.anim_scroll_reveal %} reveal{% endif %}">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+
+    <div class="product-grid" style="--grid-columns: {{ columns }}; --grid-columns-mobile: {{ columns_mobile }};">
+      {%- for product in coll.products limit: limit -%}
+        {%- liquid
+          assign first_variant = product.selected_or_first_available_variant
+          assign has_sale = false
+          if product.compare_at_price > product.price
+            assign has_sale = true
+          endif
+          assign title_parts = product.title | split: ' - '
+          assign title_line1 = title_parts[0]
+          assign title_line2 = title_parts[1] | default: ''
+        -%}
+
+        <div class="pcard{% if settings.anim_scroll_reveal %} reveal{% endif %}" style="{% if settings.anim_scroll_reveal %}transition-delay: {{ forloop.index0 | times: settings.anim_stagger }}ms;{% endif %}">
+          <div class="pcard-image-wrap">
+            <a href="{{ product.url }}" class="pcard-image-link">
+              {%- if product.featured_image != blank -%}
+                <img
+                  src="{{ product.featured_image | image_url: width: 600 }}"
+                  srcset="{{ product.featured_image | image_url: width: 400 }} 400w, {{ product.featured_image | image_url: width: 600 }} 600w, {{ product.featured_image | image_url: width: 800 }} 800w"
+                  sizes="(max-width: 749px) 50vw, 33vw"
+                  alt="{{ product.featured_image.alt | escape | default: product.title | escape }}"
+                  loading="lazy"
+                  width="{{ product.featured_image.width }}"
+                  height="{{ product.featured_image.height }}"
+                  class="pcard-image"
+                >
+              {%- else -%}
+                <div class="pcard-placeholder">{{ product.title | truncate: 1, '' }}</div>
+              {%- endif -%}
+            </a>
+
+            <!-- Title overlay -->
+            <div class="pcard-title-overlay">
+              <span class="pcard-title-line1">{{ title_line1 }}</span>
+              {%- if title_line2 != '' -%}
+                <span class="pcard-title-line2">{{ title_line2 }}</span>
+              {%- endif -%}
+            </div>
+
+            {%- if has_sale and settings.pcard_show_sale_badge -%}
+              <span class="pcard-sale-badge">{{ settings.pcard_sale_text }}</span>
+            {%- endif -%}
+          </div>
+
+          <div class="pcard-info">
+            <div class="pcard-prices">
+              <span class="pcard-price">{{ product.price | money }}</span>
+              {%- if has_sale -%}
+                <span class="pcard-compare-price">{{ product.compare_at_price | money }}</span>
+              {%- endif -%}
+            </div>
+
+            <div class="pcard-actions">
+              <button
+                class="pcard-cart-btn"
+                aria-label="Add {{ product.title | escape }} to cart"
+                data-variant-id="{{ first_variant.id }}"
+                data-add-to-cart
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+                  <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+                </svg>
+              </button>
+
+              {%- liquid
+                assign buy_action = settings.pcard_button_action
+                if buy_action == 'product'
+                  assign buy_url = product.url
+                elsif buy_action == 'checkout'
+                  assign buy_url = '/cart/' | append: first_variant.id | append: ':1'
+                endif
+              -%}
+
+              {%- if buy_action == 'cart' -%}
+                <button
+                  class="pcard-buy-btn"
+                  data-variant-id="{{ first_variant.id }}"
+                  data-add-to-cart
+                >
+                  {{ settings.pcard_button_text }}
+                </button>
+              {%- else -%}
+                <a href="{{ buy_url }}" class="pcard-buy-btn">
+                  {{ settings.pcard_button_text }}
+                </a>
+              {%- endif -%}
+            </div>
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+<style>
+  .product-grid-container {
+    max-width: var(--page-max-width);
+    margin: 0 auto;
+    padding: 0 var(--page-side-padding);
+  }
+
+  .product-grid-heading {
+    font-family: var(--font-heading-family);
+    font-size: var(--font-h2-size);
+    text-transform: var(--font-heading-transform);
+    color: var(--color-text-primary);
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(var(--grid-columns), 1fr);
+    gap: var(--grid-gap);
+  }
+
+  @media (max-width: 749px) {
+    .product-grid {
+      grid-template-columns: repeat(var(--grid-columns-mobile), 1fr);
+    }
+  }
+
+  .pcard {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--card-radius);
+    overflow: hidden;
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  {% if settings.card_hover_lift %}
+  .pcard:hover {
+    transform: translateY(-{{ settings.card_hover_lift_amount }}px);
+    border-color: var(--card-hover-border);
+    box-shadow: 0 0 20px rgba(57, 255, 20, 0.1);
+  }
+  {% endif %}
+
+  .pcard-image-wrap {
+    position: relative;
+    overflow: hidden;
+    background: var(--pcard-image-bg);
+    padding: var(--pcard-image-padding);
+    aspect-ratio: 1 / 1;
+  }
+
+  .pcard-image-link {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .pcard-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+  }
+
+  {% if settings.pcard_hover_zoom %}
+  .pcard:hover .pcard-image {
+    transform: scale(1.08);
+  }
+  {% endif %}
+
+  .pcard-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+    font-weight: 700;
+    color: var(--color-text-faint);
+    background: var(--pcard-image-bg);
+  }
+
+  .pcard-title-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 12px 14px;
+    background: linear-gradient(transparent, rgba({{ settings.pcard_overlay_bg.red }}, {{ settings.pcard_overlay_bg.green }}, {{ settings.pcard_overlay_bg.blue }}, var(--pcard-overlay-opacity)));
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .pcard-title-line1 {
+    color: var(--pcard-title-line1-color);
+    font-style: italic;
+    font-size: 13px;
+    line-height: 1.2;
+  }
+
+  .pcard-title-line2 {
+    color: var(--pcard-title-line2-color);
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 1.2;
+  }
+
+  .pcard-sale-badge {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    background: var(--pcard-sale-bg);
+    color: var(--pcard-sale-text-color);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 4px;
+    letter-spacing: 1px;
+    z-index: 2;
+  }
+
+  .pcard-info {
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .pcard-prices {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .pcard-price {
+    color: var(--pcard-price-color);
+    font-weight: 700;
+    font-size: 18px;
+  }
+
+  .pcard-compare-price {
+    color: var(--pcard-compare-color);
+    text-decoration: line-through;
+    font-size: 14px;
+  }
+
+  .pcard-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .pcard-cart-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--pcard-cart-icon-bg);
+    color: var(--pcard-cart-icon-color);
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
+    flex-shrink: 0;
+  }
+
+  .pcard-cart-btn:hover {
+    background: var(--color-accent);
+    color: var(--color-page-bg);
+    transform: scale(1.1);
+  }
+
+  .pcard-buy-btn {
+    flex: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    padding: 0 20px;
+    background: var(--pcard-button-bg);
+    color: var(--pcard-button-text-color);
+    font-family: var(--font-heading-family);
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+
+  .pcard-buy-btn:hover {
+    background: var(--btn-primary-hover);
+    transform: translateY(-1px);
+  }
+</style>
+
+<script>
+  (function() {
+    var section = document.querySelector('[data-section-id="{{ section.id }}"]');
+    if (!section) return;
+
+    section.querySelectorAll('[data-add-to-cart]').forEach(function(btn) {
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        var variantId = this.getAttribute('data-variant-id');
+        if (!variantId) return;
+
+        var originalText = this.innerHTML;
+        this.disabled = true;
+
+        fetch('/cart/add.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ items: [{ id: parseInt(variantId), quantity: 1 }] })
+        })
+        .then(function(res) { return res.json(); })
+        .then(function(data) {
+          /* Update cart badge */
+          fetch('/cart.js')
+            .then(function(r) { return r.json(); })
+            .then(function(cart) {
+              document.querySelectorAll('[data-cart-count]').forEach(function(el) {
+                el.textContent = cart.item_count;
+              });
+            });
+
+          btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>';
+          setTimeout(function() {
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+          }, 1200);
+        })
+        .catch(function() {
+          btn.disabled = false;
+        });
+      });
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Product Grid",
+  "tag": "div",
+  "class": "product-grid-wrapper",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "OUR PRODUCTS"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "columns",
+      "label": "Products per row",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "columns_mobile",
+      "label": "Columns on mobile",
+      "min": 1,
+      "max": 2,
+      "step": 1,
+      "default": 1
+    },
+    {
+      "type": "checkbox",
+      "id": "show_second_row",
+      "label": "Show second row",
+      "default": false
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Grid"
+    }
+  ]
+}
+{% endschema %}

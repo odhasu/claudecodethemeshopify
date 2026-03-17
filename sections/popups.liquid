@@ -1,0 +1,432 @@
+<style>
+  /* Purchase Notification */
+  .popup-purchase-{{ section.id }} {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background: {{ settings.color_card_bg }};
+    border: 1px solid {{ settings.color_border }};
+    border-radius: {{ settings.card_radius }}px;
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    z-index: 999;
+    max-width: 360px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+    transform: translateX(-120%);
+    transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  .popup-purchase-{{ section.id }}.is-visible {
+    transform: translateX(0);
+  }
+  .popup-purchase-img-{{ section.id }} {
+    width: 48px;
+    height: 48px;
+    border-radius: 8px;
+    background: {{ settings.color_image_bg }};
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 24px;
+  }
+  .popup-purchase-body-{{ section.id }} {
+    flex: 1;
+    min-width: 0;
+  }
+  .popup-purchase-text-{{ section.id }} {
+    font-size: 13px;
+    color: {{ settings.color_text_muted }};
+    line-height: 1.4;
+    margin: 0;
+  }
+  .popup-purchase-text-{{ section.id }} strong {
+    color: {{ settings.color_text_primary }};
+  }
+  .popup-purchase-badge-{{ section.id }} {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    color: {{ settings.color_accent }};
+    margin-top: 4px;
+    font-weight: 600;
+  }
+  .popup-purchase-badge-{{ section.id }} svg {
+    width: 12px;
+    height: 12px;
+  }
+
+  /* Urgency Popup */
+  .popup-urgency-{{ section.id }} {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: {{ settings.color_card_bg }};
+    border: 1px solid {{ settings.color_border }};
+    border-radius: {{ settings.card_radius }}px;
+    padding: 16px 44px 16px 20px;
+    z-index: 999;
+    max-width: 320px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+    transform: translateX(120%);
+    transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  .popup-urgency-{{ section.id }}.is-visible {
+    transform: translateX(0);
+  }
+  .popup-urgency-text-{{ section.id }} {
+    font-size: 14px;
+    color: {{ settings.color_text_primary }};
+    margin: 0;
+    line-height: 1.4;
+  }
+  .popup-urgency-text-{{ section.id }} span {
+    color: {{ settings.color_accent }};
+    font-weight: 700;
+  }
+  .popup-urgency-close-{{ section.id }} {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    background: none;
+    border: none;
+    color: {{ settings.color_text_faint }};
+    cursor: pointer;
+    font-size: 18px;
+    line-height: 1;
+    padding: 4px;
+    transition: color 0.3s;
+  }
+  .popup-urgency-close-{{ section.id }}:hover {
+    color: {{ settings.color_text_primary }};
+  }
+
+  /* Chat Bubble */
+  .popup-chat-{{ section.id }} {
+    position: fixed;
+    bottom: {{ section.settings.chat_position_bottom }}px;
+    {% if section.settings.chat_position == 'right' %}right: 20px;{% else %}left: 20px;{% endif %}
+    z-index: 998;
+  }
+  .popup-chat-btn-{{ section.id }} {
+    width: {{ section.settings.chat_size }}px;
+    height: {{ section.settings.chat_size }}px;
+    border-radius: 50%;
+    background: {{ section.settings.chat_bg }};
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 20px rgba(57, 255, 20, 0.3);
+    position: relative;
+    transition: transform 0.3s;
+    animation: chatBounce-{{ section.id }} 2s ease-in-out 1s 3;
+  }
+  .popup-chat-btn-{{ section.id }}:hover {
+    transform: scale(1.1);
+  }
+  .popup-chat-btn-{{ section.id }} svg {
+    width: 24px;
+    height: 24px;
+    color: {{ section.settings.chat_icon_color }};
+  }
+  .popup-chat-dot-{{ section.id }} {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: {{ settings.color_error }};
+    border: 2px solid {{ settings.color_card_bg }};
+  }
+  @keyframes chatBounce-{{ section.id }} {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+
+  @media (max-width: 600px) {
+    .popup-purchase-{{ section.id }} {
+      left: 10px;
+      right: 10px;
+      max-width: none;
+      bottom: 10px;
+    }
+    .popup-urgency-{{ section.id }} {
+      right: 10px;
+      left: 10px;
+      max-width: none;
+      bottom: 10px;
+    }
+  }
+</style>
+
+{% if section.settings.enable_purchase %}
+  <div class="popup-purchase-{{ section.id }}" id="popup-purchase-{{ section.id }}">
+    <div class="popup-purchase-img-{{ section.id }}">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="{{ settings.color_text_muted }}" stroke-width="2"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+    </div>
+    <div class="popup-purchase-body-{{ section.id }}">
+      <p class="popup-purchase-text-{{ section.id }}">
+        Someone from <strong class="popup-purchase-city-{{ section.id }}">New York</strong> just purchased <strong class="popup-purchase-product-{{ section.id }}">Vendor List</strong>
+      </p>
+      <div class="popup-purchase-badge-{{ section.id }}">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+        Verified purchase
+      </div>
+    </div>
+  </div>
+{% endif %}
+
+{% if section.settings.enable_urgency %}
+  <div class="popup-urgency-{{ section.id }}" id="popup-urgency-{{ section.id }}">
+    <button class="popup-urgency-close-{{ section.id }}" aria-label="Close">&times;</button>
+    <p class="popup-urgency-text-{{ section.id }}">
+      <span class="popup-urgency-count-{{ section.id }}">{{ section.settings.urgency_count }}</span> {{ section.settings.urgency_text }}
+    </p>
+  </div>
+{% endif %}
+
+{% if section.settings.enable_chat %}
+  <div class="popup-chat-{{ section.id }}">
+    {% if section.settings.chat_url != blank %}
+      <a href="{{ section.settings.chat_url }}" class="popup-chat-btn-{{ section.id }}" aria-label="Chat with us" target="_blank" rel="noopener">
+    {% else %}
+      <button class="popup-chat-btn-{{ section.id }}" aria-label="Chat with us">
+    {% endif %}
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+      </svg>
+      <span class="popup-chat-dot-{{ section.id }}"></span>
+    {% if section.settings.chat_url != blank %}
+      </a>
+    {% else %}
+      </button>
+    {% endif %}
+  </div>
+{% endif %}
+
+<script>
+  (function() {
+    var sid = '{{ section.id }}';
+
+    {% if section.settings.enable_purchase %}
+    (function() {
+      var el = document.getElementById('popup-purchase-' + sid);
+      if (!el) return;
+
+      var buyers = {{ section.settings.buyer_names | replace: "'", "\\'" | json }};
+      var products = {{ section.settings.product_names | replace: "'", "\\'" | json }};
+
+      var buyerList = buyers ? buyers.split('\n').filter(function(n) { return n.trim(); }) : ['Alex', 'Jordan', 'Taylor', 'Morgan', 'Casey'];
+      var productList = products ? products.split('\n').filter(function(n) { return n.trim(); }) : ['Vendor List', 'Premium Pack', 'Starter Bundle'];
+
+      var cities = ['New York', 'Los Angeles', 'Chicago', 'Houston', 'Miami', 'Atlanta', 'Dallas', 'Phoenix', 'Denver', 'Seattle', 'Toronto', 'London'];
+      var cityEl = el.querySelector('.popup-purchase-city-' + sid);
+      var productEl = el.querySelector('.popup-purchase-product-' + sid);
+
+      var delay = {{ section.settings.purchase_delay }} * 1000;
+      var duration = {{ section.settings.purchase_duration }} * 1000;
+      var interval = {{ section.settings.purchase_interval }} * 1000;
+
+      function randomFrom(arr) {
+        return arr[Math.floor(Math.random() * arr.length)];
+      }
+
+      function showPurchase() {
+        if (cityEl) cityEl.textContent = randomFrom(cities);
+        if (productEl) productEl.textContent = randomFrom(productList);
+        el.classList.add('is-visible');
+        setTimeout(function() {
+          el.classList.remove('is-visible');
+        }, duration);
+      }
+
+      setTimeout(function() {
+        showPurchase();
+        setInterval(showPurchase, interval);
+      }, delay);
+    })();
+    {% endif %}
+
+    {% if section.settings.enable_urgency %}
+    (function() {
+      var el = document.getElementById('popup-urgency-' + sid);
+      if (!el) return;
+      var closeBtn = el.querySelector('.popup-urgency-close-' + sid);
+      var delay = {{ section.settings.urgency_delay }} * 1000;
+
+      setTimeout(function() {
+        el.classList.add('is-visible');
+      }, delay);
+
+      if (closeBtn) {
+        closeBtn.addEventListener('click', function() {
+          el.classList.remove('is-visible');
+        });
+      }
+    })();
+    {% endif %}
+
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Popups & Notifications",
+  "tag": "section",
+  "class": "section-popups",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Purchase Notification"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_purchase",
+      "label": "Enable purchase notification",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "purchase_delay",
+      "label": "Initial delay (seconds)",
+      "min": 1,
+      "max": 30,
+      "step": 1,
+      "default": 5,
+      "unit": "s"
+    },
+    {
+      "type": "range",
+      "id": "purchase_duration",
+      "label": "Display duration (seconds)",
+      "min": 2,
+      "max": 15,
+      "step": 1,
+      "default": 5,
+      "unit": "s"
+    },
+    {
+      "type": "range",
+      "id": "purchase_interval",
+      "label": "Repeat interval (seconds)",
+      "min": 10,
+      "max": 120,
+      "step": 5,
+      "default": 30,
+      "unit": "s"
+    },
+    {
+      "type": "textarea",
+      "id": "buyer_names",
+      "label": "Buyer names (one per line)",
+      "default": "Alex M.\nJordan K.\nTaylor R.\nMorgan S.\nCasey W.\nDrew P.\nAvery L."
+    },
+    {
+      "type": "textarea",
+      "id": "product_names",
+      "label": "Product names (one per line)",
+      "default": "Premium Vendor List\nStarter Bundle\nUltimate Pack\nVendor Directory"
+    },
+    {
+      "type": "header",
+      "content": "Urgency Popup"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_urgency",
+      "label": "Enable urgency popup",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "urgency_delay",
+      "label": "Appear after (seconds)",
+      "min": 1,
+      "max": 60,
+      "step": 1,
+      "default": 10,
+      "unit": "s"
+    },
+    {
+      "type": "text",
+      "id": "urgency_count",
+      "label": "Number of viewers",
+      "default": "23"
+    },
+    {
+      "type": "text",
+      "id": "urgency_text",
+      "label": "Urgency text (after number)",
+      "default": "people are viewing this right now"
+    },
+    {
+      "type": "header",
+      "content": "Chat Bubble"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_chat",
+      "label": "Enable chat bubble",
+      "default": true
+    },
+    {
+      "type": "url",
+      "id": "chat_url",
+      "label": "Chat link URL",
+      "info": "Leave empty for decorative button"
+    },
+    {
+      "type": "color",
+      "id": "chat_bg",
+      "label": "Chat bubble background",
+      "default": "#39ff14"
+    },
+    {
+      "type": "color",
+      "id": "chat_icon_color",
+      "label": "Chat icon color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "chat_size",
+      "label": "Chat bubble size (px)",
+      "min": 40,
+      "max": 72,
+      "step": 4,
+      "default": 56,
+      "unit": "px"
+    },
+    {
+      "type": "select",
+      "id": "chat_position",
+      "label": "Chat bubble position",
+      "options": [
+        { "value": "right", "label": "Bottom right" },
+        { "value": "left", "label": "Bottom left" }
+      ],
+      "default": "right"
+    },
+    {
+      "type": "range",
+      "id": "chat_position_bottom",
+      "label": "Distance from bottom (px)",
+      "min": 16,
+      "max": 100,
+      "step": 4,
+      "default": 24,
+      "unit": "px"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Popups & Notifications"
+    }
+  ]
+}
+{% endschema %}

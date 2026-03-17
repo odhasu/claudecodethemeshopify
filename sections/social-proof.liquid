@@ -1,0 +1,188 @@
+{%- liquid
+  assign card_width = section.settings.card_width | default: 280
+  assign card_gap = section.settings.card_gap | default: 16
+  assign card_radius = section.settings.card_radius | default: 12
+-%}
+
+<section class="social-proof-section{% if settings.anim_scroll_reveal %} reveal{% endif %}" data-section-id="{{ section.id }}" style="padding: var(--section-spacing) 0;">
+  <div class="social-proof-container">
+    {%- if section.settings.title != blank -%}
+      <h2 class="social-proof-heading">{{ section.settings.title }}</h2>
+    {%- endif -%}
+
+    <div class="social-proof-scroll" style="--sp-card-width: {{ card_width }}px; --sp-card-gap: {{ card_gap }}px; --sp-card-radius: {{ card_radius }}px;">
+      {%- for block in section.blocks -%}
+        <div class="social-proof-card" {{ block.shopify_attributes }}>
+          {%- if block.settings.image != blank -%}
+            <div class="sp-card-image">
+              <img
+                src="{{ block.settings.image | image_url: width: 600 }}"
+                alt="{{ block.settings.username | default: 'Customer screenshot' | escape }}"
+                loading="lazy"
+                width="{{ block.settings.image.width }}"
+                height="{{ block.settings.image.height }}"
+              >
+            </div>
+          {%- else -%}
+            <div class="sp-card-placeholder">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.3">
+                <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/>
+                <path d="m21 15-5-5L5 21"/>
+              </svg>
+            </div>
+          {%- endif -%}
+          {%- if block.settings.username != blank -%}
+            <div class="sp-card-username">@{{ block.settings.username }}</div>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+<style>
+  .social-proof-container {
+    max-width: var(--page-max-width);
+    margin: 0 auto;
+    padding: 0 var(--page-side-padding);
+  }
+
+  .social-proof-heading {
+    font-family: var(--font-heading-family);
+    font-size: var(--font-h2-size);
+    text-transform: var(--font-heading-transform);
+    color: var(--color-text-primary);
+    text-align: center;
+    margin-bottom: 32px;
+  }
+
+  .social-proof-scroll {
+    display: flex;
+    gap: var(--sp-card-gap);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 8px;
+
+    /* Hide scrollbar */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .social-proof-scroll::-webkit-scrollbar {
+    display: none;
+  }
+
+  .social-proof-card {
+    flex: 0 0 var(--sp-card-width);
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--sp-card-radius);
+    overflow: hidden;
+    scroll-snap-align: start;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+  }
+
+  .social-proof-card:hover {
+    border-color: var(--card-hover-border);
+    transform: translateY(-2px);
+  }
+
+  .sp-card-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .sp-card-placeholder {
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-secondary-bg);
+    color: var(--color-text-faint);
+  }
+
+  .sp-card-username {
+    padding: 10px 14px;
+    font-size: 13px;
+    color: var(--color-text-muted);
+    font-weight: 500;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Social Proof",
+  "tag": "div",
+  "class": "social-proof-wrapper",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section title",
+      "default": "What Our Customers Say"
+    },
+    {
+      "type": "range",
+      "id": "card_width",
+      "label": "Card width (px)",
+      "min": 180,
+      "max": 400,
+      "step": 10,
+      "default": 280,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "card_gap",
+      "label": "Card gap (px)",
+      "min": 8,
+      "max": 32,
+      "step": 4,
+      "default": 16,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "label": "Card border radius (px)",
+      "min": 0,
+      "max": 24,
+      "step": 2,
+      "default": 12,
+      "unit": "px"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "screenshot",
+      "name": "Screenshot",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Screenshot image"
+        },
+        {
+          "type": "text",
+          "id": "username",
+          "label": "Username",
+          "default": "customer"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Social Proof",
+      "blocks": [
+        { "type": "screenshot", "settings": { "username": "reseller_josh" } },
+        { "type": "screenshot", "settings": { "username": "vendorqueen" } },
+        { "type": "screenshot", "settings": { "username": "flipgod99" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
