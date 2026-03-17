@@ -111,6 +111,51 @@
 </head>
 
 <body class="template-{{ template.name }}{% if template.suffix %} template-{{ template.name }}-{{ template.suffix }}{% endif %}">
+  <!-- Loading Screen -->
+  <div class="scaled-loader" id="scaled-loader">
+    <div class="scaled-loader__spinner"></div>
+  </div>
+  <style>
+    .scaled-loader {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      z-index: 99999;
+      background: var(--color-bg, #000);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.4s ease;
+    }
+    .scaled-loader.hide {
+      opacity: 0;
+      pointer-events: none;
+    }
+    .scaled-loader__spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid transparent;
+      border-top-color: var(--color-accent, #39ff14);
+      border-right-color: var(--color-accent, #39ff14);
+      border-radius: 50%;
+      animation: scaledSpin 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite;
+    }
+    @keyframes scaledSpin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+  <script>
+    (function(){
+      function hideLoader() {
+        var l = document.getElementById('scaled-loader');
+        if(l) { l.classList.add('hide'); setTimeout(function(){ l.style.display='none'; }, 400); }
+      }
+      window.addEventListener('load', function(){ setTimeout(hideLoader, 300); });
+      setTimeout(hideLoader, 5000);
+    })();
+  </script>
+
   <a class="sr-only" href="#MainContent">Skip to content</a>
 
   {% sections 'header-group' %}

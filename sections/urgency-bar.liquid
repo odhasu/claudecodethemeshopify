@@ -8,6 +8,7 @@
   assign dot_color = section.settings.dot_color | default: '#39ff14'
   assign min_viewers = section.settings.min_viewers | default: 10
   assign max_viewers = section.settings.max_viewers | default: 100
+  assign icon_color = section.settings.icon_color | default: accent
 -%}
 
 <style>
@@ -32,13 +33,31 @@
   .urgency-item {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
     padding: 0 24px;
     font-size: {{ font_size }}px;
     font-weight: 500;
     letter-spacing: 0.02em;
   }
   .urgency-item .accent { color: {{ accent }}; font-weight: 700; }
+  .urgency-icon {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  .urgency-icon svg {
+    width: 14px;
+    height: 14px;
+    stroke: {{ icon_color }};
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .urgency-icon--filled svg {
+    fill: {{ icon_color }};
+    stroke: {{ icon_color }};
+  }
   .urgency-dot {
     display: inline-block;
     width: 6px; height: 6px;
@@ -68,20 +87,25 @@
   <div class="urgency-track">
     {%- for i in (1..2) -%}
       {%- if section.settings.show_verified -%}
-        <span class="urgency-item">✓ {{ section.settings.verified_text | default: 'Fully verified' }}</span>
+        <span class="urgency-item">
+          <span class="urgency-icon"><svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg></span>
+          {{ section.settings.verified_text | default: 'Fully verified' }}
+        </span>
         <span class="urgency-divider"></span>
       {%- endif -%}
 
       {%- if section.settings.show_countdown -%}
         <span class="urgency-item">
+          <span class="urgency-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
           {{ section.settings.countdown_prefix | default: 'Price goes up in' }}
-          <span class="accent" id="urgency-countdown{% if i == 2 %}-dup{% endif %}">00:00:00</span>
+          <span class="accent" id="urgency-countdown{% if i == 2 %}-dup{% endif %}">0h 00m</span>
         </span>
         <span class="urgency-divider"></span>
       {%- endif -%}
 
       {%- if section.settings.show_rating -%}
         <span class="urgency-item">
+          <span class="urgency-icon urgency-icon--filled"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
           Rated <span class="accent">{{ section.settings.rating_value | default: '4.96/5' }}</span>
           by <span class="accent">{{ section.settings.rating_count | default: '2,400+' }}</span> resellers
         </span>
@@ -98,12 +122,18 @@
       {%- endif -%}
 
       {%- if section.settings.show_private -%}
-        <span class="urgency-item">🔒 {{ section.settings.private_text | default: 'Private suppliers not found anywhere else' }}</span>
+        <span class="urgency-item">
+          <span class="urgency-icon"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></span>
+          {{ section.settings.private_text | default: 'Private suppliers not found anywhere else' }}
+        </span>
         <span class="urgency-divider"></span>
       {%- endif -%}
 
       {%- if section.settings.show_personally_verified -%}
-        <span class="urgency-item">✓ {{ section.settings.personally_verified_text | default: 'All suppliers personally verified' }}</span>
+        <span class="urgency-item">
+          <span class="urgency-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
+          {{ section.settings.personally_verified_text | default: 'All suppliers personally verified' }}
+        </span>
         <span class="urgency-divider"></span>
       {%- endif -%}
 
@@ -119,7 +149,7 @@
 
 <script>
   (function() {
-    // Countdown to midnight
+    // Countdown to midnight — formatted as "Xh Xm"
     function updateCountdown() {
       var now = new Date();
       var midnight = new Date(now);
@@ -127,15 +157,14 @@
       var diff = midnight - now;
       var h = Math.floor(diff / 3600000);
       var m = Math.floor((diff % 3600000) / 60000);
-      var s = Math.floor((diff % 60000) / 1000);
-      var str = String(h).padStart(2,'0') + ':' + String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+      var str = h + 'h ' + String(m).padStart(2,'0') + 'm';
       var el1 = document.getElementById('urgency-countdown');
       var el2 = document.getElementById('urgency-countdown-dup');
       if (el1) el1.textContent = str;
       if (el2) el2.textContent = str;
     }
     updateCountdown();
-    setInterval(updateCountdown, 1000);
+    setInterval(updateCountdown, 60000);
 
     // Random viewer count
     var min = {{ min_viewers }};
@@ -162,6 +191,7 @@
     { "type": "color", "id": "bg_color", "label": "Background color", "default": "#000000" },
     { "type": "color", "id": "text_color", "label": "Text color", "default": "#ffffff" },
     { "type": "color", "id": "accent_color", "label": "Accent color", "default": "#39ff14" },
+    { "type": "color", "id": "icon_color", "label": "Icon color", "default": "#39ff14" },
     { "type": "color", "id": "dot_color", "label": "Pulsing dot color", "default": "#39ff14" },
     { "type": "color", "id": "divider_color", "label": "Divider dot color", "default": "#333333" },
     { "type": "color", "id": "border_color", "label": "Bottom border color", "default": "#1a1a1a" },

@@ -32,7 +32,11 @@
     border-radius: 50%;
     background: #22c55e;
     border: 2px solid #000;
-    animation: pulseDot 1.5s ease-in-out infinite;
+    animation: chatPulseDot 1.5s ease-in-out infinite;
+  }
+  @keyframes chatPulseDot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.4); }
   }
 
   .chat-window {
@@ -76,7 +80,7 @@
     width: 6px; height: 6px;
     border-radius: 50%;
     background: #22c55e;
-    animation: pulseDot 1.5s ease-in-out infinite;
+    animation: chatPulseDot 1.5s ease-in-out infinite;
   }
   .chat-close-btn { background: none; border: none; color: #fff; font-size: 20px; cursor: pointer; padding: 4px; }
   .chat-messages {
@@ -107,6 +111,28 @@
     border-bottom-right-radius: 4px;
   }
   .chat-msg a { color: {{ btn_bg }}; font-weight: 700; text-decoration: underline; }
+  .chat-typing {
+    align-self: flex-start;
+    padding: 10px 14px;
+    background: #1a1a1a;
+    border-radius: 12px;
+    border-bottom-left-radius: 4px;
+    display: flex;
+    gap: 4px;
+    align-items: center;
+  }
+  .chat-typing span {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: #555;
+    animation: typingBounce 1.4s ease-in-out infinite;
+  }
+  .chat-typing span:nth-child(2) { animation-delay: 0.2s; }
+  .chat-typing span:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes typingBounce {
+    0%, 60%, 100% { transform: translateY(0); }
+    30% { transform: translateY(-6px); }
+  }
   .chat-input-area {
     padding: 12px 16px;
     border-top: 1px solid #2a2a2a;
@@ -164,10 +190,10 @@
     <button class="chat-close-btn" id="chat-close">&times;</button>
   </div>
   <div class="chat-messages" id="chat-messages">
-    <div class="chat-msg bot">{{ settings.chat_greeting | default: 'Hey! 👋 Welcome! Looking to start your reselling journey? I can help you pick the right bundle.' }}</div>
+    <div class="chat-msg bot">{{ settings.chat_greeting | default: "Hey! 👋 Got questions about our vendor lists? I'm here to help you decide." }}</div>
   </div>
   <div class="chat-input-area">
-    <input class="chat-input" id="chat-input" placeholder="{{ settings.chat_placeholder | default: 'Type a message...' }}" onkeypress="if(event.key==='Enter')sendChatMsg()">
+    <input class="chat-input" id="chat-input" placeholder="{{ settings.chat_placeholder | default: 'Ask me anything...' }}" onkeypress="if(event.key==='Enter')sendChatMsg()">
     <button class="chat-send" onclick="sendChatMsg()">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
     </button>
@@ -175,23 +201,87 @@
 </div>
 
 <script>
-  (function() {
-    var fab = document.getElementById('chat-fab');
-    var win = document.getElementById('chat-window');
-    var close = document.getElementById('chat-close');
-    fab.addEventListener('click', function() { win.classList.toggle('open'); });
-    close.addEventListener('click', function() { win.classList.remove('open'); });
-  })();
+(function() {
+  var fab = document.getElementById('chat-fab');
+  var win = document.getElementById('chat-window');
+  var close = document.getElementById('chat-close');
+  fab.addEventListener('click', function() { win.classList.toggle('open'); });
+  close.addEventListener('click', function() { win.classList.remove('open'); });
 
-  var botResponses = [
-    "Great question! Our vendor lists include verified suppliers with the best prices. Which bundle interests you?",
-    "Our most popular bundle is the Elite Vendor Bundle — it includes premium suppliers across multiple categories.",
-    "Once you purchase, you'll get instant access via email. It's that simple! 🚀",
-    "Ready to get started? <a href='/collections/all'>Check out our bundles here →</a>"
+  /* ── Smart Chatbot Engine ── */
+  var keywords = {
+    // Greetings
+    'hello|hi|hey|yo|sup|whats up|wassup': "Hey! 👋 What's good? Looking to start reselling or got questions about a specific bundle?",
+    // Price / cost
+    'price|cost|how much|expensive|cheap|afford|money|pay': "Our bundles range from budget-friendly to premium! Check out our <a href='/collections/all'>full collection</a> — there's something for every budget. What category interests you?",
+    // Legit / scam / trust
+    'legit|scam|trust|real|fake|honest|reliable': "100% legit! Every single vendor is personally verified and tested. We've helped thousands of resellers get started. Check our reviews section — real customers, real results 💯",
+    // Refund / return
+    'refund|return|money back|cancel': "Since these are digital products, all sales are final. But we stand behind our lists 100% — the vendors are verified and working. You won't need a refund 🔥",
+    // Delivery / receive / how
+    'deliver|receive|get|how do i|access|download|email|instant': "Instant delivery! Once you purchase, vendor links are sent straight to your email within minutes. No waiting around ⚡",
+    // Which / recommend / best / popular
+    'which|recommend|best|popular|suggest|what should|starter|beginner': "For beginners, I'd recommend starting with a single category bundle to test the waters. Our most popular is the Elite bundle — it covers multiple categories. What are you interested in reselling?",
+    // Clothing / fashion
+    'cloth|fashion|shirt|hoodie|shoe|sneaker|apparel|wear': "Great choice! Our clothing vendor bundles include verified suppliers for streetwear, designer pieces, and sneakers. <a href='/collections/all'>Check them out here →</a>",
+    // Electronics / tech
+    'electronic|tech|phone|laptop|headphone|airpod|watch|gadget': "Electronics is huge for reselling! Our tech bundles include suppliers for watches, headphones, phones, and more. <a href='/collections/all'>Browse bundles →</a>",
+    // Jewelry / accessories
+    'jewel|accessor|bracelet|necklace|ring|chain|moissanite|cologne|perfume': "Accessories and jewelry have insane margins! Our bundles cover moissanite, designer jewelry, cologne, and more. <a href='/collections/all'>See what's available →</a>",
+    // All / everything / bundle
+    'all|everything|every|complete|full|mega|ultimate': "Want it all? Our All Vendor Bundle gives you access to every supplier across all categories. Best value for serious resellers! <a href='/collections/all'>Check it out →</a>",
+    // How to start / reselling
+    'start|begin|new|resell|flip|sell|hustle|side': "Starting is easy! 1) Pick a bundle that matches your interest, 2) Purchase it, 3) Get instant access to verified vendors, 4) Start ordering and reselling! Want help choosing a bundle?",
+    // Profit / earnings
+    'profit|earn|make money|income|roi|margin': "Our resellers typically see 2-5x margins on products! The key is finding the right niche. Our vendor lists give you access to wholesale prices that most people can't find. Ready to start?",
+    // Thanks / bye
+    'thank|thanks|thx|bye|later|peace|cya': "You're welcome! Good luck with your reselling journey 🚀 If you need anything else, I'm always here. Let's get it! 💪",
+    // Yes / sure / ok
+    '^yes$|^yeah$|^sure$|^ok$|^yep$|^yea$': "Awesome! Head over to our <a href='/collections/all'>bundles page</a> and pick the one that fits your goals. Any questions, just ask! 🔥",
+    // No / nah
+    '^no$|^nah$|^nope$': "No worries! Feel free to browse around. I'm here whenever you need help. 🤙",
+    // Support / help / contact
+    'support|help|contact|issue|problem|question': "I'm here to help! What's your question? If you need direct support, you can reach out through our contact page. What do you need?"
+  };
+
+  var fallbacks = [
+    "Interesting! Tell me more — are you looking to get into reselling? I can help you pick the right bundle.",
+    "I hear you! Our vendor lists cover tons of categories. What are you most interested in reselling?",
+    "Got it! If you want to check out what we offer, head to our <a href='/collections/all'>bundles page</a>. Anything specific you're looking for?",
+    "For sure! We've got bundles for clothing, electronics, jewelry, accessories and more. What catches your eye?",
+    "Nice! Our vendor lists are all personally verified — real suppliers, real products. Want me to recommend a bundle for you?"
   ];
-  var botIndex = 0;
 
-  function sendChatMsg() {
+  var fallbackIndex = 0;
+
+  function findResponse(text) {
+    var lower = text.toLowerCase().replace(/[^a-z0-9\s]/g, '');
+    for (var pattern in keywords) {
+      if (new RegExp(pattern, 'i').test(lower)) {
+        return keywords[pattern];
+      }
+    }
+    var resp = fallbacks[fallbackIndex % fallbacks.length];
+    fallbackIndex++;
+    return resp;
+  }
+
+  function showTyping() {
+    var messages = document.getElementById('chat-messages');
+    var typing = document.createElement('div');
+    typing.className = 'chat-typing';
+    typing.id = 'chat-typing';
+    typing.innerHTML = '<span></span><span></span><span></span>';
+    messages.appendChild(typing);
+    messages.scrollTop = messages.scrollHeight;
+  }
+
+  function hideTyping() {
+    var t = document.getElementById('chat-typing');
+    if (t) t.remove();
+  }
+
+  window.sendChatMsg = function() {
     var input = document.getElementById('chat-input');
     var messages = document.getElementById('chat-messages');
     var text = input.value.trim();
@@ -204,14 +294,18 @@
     input.value = '';
     messages.scrollTop = messages.scrollHeight;
 
+    showTyping();
+
+    var delay = 800 + Math.random() * 1200;
     setTimeout(function() {
+      hideTyping();
       var botMsg = document.createElement('div');
       botMsg.className = 'chat-msg bot';
-      botMsg.innerHTML = botResponses[botIndex % botResponses.length];
+      botMsg.innerHTML = findResponse(text);
       messages.appendChild(botMsg);
       messages.scrollTop = messages.scrollHeight;
-      botIndex++;
-    }, 1000);
-  }
+    }, delay);
+  };
+})();
 </script>
 {%- endif -%}
