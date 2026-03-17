@@ -221,10 +221,12 @@
             {%- endif -%}
 
             {%- assign first_var = product.first_available_variant -%}
+            {%- assign compare_price = first_var.compare_at_price -%}
+            {%- unless compare_price > 0 -%}
+              {%- assign compare_price = product.compare_at_price_max -%}
+            {%- endunless -%}
             {%- assign has_compare = false -%}
-            {%- if first_var.compare_at_price != nil and first_var.compare_at_price != blank and first_var.compare_at_price != 0 and first_var.compare_at_price > first_var.price -%}
-              {%- assign has_compare = true -%}
-            {%- elsif product.compare_at_price != nil and product.compare_at_price != blank and product.compare_at_price != 0 and product.compare_at_price > product.price -%}
+            {%- if compare_price > first_var.price -%}
               {%- assign has_compare = true -%}
             {%- endif -%}
 
@@ -240,11 +242,7 @@
             <div class="product-card-prices">
               <span class="price-sale">{{ first_var.price | money }}</span>
               {%- if has_compare -%}
-                {%- if first_var.compare_at_price > first_var.price -%}
-                  <span class="price-compare">{{ first_var.compare_at_price | money }}</span>
-                {%- elsif product.compare_at_price > product.price -%}
-                  <span class="price-compare">{{ product.compare_at_price | money }}</span>
-                {%- endif -%}
+                <span class="price-compare">{{ compare_price | money }}</span>
               {%- endif -%}
             </div>
             <div class="product-card-actions">
