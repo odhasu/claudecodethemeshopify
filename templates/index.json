@@ -70,6 +70,26 @@
     },
     "testimonials": {
       "type": "testimonials",
+      "blocks": {
+        "image_tY96cB": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/IMG_0457.webp",
+            "alt": ""
+          }
+        },
+        "image_W7CaEV": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/3e51884a71daea267e8a457dfd1a8b89.webp",
+            "alt": ""
+          }
+        }
+      },
+      "block_order": [
+        "image_tY96cB",
+        "image_W7CaEV"
+      ],
       "settings": {
         "title": "What Our Customers Say",
         "title_color": "#ffffff",
