@@ -62,7 +62,7 @@
         "pill_width": 380,
         "icon_size": 38,
         "brand_font_size": 18,
-        "padding_y": 14,
+        "padding_y": 16,
         "menu": "main-menu"
       }
     }
