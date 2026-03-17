@@ -1,0 +1,246 @@
+{%- liquid
+  assign pill_bg = section.settings.pill_bg | default: '#000000'
+  assign pill_border = section.settings.pill_border | default: '#2a2a2a'
+  assign pill_width = section.settings.pill_width | default: 380
+  assign icon_size = section.settings.icon_size | default: 40
+  assign icon_bg = section.settings.icon_bg | default: '#1a1a1a'
+  assign brand_text = section.settings.brand_text | default: shop.name
+  assign brand_color = section.settings.brand_color | default: '#ffffff'
+  assign brand_size = section.settings.brand_font_size | default: 16
+  assign header_padding = section.settings.padding_y | default: 12
+  assign badge_bg = section.settings.badge_bg | default: '#39ff14'
+  assign badge_color = section.settings.badge_text_color | default: '#000000'
+-%}
+
+<style>
+  .header-pill-wrapper {
+    position: sticky;
+    top: 0;
+    z-index: 99;
+    display: flex;
+    justify-content: center;
+    padding: {{ header_padding }}px 20px;
+    background: transparent;
+    pointer-events: none;
+  }
+  .header-pill {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: {{ pill_width }}px;
+    max-width: 95vw;
+    background: {{ pill_bg }};
+    border: 1px solid {{ pill_border }};
+    border-radius: 999px;
+    padding: 6px 6px;
+    pointer-events: all;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+  .header-icon-btn {
+    width: {{ icon_size }}px;
+    height: {{ icon_size }}px;
+    border-radius: 50%;
+    background: {{ icon_bg }};
+    border: 1px solid {{ pill_border }};
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: {{ brand_color }};
+    transition: background 0.2s, border-color 0.2s;
+    position: relative;
+    flex-shrink: 0;
+  }
+  .header-icon-btn:hover {
+    background: {{ section.settings.icon_hover_bg | default: '#2a2a2a' }};
+    border-color: {{ section.settings.icon_hover_border | default: '#444' }};
+  }
+  .header-icon-btn svg { width: 18px; height: 18px; }
+  .header-brand {
+    font-family: var(--font-heading);
+    font-size: {{ brand_size }}px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: {{ brand_color }};
+    white-space: nowrap;
+  }
+  .header-brand a { color: inherit; }
+  .cart-count-badge {
+    position: absolute;
+    top: -4px; right: -4px;
+    background: {{ badge_bg }};
+    color: {{ badge_color }};
+    font-size: 10px;
+    font-weight: 800;
+    min-width: 18px;
+    height: 18px;
+    border-radius: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 4px;
+    display: none;
+  }
+  .cart-count-badge.has-items { display: flex; }
+
+  /* Drawer */
+  .header-drawer-overlay {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 200;
+    opacity: 0; visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
+  }
+  .header-drawer-overlay.open { opacity: 1; visibility: visible; }
+  .header-drawer {
+    position: fixed;
+    top: 0; right: 0;
+    width: 320px; max-width: 85vw;
+    height: 100vh;
+    background: {{ section.settings.drawer_bg | default: '#0a0a0a' }};
+    z-index: 201;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+    padding: 24px;
+    overflow-y: auto;
+  }
+  .header-drawer.open { transform: translateX(0); }
+  .drawer-close {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: {{ icon_bg }};
+    border: 1px solid {{ pill_border }};
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    margin-bottom: 24px;
+    margin-left: auto;
+  }
+  .drawer-nav { list-style: none; }
+  .drawer-nav li { border-bottom: 1px solid {{ pill_border }}; }
+  .drawer-nav a {
+    display: block;
+    padding: 16px 0;
+    font-family: var(--font-heading);
+    font-size: 18px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: {{ section.settings.drawer_text_color | default: '#ffffff' }};
+    transition: color 0.2s;
+  }
+  .drawer-nav a:hover { color: var(--color-accent); }
+
+  @media (max-width: 768px) {
+    .header-pill { width: 95vw; }
+    .header-brand { font-size: {{ brand_size | minus: 2 }}px; }
+  }
+</style>
+
+<div class="header-pill-wrapper">
+  <div class="header-pill">
+    <a href="/cart" class="header-icon-btn" aria-label="Cart">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+        <line x1="3" y1="6" x2="21" y2="6"/>
+        <path d="M16 10a4 4 0 01-8 0"/>
+      </svg>
+      <span class="cart-count-badge" id="cart-count-badge">0</span>
+    </a>
+
+    <span class="header-brand">
+      {%- if section.settings.logo != blank -%}
+        <a href="/">
+          <img src="{{ section.settings.logo | image_url: height: 40 }}" alt="{{ shop.name }}" style="height: {{ section.settings.logo_height | default: 30 }}px;">
+        </a>
+      {%- else -%}
+        <a href="/">{{ brand_text }}</a>
+      {%- endif -%}
+    </span>
+
+    <button class="header-icon-btn" id="menu-toggle" aria-label="Menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <line x1="4" y1="7" x2="20" y2="7"/>
+        <line x1="4" y1="12" x2="20" y2="12"/>
+        <line x1="4" y1="17" x2="20" y2="17"/>
+      </svg>
+    </button>
+  </div>
+</div>
+
+<!-- Mobile Drawer -->
+<div class="header-drawer-overlay" id="drawer-overlay"></div>
+<div class="header-drawer" id="header-drawer">
+  <button class="drawer-close" id="drawer-close" aria-label="Close menu">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+  </button>
+  <nav>
+    <ul class="drawer-nav">
+      {%- for link in section.settings.menu.links -%}
+        <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+      {%- endfor -%}
+      {%- if section.settings.menu == blank -%}
+        <li><a href="/">Home</a></li>
+        <li><a href="/collections/all">Shop</a></li>
+        <li><a href="/pages/contact">Contact</a></li>
+      {%- endif -%}
+    </ul>
+  </nav>
+</div>
+
+<script>
+  (function(){
+    var toggle = document.getElementById('menu-toggle');
+    var drawer = document.getElementById('header-drawer');
+    var overlay = document.getElementById('drawer-overlay');
+    var close = document.getElementById('drawer-close');
+    function open(){ drawer.classList.add('open'); overlay.classList.add('open'); document.body.style.overflow='hidden'; }
+    function shut(){ drawer.classList.remove('open'); overlay.classList.remove('open'); document.body.style.overflow=''; }
+    if(toggle) toggle.addEventListener('click', open);
+    if(close) close.addEventListener('click', shut);
+    if(overlay) overlay.addEventListener('click', shut);
+
+    // Cart count
+    fetch('/cart.js').then(r=>r.json()).then(c=>{
+      var badge = document.getElementById('cart-count-badge');
+      if(badge && c.item_count > 0){ badge.textContent = c.item_count; badge.classList.add('has-items'); }
+    }).catch(()=>{});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Header Pill",
+  "tag": "header",
+  "class": "header-section",
+  "settings": [
+    { "type": "header", "content": "Logo" },
+    { "type": "image_picker", "id": "logo", "label": "Logo image" },
+    { "type": "range", "id": "logo_height", "label": "Logo height (px)", "min": 16, "max": 60, "step": 2, "default": 30 },
+    { "type": "text", "id": "brand_text", "label": "Brand text (if no logo)", "default": "OGVENDORS" },
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "pill_bg", "label": "Pill background", "default": "#000000" },
+    { "type": "color", "id": "pill_border", "label": "Pill border", "default": "#2a2a2a" },
+    { "type": "color", "id": "brand_color", "label": "Brand text color", "default": "#ffffff" },
+    { "type": "color", "id": "icon_bg", "label": "Icon button background", "default": "#1a1a1a" },
+    { "type": "color", "id": "icon_hover_bg", "label": "Icon hover background", "default": "#2a2a2a" },
+    { "type": "color", "id": "icon_hover_border", "label": "Icon hover border", "default": "#444444" },
+    { "type": "color", "id": "badge_bg", "label": "Cart badge background", "default": "#39ff14" },
+    { "type": "color", "id": "badge_text_color", "label": "Cart badge text", "default": "#000000" },
+    { "type": "header", "content": "Layout" },
+    { "type": "range", "id": "pill_width", "label": "Pill width (px)", "min": 280, "max": 600, "step": 10, "default": 380 },
+    { "type": "range", "id": "icon_size", "label": "Icon button size (px)", "min": 30, "max": 56, "step": 2, "default": 40 },
+    { "type": "range", "id": "brand_font_size", "label": "Brand font size (px)", "min": 12, "max": 28, "step": 1, "default": 16 },
+    { "type": "range", "id": "padding_y", "label": "Vertical padding (px)", "min": 4, "max": 24, "step": 2, "default": 12 },
+    { "type": "header", "content": "Navigation" },
+    { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu" },
+    { "type": "header", "content": "Drawer" },
+    { "type": "color", "id": "drawer_bg", "label": "Drawer background", "default": "#0a0a0a" },
+    { "type": "color", "id": "drawer_text_color", "label": "Drawer text color", "default": "#ffffff" }
+  ],
+  "presets": [
+    { "name": "Header Pill" }
+  ]
+}
+{% endschema %}

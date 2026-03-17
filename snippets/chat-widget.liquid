@@ -1,0 +1,217 @@
+{%- if settings.chat_enabled -%}
+{%- liquid
+  assign btn_bg = settings.chat_btn_bg | default: '#39ff14'
+  assign btn_size = settings.chat_btn_size | default: 60
+  assign chat_width = settings.chat_window_width | default: 380
+-%}
+
+<style>
+  .chat-fab {
+    position: fixed;
+    bottom: {{ settings.chat_bottom | default: 24 }}px;
+    right: {{ settings.chat_right | default: 24 }}px;
+    width: {{ btn_size }}px;
+    height: {{ btn_size }}px;
+    border-radius: 50%;
+    background: {{ btn_bg }};
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 160;
+    box-shadow: 0 4px 20px rgba(57,255,20,0.3);
+    cursor: pointer;
+    transition: transform 0.2s;
+    border: none;
+  }
+  .chat-fab:hover { transform: scale(1.08); }
+  .chat-fab svg { width: 28px; height: 28px; color: #000; }
+  .chat-fab-dot {
+    position: absolute;
+    top: 4px; right: 4px;
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: #22c55e;
+    border: 2px solid #000;
+    animation: pulseDot 1.5s ease-in-out infinite;
+  }
+
+  .chat-window {
+    position: fixed;
+    bottom: {{ settings.chat_bottom | default: 24 | plus: btn_size | plus: 12 }}px;
+    right: {{ settings.chat_right | default: 24 }}px;
+    width: {{ chat_width }}px;
+    max-height: 500px;
+    background: {{ settings.chat_window_bg | default: '#111111' }};
+    border: 1px solid #2a2a2a;
+    border-radius: 16px;
+    z-index: 161;
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+  }
+  .chat-window.open { display: flex; }
+  .chat-header {
+    padding: 16px;
+    background: #0a0a0a;
+    border-bottom: 1px solid #2a2a2a;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .chat-avatar {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: {{ btn_bg }};
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .chat-avatar svg { width: 20px; height: 20px; color: #000; }
+  .chat-header-info { flex: 1; }
+  .chat-header-name { font-weight: 700; font-size: 14px; }
+  .chat-header-status { font-size: 12px; color: #22c55e; display: flex; align-items: center; gap: 4px; }
+  .chat-header-status::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: #22c55e;
+    animation: pulseDot 1.5s ease-in-out infinite;
+  }
+  .chat-close-btn { background: none; border: none; color: #fff; font-size: 20px; cursor: pointer; padding: 4px; }
+  .chat-messages {
+    flex: 1;
+    padding: 16px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-height: 320px;
+  }
+  .chat-msg {
+    padding: 10px 14px;
+    border-radius: 12px;
+    font-size: 14px;
+    line-height: 1.5;
+    max-width: 85%;
+  }
+  .chat-msg.bot {
+    background: #1a1a1a;
+    align-self: flex-start;
+    border-bottom-left-radius: 4px;
+  }
+  .chat-msg.user {
+    background: {{ btn_bg }};
+    color: #000;
+    align-self: flex-end;
+    border-bottom-right-radius: 4px;
+  }
+  .chat-msg a { color: {{ btn_bg }}; font-weight: 700; text-decoration: underline; }
+  .chat-input-area {
+    padding: 12px 16px;
+    border-top: 1px solid #2a2a2a;
+    display: flex;
+    gap: 8px;
+  }
+  .chat-input {
+    flex: 1;
+    padding: 10px 14px;
+    border-radius: 999px;
+    border: 1px solid #2a2a2a;
+    background: #0a0a0a;
+    color: #fff;
+    font-size: 14px;
+    outline: none;
+  }
+  .chat-send {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: {{ btn_bg }};
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    cursor: pointer;
+  }
+  .chat-send svg { width: 18px; height: 18px; color: #000; }
+
+  @media (max-width: 768px) {
+    .chat-window {
+      inset: 0;
+      width: 100%;
+      max-height: 100%;
+      border-radius: 0;
+      bottom: 0; right: 0;
+    }
+    .chat-window.open { position: fixed; }
+  }
+</style>
+
+<button class="chat-fab" id="chat-fab" aria-label="Open chat">
+  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
+  <span class="chat-fab-dot"></span>
+</button>
+
+<div class="chat-window" id="chat-window">
+  <div class="chat-header">
+    <div class="chat-avatar">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
+    </div>
+    <div class="chat-header-info">
+      <div class="chat-header-name">{{ settings.chat_name | default: 'Reselling Assistant' }}</div>
+      <div class="chat-header-status">Online now</div>
+    </div>
+    <button class="chat-close-btn" id="chat-close">&times;</button>
+  </div>
+  <div class="chat-messages" id="chat-messages">
+    <div class="chat-msg bot">{{ settings.chat_greeting | default: 'Hey! 👋 Welcome! Looking to start your reselling journey? I can help you pick the right bundle.' }}</div>
+  </div>
+  <div class="chat-input-area">
+    <input class="chat-input" id="chat-input" placeholder="{{ settings.chat_placeholder | default: 'Type a message...' }}" onkeypress="if(event.key==='Enter')sendChatMsg()">
+    <button class="chat-send" onclick="sendChatMsg()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+    </button>
+  </div>
+</div>
+
+<script>
+  (function() {
+    var fab = document.getElementById('chat-fab');
+    var win = document.getElementById('chat-window');
+    var close = document.getElementById('chat-close');
+    fab.addEventListener('click', function() { win.classList.toggle('open'); });
+    close.addEventListener('click', function() { win.classList.remove('open'); });
+  })();
+
+  var botResponses = [
+    "Great question! Our vendor lists include verified suppliers with the best prices. Which bundle interests you?",
+    "Our most popular bundle is the Elite Vendor Bundle — it includes premium suppliers across multiple categories.",
+    "Once you purchase, you'll get instant access via email. It's that simple! 🚀",
+    "Ready to get started? <a href='/collections/all'>Check out our bundles here →</a>"
+  ];
+  var botIndex = 0;
+
+  function sendChatMsg() {
+    var input = document.getElementById('chat-input');
+    var messages = document.getElementById('chat-messages');
+    var text = input.value.trim();
+    if (!text) return;
+
+    var userMsg = document.createElement('div');
+    userMsg.className = 'chat-msg user';
+    userMsg.textContent = text;
+    messages.appendChild(userMsg);
+    input.value = '';
+    messages.scrollTop = messages.scrollHeight;
+
+    setTimeout(function() {
+      var botMsg = document.createElement('div');
+      botMsg.className = 'chat-msg bot';
+      botMsg.innerHTML = botResponses[botIndex % botResponses.length];
+      messages.appendChild(botMsg);
+      messages.scrollTop = messages.scrollHeight;
+      botIndex++;
+    }, 1000);
+  }
+</script>
+{%- endif -%}
