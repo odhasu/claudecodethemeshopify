@@ -14,9 +14,9 @@
     "footer": {
       "type": "footer",
       "settings": {
-        "logo_height": 40,
+        "logo_height": 25,
         "brand_text": "OGVENDORS",
-        "brand_font_size": 24,
+        "brand_font_size": 18,
         "menu": "footer",
         "link_gap": 24,
         "show_copyright": true,
