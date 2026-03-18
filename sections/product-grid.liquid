@@ -220,13 +220,17 @@
               </div>
             {%- endif -%}
 
-            {%- assign first_var = product.first_available_variant -%}
+            {%- assign first_var = product.selected_or_first_available_variant -%}
+            {%- assign current_price = first_var.price -%}
             {%- assign compare_price = first_var.compare_at_price -%}
-            {%- unless compare_price > 0 -%}
+            {%- if compare_price == nil or compare_price == 0 or compare_price == blank -%}
               {%- assign compare_price = product.compare_at_price_max -%}
-            {%- endunless -%}
+            {%- endif -%}
+            {%- if compare_price == nil or compare_price == 0 or compare_price == blank -%}
+              {%- assign compare_price = product.compare_at_price -%}
+            {%- endif -%}
             {%- assign has_compare = false -%}
-            {%- if compare_price > first_var.price -%}
+            {%- if compare_price != nil and compare_price != blank and compare_price > current_price -%}
               {%- assign has_compare = true -%}
             {%- endif -%}
 
@@ -240,7 +244,7 @@
           <div class="product-card-info">
             <h3 class="product-card-title"><a href="{{ product.url }}">{{ product.title }}</a></h3>
             <div class="product-card-prices">
-              <span class="price-sale">{{ first_var.price | money }}</span>
+              <span class="price-sale">{{ current_price | money }}</span>
               {%- if has_compare -%}
                 <span class="price-compare">{{ compare_price | money }}</span>
               {%- endif -%}
