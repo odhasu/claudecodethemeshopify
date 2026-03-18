@@ -21,7 +21,7 @@
     "color_stars": "#fbbf24",
     "color_success": "#22c55e",
     "color_error": "#ef4444",
-    "heading_font": "Inter",
+    "heading_font": "DM Sans",
     "body_font": "Inter",
     "max_page_width": 1400,
     "section_spacing": 50,
