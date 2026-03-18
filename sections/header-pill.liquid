@@ -19,16 +19,20 @@
 -%}
 
 <style>
+  /* Luke's Vendors style — fixed pill with --header-top CSS variable */
   .header-pill-wrapper {
-    position: relative;
-    top: 0;
+    position: fixed;
+    top: var(--header-top, {{ pad_top }}px);
+    left: 0;
+    right: 0;
     z-index: 999;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: {{ pad_top }}px 20px {{ pad_bottom }}px;
+    padding: 0 20px {{ pad_bottom }}px;
     background: transparent;
     pointer-events: none;
+    transition: top 0.25s ease-out;
   }
   .header-pill {
     display: flex;
@@ -142,27 +146,9 @@
   .menu-toggle-icon { transition: transform 0.3s; }
   .menu-toggle-icon.active { transform: rotate(90deg); }
 
-  /* Sticky header — JS toggles this class */
-  .header-pill-wrapper.is-sticky {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    background: rgba(0,0,0,0.85);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    animation: slideDown 0.3s ease;
-  }
+  /* Spacer pushes content below the fixed header */
   .header-pill-spacer {
-    display: none;
-  }
-  .header-pill-wrapper.is-sticky + .header-pill-spacer,
-  .header-pill-spacer.active {
-    display: block;
-  }
-  @keyframes slideDown {
-    from { transform: translateY(-100%); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
+    height: {{ icon_size | plus: 12 | plus: pad_top | plus: pad_bottom }}px;
   }
 
   @media (max-width: 768px) {
@@ -251,37 +237,61 @@
       if(badge && c.item_count > 0){ badge.textContent = c.item_count; badge.classList.add('has-items'); }
     }).catch(function(){});
 
-    // Sticky header on scroll
+    // Luke's Vendors style scroll — --header-top CSS variable
+    // Header smoothly slides up as you scroll past the urgency bar
     {%- if section.settings.sticky_header -%}
-    var wrapper = document.getElementById('header-pill-wrapper');
-    var spacer = document.getElementById('header-pill-spacer');
-    if (wrapper) {
-      var stickyOffset = wrapper.offsetTop;
-      var wrapperHeight = wrapper.offsetHeight;
+    (function(){
+      var BASE_TOP = {{ pad_top | default: 16 }};
+      var URGENCY_GAP = 8;
+      var urgencyEl = null;
+      var ticking = false;
 
-      function handleScroll() {
-        if (window.pageYOffset > stickyOffset) {
-          if (!wrapper.classList.contains('is-sticky')) {
-            wrapper.classList.add('is-sticky');
-            spacer.style.height = wrapperHeight + 'px';
-            spacer.classList.add('active');
-          }
+      function getUrgencyElement() {
+        return document.querySelector('.urgency-bar') || document.getElementById('scaled-urgency');
+      }
+
+      function updateHeaderPosition() {
+        var scrollY = window.scrollY;
+        if (!urgencyEl) urgencyEl = getUrgencyElement();
+
+        if (urgencyEl && urgencyEl.offsetHeight > 0) {
+          var urgencyHeight = urgencyEl.offsetHeight;
+          var headerTop = Math.max(BASE_TOP, urgencyHeight + URGENCY_GAP - scrollY);
+          document.documentElement.style.setProperty('--header-top', headerTop + 'px');
         } else {
-          wrapper.classList.remove('is-sticky');
-          spacer.style.height = '0px';
-          spacer.classList.remove('active');
+          document.documentElement.style.setProperty('--header-top', BASE_TOP + 'px');
+        }
+        ticking = false;
+      }
+
+      function onScroll() {
+        if (!ticking) {
+          requestAnimationFrame(updateHeaderPosition);
+          ticking = true;
         }
       }
 
-      window.addEventListener('scroll', handleScroll, { passive: true });
-      // Recalculate on resize
-      window.addEventListener('resize', function() {
-        if (!wrapper.classList.contains('is-sticky')) {
-          stickyOffset = wrapper.offsetTop;
-          wrapperHeight = wrapper.offsetHeight;
+      window.addEventListener('scroll', onScroll, { passive: true });
+
+      // Detect urgency bar appearing in DOM
+      var observer = new MutationObserver(function() {
+        var el = getUrgencyElement();
+        if (el && el.offsetHeight > 0 && !urgencyEl) {
+          urgencyEl = el;
+          updateHeaderPosition();
         }
       });
-    }
+      observer.observe(document.body, { childList: true, subtree: true });
+
+      // Initial position
+      updateHeaderPosition();
+
+      // Recalculate on resize
+      window.addEventListener('resize', function() {
+        urgencyEl = null;
+        updateHeaderPosition();
+      });
+    })();
     {%- endif -%}
   })();
 </script>
@@ -330,7 +340,7 @@
     { "type": "range", "id": "pill_width", "label": "Pill width (px)", "min": 280, "max": 600, "step": 10, "default": 380 },
     { "type": "range", "id": "icon_size", "label": "Icon button size (px)", "min": 30, "max": 56, "step": 2, "default": 40 },
     { "type": "range", "id": "brand_font_size", "label": "Brand font size (px)", "min": 12, "max": 28, "step": 1, "default": 16 },
-    { "type": "range", "id": "padding_y", "label": "Top padding (px)", "min": 0, "max": 150, "step": 1, "default": 0 },
+    { "type": "range", "id": "padding_y", "label": "Top padding (px)", "min": 0, "max": 150, "step": 1, "default": 16 },
     { "type": "range", "id": "padding_bottom", "label": "Bottom padding (px)", "min": 0, "max": 150, "step": 1, "default": 0 },
     { "type": "header", "content": "Navigation" },
     { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu" },

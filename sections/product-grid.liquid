@@ -85,6 +85,12 @@
   }
   @media (max-width: 768px) {
     .product-grid { grid-template-columns: repeat({{ columns_mobile }}, 1fr); }
+    /* Reduce green glow on mobile — keeps background black when scrolling */
+    .product-grid-section::before {
+      background:
+        radial-gradient(ellipse 600px 400px at 10% 10%, rgba({{ glow_r }},{{ glow_g }},{{ glow_b }},0.15) 0%, transparent 60%),
+        radial-gradient(ellipse 500px 350px at 90% 20%, rgba({{ glow_r }},{{ glow_g }},{{ glow_b }},0.12) 0%, transparent 65%) !important;
+    }
   }
 
   /* Glassmorphic card — keanusvendors style */

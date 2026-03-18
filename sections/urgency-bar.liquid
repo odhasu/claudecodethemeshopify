@@ -1,3 +1,7 @@
+{%- unless template.name == 'index' or section.settings.show_on_all_pages -%}
+  {%- style -%}.urgency-bar { display: none !important; }{%- endstyle -%}
+{%- endunless -%}
+
 {%- liquid
   assign bg_color = section.settings.bg_color | default: '#000000'
   assign text_color = section.settings.text_color | default: '#ffffff'
@@ -195,6 +199,8 @@
   "tag": "section",
   "class": "urgency-bar-section",
   "settings": [
+    { "type": "header", "content": "Visibility" },
+    { "type": "checkbox", "id": "show_on_all_pages", "label": "Show on all pages (not just homepage)", "default": false },
     { "type": "header", "content": "Colors" },
     { "type": "color", "id": "bg_color", "label": "Background color", "default": "#000000" },
     { "type": "color", "id": "text_color", "label": "Text color", "default": "#ffffff" },
