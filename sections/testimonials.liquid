@@ -3,6 +3,7 @@
   assign title_color = section.settings.title_color | default: '#ffffff'
   assign speed = section.settings.scroll_speed | default: 20
   assign img_height = section.settings.image_height | default: 250
+  assign img_height_2x = img_height | times: 2
   assign img_height_mobile = section.settings.image_height_mobile | default: 180
   assign img_radius = section.settings.image_radius | default: 12
   assign bg_color = section.settings.bg_color | default: '#000000'
@@ -68,7 +69,7 @@
         {%- assign img_key = 'image_' | append: i -%}
         {%- assign img = section.settings[img_key] -%}
         {%- if img != blank -%}
-          <img src="{{ img | image_url: height: img_height | times: 2 }}" alt="Customer testimonial {{ i }}" loading="lazy">
+          <img src="{{ img | image_url: height: img_height_2x }}" alt="Customer testimonial {{ i }}" loading="lazy">
         {%- endif -%}
       {%- endfor -%}
       {%- comment -%} Duplicate for seamless loop {%- endcomment -%}
@@ -76,7 +77,7 @@
         {%- assign img_key = 'image_' | append: i -%}
         {%- assign img = section.settings[img_key] -%}
         {%- if img != blank -%}
-          <img src="{{ img | image_url: height: img_height | times: 2 }}" alt="Customer testimonial {{ i }}" loading="lazy">
+          <img src="{{ img | image_url: height: img_height_2x }}" alt="Customer testimonial {{ i }}" loading="lazy">
         {%- endif -%}
       {%- endfor -%}
     </div>

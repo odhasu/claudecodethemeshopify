@@ -113,35 +113,25 @@
       box-shadow: 0 8px 40px rgba(0,0,0,0.5);
     }
     .chat-window.open { display: flex; }
-    .chat-header {
-      padding: 16px;
-      background: #0a0a0a;
-      border-bottom: 1px solid #2a2a2a;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .chat-avatar {
-      width: 36px; height: 36px;
+    .chat-close-btn {
+      position: absolute;
+      top: 10px; right: 12px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      width: 28px; height: 28px;
       border-radius: 50%;
-      background: {{ btn_bg }};
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
+      z-index: 2;
+      transition: background 0.2s;
     }
-    .chat-avatar svg { width: 20px; height: 20px; color: #000; }
-    .chat-header-info { flex: 1; }
-    .chat-header-name { font-weight: 700; font-size: 14px; }
-    .chat-header-status { font-size: 12px; color: #22c55e; display: flex; align-items: center; gap: 4px; }
-    .chat-header-status::before {
-      content: '';
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      background: #22c55e;
-      animation: chatPulseDot 1.5s ease-in-out infinite;
-    }
-    .chat-close-btn { background: none; border: none; color: #fff; font-size: 20px; cursor: pointer; padding: 4px; }
+    .chat-close-btn:hover { background: rgba(255,255,255,0.12); }
     .chat-messages {
+      position: relative;
       flex: 1;
       padding: 16px;
       overflow-y: auto;
@@ -237,16 +227,7 @@
   </button>
 
   <div class="chat-window" id="chat-window">
-    <div class="chat-header">
-      <div class="chat-avatar">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
-      </div>
-      <div class="chat-header-info">
-        <div class="chat-header-name">{{ settings.chat_name | default: 'Reselling Assistant' }}</div>
-        <div class="chat-header-status">Online now</div>
-      </div>
-      <button class="chat-close-btn" id="chat-close">&times;</button>
-    </div>
+    <button class="chat-close-btn" id="chat-close">&times;</button>
     <div class="chat-messages" id="chat-messages">
       <div class="chat-msg bot">{{ settings.chat_greeting | default: "yooo whats good! u looking to start reselling? lmk if u need help picking the right suppliers 🔥" }}</div>
     </div>

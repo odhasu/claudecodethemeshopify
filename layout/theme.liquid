@@ -30,7 +30,7 @@
   {%- liquid
     assign accent = settings.color_accent | default: '#39ff14'
     assign accent_hover = settings.color_accent_hover | default: '#2de010'
-    assign bg = settings.color_background | default: '#0a0a0a'
+    assign bg = settings.color_background | default: '#000000'
     assign card_bg = settings.color_card_bg | default: '#111111'
     assign card_elevated = settings.color_card_elevated | default: '#1a1a1a'
     assign border_color = settings.color_border | default: '#2a2a2a'
@@ -142,13 +142,29 @@
       pointer-events: none;
     }
     .scaled-loader__spinner {
-      width: 40px;
-      height: 40px;
+      width: 44px;
+      height: 44px;
+      position: relative;
+    }
+    .scaled-loader__spinner::before,
+    .scaled-loader__spinner::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+    }
+    .scaled-loader__spinner::before {
       border: 3px solid transparent;
       border-top-color: var(--color-accent, #39ff14);
       border-right-color: var(--color-accent, #39ff14);
-      border-radius: 50%;
-      animation: scaledSpin 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite;
+      animation: scaledSpin 1s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite;
+    }
+    .scaled-loader__spinner::after {
+      inset: 5px;
+      border: 2px solid transparent;
+      border-bottom-color: var(--color-accent, #39ff14);
+      border-left-color: var(--color-accent, #39ff14);
+      animation: scaledSpin 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite reverse;
     }
     @keyframes scaledSpin {
       0% { transform: rotate(0deg); }
