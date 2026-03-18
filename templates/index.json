@@ -90,7 +90,10 @@
         "image_radius": 12,
         "gap": 16,
         "padding_top": 60,
-        "padding_bottom": 60
+        "padding_bottom": 60,
+        "image_1": "shopify://shop_images/3e51884a71daea267e8a457dfd1a8b89.webp",
+        "image_2": "shopify://shop_images/person-stands-on-rocks-poking-out-of-the-ocean-shoreline.jpg",
+        "image_3": "shopify://shop_images/Screenshot_2026-03-08_at_18.28.14.png"
       }
     },
     "reviews": {
