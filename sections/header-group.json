@@ -59,7 +59,7 @@
         "dropdown_border": "#2a2a2a",
         "dropdown_text_color": "#ffffff",
         "dropdown_hover_color": "#39ff14",
-        "sticky_header": true,
+        "sticky_header": false,
         "pill_width": 380,
         "icon_size": 38,
         "brand_font_size": 18,
