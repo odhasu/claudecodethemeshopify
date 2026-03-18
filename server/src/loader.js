@@ -1,245 +1,238 @@
 /**
- * OGVendors Theme Loader — The Protection Script
+ * Scaled Loader v3
  *
- * This is the UN-OBFUSCATED source. Run `node build.js` to create
- * the obfuscated version for production.
- *
- * How it works:
- * 1. Reads ScaledConfig from the theme (licenseKey + shopDomain)
- * 2. Checks for required DOM elements (anti-removal)
- * 3. Sends handshake to the Railway backend
- * 4. If valid → injects CSS + executes JS
- * 5. If invalid → injects kill-switch overlay that hides everything
- * 6. If server unreachable → graceful fallback with timeout
+ * Reads all shell sections from the DOM, collects their settings and product data,
+ * sends everything to the protection server, and injects the rendered HTML back
+ * into each shell container.
  *
  * Anti-Theft Features:
- * - If this script is removed, the theme has NO CSS layout at all
- * - If someone copies the theme files without the license, kill-switch activates
+ * - Without this script, the theme is empty shells with no content
+ * - License + domain validation on every page load
+ * - Kill-switch overlay for invalid licenses
+ * - Integrity monitor prevents DevTools removal of kill-switch
  * - debugProtection in obfuscated version crashes on DevTools
  * - selfDefending detects code modification/reformatting
- * - Domain is checked server-side so the license can't be reused on other stores
  */
-
-(function () {
+(function() {
   'use strict';
 
-  // ─── Configuration ──────────────────────────────────────────
-  var config = window.ScaledConfig;
-  if (!config || !config.licenseKey || !config.shopDomain) {
-    showLicenseError('missing_config', 'Theme configuration is missing. Please contact support.');
-    return;
+  var config = window.ScaledConfig || {};
+  var apiUrl = config.apiUrl || '';
+  var licenseKey = config.licenseKey || '';
+  var shopDomain = config.shopDomain || window.location.hostname;
+  var permanentDomain = config.permanentDomain || (window.Shopify && window.Shopify.shop ? window.Shopify.shop : '');
+
+  if (!apiUrl) return;
+
+  // ─── Collect Shell Sections ───────────────────────────────────
+  function collectSections() {
+    var sections = [];
+    var shells = document.querySelectorAll('[data-scaled-section]');
+
+    shells.forEach(function(shell) {
+      var sectionType = shell.getAttribute('data-scaled-section');
+      var settings = {};
+      var products = null;
+
+      var settingsEl = document.querySelector('script[data-scaled-section-settings="' + sectionType + '"]');
+      if (settingsEl) {
+        try { settings = JSON.parse(settingsEl.textContent); } catch(e) {}
+      }
+
+      var productsEl = document.querySelector('script[data-scaled-products="' + sectionType + '"]');
+      if (productsEl) {
+        try { products = JSON.parse(productsEl.textContent); } catch(e) {}
+      }
+
+      sections.push({
+        type: sectionType,
+        elementId: shell.id,
+        settings: settings,
+        products: products
+      });
+    });
+
+    return sections;
   }
 
-  var API_URL = config.apiUrl || 'https://your-app.up.railway.app';
-  var LICENSE_KEY = config.licenseKey;
-  var SHOP_DOMAIN = config.shopDomain;
-  var PERMANENT_DOMAIN = config.permanentDomain || '';
-  var TIMEOUT_MS = 8000;
-  var RETRY_COUNT = 2;
-  var RETRY_DELAY = 1500;
+  // ─── Inject Rendered HTML ─────────────────────────────────────
+  function injectSection(elementId, html) {
+    var shell = document.getElementById(elementId);
+    if (!shell) return;
 
-  // ─── Anti-Removal Check ─────────────────────────────────────
-  // If key DOM elements are missing, someone might have stripped the theme
-  function checkDOMIntegrity() {
-    // The footer section must exist — if removed, the theme was tampered with
-    var footer = document.getElementById('shopify-section-footer') ||
-                 document.querySelector('[class*="footer"]') ||
-                 document.querySelector('footer');
-    return !!footer;
-  }
+    shell.innerHTML = html;
+    shell.classList.remove('scaled-shell--loading');
+    shell.classList.add('scaled-shell--loaded');
 
-  // ─── Handshake with Server ──────────────────────────────────
-  function loadThemeContent(retryNum) {
-    retryNum = retryNum || 0;
-
-    var controller = new AbortController();
-    var timeoutId = setTimeout(function () {
-      controller.abort();
-    }, TIMEOUT_MS);
-
-    fetch(API_URL + '/api/v1/load', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        licenseKey: LICENSE_KEY,
-        domain: SHOP_DOMAIN,
-        permanentDomain: PERMANENT_DOMAIN
-      }),
-      signal: controller.signal
-    })
-    .then(function (response) {
-      clearTimeout(timeoutId);
-
-      if (response.status === 403) {
-        return response.json().then(function (data) {
-          // License invalid — inject kill-switch
-          if (data.killCSS) {
-            injectCSS(data.killCSS);
-          }
-          showLicenseError(data.error, data.message);
-        });
-      }
-
-      if (response.status === 429) {
-        // Rate limited — retry after delay
-        if (retryNum < RETRY_COUNT) {
-          setTimeout(function () {
-            loadThemeContent(retryNum + 1);
-          }, RETRY_DELAY * (retryNum + 1));
-        }
-        return;
-      }
-
-      if (!response.ok) {
-        throw new Error('Server error: ' + response.status);
-      }
-
-      return response.json();
-    })
-    .then(function (data) {
-      if (!data || data.error) return;
-
-      // ═══ SUCCESS — Inject the Brain ═══
-
-      // 1. Inject Critical CSS
-      if (data.css) {
-        injectCSS(data.css);
-      }
-
-      // 2. Execute Theme JS
-      if (data.js) {
-        try {
-          var fn = new Function(data.js);
-          fn();
-        } catch (e) {
-          // Silent fail — don't expose errors
-        }
-      }
-
-      // 3. Mark as loaded
-      document.documentElement.classList.add('scaled-loaded');
-      document.documentElement.dataset.scaledVersion = data.version || '1.0.0';
-
-      // 4. Hide loader
-      hideLoader();
-    })
-    .catch(function (err) {
-      clearTimeout(timeoutId);
-
-      // Network error / timeout — retry
-      if (retryNum < RETRY_COUNT) {
-        setTimeout(function () {
-          loadThemeContent(retryNum + 1);
-        }, RETRY_DELAY * (retryNum + 1));
+    // Execute inline scripts
+    var scripts = shell.querySelectorAll('script');
+    scripts.forEach(function(oldScript) {
+      var newScript = document.createElement('script');
+      if (oldScript.src) {
+        newScript.src = oldScript.src;
       } else {
-        // All retries failed — show error
-        showLicenseError('network_error', 'Unable to load theme. Please check your connection and try again.');
+        newScript.textContent = oldScript.textContent;
       }
+      oldScript.parentNode.replaceChild(newScript, oldScript);
     });
   }
 
-  // ─── CSS Injection ──────────────────────────────────────────
+  // ─── CSS Injection ────────────────────────────────────────────
   function injectCSS(css) {
+    if (!css) return;
     var style = document.createElement('style');
     style.setAttribute('data-scaled', 'critical');
     style.textContent = css;
     document.head.appendChild(style);
   }
 
-  // ─── Kill-Switch — License Error Overlay ────────────────────
-  function showLicenseError(errorCode, message) {
-    // Remove any existing notices
-    var existing = document.querySelector('.scaled-license-notice');
-    if (existing) existing.remove();
+  // ─── JS Injection ─────────────────────────────────────────────
+  function injectJS(js) {
+    if (!js) return;
+    try { new Function(js)(); } catch(e) {}
+  }
 
-    var notice = document.createElement('div');
-    notice.className = 'scaled-license-notice';
-    notice.innerHTML =
-      '<div style="text-align:center;max-width:420px;padding:40px;">' +
-        '<div style="width:56px;height:56px;margin:0 auto 16px;border-radius:50%;background:rgba(239,68,68,0.1);display:flex;align-items:center;justify-content:center;font-size:24px;">&#9888;</div>' +
-        '<h2 style="font-size:20px;font-weight:700;margin-bottom:8px;">License Required</h2>' +
-        '<p style="color:#9ca3af;font-size:14px;line-height:1.6;margin-bottom:24px;">' +
-          (message || 'This theme requires a valid license. Please contact the theme developer.') +
-        '</p>' +
-        '<div style="background:rgba(255,255,255,0.05);border-radius:8px;padding:16px;text-align:left;margin-bottom:16px;">' +
-          '<p style="font-size:12px;color:#6b7280;margin-bottom:8px;">To resolve this:</p>' +
-          '<p style="font-size:12px;color:#9ca3af;">1. Check your license key in theme settings</p>' +
-          '<p style="font-size:12px;color:#9ca3af;">2. Ensure your domain matches the license</p>' +
-          '<p style="font-size:12px;color:#9ca3af;">3. Contact support if the issue persists</p>' +
+  // ─── License Error ────────────────────────────────────────────
+  function showLicenseError(message) {
+    var shells = document.querySelectorAll('[data-scaled-section]');
+    shells.forEach(function(shell) {
+      shell.classList.remove('scaled-shell--loading');
+    });
+
+    var main = document.getElementById('main-content') || document.querySelector('main');
+    if (main) {
+      main.innerHTML = '<div class="scaled-license-notice-wrapper">' +
+        '<div class="scaled-license-notice scaled-license-notice--error">' +
+        '<div class="scaled-license-notice__icon">&#9888;</div>' +
+        '<div class="scaled-license-notice__title">License Required</div>' +
+        '<div class="scaled-license-notice__message">' + (message || 'This theme requires a valid license to display content.') + '</div>' +
+        '<div class="scaled-license-notice__steps">' +
+        '<div class="scaled-license-notice__step"><span class="scaled-license-notice__step-num">1</span>Go to Theme Settings</div>' +
+        '<div class="scaled-license-notice__step"><span class="scaled-license-notice__step-num">2</span>Enter your license key</div>' +
+        '<div class="scaled-license-notice__step"><span class="scaled-license-notice__step-num">3</span>Save and refresh</div>' +
         '</div>' +
-        '<p style="font-size:11px;color:#4b5563;">Error: ' + (errorCode || 'unknown') + '</p>' +
-      '</div>';
+        '<div class="scaled-license-notice__help">Need help? Contact the theme developer.</div>' +
+        '</div></div>';
+    }
 
-    // Inject kill-switch CSS if not already present
+    // Inject kill-switch CSS
     if (!document.querySelector('[data-scaled="kill"]')) {
       var killStyle = document.createElement('style');
       killStyle.setAttribute('data-scaled', 'kill');
-      killStyle.textContent = 'body>*:not(.scaled-license-notice){display:none!important}.scaled-license-notice{position:fixed!important;inset:0!important;z-index:999999!important;background:#000!important;display:flex!important;align-items:center!important;justify-content:center!important}';
+      killStyle.textContent = 'body>*:not(.scaled-license-notice-wrapper):not(.scaled-license-notice){opacity:0.1!important;pointer-events:none!important;filter:blur(4px)!important}';
       document.head.appendChild(killStyle);
     }
 
-    document.body.appendChild(notice);
+    startIntegrityMonitor();
   }
 
-  // ─── Loader Hide ────────────────────────────────────────────
-  function hideLoader() {
-    var loader = document.getElementById('scaled-loader');
-    if (loader) {
-      loader.classList.add('hide');
-      setTimeout(function () { loader.style.display = 'none'; }, 400);
-    }
-  }
-
-  // ─── Integrity Monitor ──────────────────────────────────────
-  // Watches for someone trying to remove the kill-switch via DevTools
+  // ─── Integrity Monitor ────────────────────────────────────────
   function startIntegrityMonitor() {
-    var observer = new MutationObserver(function (mutations) {
-      mutations.forEach(function (mutation) {
-        mutation.removedNodes.forEach(function (node) {
-          // If someone removes the kill-switch style, re-inject it
+    var observer = new MutationObserver(function(mutations) {
+      mutations.forEach(function(mutation) {
+        mutation.removedNodes.forEach(function(node) {
           if (node.nodeType === 1 && node.getAttribute && node.getAttribute('data-scaled') === 'kill') {
             document.head.appendChild(node);
           }
-          // If someone removes the license notice, re-inject it
           if (node.nodeType === 1 && node.classList && node.classList.contains('scaled-license-notice')) {
             document.body.appendChild(node);
           }
         });
       });
     });
-
     observer.observe(document.head, { childList: true });
     observer.observe(document.body, { childList: true });
   }
 
-  // ─── Boot Sequence ──────────────────────────────────────────
-  function boot() {
-    // Wait for footer to exist (Shopify renders sections async)
-    var checkCount = 0;
-    var maxChecks = 30; // 30 * 200ms = 6 seconds max wait
+  // ─── Main Render Request ──────────────────────────────────────
+  function loadContent() {
+    var sections = collectSections();
 
-    function checkAndLoad() {
-      checkCount++;
+    var payload = {
+      licenseKey: licenseKey,
+      domain: shopDomain,
+      permanentDomain: permanentDomain,
+      sections: sections,
+      colors: config.colors || {},
+      brandName: config.brandName || '',
+      logoUrl: config.logoUrl || null,
+      chatbot: config.chatbot || {},
+      urgency: config.urgency || {}
+    };
 
-      if (checkDOMIntegrity()) {
-        loadThemeContent(0);
-        startIntegrityMonitor();
-      } else if (checkCount < maxChecks) {
-        setTimeout(checkAndLoad, 200);
-      } else {
-        // Footer never appeared — could be a stripped theme or a non-index page
-        // Still try to load content
-        loadThemeContent(0);
-        startIntegrityMonitor();
+    fetch(apiUrl + '/api/v3/render', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    })
+    .then(function(response) {
+      if (response.status === 403) {
+        return response.json().then(function(data) {
+          if (data.killCSS) injectCSS(data.killCSS);
+          showLicenseError(data.message);
+          throw new Error('license_invalid');
+        });
       }
-    }
+      if (response.status === 429) {
+        showLicenseError('Too many requests. Please try again later.');
+        throw new Error('rate_limited');
+      }
+      if (!response.ok) throw new Error('server_error');
+      return response.json();
+    })
+    .then(function(data) {
+      if (!data || data.status !== 'ok') {
+        showLicenseError('Unexpected server response.');
+        return;
+      }
 
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', checkAndLoad);
-    } else {
-      checkAndLoad();
-    }
+      // Inject global CSS
+      if (data.css) injectCSS(data.css);
+
+      // Inject global JS
+      if (data.js) injectJS(data.js);
+
+      // Inject each section
+      if (data.sections && Array.isArray(data.sections)) {
+        data.sections.forEach(function(section) {
+          if (section.elementId && section.html) {
+            injectSection(section.elementId, section.html);
+          }
+        });
+      }
+    })
+    .catch(function(err) {
+      if (err.message === 'license_invalid' || err.message === 'rate_limited') return;
+      // Retry once after 2 seconds
+      setTimeout(function() {
+        fetch(apiUrl + '/api/v3/render', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        })
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+          if (data && data.status === 'ok') {
+            if (data.css) injectCSS(data.css);
+            if (data.js) injectJS(data.js);
+            if (data.sections) {
+              data.sections.forEach(function(s) {
+                if (s.elementId && s.html) injectSection(s.elementId, s.html);
+              });
+            }
+          }
+        })
+        .catch(function() {
+          showLicenseError('Unable to connect to the theme server. Please check your settings.');
+        });
+      }, 2000);
+    });
   }
 
-  boot();
+  // ─── Boot ─────────────────────────────────────────────────────
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', loadContent);
+  } else {
+    loadContent();
+  }
 })();
