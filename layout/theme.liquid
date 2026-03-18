@@ -42,6 +42,11 @@
     assign body_font = settings.body_font | default: 'system-ui, -apple-system, sans-serif'
   -%}
 
+  {%- comment -%}
+    Preconnect to the theme protection server and Google Fonts.
+    The server URL comes from theme settings so it can be updated without code changes.
+  {%- endcomment -%}
+  <link rel="preconnect" href="{{ settings.protection_server_url | default: 'https://your-app.up.railway.app' }}" crossorigin>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   {%- liquid
@@ -54,6 +59,12 @@
   -%}
   <link href="https://fonts.googleapis.com/css2?{{ load_fonts }}display=swap" rel="stylesheet">
 
+  {%- comment -%}
+    ═══ CSS Variables ═══
+    These are the ONLY styles in the Shell. The rest (layout, components, animations)
+    come from the protection server. If the server doesn't respond or the license
+    is invalid, the page shows a loading spinner → then a license error.
+  {%- endcomment -%}
   <style>
     :root {
       --color-accent: {{ accent }};
@@ -76,56 +87,17 @@
       --grid-gap: {{ settings.grid_gap | default: 16 }}px;
     }
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    html { scroll-behavior: smooth; }
-
+    /* Minimal Shell CSS — just enough to show the loader on a black screen.
+       ALL layout CSS (grid, cards, header, footer, etc.) is served from the
+       protection server. Without a valid license, none of it loads. */
     body {
+      background-color: var(--color-bg, #000);
+      color: var(--color-text, #fff);
+      margin: 0;
       font-family: var(--font-body);
-      background-color: var(--color-bg);
-      color: var(--color-text);
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      overflow-x: hidden;
     }
 
-    a { color: inherit; text-decoration: none; }
-    img { max-width: 100%; height: auto; display: block; }
-    button { cursor: pointer; border: none; background: none; font-family: inherit; }
-
-    .container {
-      max-width: var(--max-width);
-      margin: 0 auto;
-      padding: 0 20px;
-    }
-
-    .section-spacing { padding: var(--section-spacing) 0; }
-
-    .sr-only {
-      position: absolute; width: 1px; height: 1px;
-      padding: 0; margin: -1px; overflow: hidden;
-      clip: rect(0,0,0,0); white-space: nowrap; border: 0;
-    }
-  </style>
-
-  {{ 'theme.css' | asset_url | stylesheet_tag }}
-
-  {%- if settings.custom_css != blank -%}
-    <style>{{ settings.custom_css }}</style>
-  {%- endif -%}
-
-  {%- if settings.custom_head_code != blank -%}
-    {{ settings.custom_head_code }}
-  {%- endif -%}
-</head>
-
-<body class="template-{{ template.name }}{% if template.suffix %} template-{{ template.name }}-{{ template.suffix }}{% endif %}">
-  <!-- Loading Screen -->
-  <div class="scaled-loader" id="scaled-loader">
-    <div class="scaled-loader__spinner"></div>
-  </div>
-  <style>
+    /* Loading Screen — the only visible element before server responds */
     .scaled-loader {
       position: fixed;
       top: 0; left: 0;
@@ -170,17 +142,37 @@
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
     }
+
+    /* Hide ALL content until the server responds with layout CSS.
+       This prevents "flash of unstyled content" AND ensures the theme
+       is invisible without the license. */
+    main, header, footer, .header-section, .footer-section {
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    html.scaled-loaded main,
+    html.scaled-loaded header,
+    html.scaled-loaded footer,
+    html.scaled-loaded .header-section,
+    html.scaled-loaded .footer-section {
+      opacity: 1;
+    }
   </style>
-  <script>
-    (function(){
-      function hideLoader() {
-        var l = document.getElementById('scaled-loader');
-        if(l) { l.classList.add('hide'); setTimeout(function(){ l.style.display='none'; }, 400); }
-      }
-      window.addEventListener('load', function(){ setTimeout(hideLoader, 300); });
-      setTimeout(hideLoader, 5000);
-    })();
-  </script>
+
+  {%- if settings.custom_css != blank -%}
+    <style>{{ settings.custom_css }}</style>
+  {%- endif -%}
+
+  {%- if settings.custom_head_code != blank -%}
+    {{ settings.custom_head_code }}
+  {%- endif -%}
+</head>
+
+<body class="template-{{ template.name }}{% if template.suffix %} template-{{ template.name }}-{{ template.suffix }}{% endif %}">
+  <!-- Loading Screen -->
+  <div class="scaled-loader" id="scaled-loader">
+    <div class="scaled-loader__spinner"></div>
+  </div>
 
   <a class="sr-only" href="#MainContent">Skip to content</a>
 
@@ -195,7 +187,47 @@
   {% render 'live-sales-notification' %}
   {% render 'chat-widget' %}
 
-  <script src="{{ 'theme.js' | asset_url }}" defer></script>
+  {%- comment -%}
+    ═══ ScaledConfig — Theme Protection Handshake ═══
+    This object tells the Loader where to find the server and what license to use.
+    The license key and server URL are stored in theme settings so the store owner
+    can update them without touching code.
+  {%- endcomment -%}
+  <script>
+    window.ScaledConfig = {
+      licenseKey: {{ settings.license_key | default: '' | json }},
+      shopDomain: {{ request.host | json }},
+      permanentDomain: {{ shop.permanent_domain | json }},
+      apiUrl: {{ settings.protection_server_url | default: 'https://your-app.up.railway.app' | json }},
+      colors: {
+        accent: {{ accent | json }},
+        background: {{ bg | json }},
+        text: {{ text_primary | json }},
+        textMuted: {{ text_muted | json }},
+        cardBg: {{ card_bg | json }},
+        border: {{ border_color | json }}
+      },
+      brandName: {{ shop.name | json }},
+      logoUrl: {% if settings.logo %}{{ settings.logo | image_url: width: 200 | json }}{% else %}""{% endif %}
+    };
+  </script>
+
+  {%- comment -%}
+    ═══ Theme Loader — The Kill-Switch ═══
+    This script is obfuscated in production (run `node server/build.js`).
+    It fetches the critical CSS + JS from the protection server.
+    Without it, the theme is just empty shells with no styling.
+
+    In development, load the un-obfuscated version.
+    In production, use the obfuscated asset file.
+  {%- endcomment -%}
+  {%- if settings.use_obfuscated_loader -%}
+    <script src="{{ 'scaled-loader.js' | asset_url }}" defer></script>
+  {%- else -%}
+    <script src="{{ settings.protection_server_url | default: 'https://your-app.up.railway.app' }}/api/loader/scaled-loader.js" defer></script>
+  {%- endif -%}
+
+  {%- comment -%} theme.js is no longer needed — cart/header/FAQ JS comes from server {%- endcomment -%}
 
   {%- if settings.custom_js != blank -%}
     <script>{{ settings.custom_js }}</script>
