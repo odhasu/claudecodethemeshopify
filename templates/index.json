@@ -30,7 +30,7 @@
         "avatar_size": 30,
         "show_glow": true,
         "glow_color": "#39ff14",
-        "padding_top": 30,
+        "padding_top": 20,
         "padding_bottom": 20
       }
     },
