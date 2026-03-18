@@ -42,6 +42,7 @@
         "max_products": 16,
         "columns_desktop": 4,
         "columns_mobile": 2,
+        "glassmorphic_cards": true,
         "card_bg": "#111111",
         "card_border": "#2a2a2a",
         "card_hover_border": "#39ff14",
@@ -64,6 +65,9 @@
         "buy_btn_action": "checkout",
         "buy_btn_bg": "#39ff14",
         "buy_btn_text_color": "#1a1a1a",
+        "show_details_btn": true,
+        "details_btn_bg": "#0f0f0f",
+        "details_btn_text_color": "#ffffff",
         "cart_btn_bg": "#1a1a1a",
         "cart_btn_border": "#2a2a2a",
         "cart_btn_hover_border": "#ffffff",
@@ -73,6 +77,8 @@
         "cart_btn_incart_border": "#22c55e",
         "show_glow": true,
         "glow_color": "#39ff14",
+        "glow_intensity": 20,
+        "show_top_fade": false,
         "padding_top": 20,
         "padding_bottom": 20
       }
