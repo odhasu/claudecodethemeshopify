@@ -20,19 +20,27 @@
 <style>
   .header-pill-wrapper {
     {%- if section.settings.sticky_header -%}
-    position: sticky;
+    position: fixed;
+    left: 0;
+    right: 0;
     {%- else -%}
     position: relative;
     {%- endif -%}
     top: 0;
-    z-index: 99;
+    z-index: 999;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: {{ section.settings.padding_y }}px 20px {{ section.settings.padding_bottom }}px;
+    padding: {{ section.settings.padding_y | default: 0 }}px 20px {{ section.settings.padding_bottom | default: 0 }}px;
     background: transparent;
     pointer-events: none;
   }
+  {%- if section.settings.sticky_header -%}
+  /* Spacer to prevent content from jumping under fixed header */
+  .header-pill-spacer {
+    height: {{ icon_size | plus: 12 | plus: section.settings.padding_y | plus: section.settings.padding_bottom }}px;
+  }
+  {%- endif -%}
   .header-pill {
     display: flex;
     align-items: center;
@@ -153,6 +161,9 @@
   }
 </style>
 
+{%- if section.settings.sticky_header -%}
+<div class="header-pill-spacer"></div>
+{%- endif -%}
 <div class="header-pill-wrapper">
   <div class="header-pill">
     <a href="/cart" class="header-icon-btn" aria-label="Cart">
