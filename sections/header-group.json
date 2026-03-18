@@ -24,7 +24,7 @@
         "bar_height": 40,
         "font_size": 13,
         "scroll_speed": 50,
-        "min_viewers": 24,
+        "min_viewers": 22,
         "max_viewers": 55,
         "show_verified": true,
         "show_countdown": true,
