@@ -73,7 +73,7 @@
         "cart_btn_incart_border": "#22c55e",
         "show_glow": true,
         "glow_color": "#39ff14",
-        "padding_top": 40,
+        "padding_top": 20,
         "padding_bottom": 20
       }
     },
