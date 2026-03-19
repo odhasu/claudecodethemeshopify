@@ -763,6 +763,25 @@ app.delete('/api/admin/remote-content/:id', requireAdmin, (req, res) => {
   res.json({ message: 'Remote content deleted' });
 });
 
+// ─── Theme ZIP Download ─────────────────────────────────────────
+app.get('/api/admin/download-theme', requireAdmin, (req, res) => {
+  const archiver = require('archiver');
+  const themePath = path.join(__dirname, 'theme-dist');
+
+  if (!fs.existsSync(themePath)) {
+    return res.status(404).json({ error: 'Theme files not found. Run: node package-theme.js' });
+  }
+
+  res.setHeader('Content-Type', 'application/zip');
+  res.setHeader('Content-Disposition', 'attachment; filename="scaled-theme-v3.zip"');
+
+  const archive = archiver('zip', { zlib: { level: 9 } });
+  archive.on('error', (err) => res.status(500).json({ error: err.message }));
+  archive.pipe(res);
+  archive.directory(themePath, false);
+  archive.finalize();
+});
+
 // ─── Start Server ───────────────────────────────────────────────
 app.listen(PORT, () => {
   console.log(`[OGVendors] Theme protection server v3 running on port ${PORT}`);
