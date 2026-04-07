@@ -1,69 +1,55 @@
-# OGResell Theme — Skills & How-Tos
+# Vexel Theme — How Things Work
 
-Reference for working on this theme. What each part does and how to work on it correctly.
+## Folder structure
 
-## Shopify Theme Structure
+| Folder | What |
+|--------|------|
+| sections/ | 45 page sections (hero, products, FAQ, reviews, etc.) |
+| snippets/ | 36 reusable components (cart drawer, menus, product cards) |
+| assets/ | CSS, JS (includes loader.js) |
+| layout/ | theme.liquid — base HTML wrapper |
+| templates/ | Page templates (homepage, product, accounts, support, legal) |
+| config/ | settings_schema.json — all theme editor settings |
 
-| Folder | What it is |
-|--------|------------|
-| sections/ | Main page sections (hero, pricing, docs, license panel, etc.) |
-| snippets/ | Reusable components used inside sections |
-| assets/ | CSS, JS files (including loader.js — the license checker) |
-| layout/ | theme.liquid — the base HTML wrapper for every page |
-| templates/ | Page templates (which sections load on which pages) |
-| config/ | settings_schema.json — all theme editor settings live here |
+## Adding a new section
 
-## How to add a new section
+1. Create `sections/your-section.liquid`
+2. Write HTML + Liquid
+3. Add `{% schema %}` block with all settings (colors, text, sizes, URLs)
+4. Add to template in `templates/`
+5. Push to main
 
-1. Create the file in `sections/` as `your-section-name.liquid`
-2. Write the HTML + Liquid inside it
-3. Add a `{% schema %}` block at the bottom with all settings
-4. Every color, text, size, URL must be a schema setting — nothing hardcoded
-5. Add the section to the relevant template in `templates/`
-6. Push to GitHub
+## Key sections
 
-## How to edit the pricing section
+| Section | What it does |
+|---------|-------------|
+| hero-section.liquid | Hero banner with CTA |
+| product.liquid | Product grid with "DETAILS +" modals |
+| custom-landing-page.liquid | Full landing page (profits, sales, features, testimonials, FAQ, reviews) |
+| customer-reviews.liquid | Reviews with ratings |
+| faq-section.liquid | FAQ accordion |
+| ai-bot.liquid | AI chatbot widget |
+| live-sales-glass.liquid | Live sales notifications |
+| image-marquee.liquid | Scrolling testimonials/images |
+| header-pill.liquid | Glassmorphic pill navigation |
+| custom-footer.liquid | Footer (not deletable by resellers, links to Vexel) |
 
-File: `sections/pricing.liquid` (or the relevant section file)
-- Lite card: white background, gray "LITE" pill, $179, 1 store license
-- Pro card: blue gradient top, diamond logo, "SAVE $200" badge, $379, 5 store licenses
-- Both cards have a "Get Started →" button
-- Reference design: usekenso.com pricing page
+## The footer rule
 
-## How loader.js works
+The footer contains a link back to the Vexel store. Resellers cannot delete it or change the link. If the footer is removed, the theme protection kicks in. This is how new customers discover Vexel.
 
-File: `assets/loader.js`
+## What resellers can customize
 
-1. Page loads → loader shows a spinner
-2. Loader reads the license key from a cookie or meta tag
-3. Sends a request to the backend server to validate
-4. **Valid** → removes spinner, renders all sections marked `data-scaled-section`
-5. **403 Invalid** → blurs content, shows upgrade notice, injects footer HTML from the server response
-6. **Network error** → shows a generic error state
+Almost everything via the theme editor:
+- All colors (14 settings)
+- Fonts and sizes
+- Button styles
+- Card styles
+- Header/nav layout
+- Announcement bar
+- Product card appearance
+- Social media links
+- Animations
+- Custom CSS/JS
 
-The backend server URL is set in the theme settings (never hardcode it).
-
-## How to update copy/text
-
-All text that should be editable by Oscar goes in the section's `{% schema %}` as a `text` or `richtext` setting. If it's permanent brand copy, write it directly in the Liquid but still consider making it a setting for flexibility.
-
-## Key files
-
-| File | What it does |
-|------|--------------|
-| assets/loader.js | License validation on every page load |
-| sections/pricing.liquid | Lite + Pro pricing cards |
-| sections/docs.liquid | Docs page with 29 articles |
-| sections/license-panel.liquid | Customer license management |
-| snippets/chat-widget.liquid | Floating support chat (bottom-left) |
-| layout/theme.liquid | Base HTML, loads loader.js |
-
-## After every change
-
-```
-git add .
-git commit -m "short description of what changed"
-git push
-```
-
-Shopify picks up the changes once pushed (if connected via Shopify CLI or GitHub integration).
+What they can't change: the footer link to Vexel store, the license validation.

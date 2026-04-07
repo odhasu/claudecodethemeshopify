@@ -1,61 +1,56 @@
-# OGResell Shopify Theme — Project Context
+# Vexel Shopify Theme
 
-This is the custom Shopify theme for ogresells.com. Read this file every session before touching anything.
+This is the actual Shopify theme product that resellers install on their stores. Oscar sells it through the Vexel store. Resellers use it to run stores like keanusvendors.com.
 
-## What this repo is
+Repo: github.com/odhasu/claudecodethemeshopify
+Push to: main branch
 
-A fully custom Shopify theme built from scratch for OGResell — a reselling education business owned by Oscar. The theme is license-protected. When a customer visits the store, a loader script checks their license against the backend server. Valid license = full content loads. Invalid = content is blurred and a notice appears.
+## What it is
 
-## Rules — always follow these
+A full Shopify theme with 45 sections, 36 snippets, and 12+ settings groups. License-protected — loader.js checks with the Vexel server on every page load. Valid license = content loads. Invalid = blurred + upgrade notice.
 
-- Every visual element must have a Shopify theme editor setting. Never hardcode colors, text, sizes, or URLs.
-- After every file change: git add → git commit → git push
-- No placeholder copy. Write real persuasive copy based on OGResell's brand.
-- The paired backend server lives at: github.com/odhasu/claudeshopifylicinse
+## Rules
 
-## What's been built
+- Every visual element must have a theme editor setting. Nothing hardcoded.
+- After every change: git add → commit → push to main
+- No placeholder text — write real copy
+- The footer is not deletable by resellers (protects the license link back to Vexel store)
+- Resellers can change almost everything else from the theme editor (colors, fonts, text, etc.)
+- Don't add things Oscar didn't ask for
 
-### Homepage
-- Hero section with headline, subtext, CTA button
-- Stats bar (to be updated: $300K combined sales, 10K+ orders)
-- Resellers testimonials carousel (pending — Oscar to send Instagram handles + follower counts)
+## What's in the theme
 
-### Pricing Section
-- **Lite — $179** — white card, gray "LITE" pill badge, 1 store license, dark button
-- **Pro — $379** — blue gradient card, diamond logo icon, "SAVE $200" badge, 5 store licenses, blue button
-- Designed to match Kenso (usekenso.com) pricing layout
+- 45 sections (hero, product grid, product modals, bundle builder, FAQ, reviews, live sales, chatbot, etc.)
+- 36 snippets (cart drawer, mega menu, product cards, variant pickers, etc.)
+- 14 templates (homepage, product page, customer accounts, support, legal, affiliate dashboard)
+- Full customer accounts (login, register, orders, addresses)
+- Loading spinner on page load
+- Product detail modals ("DETAILS +" button)
+- Bundle builder with discount tiers
+- AI chatbot
+- Live sales notifications (glassmorphic)
+- Image marquee for testimonials
+- The footer links back to the Vexel store — this link is not editable
 
-### Docs Page
-- 29 full articles across 6 categories
-- Categories: Getting Started, License & Domain, Theme Customization, Feature Guides, Troubleshooting, Plans & Policies
-- Floating chat widget bottom-left (name, phone, message → posts to /api/support/ticket on server)
+## Theme editor settings (13 groups)
 
-### License Panel
-- Customers can view their license key, product, and expiry
-- Shown only to logged-in customers with a valid license
+Colors (14), Typography (8), Buttons (13), Cards (6), Layout (4), Header (13), Announcement Bar (7), Product Cards (21), Footer (13), Social Media (7), Cart (4), Animations (5), Custom Code (6)
 
-### Loader (assets/loader.js)
-- Runs on every page load
-- Pings the backend to validate the license
-- On 403 (invalid): blurs content, shows notice, injects footer HTML from server response
-- On success: renders all licensed sections
+## Reference stores (all use Kenso's theme — we match these)
 
-## Changelog
+- keanusvendors.com (primary reference)
+- flippavendors.com
+- resellersrealm.shop
+- piaresells.com
 
-### March 15 2026
-- Added floating chat widget to docs page
-- Updated pricing cards to match Kenso layout
-- Fixed loader.js 403 handler to inject footer HTML on invalid license
+## License flow
 
-### March 10 2026
-- Rebuilt docs page with 29 articles
-- Added license panel section
-- Pricing section redesigned (Lite + Pro cards)
+1. Page loads → loader.js shows spinner
+2. Sends license key + domain to Vexel server (/api/validate)
+3. Valid → spinner gone, all sections render
+4. Invalid (403) → content blurred, notice shown, footer HTML injected from server
 
-## Still to do
-- Resellers carousel — Oscar to send Instagram handles + follower counts
-- Update homepage stats to $300K / 10K orders
-- New diamond logo SVG — white diamond, transparent background
-- Support page redesign (match Kenso support page style)
-- Changelog section visible to customers in theme
+## What needs work
+
+- Diamond logo SVG: white diamond, transparent background
 - Footer copyright business name
