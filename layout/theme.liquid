@@ -1,373 +1,204 @@
 <!doctype html>
 <html class="no-js" lang="{{ request.locale.iso_code }}">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="theme-color" content="{{ settings.color_accent }}">
-    <link rel="canonical" href="{{ canonical_url }}">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="{{ settings.color_accent }}">
+  <link rel="canonical" href="{{ canonical_url }}">
+  <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
 
-    {%- if settings.favicon != blank -%}
-      <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
-    {%- endif -%}
+  {%- if settings.favicon != blank -%}
+    <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
+  {%- endif -%}
 
-    {%- unless settings.font_heading.system? and settings.font_body.system? -%}
-      <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
-    {%- endunless -%}
+  <title>
+    {{ page_title }}
+    {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
+    {%- if current_page != 1 %} &ndash; Page {{ current_page }}{% endif -%}
+    {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
+  </title>
 
-    {%- unless settings.font_body.system? -%}
-      <link rel="preload" as="font" href="{{ settings.font_body | font_url }}" type="font/woff2" crossorigin>
-    {%- endunless -%}
-    {%- unless settings.font_heading.system? -%}
-      <link rel="preload" as="font" href="{{ settings.font_heading | font_url }}" type="font/woff2" crossorigin>
-    {%- endunless -%}
+  {% if page_description %}
+    <meta name="description" content="{{ page_description | escape }}">
+  {% endif %}
 
-    <title>
-      {{ page_title }}
-      {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
-      {%- if current_page != 1 %} &ndash; Page {{ current_page }}{% endif -%}
-      {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
-    </title>
+  {% render 'meta-tags' %}
 
-    {% if page_description %}
-      <meta name="description" content="{{ page_description | escape }}">
-    {% endif %}
+  {{ content_for_header }}
 
-    {% render 'meta-tags' %}
+  {%- liquid
+    assign accent = settings.color_accent | default: '#39ff14'
+    assign accent_hover = settings.color_accent_hover | default: '#2de010'
+    assign bg = settings.color_background | default: '#000000'
+    assign card_bg = settings.color_card_bg | default: '#111111'
+    assign card_elevated = settings.color_card_elevated | default: '#1a1a1a'
+    assign border_color = settings.color_border | default: '#2a2a2a'
+    assign text_primary = settings.color_text_primary | default: '#ffffff'
+    assign text_muted = settings.color_text_muted | default: '#9ca3af'
+    assign text_subtle = settings.color_text_subtle | default: '#6b7280'
+    assign star_color = settings.color_stars | default: '#fbbf24'
+    assign heading_font = settings.heading_font | default: 'Anton'
+    assign body_font = settings.body_font | default: 'system-ui, -apple-system, sans-serif'
+  -%}
 
-    {%- liquid
-      assign body_font_bold = settings.font_body | font_modify: 'weight', 'bold'
-      assign body_font_italic = settings.font_body | font_modify: 'style', 'italic'
-      assign body_font_bold_italic = body_font_bold | font_modify: 'style', 'italic'
-    -%}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  {%- liquid
+    assign gfonts = 'Anton,Satoshi,Inter,Bebas+Neue,Poppins,Montserrat,Oswald,Outfit,Space+Grotesk,DM+Sans,Rubik,Raleway'
+    assign gfonts_arr = gfonts | split: ','
+    assign load_fonts = ''
+    for f in gfonts_arr
+      assign load_fonts = load_fonts | append: 'family=' | append: f | append: ':wght@400;500;700;900&'
+    endfor
+  -%}
+  <link href="https://fonts.googleapis.com/css2?{{ load_fonts }}display=swap" rel="stylesheet">
 
-    <style>
-      {{ settings.font_body | font_face: font_display: 'swap' }}
-      {{ body_font_bold | font_face: font_display: 'swap' }}
-      {{ body_font_italic | font_face: font_display: 'swap' }}
-      {{ body_font_bold_italic | font_face: font_display: 'swap' }}
-      {{ settings.font_heading | font_face: font_display: 'swap' }}
+  <style>
+    :root {
+      --color-accent: {{ accent }};
+      --color-accent-hover: {{ accent_hover }};
+      --color-accent-rgb: {{ accent | color_extract: 'red' }}, {{ accent | color_extract: 'green' }}, {{ accent | color_extract: 'blue' }};
+      --color-bg: {{ bg }};
+      --color-card-bg: {{ card_bg }};
+      --color-card-elevated: {{ card_elevated }};
+      --color-border: {{ border_color }};
+      --color-text: {{ text_primary }};
+      --color-text-muted: {{ text_muted }};
+      --color-text-subtle: {{ text_subtle }};
+      --color-stars: {{ star_color }};
+      --font-heading: '{{ heading_font }}', 'Anton', sans-serif;
+      --font-body: {{ body_font }};
+      --radius-card: {{ settings.border_radius_card | default: 12 }}px;
+      --radius-button: {{ settings.border_radius_button | default: 8 }}px;
+      --max-width: {{ settings.max_page_width | default: 1200 }}px;
+      --section-spacing: {{ settings.section_spacing | default: 60 }}px;
+      --grid-gap: {{ settings.grid_gap | default: 16 }}px;
+    }
 
-      :root {
-        /* Sense theme compatibility (RGB triplets) */
-        {%- assign page_bg = settings.color_page_bg | default: '#0a0a0a' -%}
-        {%- assign text_primary = settings.color_text_primary | default: '#ffffff' -%}
-        --color-background: {{ page_bg | color_extract: 'red' }}, {{ page_bg | color_extract: 'green' }}, {{ page_bg | color_extract: 'blue' }};
-        --color-foreground: {{ text_primary | color_extract: 'red' }}, {{ text_primary | color_extract: 'green' }}, {{ text_primary | color_extract: 'blue' }};
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-        /* Colors */
-        --color-accent: {{ settings.color_accent }};
-        --color-accent-hover: {{ settings.color_accent_hover }};
-        --color-page-bg: {{ settings.color_page_bg }};
-        --color-secondary-bg: {{ settings.color_secondary_bg }};
-        --color-card-bg: {{ settings.color_card_bg }};
-        --color-image-bg: {{ settings.color_image_bg }};
-        --color-text-primary: {{ settings.color_text_primary }};
-        --color-text-muted: {{ settings.color_text_muted }};
-        --color-text-faint: {{ settings.color_text_faint }};
-        --color-border: {{ settings.color_border }};
-        --color-stars: {{ settings.color_stars }};
-        --color-success: {{ settings.color_success }};
-        --color-error: {{ settings.color_error }};
-        --color-warning: {{ settings.color_warning }};
+    html { scroll-behavior: smooth; }
 
-        /* Typography */
-        --font-heading-family: {{ settings.font_heading.family }}, {{ settings.font_heading.fallback_families }};
-        --font-heading-style: {{ settings.font_heading.style }};
-        --font-heading-weight: {{ settings.font_heading.weight }};
-        --font-body-family: {{ settings.font_body.family }}, {{ settings.font_body.fallback_families }};
-        --font-body-style: {{ settings.font_body.style }};
-        --font-body-weight: {{ settings.font_body.weight }};
-        --font-h1-size: {{ settings.font_h1_size }}px;
-        --font-h1-mobile-size: {{ settings.font_h1_mobile_size }}px;
-        --font-h2-size: {{ settings.font_h2_size }}px;
-        --font-h3-size: {{ settings.font_h3_size }}px;
-        --font-heading-transform: {{ settings.font_heading_transform }};
-        --font-body-size: {{ settings.font_body_size }}px;
-        --font-body-line-height: {{ settings.font_body_line_height | divided_by: 10.0 }};
+    body {
+      font-family: var(--font-body);
+      background-color: var(--color-bg);
+      color: var(--color-text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
 
-        /* Buttons */
-        --btn-primary-bg: {{ settings.btn_primary_bg }};
-        --btn-primary-hover: {{ settings.btn_primary_hover }};
-        --btn-primary-text: {{ settings.btn_primary_text }};
-        --btn-height: {{ settings.btn_height }}px;
-        --btn-radius: {{ settings.btn_radius }}px;
-        --btn-font-size: {{ settings.btn_font_size }}px;
-        --btn-letter-spacing: {{ settings.btn_letter_spacing }}px;
-        --btn-outline-border: {{ settings.btn_outline_border }};
-        --btn-outline-text: {{ settings.btn_outline_text }};
-        --btn-outline-hover-bg: {{ settings.btn_outline_hover_bg }};
-        --btn-outline-hover-text: {{ settings.btn_outline_hover_text }};
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; height: auto; display: block; }
+    button { cursor: pointer; border: none; background: none; font-family: inherit; }
 
-        /* Cards */
-        --card-bg: {{ settings.card_bg }};
-        --card-border: {{ settings.card_border }};
-        --card-hover-border: {{ settings.card_hover_border }};
-        --card-radius: {{ settings.card_radius }}px;
-        --card-hover-lift-amount: {{ settings.card_hover_lift_amount }}px;
+    .container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 20px;
+    }
 
-        /* Layout */
-        --page-max-width: {{ settings.page_max_width }}px;
-        --page-side-padding: {{ settings.page_side_padding }}px;
-        --section-spacing: {{ settings.section_spacing }}px;
-        --grid-gap: {{ settings.grid_gap }}px;
+    .section-spacing { padding: var(--section-spacing) 0; }
 
-        /* Header */
-        --header-pill-bg: {{ settings.header_pill_bg }};
-        --header-pill-border: {{ settings.header_pill_border }};
-        --header-pill-width: {{ settings.header_pill_width }}px;
-        --header-icon-size: {{ settings.header_icon_size }}px;
-        --header-icon-bg: {{ settings.header_icon_bg }};
-        --header-bg: {{ settings.header_bg }};
-        --header-padding: {{ settings.header_padding }}px;
-        --header-drawer-bg: {{ settings.header_drawer_bg }};
-        --header-drawer-text: {{ settings.header_drawer_text }};
-        --header-logo-height: {{ settings.header_logo_height }}px;
+    .sr-only {
+      position: absolute; width: 1px; height: 1px;
+      padding: 0; margin: -1px; overflow: hidden;
+      clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+    }
+  </style>
 
-        /* Ticker */
-        --ticker-bg: {{ settings.ticker_bg }};
-        --ticker-text: {{ settings.ticker_text }};
-        --ticker-dot-color: {{ settings.ticker_dot_color }};
-        --ticker-highlight: {{ settings.ticker_highlight }};
-        --ticker-speed: {{ settings.ticker_speed }}s;
-        --ticker-height: {{ settings.ticker_height }}px;
-        --ticker-font-size: {{ settings.ticker_font_size }}px;
+  {{ 'theme.css' | asset_url | stylesheet_tag }}
 
-        /* Product Cards */
-        --pcard-image-bg: {{ settings.pcard_image_bg }};
-        --pcard-image-padding: {{ settings.pcard_image_padding }}px;
-        --pcard-overlay-bg: {{ settings.pcard_overlay_bg }};
-        --pcard-overlay-opacity: {{ settings.pcard_overlay_opacity | divided_by: 100.0 }};
-        --pcard-title-line1-color: {{ settings.pcard_title_line1_color }};
-        --pcard-title-line2-color: {{ settings.pcard_title_line2_color }};
-        --pcard-sale-bg: {{ settings.pcard_sale_bg }};
-        --pcard-sale-text-color: {{ settings.pcard_sale_text_color }};
-        --pcard-price-color: {{ settings.pcard_price_color }};
-        --pcard-compare-color: {{ settings.pcard_compare_color }};
-        --pcard-button-bg: {{ settings.pcard_button_bg }};
-        --pcard-button-text-color: {{ settings.pcard_button_text_color }};
-        --pcard-cart-icon-bg: {{ settings.pcard_cart_icon_bg }};
-        --pcard-cart-icon-color: {{ settings.pcard_cart_icon_color }};
+  {%- if settings.custom_css != blank -%}
+    <style>{{ settings.custom_css }}</style>
+  {%- endif -%}
 
-        /* Footer */
-        --footer-bg: {{ settings.footer_bg }};
-        --footer-border: {{ settings.footer_border }};
-        --footer-text: {{ settings.footer_text }};
-        --footer-link-color: {{ settings.footer_link_color }};
-        --footer-link-hover: {{ settings.footer_link_hover }};
+  {%- if settings.custom_head_code != blank -%}
+    {{ settings.custom_head_code }}
+  {%- endif -%}
+</head>
 
-        /* Cart */
-        --cart-badge-bg: {{ settings.cart_badge_bg }};
-        --cart-badge-text: {{ settings.cart_badge_text }};
-
-        /* Animations */
-        --anim-duration: {{ settings.anim_duration }}ms;
-        --anim-stagger: {{ settings.anim_stagger }}ms;
+<body class="template-{{ template.name }}{% if template.suffix %} template-{{ template.name }}-{{ template.suffix }}{% endif %}">
+  <!-- Loading Screen -->
+  <div class="scaled-loader" id="scaled-loader">
+    <div class="scaled-loader__spinner"></div>
+  </div>
+  <style>
+    .scaled-loader {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      z-index: 99999;
+      background: var(--color-bg, #000);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.4s ease;
+    }
+    .scaled-loader.hide {
+      opacity: 0;
+      pointer-events: none;
+    }
+    .scaled-loader__spinner {
+      width: 44px;
+      height: 44px;
+      position: relative;
+    }
+    .scaled-loader__spinner::before,
+    .scaled-loader__spinner::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+    }
+    .scaled-loader__spinner::before {
+      border: 3px solid transparent;
+      border-top-color: var(--color-accent, #39ff14);
+      border-right-color: var(--color-accent, #39ff14);
+      animation: scaledSpin 1s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite;
+    }
+    .scaled-loader__spinner::after {
+      inset: 5px;
+      border: 2px solid transparent;
+      border-bottom-color: var(--color-accent, #39ff14);
+      border-left-color: var(--color-accent, #39ff14);
+      animation: scaledSpin 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite reverse;
+    }
+    @keyframes scaledSpin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+  <script>
+    (function(){
+      function hideLoader() {
+        var l = document.getElementById('scaled-loader');
+        if(l) { l.classList.add('hide'); setTimeout(function(){ l.style.display='none'; }, 400); }
       }
+      window.addEventListener('load', function(){ setTimeout(hideLoader, 300); });
+      setTimeout(hideLoader, 5000);
+    })();
+  </script>
 
-      *, *::before, *::after { box-sizing: border-box; }
+  <a class="sr-only" href="#MainContent">Skip to content</a>
 
-      html {
-        font-size: 16px;
-        height: 100%;
-      }
+  {% sections 'header-group' %}
 
-      body {
-        display: flex;
-        flex-direction: column;
-        min-height: 100%;
-        margin: 0;
-        font-family: var(--font-body-family);
-        font-style: var(--font-body-style);
-        font-weight: var(--font-body-weight);
-        font-size: var(--font-body-size);
-        line-height: var(--font-body-line-height);
-        color: var(--color-text-primary);
-        background-color: var(--color-page-bg);
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-      }
+  <main id="MainContent" role="main" tabindex="-1">
+    {{ content_for_layout }}
+  </main>
 
-      main#MainContent {
-        flex: 1;
-      }
+  {% sections 'footer-group' %}
 
-      h1, h2, h3, h4, h5, h6 {
-        font-family: var(--font-heading-family);
-        font-style: var(--font-heading-style);
-        font-weight: var(--font-heading-weight);
-        text-transform: var(--font-heading-transform);
-        margin: 0;
-        line-height: 1.1;
-      }
+  {% render 'live-sales-notification' %}
+  {% render 'chat-widget' %}
 
-      a { color: inherit; text-decoration: none; }
-      img { max-width: 100%; height: auto; display: block; }
+  <script src="{{ 'theme.js' | asset_url }}" defer></script>
 
-      .visually-hidden {
-        position: absolute !important;
-        width: 1px !important;
-        height: 1px !important;
-        padding: 0 !important;
-        margin: -1px !important;
-        overflow: hidden !important;
-        clip: rect(0,0,0,0) !important;
-        white-space: nowrap !important;
-        border: 0 !important;
-      }
-
-      /* Scroll reveal */
-      {% if settings.anim_scroll_reveal %}
-      .reveal {
-        opacity: 0;
-        transform: translateY(30px);
-        transition: opacity var(--anim-duration) ease, transform var(--anim-duration) ease;
-      }
-      .reveal.revealed {
-        opacity: 1;
-        transform: translateY(0);
-      }
-      {% endif %}
-    </style>
-
-    {{ 'base.css' | asset_url | stylesheet_tag }}
-
-    <style>
-      /* Dark theme overrides (after base.css) */
-      body,
-      .shopify-section,
-      .section-template--*,
-      main#MainContent {
-        background-color: var(--color-page-bg) !important;
-        color: var(--color-text-primary);
-      }
-      h1, h2, h3, h4, h5, h6 { color: var(--color-text-primary); }
-      a { color: inherit; }
-    </style>
-
-    {%- if settings.custom_css != blank -%}
-      <style>{{ settings.custom_css }}</style>
-    {%- endif -%}
-
-    {%- if settings.custom_head != blank -%}
-      {{ settings.custom_head }}
-    {%- endif -%}
-
-    {{ content_for_header }}
-
-    {%- if settings.pixel_ga != blank -%}
-      <script async src="https://www.googletagmanager.com/gtag/js?id={{ settings.pixel_ga }}"></script>
-      <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', '{{ settings.pixel_ga }}');
-      </script>
-    {%- endif -%}
-
-    {%- if settings.pixel_fb != blank -%}
-      <script>
-        !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-        n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
-        n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
-        t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
-        document,'script','https://connect.facebook.net/en_US/fbevents.js');
-        fbq('init', '{{ settings.pixel_fb }}');
-        fbq('track', 'PageView');
-      </script>
-      <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id={{ settings.pixel_fb }}&ev=PageView&noscript=1"/></noscript>
-    {%- endif -%}
-
-    {%- if settings.pixel_tiktok != blank -%}
-      <script>
-        !function(w,d,t){w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=
-        ["page","track","identify","instances","debug","on","off","once","ready","alias",
-        "group","enableCookie","disableCookie"];ttq.setAndDefer=function(t,e){t[e]=function()
-        {t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)
-        ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;
-        n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e};ttq.load=function(e,n)
-        {var i="https://analytics.tiktok.com/i18n/pixel/events.js";ttq._i=ttq._i||{};ttq._i[e]=[];
-        ttq._i[e]._u=i;ttq._t=ttq._t||{};ttq._t[e+\"_\"+n]=+new Date;(ttq._o=ttq._o||{})[e+\"_\"+n]=n||{};
-        var o=document.createElement("script");o.type="text/javascript";o.async=!0;o.src=i+"?sdkid="+e+"&lib="+t;
-        var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(o,a)};
-        ttq.load('{{ settings.pixel_tiktok }}');ttq.page();
-        }(window,document,'ttq');
-      </script>
-    {%- endif -%}
-
-    <script>
-      if (Shopify.designMode) {
-        document.documentElement.classList.add('shopify-design-mode');
-      }
-    </script>
-  </head>
-
-  <body>
-    <a class="skip-to-content-link visually-hidden" href="#MainContent">
-      {{ 'accessibility.skip_to_text' | t }}
-    </a>
-
-    {%- if settings.cart_type == 'drawer' -%}
-      {%- render 'cart-drawer' -%}
-    {%- endif -%}
-
-    {% sections 'header-group' %}
-
-    <main id="MainContent" role="main" tabindex="-1">
-      {{ content_for_layout }}
-    </main>
-
-    {% sections 'footer-group' %}
-
-    <script>
-      window.shopUrl = '{{ request.origin }}';
-      window.routes = {
-        cart_add_url: '{{ routes.cart_add_url }}',
-        cart_change_url: '{{ routes.cart_change_url }}',
-        cart_update_url: '{{ routes.cart_update_url }}',
-        cart_url: '{{ routes.cart_url }}',
-        predictive_search_url: '{{ routes.predictive_search_url }}'
-      };
-
-      window.cartStrings = {
-        error: `{{ 'sections.cart.cart_error' | t }}`,
-        quantityError: `{{ 'sections.cart.cart_quantity_error_html' | t: quantity: '[quantity]' }}`
-      };
-
-      window.variantStrings = {
-        addToCart: `{{ 'products.product.add_to_cart' | t }}`,
-        soldOut: `{{ 'products.product.sold_out' | t }}`,
-        unavailable: `{{ 'products.product.unavailable' | t }}`,
-        unavailable_with_option: `{{ 'products.product.value_unavailable' | t: option_value: '[value]' }}`
-      };
-    </script>
-
-    <script src="{{ 'global.js' | asset_url }}" defer></script>
-
-    {%- if settings.cart_type == 'drawer' -%}
-      <script src="{{ 'cart-drawer.js' | asset_url }}" defer></script>
-    {%- endif -%}
-
-    {%- if settings.anim_scroll_reveal -%}
-      <script>
-        document.addEventListener('DOMContentLoaded', function() {
-          var reveals = document.querySelectorAll('.reveal');
-          if (!reveals.length) return;
-          var observer = new IntersectionObserver(function(entries) {
-            entries.forEach(function(entry) {
-              if (entry.isIntersecting) {
-                entry.target.classList.add('revealed');
-                observer.unobserve(entry.target);
-              }
-            });
-          }, { threshold: 0.1 });
-          reveals.forEach(function(el) { observer.observe(el); });
-        });
-      </script>
-    {%- endif -%}
-
-    {%- if settings.custom_js != blank -%}
-      <script>{{ settings.custom_js }}</script>
-    {%- endif -%}
-  </body>
+  {%- if settings.custom_js != blank -%}
+    <script>{{ settings.custom_js }}</script>
+  {%- endif -%}
+</body>
 </html>

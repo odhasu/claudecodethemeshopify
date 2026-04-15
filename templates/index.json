@@ -1,123 +1,244 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero": {
-      "type": "hero-section",
+      "type": "hero",
       "settings": {
+        "hero_font": "Satoshi",
         "title_before": "START YOUR",
-        "title_accent": "RESELLING",
+        "title_highlight": "RESELLING",
         "title_after": "JOURNEY TODAY",
-        "trust_prefix": "Join",
-        "trust_count": "10,000+",
-        "trust_suffix": "people making money",
-        "cta_text": "GET STARTED",
-        "cta_link": "/collections/all"
+        "title_color": "#ffffff",
+        "highlight_color": "#39ff14",
+        "title_size_desktop": 42,
+        "title_size_mobile": 28,
+        "trust_prefix": "Trusted By",
+        "trust_count": "2,463+",
+        "trust_suffix": "Resellers",
+        "trust_count_color": "#fbbf24",
+        "trust_text_color": "#9ca3af",
+        "trust_font_size": 20,
+        "show_avatars": true,
+        "avatar_size": 30,
+        "show_glow": true,
+        "glow_color": "#39ff14",
+        "padding_top": 20,
+        "padding_bottom": 20
       }
     },
-    "products": {
+    "product-grid": {
       "type": "product-grid",
       "settings": {
-        "title": "Our Products",
-        "products_per_row": 3
+        "collection": "",
+        "title": "",
+        "max_products": 16,
+        "columns_desktop": 4,
+        "columns_mobile": 2,
+        "glassmorphic_cards": true,
+        "card_bg": "#111111",
+        "card_border": "#2a2a2a",
+        "card_hover_border": "#39ff14",
+        "image_bg": "#0a0a0a",
+        "title_color": "#ffffff",
+        "show_overlay_title": true,
+        "overlay_title_green_color": "#39ff14",
+        "overlay_title_white_color": "#ffffff",
+        "overlay_font_size": 12,
+        "show_sale_badge": true,
+        "always_show_sale_badge": false,
+        "sale_badge_label": "SALE",
+        "sale_badge_bg": "#000000",
+        "sale_badge_text_color": "#ffffff",
+        "sale_badge_position_y": "bottom",
+        "sale_badge_position_x": "right",
+        "price_color": "#39ff14",
+        "compare_price_color": "#6b7280",
+        "buy_btn_label": "BUY NOW",
+        "buy_btn_action": "checkout",
+        "buy_btn_bg": "#39ff14",
+        "buy_btn_text_color": "#1a1a1a",
+        "show_details_btn": false,
+        "details_btn_bg": "#0f0f0f",
+        "details_btn_text_color": "#ffffff",
+        "cart_btn_bg": "#1a1a1a",
+        "cart_btn_border": "#2a2a2a",
+        "cart_btn_hover_border": "#ffffff",
+        "cart_btn_hover_bg": "#1a1a1a",
+        "cart_btn_hover_color": "#ffffff",
+        "cart_btn_incart_bg": "#22c55e",
+        "cart_btn_incart_border": "#22c55e",
+        "show_glow": false,
+        "glow_color": "#39ff14",
+        "glow_intensity": 20,
+        "show_top_fade": true,
+        "padding_top": 20,
+        "padding_bottom": 20
       }
     },
-    "social-proof": {
-      "type": "social-proof",
+    "testimonials": {
+      "type": "testimonials",
       "settings": {
-        "title": "What Our Customers Say"
+        "title": "What Our Customers Say",
+        "title_color": "#ffffff",
+        "bg_color": "#000000",
+        "scroll_speed": 20,
+        "max_width": 1400,
+        "image_height": 250,
+        "image_height_mobile": 180,
+        "image_radius": 12,
+        "gap": 16,
+        "padding_top": 60,
+        "padding_bottom": 60,
+        "image_1": "shopify://shop_images/3e51884a71daea267e8a457dfd1a8b89.webp",
+        "image_2": "shopify://shop_images/person-stands-on-rocks-poking-out-of-the-ocean-shoreline.jpg",
+        "image_3": "shopify://shop_images/Screenshot_2026-03-08_at_18.28.14.png"
       }
     },
     "reviews": {
-      "type": "customer-reviews",
-      "settings": {
-        "title": "Customer Reviews",
-        "aggregate_rating": "4.8",
-        "total_reviews": "2,847"
-      },
+      "type": "reviews",
       "blocks": {
         "review-1": {
           "type": "review",
           "settings": {
-            "reviewer_name": "Marcus T.",
-            "rating": 5,
-            "review_text": "Best vendor list I've ever purchased. Found 3 profitable suppliers in the first week!",
-            "date": "2 days ago"
+            "name": "Alex M.",
+            "date": "1 week ago",
+            "stars": 5,
+            "text": "Best vendor list I've ever purchased. Made my money back in the first week!"
           }
         },
         "review-2": {
           "type": "review",
           "settings": {
-            "reviewer_name": "Sarah K.",
-            "rating": 5,
-            "review_text": "This completely changed my reselling game. The vendors are legit and the prices are unbeatable.",
-            "date": "1 week ago"
+            "name": "Sarah K.",
+            "date": "2 weeks ago",
+            "stars": 5,
+            "text": "Incredible value. The suppliers are legit and the prices are unbeatable."
           }
         },
         "review-3": {
           "type": "review",
           "settings": {
-            "reviewer_name": "James R.",
-            "rating": 4,
-            "review_text": "Great value for the price. Already made back my investment within the first month of reselling.",
-            "date": "2 weeks ago"
+            "name": "Mike R.",
+            "date": "3 weeks ago",
+            "stars": 5,
+            "text": "Was skeptical at first but these vendors are 100% real. Already made sales!"
           }
         }
       },
-      "block_order": ["review-1", "review-2", "review-3"]
-    },
-    "how-it-works": {
-      "type": "how-it-works",
+      "block_order": [
+        "review-1",
+        "review-2",
+        "review-3"
+      ],
       "settings": {
-        "title": "How It Works"
+        "title": "Customer Reviews",
+        "subtitle": "See what our customers are saying",
+        "rating": "4.9",
+        "review_count": "15",
+        "title_color": "#ffffff",
+        "subtitle_color": "#9ca3af",
+        "star_color": "#fbbf24",
+        "card_bg": "#111111",
+        "card_border": "#2a2a2a",
+        "avatar_bg": "#39ff14",
+        "avatar_text_color": "#000000",
+        "write_btn_bg": "#39ff14",
+        "write_btn_text_color": "#000000",
+        "columns": 3,
+        "avatar_size": 40,
+        "card_padding": 20,
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    },
+    "discord": {
+      "type": "discord-community",
+      "settings": {
+        "title": "Join Our Community",
+        "subtitle": "Get exclusive tips, early access to new vendors, and connect with other resellers.",
+        "button_text": "Join Discord",
+        "show_discord_icon": true,
+        "show_member_count": true,
+        "member_count": "500+",
+        "show_btn_icon": true
       }
     },
     "faq": {
-      "type": "faq-section",
-      "settings": {
-        "title": "Frequently Asked Questions"
-      },
+      "type": "faq",
       "blocks": {
         "faq-1": {
-          "type": "faq",
+          "type": "question",
           "settings": {
-            "question": "What are vendor lists?",
-            "answer": "Vendor lists are curated collections of wholesale suppliers and manufacturers that offer products at below-retail prices. These lists give you direct access to the same suppliers used by successful resellers."
+            "question": "Is this legit?",
+            "answer": "<p>Yes! I personally use these suppliers and have verified every single one. These are real, working vendor contacts.</p>"
           }
         },
         "faq-2": {
-          "type": "faq",
+          "type": "question",
           "settings": {
-            "question": "How quickly will I receive my order?",
-            "answer": "All digital products are delivered instantly after purchase. You'll receive access via email within minutes."
+            "question": "How will I receive the vendors?",
+            "answer": "<p>Once you purchase, vendor links are INSTANTLY sent through email. You'll have access within minutes.</p>"
           }
         },
         "faq-3": {
-          "type": "faq",
+          "type": "question",
           "settings": {
-            "question": "Do you offer refunds?",
-            "answer": "Due to the digital nature of our products, all sales are final. However, if you experience any issues, please contact our support team."
+            "question": "Can I get a refund?",
+            "answer": "<p>Due to the digital nature of the product, all sales are final. However, we stand behind our product 100%.</p>"
           }
         },
         "faq-4": {
-          "type": "faq",
+          "type": "question",
           "settings": {
-            "question": "How do I get started with reselling?",
-            "answer": "Simply purchase one of our vendor lists, browse the suppliers, reach out to them for pricing, and start listing products on your preferred marketplace."
-          }
-        },
-        "faq-5": {
-          "type": "faq",
-          "settings": {
-            "question": "Can I use these vendors for any marketplace?",
-            "answer": "Yes! Our vendor lists work for Amazon, eBay, Poshmark, Mercari, Facebook Marketplace, and any other platform you sell on."
+            "question": "How many vendors are included?",
+            "answer": "<p>Each bundle contains multiple verified vendors with contact information and pricing details.</p>"
           }
         }
       },
-      "block_order": ["faq-1", "faq-2", "faq-3", "faq-4", "faq-5"]
-    },
-    "popups": {
-      "type": "popups",
-      "settings": {}
+      "block_order": [
+        "faq-1",
+        "faq-2",
+        "faq-3",
+        "faq-4"
+      ],
+      "settings": {
+        "title": "Frequently Asked Questions",
+        "title_color": "#ffffff",
+        "card_bg": "#111111",
+        "card_border": "#2a2a2a",
+        "card_border_open": "#39ff14",
+        "card_radius": 12,
+        "card_padding": 18,
+        "item_gap": 12,
+        "max_width": 700,
+        "question_color": "#ffffff",
+        "answer_color": "#9ca3af",
+        "question_font_size": 15,
+        "answer_font_size": 14,
+        "toggle_size": 32,
+        "toggle_bg": "#1a1a1a",
+        "toggle_bg_open": "#39ff14",
+        "toggle_icon_color": "#ffffff",
+        "toggle_icon_open": "#1a1a1a",
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
     }
   },
-  "order": ["hero", "products", "social-proof", "reviews", "how-it-works", "faq", "popups"]
+  "order": [
+    "hero",
+    "product-grid",
+    "testimonials",
+    "reviews",
+    "discord",
+    "faq"
+  ]
 }

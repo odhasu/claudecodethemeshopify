@@ -4,181 +4,131 @@
     "theme_name": "OGVendors Theme",
     "theme_version": "1.0.0",
     "theme_author": "OGVendors",
-    "theme_documentation_url": "",
-    "theme_support_url": ""
+    "theme_documentation_url": "https://ogvendors.com",
+    "theme_support_url": "https://ogvendors.com"
   },
   {
     "name": "Colors",
     "settings": [
+      { "type": "header", "content": "Primary Colors" },
       { "type": "color", "id": "color_accent", "label": "Accent color", "default": "#39ff14" },
-      { "type": "color", "id": "color_accent_hover", "label": "Accent hover color", "default": "#2ecc0f" },
-      { "type": "color", "id": "color_page_bg", "label": "Page background", "default": "#0a0a0a" },
-      { "type": "color", "id": "color_secondary_bg", "label": "Secondary background", "default": "#111111" },
-      { "type": "color", "id": "color_card_bg", "label": "Card background", "default": "#1a1a1a" },
-      { "type": "color", "id": "color_image_bg", "label": "Image background", "default": "#222222" },
+      { "type": "color", "id": "color_accent_hover", "label": "Accent hover", "default": "#2de010" },
+      { "type": "color", "id": "color_background", "label": "Page background", "default": "#0a0a0a" },
+      { "type": "color", "id": "color_card_bg", "label": "Card background", "default": "#111111" },
+      { "type": "color", "id": "color_card_elevated", "label": "Card elevated", "default": "#1a1a1a" },
+      { "type": "color", "id": "color_border", "label": "Borders", "default": "#2a2a2a" },
+      { "type": "header", "content": "Text Colors" },
       { "type": "color", "id": "color_text_primary", "label": "Primary text", "default": "#ffffff" },
-      { "type": "color", "id": "color_text_muted", "label": "Muted text", "default": "#999999" },
-      { "type": "color", "id": "color_text_faint", "label": "Faint text", "default": "#666666" },
-      { "type": "color", "id": "color_border", "label": "Border color", "default": "#333333" },
-      { "type": "color", "id": "color_stars", "label": "Star rating color", "default": "#FFD700" },
-      { "type": "color", "id": "color_success", "label": "Success color", "default": "#39ff14" },
-      { "type": "color", "id": "color_error", "label": "Error color", "default": "#ff4444" },
-      { "type": "color", "id": "color_warning", "label": "Warning color", "default": "#ffaa00" }
+      { "type": "color", "id": "color_text_muted", "label": "Muted text", "default": "#9ca3af" },
+      { "type": "color", "id": "color_text_subtle", "label": "Subtle text", "default": "#6b7280" },
+      { "type": "header", "content": "Misc Colors" },
+      { "type": "color", "id": "color_stars", "label": "Star rating color", "default": "#fbbf24" },
+      { "type": "color", "id": "color_success", "label": "Success color", "default": "#22c55e" },
+      { "type": "color", "id": "color_error", "label": "Error color", "default": "#ef4444" }
     ]
   },
   {
     "name": "Typography",
     "settings": [
-      { "type": "font_picker", "id": "font_heading", "label": "Heading font", "default": "poppins_n7" },
-      { "type": "font_picker", "id": "font_body", "label": "Body font", "default": "poppins_n4" },
-      { "type": "range", "id": "font_h1_size", "label": "H1 size (px)", "min": 28, "max": 120, "step": 2, "default": 64, "unit": "px" },
-      { "type": "range", "id": "font_h1_mobile_size", "label": "H1 mobile size (px)", "min": 20, "max": 60, "step": 2, "default": 32, "unit": "px" },
-      { "type": "range", "id": "font_h2_size", "label": "H2 size (px)", "min": 20, "max": 80, "step": 2, "default": 40, "unit": "px" },
-      { "type": "range", "id": "font_h3_size", "label": "H3 size (px)", "min": 16, "max": 48, "step": 2, "default": 24, "unit": "px" },
-      { "type": "select", "id": "font_heading_transform", "label": "Heading text transform", "options": [{ "value": "none", "label": "None" }, { "value": "uppercase", "label": "UPPERCASE" }, { "value": "capitalize", "label": "Capitalize" }], "default": "uppercase" },
-      { "type": "range", "id": "font_body_size", "label": "Body font size (px)", "min": 12, "max": 24, "step": 1, "default": 16, "unit": "px" },
-      { "type": "range", "id": "font_body_line_height", "label": "Body line height (x10)", "min": 10, "max": 20, "step": 1, "default": 16, "info": "Value is divided by 10. So 16 = 1.6 line height." }
+      { "type": "select", "id": "heading_font", "label": "Heading font", "default": "Satoshi", "options": [
+        { "value": "Satoshi", "label": "Satoshi (like Luke's Vendors)" },
+        { "value": "Anton", "label": "Anton" },
+        { "value": "Inter", "label": "Inter" },
+        { "value": "Bebas Neue", "label": "Bebas Neue" },
+        { "value": "Poppins", "label": "Poppins" },
+        { "value": "Montserrat", "label": "Montserrat" },
+        { "value": "Oswald", "label": "Oswald" },
+        { "value": "Outfit", "label": "Outfit" },
+        { "value": "Space Grotesk", "label": "Space Grotesk" },
+        { "value": "DM Sans", "label": "DM Sans" },
+        { "value": "Rubik", "label": "Rubik" },
+        { "value": "Raleway", "label": "Raleway" }
+      ]},
+      { "type": "select", "id": "body_font", "label": "Body font", "default": "Inter", "options": [
+        { "value": "system-ui, -apple-system, sans-serif", "label": "System Default" },
+        { "value": "Inter", "label": "Inter" },
+        { "value": "DM Sans", "label": "DM Sans" },
+        { "value": "Poppins", "label": "Poppins" },
+        { "value": "Satoshi", "label": "Satoshi" },
+        { "value": "Rubik", "label": "Rubik" },
+        { "value": "Montserrat", "label": "Montserrat" },
+        { "value": "Space Grotesk", "label": "Space Grotesk" },
+        { "value": "Outfit", "label": "Outfit" },
+        { "value": "Raleway", "label": "Raleway" }
+      ]}
     ]
   },
   {
-    "name": "Buttons",
+    "name": "Layout",
     "settings": [
-      { "type": "color", "id": "btn_primary_bg", "label": "Primary button background", "default": "#39ff14" },
-      { "type": "color", "id": "btn_primary_hover", "label": "Primary button hover", "default": "#2ecc0f" },
-      { "type": "color", "id": "btn_primary_text", "label": "Primary button text", "default": "#000000" },
-      { "type": "range", "id": "btn_height", "label": "Button height (px)", "min": 32, "max": 64, "step": 2, "default": 48, "unit": "px" },
-      { "type": "range", "id": "btn_radius", "label": "Button border radius (px)", "min": 0, "max": 50, "step": 1, "default": 25, "unit": "px" },
-      { "type": "range", "id": "btn_font_size", "label": "Button font size (px)", "min": 10, "max": 20, "step": 1, "default": 14, "unit": "px" },
-      { "type": "range", "id": "btn_letter_spacing", "label": "Button letter spacing (px)", "min": 0, "max": 5, "step": 1, "default": 1, "unit": "px" },
-      { "type": "checkbox", "id": "btn_uppercase", "label": "Uppercase button text", "default": true },
-      { "type": "checkbox", "id": "btn_hover_lift", "label": "Lift on hover", "default": true },
-      { "type": "color", "id": "btn_outline_border", "label": "Outline button border", "default": "#39ff14" },
-      { "type": "color", "id": "btn_outline_text", "label": "Outline button text", "default": "#39ff14" },
-      { "type": "color", "id": "btn_outline_hover_bg", "label": "Outline button hover background", "default": "#39ff14" },
-      { "type": "color", "id": "btn_outline_hover_text", "label": "Outline button hover text", "default": "#000000" }
+      { "type": "range", "id": "max_page_width", "label": "Max page width (px)", "min": 900, "max": 1600, "step": 50, "default": 1200 },
+      { "type": "range", "id": "section_spacing", "label": "Section spacing (px)", "min": 20, "max": 120, "step": 10, "default": 60 },
+      { "type": "range", "id": "grid_gap", "label": "Grid gap (px)", "min": 8, "max": 32, "step": 4, "default": 16 },
+      { "type": "range", "id": "border_radius_card", "label": "Card border radius (px)", "min": 0, "max": 24, "step": 2, "default": 12 },
+      { "type": "range", "id": "border_radius_button", "label": "Button border radius (px)", "min": 0, "max": 24, "step": 2, "default": 8 }
     ]
   },
   {
-    "name": "Cards",
+    "name": "Branding",
     "settings": [
-      { "type": "color", "id": "card_bg", "label": "Card background", "default": "#1a1a1a" },
-      { "type": "color", "id": "card_border", "label": "Card border", "default": "#333333" },
-      { "type": "color", "id": "card_hover_border", "label": "Card hover border", "default": "#39ff14" },
-      { "type": "range", "id": "card_radius", "label": "Card border radius (px)", "min": 0, "max": 30, "step": 1, "default": 12, "unit": "px" },
-      { "type": "checkbox", "id": "card_hover_lift", "label": "Lift cards on hover", "default": true },
-      { "type": "range", "id": "card_hover_lift_amount", "label": "Hover lift amount (px)", "min": 1, "max": 12, "step": 1, "default": 4, "unit": "px" }
+      { "type": "image_picker", "id": "favicon", "label": "Favicon" },
+      { "type": "image_picker", "id": "logo", "label": "Logo (used globally)" },
+      { "type": "text", "id": "brand_name", "label": "Brand name", "default": "OGVENDORS" }
     ]
   },
   {
-    "name": "Layout & Spacing",
+    "name": "Social Links",
     "settings": [
-      { "type": "range", "id": "page_max_width", "label": "Page max width (px)", "min": 900, "max": 1600, "step": 20, "default": 1200, "unit": "px" },
-      { "type": "range", "id": "page_side_padding", "label": "Side padding (px)", "min": 10, "max": 60, "step": 2, "default": 20, "unit": "px" },
-      { "type": "range", "id": "section_spacing", "label": "Section spacing (px)", "min": 0, "max": 120, "step": 4, "default": 60, "unit": "px" },
-      { "type": "range", "id": "grid_gap", "label": "Grid gap (px)", "min": 8, "max": 40, "step": 2, "default": 20, "unit": "px" }
+      { "type": "url", "id": "social_instagram", "label": "Instagram" },
+      { "type": "url", "id": "social_tiktok", "label": "TikTok" },
+      { "type": "url", "id": "social_youtube", "label": "YouTube" },
+      { "type": "url", "id": "social_twitter", "label": "Twitter / X" },
+      { "type": "url", "id": "social_facebook", "label": "Facebook" },
+      { "type": "url", "id": "social_snapchat", "label": "Snapchat" },
+      { "type": "url", "id": "social_discord", "label": "Discord" }
     ]
   },
   {
-    "name": "Header",
+    "name": "Live Sales Notification",
     "settings": [
-      { "type": "image_picker", "id": "header_logo", "label": "Logo image" },
-      { "type": "text", "id": "header_logo_text", "label": "Logo text (if no image)", "default": "OGVENDORS" },
-      { "type": "range", "id": "header_logo_height", "label": "Logo height (px)", "min": 20, "max": 80, "step": 2, "default": 40, "unit": "px" },
-      { "type": "color", "id": "header_pill_bg", "label": "Header pill background", "default": "#1a1a1a" },
-      { "type": "color", "id": "header_pill_border", "label": "Header pill border", "default": "#333333" },
-      { "type": "range", "id": "header_pill_width", "label": "Header pill max width (px)", "min": 300, "max": 600, "step": 10, "default": 420, "unit": "px" },
-      { "type": "range", "id": "header_icon_size", "label": "Icon button size (px)", "min": 28, "max": 56, "step": 2, "default": 40, "unit": "px" },
-      { "type": "color", "id": "header_icon_bg", "label": "Icon button background", "default": "#2a2a2a" },
-      { "type": "color", "id": "header_bg", "label": "Header background (behind pill)", "default": "#0a0a0a" },
-      { "type": "range", "id": "header_padding", "label": "Header padding (px)", "min": 4, "max": 24, "step": 2, "default": 12, "unit": "px" },
-      { "type": "link_list", "id": "header_menu", "label": "Navigation menu", "default": "main-menu" },
-      { "type": "color", "id": "header_drawer_bg", "label": "Drawer background", "default": "#111111" },
-      { "type": "color", "id": "header_drawer_text", "label": "Drawer text color", "default": "#ffffff" }
+      { "type": "checkbox", "id": "live_sales_enabled", "label": "Enable live sales popup", "default": true },
+      { "type": "color", "id": "live_sales_bg", "label": "Notification background", "default": "#333333" },
+      { "type": "color", "id": "live_sales_text_color", "label": "Text color", "default": "#ffffff" },
+      { "type": "color", "id": "live_sales_name_color", "label": "Buyer name color", "default": "#cc3d3d" },
+      { "type": "text", "id": "live_sales_names", "label": "Buyer names (comma-separated)", "default": "Alex,Jordan,Sarah,Mike,Emily,Chris,Taylor,Sam,Morgan,Casey" },
+      { "type": "text", "id": "live_sales_products", "label": "Product names (comma-separated)", "default": "Elite Supplier List,Premium Vendor List,Starter Supplier Pack,Ultimate Supplier Bundle" },
+      { "type": "range", "id": "live_sales_delay", "label": "Initial delay (seconds)", "min": 1, "max": 30, "step": 1, "default": 5 },
+      { "type": "range", "id": "live_sales_duration", "label": "Show duration (seconds)", "min": 3, "max": 15, "step": 1, "default": 7 },
+      { "type": "range", "id": "live_sales_min_interval", "label": "Min interval (seconds)", "min": 5, "max": 30, "step": 1, "default": 8 },
+      { "type": "range", "id": "live_sales_max_interval", "label": "Max interval (seconds)", "min": 10, "max": 60, "step": 5, "default": 20 }
     ]
   },
   {
-    "name": "Announcement Bar",
+    "name": "AI Chatbot",
     "settings": [
-      { "type": "color", "id": "ticker_bg", "label": "Background color", "default": "#111111" },
-      { "type": "color", "id": "ticker_text", "label": "Text color", "default": "#ffffff" },
-      { "type": "color", "id": "ticker_dot_color", "label": "Dot / separator color", "default": "#39ff14" },
-      { "type": "color", "id": "ticker_highlight", "label": "Highlight color", "default": "#39ff14" },
-      { "type": "range", "id": "ticker_speed", "label": "Scroll speed (seconds)", "min": 10, "max": 60, "step": 2, "default": 20 },
-      { "type": "range", "id": "ticker_height", "label": "Bar height (px)", "min": 28, "max": 56, "step": 2, "default": 36, "unit": "px" },
-      { "type": "range", "id": "ticker_font_size", "label": "Font size (px)", "min": 10, "max": 18, "step": 1, "default": 12, "unit": "px" }
-    ]
-  },
-  {
-    "name": "Product Cards",
-    "settings": [
-      { "type": "color", "id": "pcard_image_bg", "label": "Image background", "default": "#222222" },
-      { "type": "range", "id": "pcard_image_padding", "label": "Image padding (px)", "min": 0, "max": 30, "step": 2, "default": 0, "unit": "px" },
-      { "type": "checkbox", "id": "pcard_hover_zoom", "label": "Zoom image on hover", "default": true },
-      { "type": "color", "id": "pcard_overlay_bg", "label": "Title overlay background", "default": "#000000" },
-      { "type": "range", "id": "pcard_overlay_opacity", "label": "Title overlay opacity (%)", "min": 0, "max": 100, "step": 5, "default": 70 },
-      { "type": "color", "id": "pcard_title_line1_color", "label": "Title line 1 color (italic)", "default": "#39ff14" },
-      { "type": "color", "id": "pcard_title_line2_color", "label": "Title line 2 color (bold)", "default": "#ffffff" },
-      { "type": "checkbox", "id": "pcard_show_sale_badge", "label": "Show SALE badge", "default": true },
-      { "type": "text", "id": "pcard_sale_text", "label": "Sale badge text", "default": "SALE" },
-      { "type": "color", "id": "pcard_sale_bg", "label": "Sale badge background", "default": "#39ff14" },
-      { "type": "color", "id": "pcard_sale_text_color", "label": "Sale badge text color", "default": "#000000" },
-      { "type": "color", "id": "pcard_price_color", "label": "Price color", "default": "#39ff14" },
-      { "type": "color", "id": "pcard_compare_color", "label": "Compare-at price color", "default": "#666666" },
-      { "type": "select", "id": "pcard_button_action", "label": "BUY NOW button action", "options": [{ "value": "product", "label": "Go to product page" }, { "value": "cart", "label": "Add to cart" }, { "value": "checkout", "label": "Go to checkout" }], "default": "product" },
-      { "type": "text", "id": "pcard_button_text", "label": "Buy button text", "default": "BUY NOW" },
-      { "type": "color", "id": "pcard_button_bg", "label": "Buy button background", "default": "#39ff14" },
-      { "type": "color", "id": "pcard_button_text_color", "label": "Buy button text color", "default": "#000000" },
-      { "type": "color", "id": "pcard_cart_icon_bg", "label": "Cart icon button background", "default": "#2a2a2a" },
-      { "type": "color", "id": "pcard_cart_icon_color", "label": "Cart icon color", "default": "#ffffff" }
-    ]
-  },
-  {
-    "name": "Footer",
-    "settings": [
-      { "type": "image_picker", "id": "footer_logo", "label": "Footer logo" },
-      { "type": "text", "id": "footer_brand_text", "label": "Footer brand text", "default": "OGVENDORS" },
-      { "type": "color", "id": "footer_bg", "label": "Footer background", "default": "#0a0a0a" },
-      { "type": "color", "id": "footer_border", "label": "Footer top border", "default": "#333333" },
-      { "type": "color", "id": "footer_text", "label": "Footer text color", "default": "#999999" },
-      { "type": "color", "id": "footer_link_color", "label": "Footer link color", "default": "#cccccc" },
-      { "type": "color", "id": "footer_link_hover", "label": "Footer link hover", "default": "#39ff14" },
-      { "type": "checkbox", "id": "footer_show_copyright", "label": "Show copyright", "default": true },
-      { "type": "checkbox", "id": "footer_show_design_btn", "label": "Show design button", "default": true },
-      { "type": "text", "id": "footer_design_btn_text", "label": "Design button text", "default": "Get this store design" },
-      { "type": "url", "id": "footer_design_btn_url", "label": "Design button URL" },
-      { "type": "color", "id": "footer_design_btn_bg", "label": "Design button background", "default": "#39ff14" },
-      { "type": "color", "id": "footer_design_btn_text_color", "label": "Design button text color", "default": "#000000" }
-    ]
-  },
-  {
-    "name": "Social Media",
-    "settings": [
-      { "type": "text", "id": "social_instagram", "label": "Instagram URL" },
-      { "type": "text", "id": "social_tiktok", "label": "TikTok URL" },
-      { "type": "text", "id": "social_youtube", "label": "YouTube URL" },
-      { "type": "text", "id": "social_twitter", "label": "Twitter / X URL" },
-      { "type": "text", "id": "social_facebook", "label": "Facebook URL" },
-      { "type": "text", "id": "social_snapchat", "label": "Snapchat URL" },
-      { "type": "text", "id": "social_discord", "label": "Discord URL" }
-    ]
-  },
-  {
-    "name": "Cart",
-    "settings": [
-      { "type": "select", "id": "cart_type", "label": "Cart behavior", "options": [{ "value": "page", "label": "Go to cart page" }, { "value": "notification", "label": "Show notification" }, { "value": "drawer", "label": "Open cart drawer" }], "default": "page" },
-      { "type": "checkbox", "id": "cart_show_badge", "label": "Show cart item count badge", "default": true },
-      { "type": "color", "id": "cart_badge_bg", "label": "Cart badge background", "default": "#39ff14" },
-      { "type": "color", "id": "cart_badge_text", "label": "Cart badge text color", "default": "#000000" }
-    ]
-  },
-  {
-    "name": "Animations",
-    "settings": [
-      { "type": "checkbox", "id": "anim_scroll_reveal", "label": "Enable scroll reveal animations", "default": true },
-      { "type": "range", "id": "anim_duration", "label": "Animation duration (ms)", "min": 100, "max": 1200, "step": 50, "default": 600 },
-      { "type": "range", "id": "anim_stagger", "label": "Stagger delay (ms)", "min": 0, "max": 300, "step": 25, "default": 100 },
-      { "type": "checkbox", "id": "anim_hover_effects", "label": "Enable hover effects", "default": true },
-      { "type": "checkbox", "id": "anim_page_transitions", "label": "Enable page transitions", "default": false }
+      { "type": "header", "content": "General" },
+      { "type": "checkbox", "id": "chat_enabled", "label": "Enable Chatbot", "default": true },
+      { "type": "select", "id": "chat_mode", "label": "Chat Mode", "default": "builtin", "info": "Tidio gives you real AI + live chat. Built-in uses keyword matching.", "options": [
+        { "value": "tidio", "label": "Tidio (AI + Live Chat)" },
+        { "value": "builtin", "label": "Built-in (keyword matching)" },
+        { "value": "external", "label": "External (custom script)" }
+      ]},
+      { "type": "header", "content": "Tidio Settings" },
+      { "type": "text", "id": "chat_tidio_key", "label": "Tidio Public Key", "info": "Find this in Tidio dashboard → Settings → Installation → copy the key from the script URL (the part after tidio.co/ and before .js)" },
+      { "type": "checkbox", "id": "chat_custom_tidio_button", "label": "Use custom green button (instead of Tidio default)", "default": true, "info": "Shows our green chat button that opens Tidio when clicked" },
+      { "type": "header", "content": "External Chat Script" },
+      { "type": "textarea", "id": "chat_external_script", "label": "External embed code", "info": "Paste any chat widget embed code (Crisp, Intercom, etc.)" },
+      { "type": "header", "content": "Built-in Chat Settings" },
+      { "type": "text", "id": "chat_name", "label": "Chatbot Name", "default": "Reselling Assistant", "info": "Name shown in chat header" },
+      { "type": "textarea", "id": "chat_greeting", "label": "Greeting message", "default": "yooo whats good! u looking to start reselling? lmk if u need help picking the right suppliers 🔥" },
+      { "type": "text", "id": "chat_placeholder", "label": "Input placeholder", "default": "Ask me anything..." },
+      { "type": "header", "content": "Appearance" },
+      { "type": "color", "id": "chat_btn_bg", "label": "Button color", "default": "#39ff14" },
+      { "type": "range", "id": "chat_btn_size", "label": "Button size (px)", "min": 44, "max": 80, "step": 4, "default": 60 },
+      { "type": "range", "id": "chat_window_width", "label": "Chat window width (px)", "min": 300, "max": 500, "step": 20, "default": 380 },
+      { "type": "color", "id": "chat_window_bg", "label": "Window background", "default": "#111111" },
+      { "type": "range", "id": "chat_bottom", "label": "Bottom offset (px)", "min": 12, "max": 60, "step": 4, "default": 24 },
+      { "type": "range", "id": "chat_right", "label": "Right offset (px)", "min": 12, "max": 60, "step": 4, "default": 24 }
     ]
   },
   {
@@ -186,10 +136,7 @@
     "settings": [
       { "type": "textarea", "id": "custom_css", "label": "Custom CSS" },
       { "type": "textarea", "id": "custom_js", "label": "Custom JavaScript" },
-      { "type": "textarea", "id": "custom_head", "label": "Custom <head> code" },
-      { "type": "text", "id": "pixel_ga", "label": "Google Analytics ID" },
-      { "type": "text", "id": "pixel_fb", "label": "Facebook Pixel ID" },
-      { "type": "text", "id": "pixel_tiktok", "label": "TikTok Pixel ID" }
+      { "type": "textarea", "id": "custom_head_code", "label": "Custom head code (tracking pixels, etc.)" }
     ]
   }
 ]
