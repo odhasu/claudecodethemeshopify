@@ -71,10 +71,11 @@
     {%- for link in section.settings.menu.links -%}
       <a href="{{ link.url }}">{{ link.title }}</a>
     {%- endfor -%}
-    {%- if section.settings.menu == blank -%}
+    {%- if section.settings.show_policies -%}
       <a href="/policies/refund-policy">Refund Policy</a>
       <a href="/policies/privacy-policy">Privacy Policy</a>
       <a href="/policies/terms-of-service">Terms of Service</a>
+      <a href="/policies/shipping-policy">Shipping Policy</a>
     {%- endif -%}
   </div>
 
@@ -103,6 +104,7 @@
     { "type": "range", "id": "brand_font_size", "label": "Brand font size (px)", "min": 16, "max": 40, "step": 2, "default": 24 },
     { "type": "header", "content": "Navigation" },
     { "type": "link_list", "id": "menu", "label": "Footer menu", "default": "footer" },
+    { "type": "checkbox", "id": "show_policies", "label": "Show policy links", "default": true },
     { "type": "range", "id": "link_gap", "label": "Link spacing (px)", "min": 12, "max": 40, "step": 4, "default": 24 },
     { "type": "header", "content": "Copyright" },
     { "type": "checkbox", "id": "show_copyright", "label": "Show copyright", "default": true },

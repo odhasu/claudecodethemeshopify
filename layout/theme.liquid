@@ -4,7 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="{{ settings.color_accent }}">
+  <meta name="theme-color" content="{{ settings.color_background | default: '#000000' }}">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <link rel="canonical" href="{{ canonical_url }}">
   <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
 
@@ -121,12 +122,12 @@
 </head>
 
 <body class="template-{{ template.name }}{% if template.suffix %} template-{{ template.name }}-{{ template.suffix }}{% endif %}">
-  <!-- Loading Screen -->
-  <div class="scaled-loader" id="scaled-loader">
-    <div class="scaled-loader__spinner"></div>
+  <!-- Loading Screen — stays visible until license validation passes -->
+  <div class="vx-loader" id="vx-loader">
+    <div class="vx-loader__spinner"></div>
   </div>
   <style>
-    .scaled-loader {
+    .vx-loader {
       position: fixed;
       top: 0; left: 0;
       width: 100vw; height: 100vh;
@@ -135,51 +136,63 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: opacity 0.4s ease;
     }
-    .scaled-loader.hide {
+    .vx-loader.vx-ok {
       opacity: 0;
       pointer-events: none;
+      transition: opacity 0.4s ease;
     }
-    .scaled-loader__spinner {
+    .vx-loader__spinner {
       width: 44px;
       height: 44px;
       position: relative;
     }
-    .scaled-loader__spinner::before,
-    .scaled-loader__spinner::after {
+    .vx-loader__spinner::before,
+    .vx-loader__spinner::after {
       content: '';
       position: absolute;
       inset: 0;
       border-radius: 50%;
     }
-    .scaled-loader__spinner::before {
+    .vx-loader__spinner::before {
       border: 3px solid transparent;
       border-top-color: var(--color-accent, #39ff14);
       border-right-color: var(--color-accent, #39ff14);
-      animation: scaledSpin 1s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite;
+      animation: vxSpin 1s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite;
     }
-    .scaled-loader__spinner::after {
+    .vx-loader__spinner::after {
       inset: 5px;
       border: 2px solid transparent;
       border-bottom-color: var(--color-accent, #39ff14);
       border-left-color: var(--color-accent, #39ff14);
-      animation: scaledSpin 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite reverse;
+      animation: vxSpin 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite reverse;
     }
-    @keyframes scaledSpin {
+    @keyframes vxSpin {
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
     }
+    /* Setup page — shown when no license */
+    .vx-setup { display: none; }
+    .vx-loader.vx-setup-show .vx-loader__spinner { display: none; }
+    .vx-loader.vx-setup-show .vx-setup { display: block; }
   </style>
-  <script>
-    (function(){
-      function hideLoader() {
-        var l = document.getElementById('scaled-loader');
-        if(l) { l.classList.add('hide'); setTimeout(function(){ l.style.display='none'; }, 400); }
-      }
-      window.addEventListener('load', function(){ setTimeout(hideLoader, 300); });
-      setTimeout(hideLoader, 5000);
-    })();
+
+  {%- comment -%}
+    License config — injected into the page for theme.js to read.
+    The integrity marker __VX_INTEGRITY is checked by theme.js;
+    if this script block is removed, the theme crashes (loader stays forever).
+  {%- endcomment -%}
+  <script id="vx-config" data-vx-integrity="1">
+    window.__VX = {
+      k: {{ settings.license_key | default: '' | json }},
+      s: {{ settings.license_server_url | default: '' | json }},
+      d: window.location.hostname,
+      pd: (window.Shopify && window.Shopify.shop) ? window.Shopify.shop : '',
+      u: {{ settings.license_store_url | default: 'https://vexelthemes.com' | json }},
+      n: {{ settings.license_store_name | default: 'Vexel Themes' | json }},
+      _t: Date.now(),
+      _v: 1
+    };
   </script>
 
   <a class="sr-only" href="#MainContent">Skip to content</a>

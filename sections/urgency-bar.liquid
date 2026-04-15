@@ -90,13 +90,7 @@
 <div class="urgency-bar" role="marquee" aria-label="Store announcements">
   <div class="urgency-track">
     {%- for i in (1..2) -%}
-      {%- if section.settings.show_verified -%}
-        <span class="urgency-item">
-          <span class="urgency-icon"><svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg></span>
-          {{ section.settings.verified_text | default: 'Fully verified' }}
-        </span>
-        <span class="urgency-divider"></span>
-      {%- endif -%}
+
 
       {%- if section.settings.show_countdown -%}
         <span class="urgency-item">
@@ -135,7 +129,7 @@
 
       {%- if section.settings.show_personally_verified -%}
         <span class="urgency-item">
-          <span class="urgency-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
+          <span class="urgency-icon"><svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg></span>
           {{ section.settings.personally_verified_text | default: 'All suppliers personally verified' }}
         </span>
         <span class="urgency-divider"></span>
@@ -217,7 +211,7 @@
     { "type": "range", "id": "min_viewers", "label": "Min viewers", "min": 1, "max": 50, "step": 1, "default": 10 },
     { "type": "range", "id": "max_viewers", "label": "Max viewers", "min": 20, "max": 100, "step": 5, "default": 100 },
     { "type": "header", "content": "Toggle Items" },
-    { "type": "checkbox", "id": "show_verified", "label": "Show 'Fully verified'", "default": true },
+    { "type": "checkbox", "id": "show_verified", "label": "Show 'Fully verified'", "default": false },
     { "type": "checkbox", "id": "show_countdown", "label": "Show countdown timer", "default": true },
     { "type": "checkbox", "id": "show_rating", "label": "Show rating", "default": true },
     { "type": "checkbox", "id": "show_viewers", "label": "Show live viewers", "default": true },

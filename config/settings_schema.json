@@ -138,5 +138,17 @@
       { "type": "textarea", "id": "custom_js", "label": "Custom JavaScript" },
       { "type": "textarea", "id": "custom_head_code", "label": "Custom head code (tracking pixels, etc.)" }
     ]
+  },
+  {
+    "name": "License & Protection",
+    "settings": [
+      { "type": "header", "content": "License Key" },
+      { "type": "text", "id": "license_key", "label": "License Key", "info": "Enter your XXXX-XXXX-XXXX-XXXX license key. Without a valid license, the theme will not load.", "placeholder": "XXXX-XXXX-XXXX-XXXX" },
+      { "type": "header", "content": "Protection Server" },
+      { "type": "text", "id": "license_server_url", "label": "Server URL", "info": "The URL of your license validation server (e.g. https://your-app.railway.app). Leave blank to skip server validation.", "placeholder": "https://your-server.railway.app" },
+      { "type": "header", "content": "Unlicensed Page" },
+      { "type": "text", "id": "license_store_url", "label": "Buy License URL", "info": "URL shown to visitors when no license is active (e.g. your store where they buy the theme).", "default": "https://vexelthemes.com" },
+      { "type": "text", "id": "license_store_name", "label": "Theme Brand Name", "info": "Brand name shown on the license page.", "default": "Vexel Themes" }
+    ]
   }
 ]

@@ -1,0 +1,410 @@
+{%- liquid
+  assign title = section.settings.title | default: "What Our Customers Say"
+  assign subtitle = section.settings.subtitle | default: "Real results from real resellers"
+  assign card_bg = settings.color_card_bg | default: '#111111'
+  assign card_border = settings.color_border | default: '#2a2a2a'
+  assign scroll_speed = section.settings.auto_scroll_speed | default: 30
+  assign card_radius = section.settings.card_radius | default: 16
+  assign image_height = section.settings.image_height | default: 380
+-%}
+
+<style>
+  /* ═══════════════════════════════════════════════════════════
+     Results / Social Proof Carousel — Vexel Theme
+     ═══════════════════════════════════════════════════════════ */
+
+  .results-section {
+    padding: {{ section.settings.padding_top | default: 60 }}px 0 {{ section.settings.padding_bottom | default: 60 }}px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* ── Header ────────────────────────────────────────────── */
+  .results-header {
+    text-align: center;
+    padding: 0 20px;
+    margin-bottom: 36px;
+  }
+
+  .results-header__title {
+    font-family: var(--font-heading, 'Anton', sans-serif);
+    font-size: clamp(1.5rem, 5vw, 2.5rem);
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    line-height: 1.1;
+    color: var(--color-text, #fff);
+    margin: 0 0 10px;
+  }
+
+  .results-header__subtitle {
+    color: var(--color-text-muted, #9ca3af);
+    font-size: 15px;
+    line-height: 1.5;
+    margin: 0;
+    font-family: var(--font-body, 'Inter', sans-serif);
+  }
+
+  /* ── Carousel Track ────────────────────────────────────── */
+  .results-carousel {
+    position: relative;
+    width: 100%;
+    cursor: grab;
+  }
+
+  .results-carousel:active {
+    cursor: grabbing;
+  }
+
+  .results-track {
+    display: flex;
+    gap: {{ section.settings.card_gap | default: 16 }}px;
+    padding: 0 20px;
+    transition: none;
+    will-change: transform;
+  }
+
+  /* Auto-scroll animation */
+  .results-track--auto {
+    animation: resultsScroll var(--scroll-duration, 40s) linear infinite;
+  }
+
+  .results-track--auto:hover {
+    animation-play-state: paused;
+  }
+
+  @keyframes resultsScroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* ── Carousel Card ─────────────────────────────────────── */
+  .results-card {
+    flex-shrink: 0;
+    width: {{ section.settings.card_width | default: 300 }}px;
+    background: {{ card_bg }};
+    border: 1px solid {{ card_border }};
+    border-radius: {{ card_radius }}px;
+    overflow: hidden;
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .results-card:hover {
+    transform: translateY(-4px) scale(1.02);
+    border-color: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+  }
+
+  .results-card__image {
+    width: 100%;
+    height: {{ image_height }}px;
+    overflow: hidden;
+  }
+
+  .results-card__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    -webkit-user-drag: none;
+    user-select: none;
+    pointer-events: none;
+  }
+
+  /* Optional caption at bottom of card */
+  .results-card__caption {
+    padding: 14px 16px;
+    font-size: 13px;
+    color: var(--color-text-muted, #9ca3af);
+    font-family: var(--font-body, 'Inter', sans-serif);
+    line-height: 1.4;
+  }
+
+  /* ── Fade Edges ────────────────────────────────────────── */
+  .results-carousel::before,
+  .results-carousel::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 80px;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .results-carousel::before {
+    left: 0;
+    background: linear-gradient(to right, var(--color-bg, #0a0a0a), transparent);
+  }
+
+  .results-carousel::after {
+    right: 0;
+    background: linear-gradient(to left, var(--color-bg, #0a0a0a), transparent);
+  }
+
+  /* ── Responsive ────────────────────────────────────────── */
+  @media (max-width: 768px) {
+    .results-card {
+      width: {{ section.settings.card_width_mobile | default: 260 }}px;
+    }
+    .results-card__image {
+      height: {{ image_height | minus: 60 }}px;
+    }
+    .results-carousel::before,
+    .results-carousel::after {
+      width: 40px;
+    }
+  }
+</style>
+
+<section class="results-section" id="results-{{ section.id }}">
+  <!-- Header -->
+  <div class="results-header">
+    <h2 class="results-header__title">{{ title }}</h2>
+    {%- if subtitle != blank -%}
+      <p class="results-header__subtitle">{{ subtitle }}</p>
+    {%- endif -%}
+  </div>
+
+  <!-- Carousel -->
+  <div class="results-carousel" id="results-carousel-{{ section.id }}">
+    <div class="results-track {% if section.settings.auto_scroll %}results-track--auto{% endif %}"
+         id="results-track-{{ section.id }}"
+         style="--scroll-duration: {{ scroll_speed }}s;">
+
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'image' and block.settings.image != blank -%}
+          <div class="results-card" {{ block.shopify_attributes }}>
+            <div class="results-card__image">
+              <img src="{{ block.settings.image | image_url: width: 600 }}"
+                   alt="{{ block.settings.image.alt | default: 'Customer result' | escape }}"
+                   loading="lazy"
+                   width="600"
+                   height="{{ image_height }}">
+            </div>
+            {%- if block.settings.caption != blank -%}
+              <div class="results-card__caption">{{ block.settings.caption }}</div>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+
+      {%- comment -%} Duplicate cards for seamless infinite scroll {%- endcomment -%}
+      {%- if section.settings.auto_scroll -%}
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'image' and block.settings.image != blank -%}
+            <div class="results-card" aria-hidden="true">
+              <div class="results-card__image">
+                <img src="{{ block.settings.image | image_url: width: 600 }}"
+                     alt=""
+                     loading="lazy"
+                     width="600"
+                     height="{{ image_height }}">
+              </div>
+              {%- if block.settings.caption != blank -%}
+                <div class="results-card__caption">{{ block.settings.caption }}</div>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      {%- endif -%}
+
+    </div>
+  </div>
+</section>
+
+<script>
+(function() {
+  /* ── Drag-to-Scroll ───────────────────────────────────── */
+  var carousel = document.getElementById('results-carousel-{{ section.id }}');
+  var track = document.getElementById('results-track-{{ section.id }}');
+  if (!carousel || !track) return;
+
+  var isDragging = false;
+  var startX = 0;
+  var scrollLeft = 0;
+  var currentTranslate = 0;
+  var isAutoScroll = track.classList.contains('results-track--auto');
+
+  /* Only enable drag if NOT auto-scrolling */
+  if (!isAutoScroll) {
+    carousel.addEventListener('mousedown', function(e) {
+      isDragging = true;
+      startX = e.pageX;
+      scrollLeft = currentTranslate;
+      track.style.transition = 'none';
+      carousel.style.cursor = 'grabbing';
+    });
+
+    carousel.addEventListener('mousemove', function(e) {
+      if (!isDragging) return;
+      e.preventDefault();
+      var dx = e.pageX - startX;
+      currentTranslate = scrollLeft + dx;
+
+      /* Clamp so you can't scroll past content */
+      var maxScroll = -(track.scrollWidth - carousel.offsetWidth);
+      currentTranslate = Math.max(maxScroll, Math.min(0, currentTranslate));
+      track.style.transform = 'translateX(' + currentTranslate + 'px)';
+    });
+
+    document.addEventListener('mouseup', function() {
+      if (!isDragging) return;
+      isDragging = false;
+      carousel.style.cursor = 'grab';
+    });
+
+    /* Touch support */
+    carousel.addEventListener('touchstart', function(e) {
+      isDragging = true;
+      startX = e.touches[0].pageX;
+      scrollLeft = currentTranslate;
+      track.style.transition = 'none';
+    }, { passive: true });
+
+    carousel.addEventListener('touchmove', function(e) {
+      if (!isDragging) return;
+      var dx = e.touches[0].pageX - startX;
+      currentTranslate = scrollLeft + dx;
+      var maxScroll = -(track.scrollWidth - carousel.offsetWidth);
+      currentTranslate = Math.max(maxScroll, Math.min(0, currentTranslate));
+      track.style.transform = 'translateX(' + currentTranslate + 'px)';
+    }, { passive: true });
+
+    carousel.addEventListener('touchend', function() {
+      isDragging = false;
+    });
+  }
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Results Carousel",
+  "tag": "section",
+  "class": "results-carousel-wrapper",
+  "settings": [
+    { "type": "header", "content": "Content" },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "What Our Customers Say"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Section Subtitle",
+      "default": "Real results from real resellers"
+    },
+    { "type": "header", "content": "Scroll Behavior" },
+    {
+      "type": "checkbox",
+      "id": "auto_scroll",
+      "label": "Auto-scroll (infinite loop)",
+      "default": true,
+      "info": "Continuously scrolls. Pauses on hover. Disable for drag-only scrolling."
+    },
+    {
+      "type": "range",
+      "id": "auto_scroll_speed",
+      "label": "Auto-scroll speed (seconds per loop)",
+      "min": 10,
+      "max": 80,
+      "step": 5,
+      "default": 30,
+      "info": "Lower = faster. Higher = slower."
+    },
+    { "type": "header", "content": "Card Style" },
+    {
+      "type": "range",
+      "id": "card_width",
+      "label": "Card width desktop (px)",
+      "min": 200,
+      "max": 450,
+      "step": 10,
+      "default": 300
+    },
+    {
+      "type": "range",
+      "id": "card_width_mobile",
+      "label": "Card width mobile (px)",
+      "min": 180,
+      "max": 350,
+      "step": 10,
+      "default": 260
+    },
+    {
+      "type": "range",
+      "id": "image_height",
+      "label": "Image height (px)",
+      "min": 200,
+      "max": 600,
+      "step": 20,
+      "default": 380
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "label": "Card border radius (px)",
+      "min": 0,
+      "max": 24,
+      "step": 2,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "card_gap",
+      "label": "Gap between cards (px)",
+      "min": 8,
+      "max": 32,
+      "step": 4,
+      "default": 16
+    },
+    { "type": "header", "content": "Spacing" },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding (px)",
+      "min": 0,
+      "max": 120,
+      "step": 10,
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding (px)",
+      "min": 0,
+      "max": 120,
+      "step": 10,
+      "default": 60
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Screenshot",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Screenshot Image",
+          "info": "Upload a chat screenshot, success story, or proof image"
+        },
+        {
+          "type": "text",
+          "id": "caption",
+          "label": "Caption (optional)",
+          "info": "Short text shown below the image"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Results Carousel"
+    }
+  ]
+}
+{% endschema %}
