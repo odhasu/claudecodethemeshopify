@@ -1,5 +1,5 @@
 {%- unless template.name == 'index' or section.settings.show_on_all_pages -%}
-  {%- style -%}.urgency-bar { display: none !important; }{%- endstyle -%}
+  {%- style -%}.urgency-bar-wrap { display: none !important; }{%- endstyle -%}
 {%- endunless -%}
 
 {%- liquid
@@ -13,9 +13,35 @@
   assign min_viewers = section.settings.min_viewers | default: 10
   assign max_viewers = section.settings.max_viewers | default: 100
   assign icon_color = section.settings.icon_color | default: accent
+  assign reveal_on_scroll = section.settings.reveal_on_scroll
+  assign reveal_distance = section.settings.reveal_distance | default: 80
 -%}
 
 <style>
+  .urgency-bar-wrap {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  {%- if reveal_on_scroll -%}
+  /* Hidden above viewport by default — slides in on scroll */
+  .urgency-bar-wrap {
+    transform: translateY(-100%);
+  }
+  .urgency-bar-wrap.is-visible {
+    transform: translateY(0);
+  }
+  {%- else -%}
+  /* Always visible (classic mode) */
+  .urgency-bar-wrap {
+    transform: translateY(0);
+  }
+  {%- endif -%}
+
   .urgency-bar {
     background: {{ bg_color }};
     color: {{ text_color }};
@@ -23,7 +49,6 @@
     overflow: hidden;
     position: relative;
     border-bottom: 1px solid {{ section.settings.border_color | default: '#1a1a1a' }};
-    z-index: 100;
   }
   .urgency-bar:hover .urgency-track { animation-play-state: paused; }
   .urgency-track {
@@ -87,67 +112,101 @@
   }
 </style>
 
-<div class="urgency-bar" role="marquee" aria-label="Store announcements">
-  <div class="urgency-track">
-    {%- for i in (1..2) -%}
+<div class="urgency-bar-wrap" id="urgency-bar-wrap" data-reveal="{{ reveal_on_scroll }}" data-reveal-distance="{{ reveal_distance }}">
+  <div class="urgency-bar" role="marquee" aria-label="Store announcements">
+    <div class="urgency-track">
+      {%- for i in (1..2) -%}
 
-
-      {%- if section.settings.show_countdown -%}
-        <span class="urgency-item">
-          <span class="urgency-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
-          {{ section.settings.countdown_prefix | default: 'Price goes up in' }}
-          <span class="accent" id="urgency-countdown{% if i == 2 %}-dup{% endif %}">0h 00m</span>
-        </span>
-        <span class="urgency-divider"></span>
-      {%- endif -%}
-
-      {%- if section.settings.show_rating -%}
-        <span class="urgency-item">
-          <span class="urgency-icon urgency-icon--filled"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
-          Rated <span class="accent">{{ section.settings.rating_value | default: '4.96/5' }}</span>
-          by <span class="accent">{{ section.settings.rating_count | default: '2,400+' }}</span> resellers
-        </span>
-        <span class="urgency-divider"></span>
-      {%- endif -%}
-
-      {%- if section.settings.show_viewers -%}
-        <span class="urgency-item">
-          <span class="urgency-dot"></span>
-          <span class="accent" id="urgency-viewers{% if i == 2 %}-dup{% endif %}">{{ min_viewers }}</span>
-          {{ section.settings.viewers_text | default: 'people viewing right now' }}
-        </span>
-        <span class="urgency-divider"></span>
-      {%- endif -%}
-
-      {%- if section.settings.show_private -%}
-        <span class="urgency-item">
-          <span class="urgency-icon"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></span>
-          {{ section.settings.private_text | default: 'Private suppliers not found anywhere else' }}
-        </span>
-        <span class="urgency-divider"></span>
-      {%- endif -%}
-
-      {%- if section.settings.show_personally_verified -%}
-        <span class="urgency-item">
-          <span class="urgency-icon"><svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg></span>
-          {{ section.settings.personally_verified_text | default: 'All suppliers personally verified' }}
-        </span>
-        <span class="urgency-divider"></span>
-      {%- endif -%}
-
-      {%- for block in section.blocks -%}
-        {%- if block.type == 'custom_item' -%}
-          <span class="urgency-item" {{ block.shopify_attributes }}>{{ block.settings.text }}</span>
+        {%- if section.settings.show_countdown -%}
+          <span class="urgency-item">
+            <span class="urgency-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
+            {{ section.settings.countdown_prefix | default: 'Price goes up in' }}
+            <span class="accent" id="urgency-countdown{% if i == 2 %}-dup{% endif %}">0h 00m</span>
+          </span>
           <span class="urgency-divider"></span>
         {%- endif -%}
+
+        {%- if section.settings.show_rating -%}
+          <span class="urgency-item">
+            <span class="urgency-icon urgency-icon--filled"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
+            Rated <span class="accent">{{ section.settings.rating_value | default: '4.96/5' }}</span>
+            by <span class="accent">{{ section.settings.rating_count | default: '2,400+' }}</span> resellers
+          </span>
+          <span class="urgency-divider"></span>
+        {%- endif -%}
+
+        {%- if section.settings.show_viewers -%}
+          <span class="urgency-item">
+            <span class="urgency-dot"></span>
+            <span class="accent" id="urgency-viewers{% if i == 2 %}-dup{% endif %}">{{ min_viewers }}</span>
+            {{ section.settings.viewers_text | default: 'people viewing right now' }}
+          </span>
+          <span class="urgency-divider"></span>
+        {%- endif -%}
+
+        {%- if section.settings.show_private -%}
+          <span class="urgency-item">
+            <span class="urgency-icon"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></span>
+            {{ section.settings.private_text | default: 'Private suppliers not found anywhere else' }}
+          </span>
+          <span class="urgency-divider"></span>
+        {%- endif -%}
+
+        {%- if section.settings.show_personally_verified -%}
+          <span class="urgency-item">
+            <span class="urgency-icon"><svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg></span>
+            {{ section.settings.personally_verified_text | default: 'All suppliers personally verified' }}
+          </span>
+          <span class="urgency-divider"></span>
+        {%- endif -%}
+
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'custom_item' -%}
+            <span class="urgency-item" {{ block.shopify_attributes }}>{{ block.settings.text }}</span>
+            <span class="urgency-divider"></span>
+          {%- endif -%}
+        {%- endfor -%}
       {%- endfor -%}
-    {%- endfor -%}
+    </div>
   </div>
 </div>
 
 <script>
   (function() {
-    // Countdown to midnight — formatted as "Xh Xm"
+    /* ── Reveal on scroll ─────────────────────────────── */
+    var wrap = document.getElementById('urgency-bar-wrap');
+    if (wrap && wrap.dataset.reveal === 'true') {
+      var dist = parseInt(wrap.dataset.revealDistance, 10) || 80;
+      var shown = false;
+      function checkScroll() {
+        var y = window.pageYOffset || document.documentElement.scrollTop;
+        if (y >= dist && !shown) {
+          wrap.classList.add('is-visible');
+          shown = true;
+        } else if (y < dist && shown) {
+          wrap.classList.remove('is-visible');
+          shown = false;
+        }
+      }
+      window.addEventListener('scroll', checkScroll, { passive: true });
+      checkScroll();
+
+      /* Tell header-pill the urgency bar height so it can offset */
+      wrap.addEventListener('transitionend', function() {
+        document.documentElement.style.setProperty(
+          '--urgency-bar-height',
+          shown ? wrap.offsetHeight + 'px' : '0px'
+        );
+      });
+    } else if (wrap) {
+      /* Always-visible mode — set the height immediately */
+      document.documentElement.style.setProperty(
+        '--urgency-bar-height',
+        wrap.offsetHeight + 'px'
+      );
+    }
+
+    /* ── Countdown to midnight ────────────────────────── */
     function updateCountdown() {
       var now = new Date();
       var midnight = new Date(now);
@@ -164,7 +223,7 @@
     updateCountdown();
     setInterval(updateCountdown, 60000);
 
-    // Realistic viewer count — drifts ±2-3 every 1-3 minutes
+    /* ── Viewer count drift ───────────────────────────── */
     var min = {{ min_viewers }};
     var max = {{ max_viewers }};
     var currentViewers = Math.floor(Math.random() * (max - min + 1)) + min;
@@ -176,11 +235,11 @@
     }
     setViewerText(currentViewers);
     function driftViewers() {
-      var change = Math.floor(Math.random() * 4) - 1; // -1 to +2 drift
-      if (Math.random() < 0.3) change = -Math.abs(change); // 30% chance down
+      var change = Math.floor(Math.random() * 4) - 1;
+      if (Math.random() < 0.3) change = -Math.abs(change);
       currentViewers = Math.max(min, Math.min(max, currentViewers + change));
       setViewerText(currentViewers);
-      var nextUpdate = (60 + Math.floor(Math.random() * 120)) * 1000; // 1-3 minutes
+      var nextUpdate = (60 + Math.floor(Math.random() * 120)) * 1000;
       setTimeout(driftViewers, nextUpdate);
     }
     setTimeout(driftViewers, (60 + Math.floor(Math.random() * 120)) * 1000);
@@ -193,6 +252,9 @@
   "tag": "section",
   "class": "urgency-bar-section",
   "settings": [
+    { "type": "header", "content": "Behavior" },
+    { "type": "checkbox", "id": "reveal_on_scroll", "label": "Hide at top, reveal on scroll", "default": true, "info": "Bar slides in from above when user scrolls down" },
+    { "type": "range", "id": "reveal_distance", "label": "Scroll distance to reveal (px)", "min": 20, "max": 300, "step": 10, "default": 80, "info": "How far the user scrolls before bar appears" },
     { "type": "header", "content": "Visibility" },
     { "type": "checkbox", "id": "show_on_all_pages", "label": "Show on all pages (not just homepage)", "default": false },
     { "type": "header", "content": "Colors" },

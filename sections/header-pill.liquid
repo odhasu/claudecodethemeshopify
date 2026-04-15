@@ -26,8 +26,9 @@
     {%- else -%}
     position: relative;
     {%- endif -%}
-    top: 0;
+    top: var(--urgency-bar-height, 0px);
     z-index: 999;
+    transition: top 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -39,6 +40,10 @@
   /* Spacer to prevent content from jumping under fixed header */
   .header-pill-spacer {
     height: {{ icon_size | plus: 12 | plus: section.settings.padding_y | plus: section.settings.padding_bottom }}px;
+  }
+  /* When urgency bar is visible, dropdown needs to clear it too */
+  .header-pill-wrapper .header-dropdown {
+    transition: top 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   }
   {%- endif -%}
   .header-pill {

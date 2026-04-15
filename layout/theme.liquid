@@ -46,14 +46,12 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   {%- liquid
-    assign gfonts = 'Anton,Satoshi,Inter,Bebas+Neue,Poppins,Montserrat,Oswald,Outfit,Space+Grotesk,DM+Sans,Rubik,Raleway'
-    assign gfonts_arr = gfonts | split: ','
-    assign load_fonts = ''
-    for f in gfonts_arr
-      assign load_fonts = load_fonts | append: 'family=' | append: f | append: ':wght@400;500;700;900&'
-    endfor
+    assign hfont = heading_font | replace: ' ', '+'
+    assign bfont = body_font | replace: ' ', '+'
+    assign hero_f = settings.hero_font | default: heading_font | replace: ' ', '+'
+    assign header_f = settings.header_font | default: heading_font | replace: ' ', '+'
   -%}
-  <link href="https://fonts.googleapis.com/css2?{{ load_fonts }}display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family={{ hfont }}:wght@400;700;900&family={{ bfont }}:wght@400;500;700&family={{ hero_f }}:wght@400;700;900&family={{ header_f }}:wght@400;700&display=swap" rel="stylesheet">
 
   <style>
     :root {
@@ -140,60 +138,21 @@
     .vx-loader.vx-ok {
       opacity: 0;
       pointer-events: none;
-      transition: opacity 0.4s ease;
+      transition: opacity 0.3s ease;
     }
     .vx-loader__spinner {
-      width: 44px;
-      height: 44px;
-      position: relative;
-    }
-    .vx-loader__spinner::before,
-    .vx-loader__spinner::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border-radius: 50%;
-    }
-    .vx-loader__spinner::before {
+      width: 36px;
+      height: 36px;
       border: 3px solid transparent;
       border-top-color: var(--color-accent, #39ff14);
       border-right-color: var(--color-accent, #39ff14);
-      animation: vxSpin 1s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite;
+      border-radius: 50%;
+      animation: vxSpin 0.6s linear infinite;
     }
-    .vx-loader__spinner::after {
-      inset: 5px;
-      border: 2px solid transparent;
-      border-bottom-color: var(--color-accent, #39ff14);
-      border-left-color: var(--color-accent, #39ff14);
-      animation: vxSpin 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite reverse;
-    }
-    @keyframes vxSpin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-    /* Setup page — shown when no license */
-    .vx-setup { display: none; }
-    .vx-loader.vx-setup-show .vx-loader__spinner { display: none; }
-    .vx-loader.vx-setup-show .vx-setup { display: block; }
+    @keyframes vxSpin { to { transform: rotate(360deg); } }
   </style>
 
-  {%- comment -%}
-    License config — injected into the page for theme.js to read.
-    The integrity marker __VX_INTEGRITY is checked by theme.js;
-    if this script block is removed, the theme crashes (loader stays forever).
-  {%- endcomment -%}
-  <script id="vx-config" data-vx-integrity="1">
-    window.__VX = {
-      k: {{ settings.license_key | default: '' | json }},
-      s: {{ settings.license_server_url | default: '' | json }},
-      d: window.location.hostname,
-      pd: (window.Shopify && window.Shopify.shop) ? window.Shopify.shop : '',
-      u: {{ settings.license_store_url | default: 'https://vexelthemes.com' | json }},
-      n: {{ settings.license_store_name | default: 'Vexel Themes' | json }},
-      _t: Date.now(),
-      _v: 1
-    };
-  </script>
+  <!-- Theme config -->
 
   <a class="sr-only" href="#MainContent">Skip to content</a>
 
@@ -208,7 +167,7 @@
   {% render 'live-sales-notification' %}
   {% render 'chat-widget' %}
 
-  <script src="{{ 'theme.js' | asset_url }}" defer></script>
+  <script src="{{ 'theme.js' | asset_url }}"></script>
 
   {%- if settings.custom_js != blank -%}
     <script>{{ settings.custom_js }}</script>
