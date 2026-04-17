@@ -30,8 +30,9 @@
   {
     "name": "Typography",
     "settings": [
-      { "type": "select", "id": "heading_font", "label": "Heading font", "default": "Satoshi", "options": [
-        { "value": "Satoshi", "label": "Satoshi (like Luke's Vendors)" },
+      { "type": "select", "id": "heading_font", "label": "Heading font", "default": "Clash Grotesk", "options": [
+        { "value": "Clash Grotesk", "label": "Clash Grotesk (like Luke's)" },
+        { "value": "Satoshi", "label": "Satoshi" },
         { "value": "Anton", "label": "Anton" },
         { "value": "Inter", "label": "Inter" },
         { "value": "Bebas Neue", "label": "Bebas Neue" },
@@ -44,7 +45,7 @@
         { "value": "Rubik", "label": "Rubik" },
         { "value": "Raleway", "label": "Raleway" }
       ]},
-      { "type": "select", "id": "body_font", "label": "Body font", "default": "Inter", "options": [
+      { "type": "select", "id": "body_font", "label": "Body font", "default": "Satoshi", "options": [
         { "value": "system-ui, -apple-system, sans-serif", "label": "System Default" },
         { "value": "Inter", "label": "Inter" },
         { "value": "DM Sans", "label": "DM Sans" },

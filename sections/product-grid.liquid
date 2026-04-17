@@ -236,18 +236,9 @@
     align-items: center;
     justify-content: center;
     border: none;
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-    box-shadow:
-      inset 0 1px 0 rgba(255,255,255,0.15),
-      0 2px 12px rgba({{ btn_bg | color_extract: 'red' }}, {{ btn_bg | color_extract: 'green' }}, {{ btn_bg | color_extract: 'blue' }}, 0.35);
-    transition: box-shadow 0.3s, transform 0.2s;
+    transition: transform 0.2s;
   }
   .btn-buy:hover {
-    box-shadow:
-      inset 0 1px 0 rgba(255,255,255,0.2),
-      0 4px 24px rgba({{ btn_bg | color_extract: 'red' }}, {{ btn_bg | color_extract: 'green' }}, {{ btn_bg | color_extract: 'blue' }}, 0.55),
-      0 0 40px rgba({{ btn_bg | color_extract: 'red' }}, {{ btn_bg | color_extract: 'green' }}, {{ btn_bg | color_extract: 'blue' }}, 0.2);
     transform: translateY(-1px);
   }
 

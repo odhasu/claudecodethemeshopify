@@ -39,19 +39,13 @@
     assign text_muted = settings.color_text_muted | default: '#9ca3af'
     assign text_subtle = settings.color_text_subtle | default: '#6b7280'
     assign star_color = settings.color_stars | default: '#fbbf24'
-    assign heading_font = settings.heading_font | default: 'Anton'
-    assign body_font = settings.body_font | default: 'system-ui, -apple-system, sans-serif'
+    assign heading_font = settings.heading_font | default: 'Clash Grotesk'
+    assign body_font = settings.body_font | default: 'Satoshi'
   -%}
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  {%- liquid
-    assign hfont = heading_font | replace: ' ', '+'
-    assign bfont = body_font | replace: ' ', '+'
-    assign hero_f = settings.hero_font | default: heading_font | replace: ' ', '+'
-    assign header_f = settings.header_font | default: heading_font | replace: ' ', '+'
-  -%}
-  <link href="https://fonts.googleapis.com/css2?family={{ hfont }}:wght@400;700;900&family={{ bfont }}:wght@400;500;700&family={{ hero_f }}:wght@400;700;900&family={{ header_f }}:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://api.fontshare.com">
+  <link href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@400,500,600,700&display=swap" rel="stylesheet">
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
 
   <style>
     :root {
@@ -66,8 +60,8 @@
       --color-text-muted: {{ text_muted }};
       --color-text-subtle: {{ text_subtle }};
       --color-stars: {{ star_color }};
-      --font-heading: '{{ heading_font }}', 'Anton', sans-serif;
-      --font-body: {{ body_font }};
+      --font-heading: '{{ heading_font }}', 'Clash Grotesk', sans-serif;
+      --font-body: '{{ body_font }}', 'Satoshi', sans-serif;
       --radius-card: {{ settings.border_radius_card | default: 12 }}px;
       --radius-button: {{ settings.border_radius_button | default: 8 }}px;
       --max-width: {{ settings.max_page_width | default: 1200 }}px;
