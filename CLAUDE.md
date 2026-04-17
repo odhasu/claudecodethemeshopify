@@ -24,9 +24,12 @@ Snippets: `chat-widget`, `live-sales-notification`, `meta-tags`
 ## Active work (v2 branch)
 - ✅ Urgency bar: hidden at top, slides in on scroll (reveal_on_scroll setting)
 - ✅ Lag fix: removed license bloat, reduced Google Fonts from 12 to 3-4, DOMContentLoaded loader
-- 🔲 Hero section improvements
-- 🔲 Product grid improvements
-- 🔲 Rest of sections
+- ✅ Hero: full rebuild — badge pill, 3-line headline w/ gradient, subtitle, CTA pair, trust row (avatar stack + stars), stats bar (frosted glass), glow effect
+- 🔲 Product grid
+- 🔲 Testimonials
+- 🔲 FAQ
+- 🔲 Reviews
+- 🔲 Footer
 
 ## Design direction
 Dark theme. Black background (#000), neon green accent (#39ff14). Fonts: DM Sans heading, Inter body, Bebas for hero/header. Inspired by lukesvendors.com but our own style.
