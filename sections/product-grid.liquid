@@ -4,17 +4,17 @@
   assign columns_mobile = section.settings.columns_mobile | default: 2
   assign max_products = section.settings.max_products | default: 8
   assign show_glow = section.settings.show_glow
-  assign glow_color = section.settings.glow_color | default: '#39ff14'
+  assign glow_color = section.settings.glow_color | default: '#19d400'
   assign glow_intensity = section.settings.glow_intensity | default: 35
   assign card_bg = section.settings.card_bg | default: '#111111'
   assign card_border = section.settings.card_border | default: '#2a2a2a'
-  assign card_hover_border = section.settings.card_hover_border | default: '#39ff14'
+  assign card_hover_border = section.settings.card_hover_border | default: '#19d400'
   assign image_bg = section.settings.image_bg | default: '#0a0a0a'
   assign sale_badge_bg = section.settings.sale_badge_bg | default: 'rgba(0,0,0,0.5)'
   assign sale_badge_text = section.settings.sale_badge_text_color | default: '#ffffff'
-  assign price_color = section.settings.price_color | default: '#39ff14'
+  assign price_color = section.settings.price_color | default: '#19d400'
   assign compare_color = section.settings.compare_price_color | default: '#6b7280'
-  assign btn_bg = section.settings.buy_btn_bg | default: '#39ff14'
+  assign btn_bg = section.settings.buy_btn_bg | default: '#19d400'
   assign btn_text = section.settings.buy_btn_text_color | default: '#1a1a1a'
   assign btn_label = section.settings.buy_btn_label | default: 'BUY NOW'
   assign btn_action = section.settings.buy_btn_action | default: 'product'
@@ -24,7 +24,7 @@
   assign show_info_btn = section.settings.show_info_btn
   assign btn_border_color = section.settings.buy_btn_border_color | default: 'rgba(255,255,255,0.2)'
   assign btn_radius = section.settings.buy_btn_radius | default: 12
-  assign overlay_title_green = section.settings.overlay_title_green_color | default: '#39ff14'
+  assign overlay_title_green = section.settings.overlay_title_green_color | default: '#19d400'
   assign overlay_title_white = section.settings.overlay_title_white_color | default: '#ffffff'
   assign title_color = section.settings.title_color | default: '#ffffff'
   assign glassmorphic = section.settings.glassmorphic_cards
@@ -421,7 +421,7 @@
 </section>
 
 <!-- Product Detail Modal -->
-{%- if show_details_btn -%}
+{%- if show_info_btn -%}
 <div class="product-detail-modal" id="product-detail-modal">
   <div class="product-detail-modal__backdrop" onclick="closeProductDetail()"></div>
   <div class="product-detail-modal__content">
@@ -482,7 +482,7 @@
     });
   }
 
-  {%- if show_details_btn -%}
+  {%- if show_info_btn -%}
   function openProductDetail(title, desc, price, compare, compareRaw, priceRaw, url, variantId) {
     var modal = document.getElementById('product-detail-modal');
     document.getElementById('pdm-title').textContent = title;
@@ -537,12 +537,12 @@
     { "type": "checkbox", "id": "glassmorphic_cards", "label": "Glassmorphic cards (inset glow + blur)", "default": true },
     { "type": "color", "id": "card_bg", "label": "Card background", "default": "#111111" },
     { "type": "color", "id": "card_border", "label": "Card border", "default": "#2a2a2a" },
-    { "type": "color", "id": "card_hover_border", "label": "Card hover border", "default": "#39ff14" },
+    { "type": "color", "id": "card_hover_border", "label": "Card hover border", "default": "#19d400" },
     { "type": "color", "id": "image_bg", "label": "Image background", "default": "#0a0a0a" },
     { "type": "color", "id": "title_color", "label": "Title color", "default": "#ffffff" },
     { "type": "header", "content": "Overlay Title on Image" },
     { "type": "checkbox", "id": "show_overlay_title", "label": "Show overlay title on image", "default": true },
-    { "type": "color", "id": "overlay_title_green_color", "label": "Overlay green text color", "default": "#39ff14" },
+    { "type": "color", "id": "overlay_title_green_color", "label": "Overlay green text color", "default": "#19d400" },
     { "type": "color", "id": "overlay_title_white_color", "label": "Overlay white text color", "default": "#ffffff" },
     { "type": "range", "id": "overlay_font_size", "label": "Overlay font size (px)", "min": 10, "max": 22, "step": 1, "default": 14 },
     { "type": "header", "content": "Sale Badge" },
@@ -560,7 +560,7 @@
       { "value": "left", "label": "Left" }
     ]},
     { "type": "header", "content": "Pricing" },
-    { "type": "color", "id": "price_color", "label": "Sale price color", "default": "#39ff14" },
+    { "type": "color", "id": "price_color", "label": "Sale price color", "default": "#19d400" },
     { "type": "color", "id": "compare_price_color", "label": "Compare price color", "default": "#6b7280" },
     { "type": "header", "content": "Buy Button" },
     { "type": "text", "id": "buy_btn_label", "label": "Button label", "default": "BUY NOW" },
@@ -571,7 +571,7 @@
       { "value": "add_to_cart", "label": "Add to cart" },
       { "value": "checkout", "label": "Direct checkout" }
     ]},
-    { "type": "color", "id": "buy_btn_bg", "label": "Button background", "default": "#39ff14" },
+    { "type": "color", "id": "buy_btn_bg", "label": "Button background", "default": "#19d400" },
     { "type": "color", "id": "buy_btn_text_color", "label": "Button text color", "default": "#1a1a1a" },
     { "type": "header", "content": "Info Button (ⓘ)" },
     { "type": "checkbox", "id": "show_info_btn", "label": "Show info button", "default": true },
@@ -580,7 +580,7 @@
     { "type": "color", "id": "info_btn_hover_border", "label": "Info button hover border", "default": "#ffffff" },
     { "type": "header", "content": "Glow Effect" },
     { "type": "checkbox", "id": "show_glow", "label": "Show radial glow on sides", "default": true },
-    { "type": "color", "id": "glow_color", "label": "Glow color", "default": "#39ff14" },
+    { "type": "color", "id": "glow_color", "label": "Glow color", "default": "#19d400" },
     { "type": "range", "id": "glow_intensity", "label": "Glow intensity (%)", "min": 10, "max": 60, "step": 5, "default": 35 },
     { "type": "checkbox", "id": "show_top_fade", "label": "Show top fade-to-background gradient", "default": false },
     { "type": "header", "content": "Spacing" },
