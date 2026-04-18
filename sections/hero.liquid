@@ -109,22 +109,16 @@
   /* Headline */
   .hero__title {
     font-family: var(--font-heading, 'Anton', sans-serif);
-    font-size: clamp({{ title_size_mobile }}px, 6vw, {{ title_size_desktop }}px);
+    font-size: clamp({{ title_size_mobile }}px, 5vw, {{ title_size_desktop }}px);
     font-weight: 900;
     text-transform: uppercase;
     letter-spacing: -1px;
-    line-height: 1.05;
+    line-height: 1.1;
     color: {{ title_color }};
     margin: 0 0 28px;
   }
-  .hero__title-line {
-    display: {%- if headline_inline -%}inline{%- else -%}block{%- endif -%};
-  }
-  {%- if headline_inline -%}
-  .hero__title-line + .hero__title-line::before {
-    content: '\00a0';
-  }
-  {%- endif -%}
+  /* stacked mode only */
+  .hero__title--stacked .hero__title-line { display: block; }
   .hero__title-highlight {
     color: {{ highlight_color }};
     -webkit-text-fill-color: {{ highlight_color }};
@@ -329,17 +323,17 @@
       </div>
     {%- endif -%}
 
-    <h1 class="hero__title">
-      {%- if title_before != blank -%}
-        <span class="hero__title-line">{{ title_before }}</span>
-      {%- endif -%}
-      {%- if title_highlight != blank -%}
-        <span class="hero__title-line hero__title-highlight">{{ title_highlight }}</span>
-      {%- endif -%}
-      {%- if title_after != blank -%}
-        <span class="hero__title-line">{{ title_after }}</span>
-      {%- endif -%}
-    </h1>
+    {%- if headline_inline -%}
+      <h1 class="hero__title">
+        {%- if title_before != blank -%}{{ title_before }} {%- endif -%}<span class="hero__title-highlight">{{ title_highlight }}</span>{%- if title_after != blank -%} {{ title_after }}{%- endif -%}
+      </h1>
+    {%- else -%}
+      <h1 class="hero__title hero__title--stacked">
+        {%- if title_before != blank -%}<span class="hero__title-line">{{ title_before }}</span>{%- endif -%}
+        {%- if title_highlight != blank -%}<span class="hero__title-line hero__title-highlight">{{ title_highlight }}</span>{%- endif -%}
+        {%- if title_after != blank -%}<span class="hero__title-line">{{ title_after }}</span>{%- endif -%}
+      </h1>
+    {%- endif -%}
 
     {%- if show_subtitle and subtitle != blank -%}
       <p class="hero__subtitle">{{ subtitle }}</p>
