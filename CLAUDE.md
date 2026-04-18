@@ -16,33 +16,35 @@ Shopify Liquid, vanilla CSS, vanilla JS. No frameworks.
 - Every visual value must have a theme setting (never hardcode colors, sizes, text)
 - No recaps, no summaries
 
-## Current theme structure (V1 base)
-Sections: `hero`, `product-grid`, `testimonials`, `reviews`, `bundle-builder`, `results-carousel`, `faq`, `urgency-bar`, `header-pill`, `footer`
+## Current theme structure (v2)
+Sections: `hero`, `product-grid`, `trust-badges`, `testimonials`, `reviews`, `bundle-builder`, `results-carousel`, `faq`, `urgency-bar`, `header-pill`, `footer`
 Assets: `theme.css`, `theme.js`
 Snippets: `chat-widget`, `live-sales-notification`, `meta-tags`
 
 ## Active work (v2 branch)
-- ✅ Urgency bar: hidden at top, slides in on scroll (reveal_on_scroll setting)
-- ✅ Lag fix: removed license bloat, reduced Google Fonts from 12 to 3-4, DOMContentLoaded loader
-- ✅ Hero: full rebuild — badge pill, 3-line headline w/ gradient, subtitle, CTA pair, trust row (avatar stack + stars), stats bar (frosted glass), glow effect
-- 🔲 Product grid
+- ✅ Urgency bar: hidden at top, slides in on scroll
+- ✅ Lag fix: removed license bloat, Fontshare instead of Google Fonts
+- ✅ Hero: badge pill, 3-line headline w/ gradient, CTA, trust row (text above / avatars below), glow
+- ✅ Design system: Clash Grotesk heading + Satoshi body (Fontshare), accent #19d400
+- ✅ Product grid: ⓘ info button + BUY NOW (Luke's style — gradient, white border outline, glow), detail modal
+- ✅ Trust badges bar: auto-scrolling marquee, 4 badges, green icons, configurable
+- ✅ Footer: brand, policy links (· separator), social icons (ig/tiktok/yt/discord), copyright
 - 🔲 Testimonials
 - 🔲 FAQ
 - 🔲 Reviews
-- 🔲 Footer
 
-## Design direction
-Dark theme. Black background (#000), neon green accent (#39ff14). Fonts: DM Sans heading, Inter body, Bebas for hero/header. Inspired by lukesvendors.com but our own style.
+## Design system (matches lukesvendors.com)
+- Background: #000000
+- Accent: #19d400
+- Card bg: #111111
+- Fonts: Clash Grotesk (headings) + Satoshi (body) — loaded from Fontshare CDN
+- Buttons: flat green, 12px radius, 2px white border outline, green glow on hover
+- Info button: dark #1a1a1a, same radius, opens product detail modal
 
-## Key CSS variables (set in theme.liquid)
-- `--color-accent` — neon green
-- `--color-bg` — page background
-- `--color-card-bg` — card background
-- `--urgency-bar-height` — set by JS when bar is visible, used by header-pill to offset top position
-
-## Lag fix details
-The original theme had:
-1. License validation JS waiting for `window.load` (blocking full-screen overlay)
-2. 12 Google Font families loading simultaneously
-3. `setInterval` loops running forever (footer check every 3s, integrity monitor every 5s)
-All three removed in v2.
+## Key CSS variables (theme.liquid)
+- `--color-accent` — #19d400
+- `--color-bg` — #000000
+- `--color-card-bg` — #111111
+- `--font-heading` — Clash Grotesk
+- `--font-body` — Satoshi
+- `--urgency-bar-height` — set by JS, used by header-pill offset

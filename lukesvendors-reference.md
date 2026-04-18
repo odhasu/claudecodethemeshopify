@@ -273,10 +273,14 @@ Plus: Purchase toast notifications, AI chatbot, Trust badges bar (floating/overl
 
 | Feature | lukesvendors | ogresells v2 |
 |---------|-------------|-------------|
-| Accent color | #19d400 | #39ff14 |
-| Heading font | Clash Grotesk | Bebas/Anton |
-| Hero image | Yes (product shot) | No (text only) |
-| Trust badges bar | Yes (separate section) | Inside hero trust row |
-| Purchase toasts | Yes | No (not yet) |
-| AI chatbot | Yes | No |
-| Stats | No | Yes (in hero) |
+| Accent color | #19d400 | #19d400 ✅ |
+| Heading font | Clash Grotesk | Clash Grotesk ✅ |
+| Body font | Satoshi | Satoshi ✅ |
+| Buttons | Flat green, outline border | Flat green, outline border, glow ✅ |
+| Hero image | Yes (product shot) | Image picker added, off by default |
+| Trust badges bar | Separate scrolling section | Separate scrolling section ✅ |
+| Trust row | Text above, avatars below | Text above, avatars below ✅ |
+| Footer | Brand, links, socials, copyright | Brand, links, socials, copyright ✅ |
+| Purchase toasts | Yes | Already in `live-sales-notification` snippet ✅ |
+| AI chatbot | Yes | `chat-widget` snippet exists |
+| Stats bar | No | No (hidden by default) ✅ |
