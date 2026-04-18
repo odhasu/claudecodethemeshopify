@@ -194,45 +194,50 @@
     gap: 8px;
   }
 
-  /* Info button — ⓘ style, opens product detail modal */
+  /* Info button — ⓘ, dark square, matches buy button height */
   {%- if show_info_btn %}
   .btn-info {
-    width: 50px; height: 50px;
+    width: 54px; height: 54px;
     border-radius: {{ btn_radius }}px;
-    background: {{ info_btn_bg }};
-    border: 1px solid {{ info_btn_border }};
+    background: linear-gradient(180deg, #222222 0%, #181818 100%);
+    border: 1.5px solid #333333;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #fff;
-    transition: border-color 0.2s;
+    color: rgba(255,255,255,0.75);
+    transition: border-color 0.2s, color 0.2s;
     flex-shrink: 0;
     cursor: pointer;
   }
-  .btn-info:hover { border-color: {{ info_btn_hover_border }}; }
-  .btn-info svg { width: 20px; height: 20px; }
+  .btn-info:hover {
+    border-color: {{ info_btn_hover_border }};
+    color: #fff;
+  }
+  .btn-info svg { width: 22px; height: 22px; }
   {%- endif %}
 
-  /* Buy Now — Luke's style */
+  /* Buy Now — exact Luke's style */
   .btn-buy {
     flex: 1;
-    height: 50px;
+    height: 54px;
     border-radius: {{ btn_radius }}px;
-    background: {{ btn_bg }};
+    background: linear-gradient(180deg, {{ btn_bg }} 0%, {{ btn_bg | color_darken: 8 }} 100%);
     color: {{ btn_text }};
-    font-weight: 800;
-    font-size: 15px;
+    font-weight: 900;
+    font-size: 16px;
     text-transform: uppercase;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.05em;
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1.5px solid {{ btn_border_color }};
-    transition: transform 0.2s, opacity 0.2s;
+    border: 2px solid rgba(255,255,255,0.28);
+    box-shadow: 0 6px 22px rgba({{ btn_bg | color_extract: 'red' }}, {{ btn_bg | color_extract: 'green' }}, {{ btn_bg | color_extract: 'blue' }}, 0.38);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
   }
   .btn-buy:hover {
-    transform: translateY(-1px);
-    opacity: 0.92;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba({{ btn_bg | color_extract: 'red' }}, {{ btn_bg | color_extract: 'green' }}, {{ btn_bg | color_extract: 'blue' }}, 0.5);
   }
 
   /* Details modal — glassmorphic overlay */
