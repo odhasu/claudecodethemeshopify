@@ -183,13 +183,15 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
     margin-bottom: 52px;
+    width: 100%;
   }
   .hero__trust-label {
     font-size: 13px;
     color: {{ trust_text_color }};
     text-align: center;
+    width: 100%;
   }
   .hero__trust-label strong {
     color: {{ trust_count_color }};
@@ -198,6 +200,7 @@
   .hero__trust-row {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 12px;
   }
 
@@ -353,20 +356,23 @@
     {%- endif -%}
 
     {%- if show_trust -%}
+      {%- comment -%} Count how many avatar images are actually uploaded {%- endcomment -%}
+      {%- assign avatar_count = 0 -%}
+      {%- for i in (1..6) -%}
+        {%- assign avatar_key = 'avatar_' | append: i -%}
+        {%- if section.settings[avatar_key] != blank -%}
+          {%- assign avatar_count = avatar_count | plus: 1 -%}
+        {%- endif -%}
+      {%- endfor -%}
       <div class="hero__trust">
-        <p class="hero__trust-label">Trusted by <strong>{{ trust_count }}</strong> {{ trust_label }}</p>
         <div class="hero__trust-row">
-          {%- if show_avatars -%}
+          {%- if show_avatars and avatar_count > 0 -%}
             <div class="hero__avatars">
               {%- for i in (1..6) -%}
                 {%- assign avatar_key = 'avatar_' | append: i -%}
                 {%- if section.settings[avatar_key] != blank -%}
                   <div class="hero__avatar">
                     <img src="{{ section.settings[avatar_key] | image_url: width: 64 }}" alt="Customer" loading="lazy" width="32" height="32">
-                  </div>
-                {%- else -%}
-                  <div class="hero__avatar">
-                    <div class="hero__avatar-placeholder">{{ i }}</div>
                   </div>
                 {%- endif -%}
               {%- endfor -%}
@@ -380,6 +386,7 @@
             </div>
           {%- endif -%}
         </div>
+        <p class="hero__trust-label">Trusted by <strong>{{ trust_count }}</strong> {{ trust_label }}</p>
       </div>
     {%- endif -%}
 
@@ -461,7 +468,7 @@
     { "type": "image_picker", "id": "avatar_4", "label": "Avatar 4" },
     { "type": "image_picker", "id": "avatar_5", "label": "Avatar 5" },
     { "type": "image_picker", "id": "avatar_6", "label": "Avatar 6" },
-    { "type": "checkbox", "id": "show_stars", "label": "Show star rating", "default": true },
+    { "type": "checkbox", "id": "show_stars", "label": "Show star rating", "default": false },
     { "type": "text", "id": "star_rating", "label": "Star rating value", "default": "4.9" },
     { "type": "text", "id": "star_review_label", "label": "Review count label", "default": "2,400+ reviews" },
     { "type": "text", "id": "trust_count", "label": "Trust count", "default": "10,000+" },
