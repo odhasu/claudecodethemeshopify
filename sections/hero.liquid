@@ -181,19 +181,24 @@
   /* Trust row */
   .hero__trust {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 16px;
+    gap: 10px;
     margin-bottom: 52px;
   }
-  .hero__trust-divider {
-    width: 1px; height: 20px;
-    background: #ffffff20;
-    flex-shrink: 0;
+  .hero__trust-label {
+    font-size: 13px;
+    color: {{ trust_text_color }};
+    text-align: center;
   }
-  @media (max-width: 480px) {
-    .hero__trust-divider { display: none; }
+  .hero__trust-label strong {
+    color: {{ trust_count_color }};
+    font-weight: 700;
+  }
+  .hero__trust-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
   }
 
   /* Avatars */
@@ -243,16 +248,6 @@
   .hero__star-reviews {
     font-size: 12px;
     color: {{ trust_text_color }};
-  }
-
-  /* Trust count */
-  .hero__trust-count {
-    font-size: 13px;
-    color: {{ trust_text_color }};
-  }
-  .hero__trust-count strong {
-    color: {{ trust_count_color }};
-    font-weight: 700;
   }
 
   /* Stats */
@@ -346,40 +341,32 @@
 
     {%- if show_trust -%}
       <div class="hero__trust">
-
-        {%- if show_avatars -%}
-          <div class="hero__avatars">
-            {%- for i in (1..6) -%}
-              {%- assign avatar_key = 'avatar_' | append: i -%}
-              {%- if section.settings[avatar_key] != blank -%}
-                <div class="hero__avatar">
-                  <img src="{{ section.settings[avatar_key] | image_url: width: 64 }}" alt="Customer" loading="lazy" width="32" height="32">
-                </div>
-              {%- else -%}
-                <div class="hero__avatar">
-                  <div class="hero__avatar-placeholder">{{ i }}</div>
-                </div>
-              {%- endif -%}
-            {%- endfor -%}
-          </div>
-          <div class="hero__trust-divider"></div>
-        {%- endif -%}
-
-        {%- if show_stars -%}
-          <div class="hero__stars">
-            <div class="hero__star-icons">
-              ★★★★★
+        <p class="hero__trust-label">Trusted by <strong>{{ trust_count }}</strong> {{ trust_label }}</p>
+        <div class="hero__trust-row">
+          {%- if show_avatars -%}
+            <div class="hero__avatars">
+              {%- for i in (1..6) -%}
+                {%- assign avatar_key = 'avatar_' | append: i -%}
+                {%- if section.settings[avatar_key] != blank -%}
+                  <div class="hero__avatar">
+                    <img src="{{ section.settings[avatar_key] | image_url: width: 64 }}" alt="Customer" loading="lazy" width="32" height="32">
+                  </div>
+                {%- else -%}
+                  <div class="hero__avatar">
+                    <div class="hero__avatar-placeholder">{{ i }}</div>
+                  </div>
+                {%- endif -%}
+              {%- endfor -%}
             </div>
-            <span class="hero__star-text">{{ star_rating }}</span>
-            <span class="hero__star-reviews">· {{ star_review_label }}</span>
-          </div>
-          <div class="hero__trust-divider"></div>
-        {%- endif -%}
-
-        <div class="hero__trust-count">
-          <strong>{{ trust_count }}</strong> {{ trust_label }}
+          {%- endif -%}
+          {%- if show_stars -%}
+            <div class="hero__stars">
+              <div class="hero__star-icons">★★★★★</div>
+              <span class="hero__star-text">{{ star_rating }}</span>
+              <span class="hero__star-reviews">· {{ star_review_label }}</span>
+            </div>
+          {%- endif -%}
         </div>
-
       </div>
     {%- endif -%}
 
@@ -437,7 +424,7 @@
     { "type": "url", "id": "cta_secondary_url", "label": "Secondary button link" },
 
     { "type": "header", "content": "Trust Row" },
-    { "type": "checkbox", "id": "show_trust", "label": "Show trust row", "default": false },
+    { "type": "checkbox", "id": "show_trust", "label": "Show trust row", "default": true },
     { "type": "checkbox", "id": "show_avatars", "label": "Show avatar stack", "default": true },
     { "type": "image_picker", "id": "avatar_1", "label": "Avatar 1" },
     { "type": "image_picker", "id": "avatar_2", "label": "Avatar 2" },
@@ -454,7 +441,7 @@
     { "type": "color", "id": "trust_text_color", "label": "Trust text color", "default": "#9ca3af" },
 
     { "type": "header", "content": "Stats Row" },
-    { "type": "checkbox", "id": "show_stats", "label": "Show stats", "default": true },
+    { "type": "checkbox", "id": "show_stats", "label": "Show stats", "default": false },
     { "type": "text", "id": "stat_1_value", "label": "Stat 1 value", "default": "$300K+" },
     { "type": "text", "id": "stat_1_label", "label": "Stat 1 label", "default": "Customer Sales" },
     { "type": "text", "id": "stat_2_value", "label": "Stat 2 value", "default": "10,000+" },
