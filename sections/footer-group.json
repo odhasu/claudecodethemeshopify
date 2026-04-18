@@ -1,1 +1,49 @@
-{"type":"footer","name":"Footer Group","sections":{"footer_AdUHER":{"type":"footer","name":"Footer","settings":{"logo_height":40,"brand_text":"OGVENDORS","brand_font_size":24,"menu":"footer","link_gap":24,"show_copyright":true,"show_cta":true,"cta_text":"Get this store design","cta_url":"","cta_bg":"#39ff14","cta_text_color":"#000000","bg_color":"#0a0a0a","border_color":"#1a1a1a","brand_color":"#ffffff","link_color":"#6b7280","link_hover_color":"#ffffff","copyright_color":"#6b7280","padding_top":40,"padding_bottom":40}}},"order":["footer_AdUHER"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "type": "footer",
+  "name": "Footer Group",
+  "sections": {
+    "footer_AdUHER": {
+      "type": "footer",
+      "name": "Footer",
+      "settings": {
+        "logo_height": 40,
+        "brand_text": "OGVENDORS",
+        "brand_font_size": 24,
+        "show_policies": true,
+        "label_refund": "Refund",
+        "label_shipping": "Shipping",
+        "label_privacy": "Privacy",
+        "label_terms": "Terms",
+        "link_gap": 20,
+        "instagram_url": "h",
+        "tiktok_url": "",
+        "youtube_url": "",
+        "discord_url": "",
+        "social_icon_color": "#e9e9e9",
+        "social_icon_size": 32,
+        "show_copyright": true,
+        "copyright_name": "",
+        "bg_color": "#0a0a0a",
+        "border_color": "#1a1a1a",
+        "brand_color": "#ffffff",
+        "link_color": "#6b7280",
+        "link_hover_color": "#ffffff",
+        "copyright_color": "#6b7280",
+        "padding_top": 40,
+        "padding_bottom": 40
+      }
+    }
+  },
+  "order": [
+    "footer_AdUHER"
+  ]
+}
