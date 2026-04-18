@@ -18,19 +18,15 @@
   assign btn_text = section.settings.buy_btn_text_color | default: '#1a1a1a'
   assign btn_label = section.settings.buy_btn_label | default: 'BUY NOW'
   assign btn_action = section.settings.buy_btn_action | default: 'product'
-  assign cart_btn_bg = section.settings.cart_btn_bg | default: '#1a1a1a'
-  assign cart_btn_border = section.settings.cart_btn_border | default: '#2a2a2a'
-  assign cart_btn_hover_border = section.settings.cart_btn_hover_border | default: '#ffffff'
-  assign cart_btn_hover_bg = section.settings.cart_btn_hover_bg | default: '#1a1a1a'
-  assign cart_btn_hover_color = section.settings.cart_btn_hover_color | default: '#ffffff'
-  assign cart_btn_incart_bg = section.settings.cart_btn_incart_bg | default: '#22c55e'
-  assign cart_btn_incart_border = section.settings.cart_btn_incart_border | default: '#22c55e'
+  assign info_btn_bg = section.settings.info_btn_bg | default: '#1a1a1a'
+  assign info_btn_border = section.settings.info_btn_border | default: '#2a2a2a'
+  assign info_btn_hover_border = section.settings.info_btn_hover_border | default: '#ffffff'
+  assign show_info_btn = section.settings.show_info_btn
+  assign btn_border_color = section.settings.buy_btn_border_color | default: 'rgba(255,255,255,0.2)'
+  assign btn_radius = section.settings.buy_btn_radius | default: 12
   assign overlay_title_green = section.settings.overlay_title_green_color | default: '#39ff14'
   assign overlay_title_white = section.settings.overlay_title_white_color | default: '#ffffff'
   assign title_color = section.settings.title_color | default: '#ffffff'
-  assign show_details_btn = section.settings.show_details_btn
-  assign details_btn_bg = section.settings.details_btn_bg | default: 'rgba(255,255,255,0.06)'
-  assign details_btn_text = section.settings.details_btn_text_color | default: '#ffffff'
   assign glassmorphic = section.settings.glassmorphic_cards
   assign show_top_fade = section.settings.show_top_fade
 -%}
@@ -197,80 +193,47 @@
     display: flex;
     gap: 8px;
   }
-  .btn-cart-icon {
-    width: 44px; height: 44px;
-    border-radius: var(--radius-button);
-    background: {{ cart_btn_bg }};
-    border: 1px solid {{ cart_btn_border }};
+
+  /* Info button — ⓘ style, opens product detail modal */
+  {%- if show_info_btn %}
+  .btn-info {
+    width: 50px; height: 50px;
+    border-radius: {{ btn_radius }}px;
+    background: {{ info_btn_bg }};
+    border: 1px solid {{ info_btn_border }};
     display: flex;
     align-items: center;
     justify-content: center;
     color: #fff;
-    transition: background 0.2s, border-color 0.2s;
+    transition: border-color 0.2s;
     flex-shrink: 0;
+    cursor: pointer;
   }
-  .btn-cart-icon:hover {
-    background: {{ cart_btn_hover_bg }};
-    border-color: {{ cart_btn_hover_border }};
-    color: {{ cart_btn_hover_color }};
-  }
-  .btn-cart-icon.in-cart {
-    background: {{ cart_btn_incart_bg }};
-    border-color: {{ cart_btn_incart_border }};
-    color: #fff;
-  }
-  .btn-cart-icon svg { width: 18px; height: 18px; }
+  .btn-info:hover { border-color: {{ info_btn_hover_border }}; }
+  .btn-info svg { width: 20px; height: 20px; }
+  {%- endif %}
 
-  /* Pill-shaped Buy Now — keanusvendors style */
+  /* Buy Now — Luke's style */
   .btn-buy {
     flex: 1;
-    height: 44px;
-    border-radius: 28px;
+    height: 50px;
+    border-radius: {{ btn_radius }}px;
     background: {{ btn_bg }};
     color: {{ btn_text }};
     font-weight: 800;
-    font-size: 13px;
+    font-size: 15px;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.04em;
     display: flex;
     align-items: center;
     justify-content: center;
-    border: none;
-    transition: transform 0.2s;
+    border: 1.5px solid {{ btn_border_color }};
+    transition: transform 0.2s, opacity 0.2s;
   }
   .btn-buy:hover {
     transform: translateY(-1px);
+    opacity: 0.92;
   }
-
-  /* Details button */
-  {%- if show_details_btn %}
-  .btn-details {
-    width: 100%;
-    height: 38px;
-    border-radius: 28px;
-    background: {{ details_btn_bg }};
-    color: {{ details_btn_text }};
-    font-weight: 600;
-    font-size: 12px;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    border: 1px solid rgba(255,255,255,0.08);
-    margin-top: 8px;
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-    transition: background 0.2s, border-color 0.2s;
-    cursor: pointer;
-  }
-  .btn-details:hover {
-    background: rgba(255,255,255,0.1);
-    border-color: rgba(255,255,255,0.15);
-  }
-  .btn-details svg { width: 14px; height: 14px; }
-  {%- endif %}
 
   /* Details modal — glassmorphic overlay */
   .product-detail-modal {
@@ -428,16 +391,14 @@
                 {%- endif -%}
               </div>
               <div class="product-card-actions">
-                <button class="btn-cart-icon" data-variant-id="{{ product.first_available_variant.id }}" aria-label="Add to cart" onclick="addToCartOnly(this, {{ product.first_available_variant.id }})">
-                  <svg class="icon-cart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
-                    <path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/>
-                  </svg>
-                  <svg class="icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
-                    <polyline points="20 6 9 17 4 12"/>
-                  </svg>
-                </button>
-                {%- comment -%} Buy Now — configurable action {%- endcomment -%}
+                {%- if show_info_btn -%}
+                  <button class="btn-info" aria-label="Product details"
+                    onclick="openProductDetail('{{ product.title | escape }}', '{{ product.description | strip_html | truncate: 500 | escape }}', '{{ product.price | money }}', '{{ product.compare_at_price_max | money }}', {{ product.compare_at_price_max }}, {{ product.price }}, '{{ product.url }}', {{ product.first_available_variant.id }})">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/>
+                    </svg>
+                  </button>
+                {%- endif -%}
                 {%- if btn_action == 'checkout' -%}
                   <button class="btn-buy" onclick="buyNowCheckout({{ product.first_available_variant.id }})">{{ btn_label }}</button>
                 {%- elsif btn_action == 'add_to_cart' -%}
@@ -446,16 +407,6 @@
                   <a href="{{ product.url }}" class="btn-buy">{{ btn_label }}</a>
                 {%- endif -%}
               </div>
-
-              {%- if show_details_btn -%}
-                <button class="btn-details"
-                  onclick="openProductDetail('{{ product.title | escape }}', '{{ product.description | strip_html | truncate: 500 | escape }}', '{{ product.price | money }}', '{{ product.compare_at_price_max | money }}', {{ product.compare_at_price_max }}, {{ product.price }}, '{{ product.url }}', {{ product.first_available_variant.id }})">
-                  DETAILS
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
-                  </svg>
-                </button>
-              {%- endif -%}
             </div>
           </div>
         </div>
@@ -608,6 +559,8 @@
     { "type": "color", "id": "compare_price_color", "label": "Compare price color", "default": "#6b7280" },
     { "type": "header", "content": "Buy Button" },
     { "type": "text", "id": "buy_btn_label", "label": "Button label", "default": "BUY NOW" },
+    { "type": "range", "id": "buy_btn_radius", "label": "Button radius (px)", "min": 4, "max": 28, "step": 2, "default": 12 },
+    { "type": "color", "id": "buy_btn_border_color", "label": "Button inner border", "default": "#ffffff33" },
     { "type": "select", "id": "buy_btn_action", "label": "Button action", "default": "product", "options": [
       { "value": "product", "label": "Go to product page" },
       { "value": "add_to_cart", "label": "Add to cart" },
@@ -615,18 +568,11 @@
     ]},
     { "type": "color", "id": "buy_btn_bg", "label": "Button background", "default": "#39ff14" },
     { "type": "color", "id": "buy_btn_text_color", "label": "Button text color", "default": "#1a1a1a" },
-    { "type": "header", "content": "Details Button" },
-    { "type": "checkbox", "id": "show_details_btn", "label": "Show 'Details +' button", "default": false },
-    { "type": "color", "id": "details_btn_bg", "label": "Details button background", "default": "#0f0f0f" },
-    { "type": "color", "id": "details_btn_text_color", "label": "Details button text", "default": "#ffffff" },
-    { "type": "header", "content": "Cart Icon Button" },
-    { "type": "color", "id": "cart_btn_bg", "label": "Cart button background", "default": "#1a1a1a" },
-    { "type": "color", "id": "cart_btn_border", "label": "Cart button border", "default": "#2a2a2a" },
-    { "type": "color", "id": "cart_btn_hover_border", "label": "Cart hover border", "default": "#ffffff" },
-    { "type": "color", "id": "cart_btn_hover_bg", "label": "Cart hover background", "default": "#1a1a1a" },
-    { "type": "color", "id": "cart_btn_hover_color", "label": "Cart hover icon color", "default": "#ffffff" },
-    { "type": "color", "id": "cart_btn_incart_bg", "label": "Cart 'in cart' background", "default": "#22c55e" },
-    { "type": "color", "id": "cart_btn_incart_border", "label": "Cart 'in cart' border", "default": "#22c55e" },
+    { "type": "header", "content": "Info Button (ⓘ)" },
+    { "type": "checkbox", "id": "show_info_btn", "label": "Show info button", "default": true },
+    { "type": "color", "id": "info_btn_bg", "label": "Info button background", "default": "#1a1a1a" },
+    { "type": "color", "id": "info_btn_border", "label": "Info button border", "default": "#2a2a2a" },
+    { "type": "color", "id": "info_btn_hover_border", "label": "Info button hover border", "default": "#ffffff" },
     { "type": "header", "content": "Glow Effect" },
     { "type": "checkbox", "id": "show_glow", "label": "Show radial glow on sides", "default": true },
     { "type": "color", "id": "glow_color", "label": "Glow color", "default": "#39ff14" },

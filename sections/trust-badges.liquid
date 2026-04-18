@@ -1,0 +1,162 @@
+{%- liquid
+  assign bg_color    = section.settings.bg_color    | default: 'transparent'
+  assign border_top  = section.settings.border_top  | default: '#1a1a1a'
+  assign border_bot  = section.settings.border_bot  | default: '#1a1a1a'
+  assign icon_color  = section.settings.icon_color  | default: '#39ff14'
+  assign text_color  = section.settings.text_color  | default: '#ffffff'
+  assign speed       = section.settings.scroll_speed | default: 30
+  assign show_sep    = section.settings.show_separator
+-%}
+
+<style>
+  #trust-badges-{{ section.id }} {
+    background: {{ bg_color }};
+    border-top: 1px solid {{ border_top }};
+    border-bottom: 1px solid {{ border_bot }};
+    overflow: hidden;
+    height: 48px;
+    display: flex;
+    align-items: center;
+  }
+
+  .trust-badges__track {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    white-space: nowrap;
+    animation: trustScroll {{ speed }}s linear infinite;
+    will-change: transform;
+  }
+
+  #trust-badges-{{ section.id }}:hover .trust-badges__track {
+    animation-play-state: paused;
+  }
+
+  @keyframes trustScroll {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
+  .trust-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 28px;
+    font-size: 13px;
+    font-weight: 600;
+    color: {{ text_color }};
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .trust-badge__icon {
+    color: {{ icon_color }};
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  .trust-badge__icon svg { width: 16px; height: 16px; }
+
+  .trust-badge__sep {
+    color: {{ icon_color }};
+    font-size: 10px;
+    opacity: 0.5;
+    padding: 0 4px;
+  }
+</style>
+
+<div id="trust-badges-{{ section.id }}">
+  <div class="trust-badges__track">
+    {%- for rep in (1..2) -%}
+      {%- for i in (1..4) -%}
+        {%- assign badge_text_key = 'badge_' | append: i | append: '_text' -%}
+        {%- assign badge_icon_key = 'badge_' | append: i | append: '_icon' -%}
+        {%- assign badge_text_val = section.settings[badge_text_key] -%}
+        {%- assign badge_icon_val = section.settings[badge_icon_key] | default: 'star' -%}
+        {%- if badge_text_val != blank -%}
+          <span class="trust-badge">
+            <span class="trust-badge__icon">
+              {%- if badge_icon_val == 'star' -%}
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              {%- elsif badge_icon_val == 'shield' -%}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              {%- elsif badge_icon_val == 'users' -%}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              {%- elsif badge_icon_val == 'bolt' -%}
+                <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+              {%- elsif badge_icon_val == 'headset' -%}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+              {%- else -%}
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              {%- endif -%}
+            </span>
+            {{ badge_text_val }}
+          </span>
+          {%- if show_sep -%}
+            <span class="trust-badge__sep">✦</span>
+          {%- endif -%}
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Trust Badges Bar",
+  "tag": "section",
+  "settings": [
+    { "type": "header", "content": "Style" },
+    { "type": "color", "id": "bg_color", "label": "Background", "default": "#000000" },
+    { "type": "color", "id": "border_top", "label": "Border top", "default": "#1a1a1a" },
+    { "type": "color", "id": "border_bot", "label": "Border bottom", "default": "#1a1a1a" },
+    { "type": "color", "id": "icon_color", "label": "Icon color", "default": "#39ff14" },
+    { "type": "color", "id": "text_color", "label": "Text color", "default": "#ffffff" },
+    { "type": "range", "id": "scroll_speed", "label": "Scroll speed (lower = faster)", "min": 10, "max": 80, "step": 5, "default": 30 },
+    { "type": "checkbox", "id": "show_separator", "label": "Show separator between badges", "default": true },
+
+    { "type": "header", "content": "Badge 1" },
+    { "type": "text", "id": "badge_1_text", "label": "Text", "default": "5,000+ Happy Customers" },
+    { "type": "select", "id": "badge_1_icon", "label": "Icon", "default": "users", "options": [
+      { "value": "users", "label": "Users" },
+      { "value": "star", "label": "Star" },
+      { "value": "shield", "label": "Shield" },
+      { "value": "bolt", "label": "Bolt" },
+      { "value": "headset", "label": "Headset" }
+    ]},
+
+    { "type": "header", "content": "Badge 2" },
+    { "type": "text", "id": "badge_2_text", "label": "Text", "default": "Verified Seller" },
+    { "type": "select", "id": "badge_2_icon", "label": "Icon", "default": "shield", "options": [
+      { "value": "users", "label": "Users" },
+      { "value": "star", "label": "Star" },
+      { "value": "shield", "label": "Shield" },
+      { "value": "bolt", "label": "Bolt" },
+      { "value": "headset", "label": "Headset" }
+    ]},
+
+    { "type": "header", "content": "Badge 3" },
+    { "type": "text", "id": "badge_3_text", "label": "Text", "default": "24/7 Support" },
+    { "type": "select", "id": "badge_3_icon", "label": "Icon", "default": "headset", "options": [
+      { "value": "users", "label": "Users" },
+      { "value": "star", "label": "Star" },
+      { "value": "shield", "label": "Shield" },
+      { "value": "bolt", "label": "Bolt" },
+      { "value": "headset", "label": "Headset" }
+    ]},
+
+    { "type": "header", "content": "Badge 4" },
+    { "type": "text", "id": "badge_4_text", "label": "Text", "default": "Instant Access" },
+    { "type": "select", "id": "badge_4_icon", "label": "Icon", "default": "bolt", "options": [
+      { "value": "users", "label": "Users" },
+      { "value": "star", "label": "Star" },
+      { "value": "shield", "label": "Shield" },
+      { "value": "bolt", "label": "Bolt" },
+      { "value": "headset", "label": "Headset" }
+    ]}
+  ],
+  "presets": [
+    { "name": "Trust Badges Bar" }
+  ]
+}
+{% endschema %}

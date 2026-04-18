@@ -295,6 +295,19 @@
     letter-spacing: 0.06em;
     margin-top: 4px;
   }
+
+  /* Hero image */
+  .hero__image-wrap {
+    margin-top: {{ section.settings.image_margin_top | default: 40 }}px;
+    text-align: center;
+  }
+  .hero__image {
+    max-width: {{ section.settings.image_max_width | default: 1200 }}px;
+    width: 100%;
+    height: auto;
+    border-radius: {{ section.settings.image_radius | default: 0 }}px;
+    display: inline-block;
+  }
 </style>
 
 <section class="hero" id="hero-{{ section.id }}">
@@ -387,6 +400,22 @@
       </div>
     {%- endif -%}
 
+    {%- assign show_hero_image = section.settings.show_hero_image -%}
+    {%- if show_hero_image and section.settings.hero_image != blank -%}
+      <div class="hero__image-wrap">
+        <img
+          src="{{ section.settings.hero_image | image_url: width: 1200 }}"
+          srcset="{{ section.settings.hero_image | image_url: width: 600 }} 600w, {{ section.settings.hero_image | image_url: width: 900 }} 900w, {{ section.settings.hero_image | image_url: width: 1200 }} 1200w"
+          sizes="(max-width: 768px) 100vw, 1200px"
+          alt="{{ section.settings.hero_image_alt | default: shop.name }}"
+          loading="eager"
+          width="1200"
+          height="600"
+          class="hero__image"
+        >
+      </div>
+    {%- endif -%}
+
   </div>
 </section>
 
@@ -457,7 +486,15 @@
 
     { "type": "header", "content": "Spacing" },
     { "type": "range", "id": "padding_top", "label": "Top padding (px)", "min": 20, "max": 200, "step": 10, "default": 100 },
-    { "type": "range", "id": "padding_bottom", "label": "Bottom padding (px)", "min": 20, "max": 200, "step": 10, "default": 80 }
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding (px)", "min": 20, "max": 200, "step": 10, "default": 80 },
+
+    { "type": "header", "content": "Hero Image" },
+    { "type": "checkbox", "id": "show_hero_image", "label": "Show hero image", "default": false },
+    { "type": "image_picker", "id": "hero_image", "label": "Hero image" },
+    { "type": "text", "id": "hero_image_alt", "label": "Image alt text" },
+    { "type": "range", "id": "image_max_width", "label": "Image max width (px)", "min": 400, "max": 1400, "step": 50, "default": 1200 },
+    { "type": "range", "id": "image_margin_top", "label": "Image margin top (px)", "min": 0, "max": 100, "step": 4, "default": 40 },
+    { "type": "range", "id": "image_radius", "label": "Image border radius (px)", "min": 0, "max": 24, "step": 2, "default": 0 }
   ],
   "presets": [
     { "name": "Hero" }
