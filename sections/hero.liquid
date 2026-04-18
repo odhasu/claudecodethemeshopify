@@ -39,6 +39,7 @@
   assign show_glow         = section.settings.show_glow
   assign glow_color        = section.settings.glow_color        | default: '#19d400'
   assign glow_size         = section.settings.glow_size         | default: 700
+  assign headline_inline   = section.settings.headline_inline
   assign padding_top       = section.settings.padding_top       | default: 100
   assign padding_bottom    = section.settings.padding_bottom    | default: 80
 -%}
@@ -108,20 +109,25 @@
   /* Headline */
   .hero__title {
     font-family: var(--font-heading, 'Anton', sans-serif);
-    font-size: clamp({{ title_size_mobile }}px, 8vw, {{ title_size_desktop }}px);
+    font-size: clamp({{ title_size_mobile }}px, 6vw, {{ title_size_desktop }}px);
     font-weight: 900;
     text-transform: uppercase;
-    letter-spacing: -1.5px;
+    letter-spacing: -1px;
     line-height: 1.05;
     color: {{ title_color }};
     margin: 0 0 28px;
   }
-  .hero__title-line { display: block; }
+  .hero__title-line {
+    display: {%- if headline_inline -%}inline{%- else -%}block{%- endif -%};
+  }
+  {%- if headline_inline -%}
+  .hero__title-line + .hero__title-line::before {
+    content: '\00a0';
+  }
+  {%- endif -%}
   .hero__title-highlight {
-    background: linear-gradient(135deg, {{ highlight_color }}, {{ highlight_color }}bb);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: {{ highlight_color }};
+    -webkit-text-fill-color: {{ highlight_color }};
   }
 
   /* Subtitle */
@@ -365,7 +371,7 @@
         {%- endif -%}
       {%- endfor -%}
       <div class="hero__trust">
-        <p class="hero__trust-label">Trusted by <strong>{{ trust_count }}</strong> {{ trust_label }}</p>
+        <p class="hero__trust-label">{{ section.settings.trust_prefix | default: 'Trusted By' }} <strong>{{ trust_count }}</strong> {{ trust_label }}</p>
         {%- if show_avatars and avatar_count > 0 -%}
           <div class="hero__avatars">
             {%- for i in (1..6) -%}
@@ -434,9 +440,10 @@
     { "type": "text", "id": "badge_text", "label": "Badge text", "default": "#1 Reselling Education Platform" },
 
     { "type": "header", "content": "Headline" },
-    { "type": "text", "id": "title_before", "label": "Line 1 (before highlight)", "default": "START YOUR" },
-    { "type": "text", "id": "title_highlight", "label": "Line 2 (highlighted)", "default": "RESELLING" },
-    { "type": "text", "id": "title_after", "label": "Line 3 (after highlight)", "default": "JOURNEY TODAY" },
+    { "type": "checkbox", "id": "headline_inline", "label": "Single line headline (Luke's style)", "default": true },
+    { "type": "text", "id": "title_before", "label": "Part 1 (before highlight)", "default": "START YOUR" },
+    { "type": "text", "id": "title_highlight", "label": "Part 2 (highlighted)", "default": "RESELLING" },
+    { "type": "text", "id": "title_after", "label": "Part 3 (after highlight)", "default": "JOURNEY TODAY" },
     { "type": "color", "id": "title_color", "label": "Title color", "default": "#ffffff" },
     { "type": "color", "id": "highlight_color", "label": "Highlight color", "default": "#19d400" },
     { "type": "range", "id": "title_size_desktop", "label": "Title size desktop (px)", "min": 32, "max": 120, "step": 2, "default": 90 },
@@ -469,8 +476,9 @@
     { "type": "checkbox", "id": "show_stars", "label": "Show star rating", "default": false },
     { "type": "text", "id": "star_rating", "label": "Star rating value", "default": "4.9" },
     { "type": "text", "id": "star_review_label", "label": "Review count label", "default": "2,400+ reviews" },
+    { "type": "text", "id": "trust_prefix", "label": "Trust prefix text", "default": "Trusted By" },
     { "type": "text", "id": "trust_count", "label": "Trust count", "default": "10,000+" },
-    { "type": "text", "id": "trust_label", "label": "Trust label", "default": "resellers trust us" },
+    { "type": "text", "id": "trust_label", "label": "Trust label (after count)", "default": "Resellers" },
     { "type": "color", "id": "trust_count_color", "label": "Count color", "default": "#fbbf24" },
     { "type": "color", "id": "trust_text_color", "label": "Trust text color", "default": "#9ca3af" },
 
