@@ -365,28 +365,26 @@
         {%- endif -%}
       {%- endfor -%}
       <div class="hero__trust">
-        <div class="hero__trust-row">
-          {%- if show_avatars and avatar_count > 0 -%}
-            <div class="hero__avatars">
-              {%- for i in (1..6) -%}
-                {%- assign avatar_key = 'avatar_' | append: i -%}
-                {%- if section.settings[avatar_key] != blank -%}
-                  <div class="hero__avatar">
-                    <img src="{{ section.settings[avatar_key] | image_url: width: 64 }}" alt="Customer" loading="lazy" width="32" height="32">
-                  </div>
-                {%- endif -%}
-              {%- endfor -%}
-            </div>
-          {%- endif -%}
-          {%- if show_stars -%}
-            <div class="hero__stars">
-              <div class="hero__star-icons">★★★★★</div>
-              <span class="hero__star-text">{{ star_rating }}</span>
-              <span class="hero__star-reviews">· {{ star_review_label }}</span>
-            </div>
-          {%- endif -%}
-        </div>
         <p class="hero__trust-label">Trusted by <strong>{{ trust_count }}</strong> {{ trust_label }}</p>
+        {%- if show_avatars and avatar_count > 0 -%}
+          <div class="hero__avatars">
+            {%- for i in (1..6) -%}
+              {%- assign avatar_key = 'avatar_' | append: i -%}
+              {%- if section.settings[avatar_key] != blank -%}
+                <div class="hero__avatar">
+                  <img src="{{ section.settings[avatar_key] | image_url: width: 64 }}" alt="Customer" loading="lazy" width="32" height="32">
+                </div>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+        {%- if show_stars -%}
+          <div class="hero__stars">
+            <div class="hero__star-icons">★★★★★</div>
+            <span class="hero__star-text">{{ star_rating }}</span>
+            <span class="hero__star-reviews">· {{ star_review_label }}</span>
+          </div>
+        {%- endif -%}
       </div>
     {%- endif -%}
 
