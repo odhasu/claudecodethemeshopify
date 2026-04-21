@@ -135,15 +135,34 @@
       transition: opacity 0.3s ease;
     }
     .vx-loader__spinner {
-      width: 36px;
-      height: 36px;
-      border: 3px solid transparent;
-      border-top-color: var(--color-accent, #39ff14);
-      border-right-color: var(--color-accent, #39ff14);
-      border-radius: 50%;
-      animation: vxSpin 0.6s linear infinite;
+      width: 44px;
+      height: 44px;
+      position: relative;
     }
-    @keyframes vxSpin { to { transform: rotate(360deg); } }
+    .vx-loader__spinner::before,
+    .vx-loader__spinner::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+    }
+    .vx-loader__spinner::before {
+      border: 3px solid transparent;
+      border-top-color: var(--color-accent, #19d400);
+      border-right-color: var(--color-accent, #19d400);
+      animation: vxSpin 1s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite;
+    }
+    .vx-loader__spinner::after {
+      inset: 5px;
+      border: 2px solid transparent;
+      border-bottom-color: var(--color-accent, #19d400);
+      border-left-color: var(--color-accent, #19d400);
+      animation: vxSpin 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite reverse;
+    }
+    @keyframes vxSpin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
   </style>
 
   <!-- Theme config -->
