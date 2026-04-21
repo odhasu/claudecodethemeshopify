@@ -42,6 +42,10 @@
   assign headline_inline   = section.settings.headline_inline
   assign padding_top       = section.settings.padding_top       | default: 100
   assign padding_bottom    = section.settings.padding_bottom    | default: 80
+  assign hero_bg_image     = section.settings.hero_bg_image
+  assign overlay_opacity   = section.settings.hero_overlay_opacity | default: 50
+  assign hero_min_height   = section.settings.hero_min_height   | default: 600
+  assign bg_position       = section.settings.hero_bg_position  | default: 'center center'
 -%}
 
 <style>
@@ -51,7 +55,32 @@
     text-align: center;
     padding: {{ padding_top }}px 20px {{ padding_bottom }}px;
     background: var(--color-bg, #000);
+    {%- if hero_bg_image != blank -%}
+    min-height: {{ hero_min_height }}px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    {%- endif -%}
   }
+  {%- if hero_bg_image != blank -%}
+  .hero__bg-img {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+  .hero__bg-img img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: {{ bg_position }};
+    display: block;
+  }
+  .hero__bg-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,{{ overlay_opacity | divided_by: 100.0 }});
+    z-index: 0;
+  }
+  {%- endif -%}
 
   {%- if show_glow -%}
   .hero::before {
@@ -314,6 +343,19 @@
 </style>
 
 <section class="hero" id="hero-{{ section.id }}">
+  {%- if hero_bg_image != blank -%}
+    <div class="hero__bg-img">
+      <img
+        src="{{ hero_bg_image | image_url: width: 1800 }}"
+        srcset="{{ hero_bg_image | image_url: width: 800 }} 800w, {{ hero_bg_image | image_url: width: 1200 }} 1200w, {{ hero_bg_image | image_url: width: 1800 }} 1800w"
+        sizes="100vw"
+        alt=""
+        loading="eager"
+        width="1800"
+        height="900">
+    </div>
+    <div class="hero__bg-overlay"></div>
+  {%- endif -%}
   <div class="hero__inner">
 
     {%- if show_badge and badge_text != blank -%}
@@ -429,6 +471,18 @@
   "name": "Hero",
   "tag": "section",
   "settings": [
+    { "type": "header", "content": "Background Image (Luke's style)" },
+    { "type": "image_picker", "id": "hero_bg_image", "label": "Hero background image" },
+    { "type": "range", "id": "hero_overlay_opacity", "label": "Dark overlay opacity (%)", "min": 0, "max": 80, "step": 5, "default": 50 },
+    { "type": "range", "id": "hero_min_height", "label": "Min height (px)", "min": 300, "max": 1000, "step": 50, "default": 600 },
+    { "type": "select", "id": "hero_bg_position", "label": "Image position", "default": "center center", "options": [
+      { "value": "center center", "label": "Center" },
+      { "value": "top center", "label": "Top" },
+      { "value": "bottom center", "label": "Bottom" },
+      { "value": "center left", "label": "Left" },
+      { "value": "center right", "label": "Right" }
+    ]},
+
     { "type": "header", "content": "Badge" },
     { "type": "checkbox", "id": "show_badge", "label": "Show badge", "default": true },
     { "type": "text", "id": "badge_text", "label": "Badge text", "default": "#1 Reselling Education Platform" },

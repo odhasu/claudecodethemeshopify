@@ -3,11 +3,11 @@
   assign title_color = section.settings.title_color | default: '#ffffff'
   assign card_bg = section.settings.card_bg | default: '#111111'
   assign card_border = section.settings.card_border | default: '#2a2a2a'
-  assign card_border_open = section.settings.card_border_open | default: '#39ff14'
+  assign card_border_open = section.settings.card_border_open | default: '#19d400'
   assign question_color = section.settings.question_color | default: '#ffffff'
   assign answer_color = section.settings.answer_color | default: '#9ca3af'
   assign toggle_bg = section.settings.toggle_bg | default: '#1a1a1a'
-  assign toggle_bg_open = section.settings.toggle_bg_open | default: '#39ff14'
+  assign toggle_bg_open = section.settings.toggle_bg_open | default: '#19d400'
   assign toggle_icon_color = section.settings.toggle_icon_color | default: '#ffffff'
   assign toggle_icon_open = section.settings.toggle_icon_open | default: '#1a1a1a'
   assign max_width = section.settings.max_width | default: 700
@@ -114,17 +114,24 @@
     var item = btn.closest('.faq-item');
     var answer = item.querySelector('.faq-answer');
     var isOpen = item.classList.contains('open');
-    // Close all
     document.querySelectorAll('.faq-item.open').forEach(function(el) {
       el.classList.remove('open');
       el.querySelector('.faq-answer').style.maxHeight = '0';
     });
-    // Open clicked if was closed
     if (!isOpen) {
       item.classList.add('open');
       answer.style.maxHeight = answer.scrollHeight + 'px';
     }
   }
+  // Open first item by default (Luke's style)
+  document.addEventListener('DOMContentLoaded', function() {
+    var first = document.querySelector('.faq-item');
+    if (first) {
+      first.classList.add('open');
+      var ans = first.querySelector('.faq-answer');
+      if (ans) ans.style.maxHeight = ans.scrollHeight + 'px';
+    }
+  });
 </script>
 
 {% schema %}
