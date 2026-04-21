@@ -217,28 +217,32 @@
   .btn-info svg { width: 22px; height: 22px; }
   {%- endif %}
 
-  /* Buy Now — exact Luke's style */
+  /* Buy Now — Kenso exact style */
   .btn-buy {
     flex: 1;
     height: 54px;
     border-radius: {{ btn_radius }}px;
-    background: linear-gradient(180deg, {{ btn_bg }} 0%, {{ btn_bg | color_darken: 8 }} 100%);
+    background: linear-gradient(135deg, {{ btn_bg }}, {{ btn_bg }});
     color: {{ btn_text }};
-    font-weight: 900;
+    font-weight: 700;
     font-size: 16px;
     text-transform: uppercase;
     letter-spacing: 0.05em;
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 2px solid rgba(255,255,255,0.28);
-    box-shadow: 0 6px 22px rgba({{ btn_bg | color_extract: 'red' }}, {{ btn_bg | color_extract: 'green' }}, {{ btn_bg | color_extract: 'blue' }}, 0.38);
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    border: 2px solid rgba(255,255,255,0.25);
+    box-shadow: var(--shadow-glow, 0 0 20px rgba(25,212,0,0.3));
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+    text-decoration: none;
   }
   .btn-buy:hover {
     transform: translateY(-2px);
-    box-shadow: 0 10px 30px rgba({{ btn_bg | color_extract: 'red' }}, {{ btn_bg | color_extract: 'green' }}, {{ btn_bg | color_extract: 'blue' }}, 0.5);
+    box-shadow: 0 0 30px color-mix(in srgb, {{ btn_bg }} 40%, transparent);
+    opacity: 1;
   }
+  .btn-buy:active { transform: translateY(0); }
 
   /* Details modal — glassmorphic overlay */
   .product-detail-modal {

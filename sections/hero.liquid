@@ -82,7 +82,7 @@
   }
   {%- endif -%}
 
-  {%- if show_glow -%}
+  {%- if show_glow and hero_bg_image == blank -%}
   .hero::before {
     content: '';
     position: absolute;

@@ -206,22 +206,22 @@
       );
     }
 
-    /* ── Countdown to midnight ────────────────────────── */
+    /* ── Countdown (next hour — resets every 60 min like Luke's) ── */
     function updateCountdown() {
       var now = new Date();
-      var midnight = new Date(now);
-      midnight.setHours(24, 0, 0, 0);
-      var diff = midnight - now;
-      var h = Math.floor(diff / 3600000);
-      var m = Math.floor((diff % 3600000) / 60000);
-      var str = h + 'h ' + String(m).padStart(2,'0') + 'm';
+      var nextHour = new Date(now);
+      nextHour.setMinutes(60, 0, 0);
+      var diff = nextHour - now;
+      var m = Math.floor(diff / 60000);
+      var s = Math.floor((diff % 60000) / 1000);
+      var str = m + 'm ' + String(s).padStart(2,'0') + 's';
       var el1 = document.getElementById('urgency-countdown');
       var el2 = document.getElementById('urgency-countdown-dup');
       if (el1) el1.textContent = str;
       if (el2) el2.textContent = str;
     }
     updateCountdown();
-    setInterval(updateCountdown, 60000);
+    setInterval(updateCountdown, 1000);
 
     /* ── Viewer count drift ───────────────────────────── */
     var min = {{ min_viewers }};
