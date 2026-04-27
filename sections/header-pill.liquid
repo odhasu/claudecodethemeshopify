@@ -1,6 +1,4 @@
 {%- liquid
-  assign header_bg     = section.settings.header_bg     | default: '#000000'
-  assign header_border = section.settings.header_border | default: '#1a1a1a'
   assign nav_color     = section.settings.nav_color     | default: '#ffffff'
   assign nav_hover     = section.settings.nav_hover_color | default: '#19d400'
   assign brand_color   = section.settings.brand_color   | default: '#ffffff'
@@ -12,6 +10,8 @@
   assign badge_bg      = section.settings.badge_bg      | default: '#19d400'
   assign badge_text    = section.settings.badge_text_color | default: '#000000'
   assign dropdown_bg   = section.settings.dropdown_bg   | default: '#0a0a0a'
+  assign scroll_bg     = section.settings.scroll_bg     | default: 'rgba(0,0,0,0.85)'
+  assign scroll_border = section.settings.scroll_border | default: '#1a1a1a'
 -%}
 
 <style>
@@ -20,9 +20,15 @@
     left: 0; right: 0;
     top: var(--urgency-bar-height, 0px);
     z-index: 999;
-    background: {{ header_bg }};
-    border-bottom: 1px solid {{ header_border }};
-    transition: top 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    background: transparent;
+    border-bottom: 1px solid transparent;
+    transition: background 0.3s ease, border-color 0.3s ease, top 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .site-header.scrolled {
+    background: {{ scroll_bg }};
+    border-bottom-color: {{ scroll_border }};
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
   }
   .site-header__inner {
     display: flex;
@@ -127,9 +133,11 @@
     position: absolute;
     top: 100%; left: 0; right: 0;
     background: {{ dropdown_bg }};
-    border-bottom: 1px solid {{ header_border }};
+    border-bottom: 1px solid {{ scroll_border }};
     z-index: 998;
     padding: 8px 0;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
   }
   .site-header__mobile-nav.open { display: block; }
   .site-header__mobile-nav a {
@@ -141,27 +149,20 @@
     text-transform: uppercase;
     letter-spacing: 0.05em;
     color: {{ nav_color }};
-    border-bottom: 1px solid {{ header_border }};
+    border-bottom: 1px solid {{ scroll_border }};
     transition: color 0.2s;
   }
   .site-header__mobile-nav a:last-child { border-bottom: none; }
   .site-header__mobile-nav a:hover { color: {{ nav_hover }}; }
-
-  /* Spacer — pushes page content below fixed header */
-  .site-header-spacer {
-    height: {{ h_desk }}px;
-  }
 
   @media (max-width: 768px) {
     .site-header__inner  { height: {{ h_mob }}px; padding: 0 16px; }
     .site-header__logo img { width: {{ lw_mob }}px; }
     .site-header__nav    { display: none; }
     .site-header__hamburger { display: flex; }
-    .site-header-spacer  { height: {{ h_mob }}px; }
   }
 </style>
 
-<div class="site-header-spacer"></div>
 <header class="site-header" id="site-header">
   <div class="site-header__inner">
 
@@ -220,6 +221,7 @@
 
 <script>
   (function(){
+    /* Mobile menu toggle */
     var toggle = document.getElementById('mobile-menu-toggle');
     var menu   = document.getElementById('mobile-menu');
     if (toggle && menu) {
@@ -236,6 +238,28 @@
         }
       });
     }
+
+    /* Scroll — add solid bg after scrolling past hero */
+    var header = document.getElementById('site-header');
+    if (header) {
+      var scrollThreshold = 50;
+      var ticking = false;
+      window.addEventListener('scroll', function() {
+        if (!ticking) {
+          window.requestAnimationFrame(function() {
+            if (window.scrollY > scrollThreshold) {
+              header.classList.add('scrolled');
+            } else {
+              header.classList.remove('scrolled');
+            }
+            ticking = false;
+          });
+          ticking = true;
+        }
+      });
+    }
+
+    /* Cart count */
     fetch('/cart.js').then(function(r){ return r.json(); }).then(function(c){
       var badge = document.getElementById('cart-count-badge');
       if (badge && c.item_count > 0) {
@@ -265,8 +289,8 @@
     { "type": "color", "id": "nav_hover_color", "label": "Nav hover color", "default": "#19d400" },
 
     { "type": "header", "content": "Colors" },
-    { "type": "color", "id": "header_bg",     "label": "Header background",       "default": "#000000" },
-    { "type": "color", "id": "header_border", "label": "Bottom border color",     "default": "#1a1a1a" },
+    { "type": "color", "id": "scroll_bg",     "label": "Scroll background",       "default": "#000000" },
+    { "type": "color", "id": "scroll_border", "label": "Scroll border color",     "default": "#1a1a1a" },
     { "type": "color", "id": "dropdown_bg",   "label": "Mobile dropdown bg",      "default": "#0a0a0a" },
     { "type": "color", "id": "badge_bg",      "label": "Cart badge background",   "default": "#19d400" },
     { "type": "color", "id": "badge_text_color", "label": "Cart badge text",      "default": "#000000" },

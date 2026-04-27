@@ -7,6 +7,10 @@
   assign copy_color  = section.settings.copyright_color | default: '#6b7280'
   assign icon_color  = section.settings.social_icon_color | default: '#19d400'
   assign icon_size   = section.settings.social_icon_size  | default: 20
+  assign cta_text    = section.settings.cta_text    | default: 'SHOP NOW'
+  assign cta_url     = section.settings.cta_url     | default: '/collections/all'
+  assign cta_color   = section.settings.cta_color   | default: '#19d400'
+  assign cta_text_color = section.settings.cta_text_color | default: '#000000'
 -%}
 
 <style>
@@ -63,6 +67,27 @@
   }
   .footer-social-link:hover { transform: translateY(-2px); opacity: 1; }
   .footer-social-link svg { width: {{ icon_size }}px; height: {{ icon_size }}px; }
+  .footer-cta {
+    display: inline-block;
+    padding: 14px 48px;
+    font-family: var(--font-heading);
+    font-size: 15px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: {{ cta_text_color }};
+    background: linear-gradient(135deg, {{ cta_color }}, {{ cta_color }});
+    border: 2px solid rgba(255,255,255,0.25);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 0 20px color-mix(in srgb, {{ cta_color }} 30%, transparent);
+    margin-bottom: 24px;
+  }
+  .footer-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 30px color-mix(in srgb, {{ cta_color }} 40%, transparent);
+  }
   .footer-copyright {
     color: {{ copy_color }};
     font-size: 12px;
@@ -130,6 +155,12 @@
     </div>
   {%- endif -%}
 
+  {%- if section.settings.show_cta -%}
+    <div style="margin-bottom: 24px;">
+      <a href="{{ cta_url }}" class="footer-cta">{{ cta_text }}</a>
+    </div>
+  {%- endif -%}
+
   {%- if section.settings.show_copyright -%}
     <div class="footer-copyright">
       &copy; {{ 'now' | date: '%Y' }} {{ section.settings.copyright_name | default: shop.name }}. All rights reserved.
@@ -164,6 +195,13 @@
     { "type": "text", "id": "discord_url", "label": "Discord URL" },
     { "type": "color", "id": "social_icon_color", "label": "Icon color", "default": "#19d400" },
     { "type": "range", "id": "social_icon_size", "label": "Icon size (px)", "min": 16, "max": 32, "step": 2, "default": 20 },
+
+    { "type": "header", "content": "CTA Button" },
+    { "type": "checkbox", "id": "show_cta", "label": "Show CTA button", "default": true },
+    { "type": "text", "id": "cta_text", "label": "Button text", "default": "SHOP NOW" },
+    { "type": "url", "id": "cta_url", "label": "Button link" },
+    { "type": "color", "id": "cta_color", "label": "Button color", "default": "#19d400" },
+    { "type": "color", "id": "cta_text_color", "label": "Button text color", "default": "#000000" },
 
     { "type": "header", "content": "Copyright" },
     { "type": "checkbox", "id": "show_copyright", "label": "Show copyright", "default": true },
