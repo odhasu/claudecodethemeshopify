@@ -22,6 +22,7 @@
 - Testimonials — horizontal scrolling image carousel, fade-out edges
 - FAQ — accordion, first item open by default, green glow border on open item
 - Reviews — card grid, star rating summary, write-a-review button
+- Cart drawer — slide-out panel, AJAX quantity controls, checkout button, empty state, loading spinner
 - Color system — unified to #19d400 everywhere (was split between #39ff14 and #19d400)
 - Fonts — Clash Grotesk (headings) + Satoshi (body) from Fontshare, locked in settings
 
@@ -29,8 +30,8 @@
 - Hero background image — setting exists, Oscar needs to upload image in Shopify admin
 
 ## Still to build
-- Cart drawer — currently redirects to /cart page
 - Results carousel — section exists but not on homepage
 
 ## Last worked on
+2026-04-28 — Cart drawer built, header/footer from last session complete
 2026-04-21 — Luke's full replication: header rebuild, hero bg image mode, color unification, section order, FAQ first-open, trust badges moved to footer group

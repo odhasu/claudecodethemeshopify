@@ -1,13 +1,13 @@
 # Theme — Bugs & Todo
 
 ## Active
-- Cart — no cart drawer, clicking cart goes to default Shopify /cart page
+- Cart drawer — newly built, needs testing on live store
 - Hero bg image — setting exists in code, Oscar needs to upload image in Shopify admin (Customize > Hero > Background Image)
 - Footer Instagram URL — set to placeholder "h", needs real URL
 - Testimonials — only 3 images uploaded, needs more real customer screenshots
 
 ## Todo
-- Build cart drawer
+- Test cart drawer on live store
 - Upload hero background image (ideally a product/lifestyle photo like Luke's)
 - Upload more testimonial screenshots
 - Add real social URLs to footer
