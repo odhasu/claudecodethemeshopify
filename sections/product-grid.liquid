@@ -466,6 +466,7 @@
       body: JSON.stringify({ items: [{ id: variantId, quantity: 1 }] })
     }).then(function(r) { return r.json(); }).then(function() {
       updateCartBadge();
+      if (window.CartDrawer) window.CartDrawer.open();
     }).catch(function(e) { console.error(e); });
   }
 
