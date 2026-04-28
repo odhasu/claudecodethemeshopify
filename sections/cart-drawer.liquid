@@ -208,13 +208,14 @@
     font-size: 14px;
     font-weight: 600;
     cursor: pointer;
-    transition: color 0.2s, background 0.2s;
+    transition: color 0.2s, background 0.2s, box-shadow 0.2s;
     background: transparent;
     border: none;
   }
   .cart-item__qty button:hover {
     color: {{ text_color }};
-    background: {{ border_color }};
+    background: linear-gradient(180deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 100%);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
   }
   .cart-item__qty span {
     width: 32px;
@@ -261,15 +262,39 @@
     letter-spacing: 0.06em;
     text-align: center;
     color: {{ btn_text }};
-    background: {{ accent }};
-    border: none;
+    background: linear-gradient(180deg,
+      color-mix(in srgb, {{ accent }} 85%, #ffffff) 0%,
+      {{ accent }} 50%,
+      color-mix(in srgb, {{ accent }} 85%, #000000) 100%);
+    border: 1.5px solid rgba(255,255,255,0.3);
     border-radius: 50px;
     cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.25),
+      inset 0 -1px 0 rgba(0,0,0,0.15),
+      0 0 20px color-mix(in srgb, {{ accent }} 25%, transparent),
+      0 2px 8px rgba(0,0,0,0.3);
     transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .cart-drawer__checkout::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -20%;
+    width: 60%;
+    height: 50%;
+    background: linear-gradient(180deg, rgba(255,255,255,0.2) 0%, transparent 100%);
+    border-radius: 0 0 50% 50%;
+    pointer-events: none;
   }
   .cart-drawer__checkout:hover {
     transform: translateY(-2px);
-    box-shadow: 0 0 20px color-mix(in srgb, {{ accent }} 30%, transparent);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.3),
+      inset 0 -1px 0 rgba(0,0,0,0.15),
+      0 0 30px color-mix(in srgb, {{ accent }} 40%, transparent),
+      0 4px 16px rgba(0,0,0,0.3);
   }
 
   .cart-drawer__loading {
