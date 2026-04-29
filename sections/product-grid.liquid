@@ -170,35 +170,35 @@
     z-index: 2;
   }
 
-  .product-card-info { padding: 14px; }
+  .product-card-info { padding: 16px 16px 18px; }
   .product-card-title {
-    font-size: 13px;
-    font-weight: 600;
+    font-size: 16px;
+    font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.02em;
     color: {{ title_color }};
-    margin-bottom: 8px;
+    margin-bottom: 10px;
     line-height: 1.3;
   }
   .product-card-prices {
     display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 12px;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 14px;
   }
-  .price-sale { color: {{ price_color }}; font-weight: 800; font-size: 16px; }
-  .price-compare { color: {{ compare_color }}; text-decoration: line-through; font-size: 14px; }
+  .price-sale { color: {{ price_color }}; font-weight: 800; font-size: 22px; }
+  .price-compare { color: {{ compare_color }}; text-decoration: line-through; font-size: 18px; font-weight: 400; }
 
   .product-card-actions {
     display: flex;
-    gap: 8px;
+    gap: 10px;
   }
 
   /* Info button — ⓘ, dark square, matches buy button height */
   {%- if show_info_btn %}
   .btn-info {
     width: 54px; height: 54px;
-    border-radius: {{ btn_radius }}px;
+    border-radius: 50%;
     background: linear-gradient(180deg, #262626 0%, #181818 50%, #121212 100%);
     border: 1.5px solid rgba(255,255,255,0.12);
     box-shadow:
@@ -238,7 +238,7 @@
   .btn-buy {
     flex: 1;
     height: 54px;
-    border-radius: {{ btn_radius }}px;
+    border-radius: 50px;
     background: linear-gradient(180deg,
       color-mix(in srgb, {{ btn_bg }} 85%, #ffffff) 0%,
       {{ btn_bg }} 50%,
