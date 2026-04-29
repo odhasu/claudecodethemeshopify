@@ -1,52 +1,37 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero": {
       "type": "hero",
       "settings": {
-        "headline_inline": true,
-        "show_badge": false,
-        "badge_text": "#1 Reselling Education Platform",
-        "title_before": "Start Your",
-        "title_highlight": "Reselling",
-        "title_after": "Journey Today",
+        "hero_font": "Satoshi",
+        "title_before": "START YOUR",
+        "title_highlight": "RESELLING",
+        "title_after": "JOURNEY TODAY",
         "title_color": "#ffffff",
         "highlight_color": "#19d400",
-        "title_size_desktop": 110,
-        "title_size_mobile": 48,
-        "show_subtitle": false,
-        "subtitle": "Access 100+ verified vendors, exclusive guides, and a community of resellers making real money — starting today.",
-        "subtitle_color": "#9ca3af",
-        "subtitle_size": 18,
-        "show_cta": true,
-        "cta_primary_text": "BUY NOW",
-        "cta_primary_url": "/collections/all",
-        "cta_primary_bg": "#19d400",
-        "cta_primary_color": "#000000",
-        "cta_secondary_text": "ADD TO CART",
-        "cta_secondary_url": "/collections/all",
-        "show_trust": false,
-        "show_avatars": false,
+        "title_size_desktop": 80,
+        "title_size_mobile": 40,
         "trust_prefix": "Trusted By",
-        "show_stars": false,
-        "star_rating": "4.9",
-        "star_review_label": "2,400+ reviews",
         "trust_count": "10,000+",
-        "trust_label": "Resellers",
+        "trust_suffix": "Resellers",
         "trust_count_color": "#fbbf24",
         "trust_text_color": "#9ca3af",
-        "show_stats": false,
-        "stat_1_value": "$300K+",
-        "stat_1_label": "Customer Sales",
-        "stat_2_value": "10,000+",
-        "stat_2_label": "Orders Fulfilled",
-        "stat_3_value": "100+",
-        "stat_3_label": "Verified Vendors",
-        "stat_value_color": "#ffffff",
+        "trust_font_size": 15,
+        "show_avatars": true,
+        "avatar_size": 36,
         "show_glow": true,
         "glow_color": "#19d400",
-        "glow_size": 700,
         "padding_top": 80,
-        "padding_bottom": 80
+        "padding_bottom": 60
       }
     },
     "product-grid": {
@@ -60,11 +45,11 @@
         "glassmorphic_cards": true,
         "card_bg": "#111111",
         "card_border": "#2a2a2a",
-        "card_hover_border": "#19d400",
+        "card_hover_border": "#39ff14",
         "image_bg": "#0a0a0a",
         "title_color": "#ffffff",
         "show_overlay_title": true,
-        "overlay_title_green_color": "#19d400",
+        "overlay_title_green_color": "#39ff14",
         "overlay_title_white_color": "#ffffff",
         "overlay_font_size": 12,
         "show_sale_badge": true,
@@ -74,20 +59,20 @@
         "sale_badge_text_color": "#ffffff",
         "sale_badge_position_y": "bottom",
         "sale_badge_position_x": "right",
-        "price_color": "#19d400",
+        "price_color": "#39ff14",
         "compare_price_color": "#6b7280",
         "buy_btn_label": "BUY NOW",
-        "buy_btn_radius": 10,
+        "buy_btn_radius": 28,
         "buy_btn_border_color": "#ffffff33",
         "buy_btn_action": "checkout",
-        "buy_btn_bg": "#19d400",
+        "buy_btn_bg": "#39ff14",
         "buy_btn_text_color": "#000000",
         "show_info_btn": true,
         "info_btn_bg": "#1a1a1a",
         "info_btn_border": "#2a2a2a",
         "info_btn_hover_border": "#ffffff",
         "show_glow": true,
-        "glow_color": "#19d400",
+        "glow_color": "#39ff14",
         "glow_intensity": 10,
         "show_top_fade": true,
         "padding_top": 10,
@@ -111,6 +96,63 @@
         "image_1": "shopify://shop_images/3e51884a71daea267e8a457dfd1a8b89.webp",
         "image_2": "shopify://shop_images/person-stands-on-rocks-poking-out-of-the-ocean-shoreline.jpg",
         "image_3": "shopify://shop_images/Screenshot_2026-03-08_at_18.28.14.png"
+      }
+    },
+    "reviews": {
+      "type": "reviews",
+      "blocks": {
+        "review-1": {
+          "type": "review",
+          "settings": {
+            "name": "Alex M.",
+            "date": "1 week ago",
+            "stars": 5,
+            "text": "Best vendor list I've ever purchased. Made my money back in the first week!"
+          }
+        },
+        "review-2": {
+          "type": "review",
+          "settings": {
+            "name": "Sarah K.",
+            "date": "2 weeks ago",
+            "stars": 5,
+            "text": "Incredible value. The suppliers are legit and the prices are unbeatable."
+          }
+        },
+        "review-3": {
+          "type": "review",
+          "settings": {
+            "name": "Mike R.",
+            "date": "3 weeks ago",
+            "stars": 5,
+            "text": "Was skeptical at first but these vendors are 100% real. Already made sales!"
+          }
+        }
+      },
+      "block_order": [
+        "review-1",
+        "review-2",
+        "review-3"
+      ],
+      "settings": {
+        "title": "Customer Reviews",
+        "subtitle": "See what our customers are saying",
+        "rating": "4.9",
+        "review_count": "15",
+        "title_color": "#ffffff",
+        "subtitle_color": "#9ca3af",
+        "star_color": "#fbbf24",
+        "card_bg": "#111111",
+        "card_border": "#2a2a2a",
+        "avatar_bg": "#39ff14",
+        "avatar_text_color": "#000000",
+        "write_btn_bg": "#39ff14",
+        "write_btn_text_color": "#000000",
+        "columns": 3,
+        "avatar_size": 40,
+        "card_padding": 20,
+        "padding_top": 60,
+        "padding_bottom": 60
       }
     },
     "faq": {
@@ -145,13 +187,18 @@
           }
         }
       },
-      "block_order": ["faq-1", "faq-2", "faq-3", "faq-4"],
+      "block_order": [
+        "faq-1",
+        "faq-2",
+        "faq-3",
+        "faq-4"
+      ],
       "settings": {
         "title": "Frequently Asked Questions",
         "title_color": "#ffffff",
         "card_bg": "#111111",
         "card_border": "#2a2a2a",
-        "card_border_open": "#19d400",
+        "card_border_open": "#39ff14",
         "card_radius": 12,
         "card_padding": 18,
         "item_gap": 12,
@@ -162,62 +209,9 @@
         "answer_font_size": 14,
         "toggle_size": 32,
         "toggle_bg": "#1a1a1a",
-        "toggle_bg_open": "#19d400",
+        "toggle_bg_open": "#39ff14",
         "toggle_icon_color": "#ffffff",
         "toggle_icon_open": "#1a1a1a",
-        "padding_top": 60,
-        "padding_bottom": 60
-      }
-    },
-    "reviews": {
-      "type": "reviews",
-      "blocks": {
-        "review-1": {
-          "type": "review",
-          "settings": {
-            "name": "Alex M.",
-            "date": "1 week ago",
-            "stars": 5,
-            "text": "Best vendor list I've ever purchased. Made my money back in the first week!"
-          }
-        },
-        "review-2": {
-          "type": "review",
-          "settings": {
-            "name": "Sarah K.",
-            "date": "2 weeks ago",
-            "stars": 5,
-            "text": "Incredible value. The suppliers are legit and the prices are unbeatable."
-          }
-        },
-        "review-3": {
-          "type": "review",
-          "settings": {
-            "name": "Mike R.",
-            "date": "3 weeks ago",
-            "stars": 5,
-            "text": "Was skeptical at first but these vendors are 100% real. Already made sales!"
-          }
-        }
-      },
-      "block_order": ["review-1", "review-2", "review-3"],
-      "settings": {
-        "title": "Customer Reviews",
-        "subtitle": "See what our customers are saying",
-        "rating": "4.9",
-        "review_count": "15",
-        "title_color": "#ffffff",
-        "subtitle_color": "#9ca3af",
-        "star_color": "#fbbf24",
-        "card_bg": "#111111",
-        "card_border": "#2a2a2a",
-        "avatar_bg": "#19d400",
-        "avatar_text_color": "#000000",
-        "write_btn_bg": "#19d400",
-        "write_btn_text_color": "#000000",
-        "columns": 3,
-        "avatar_size": 40,
-        "card_padding": 20,
         "padding_top": 60,
         "padding_bottom": 60
       }
@@ -227,7 +221,7 @@
     "hero",
     "product-grid",
     "testimonials",
-    "faq",
-    "reviews"
+    "reviews",
+    "faq"
   ]
 }
