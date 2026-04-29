@@ -62,7 +62,7 @@
         "price_color": "#39ff14",
         "compare_price_color": "#6b7280",
         "buy_btn_label": "BUY NOW",
-        "buy_btn_radius": 28,
+        "buy_btn_radius": 4,
         "buy_btn_border_color": "#ffffff33",
         "buy_btn_action": "checkout",
         "buy_btn_bg": "#39ff14",
