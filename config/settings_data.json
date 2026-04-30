@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "current": {
     "color_accent": "#19d400",
@@ -42,6 +51,25 @@
     "chat_bottom": 24,
     "chat_right": 24,
     "license_key": "6A23-B65D-7DA1-6992",
+    "license_server_url": "https://vexel-runtime.onrender.com",
+    "sections": {
+      "cart-drawer": {
+        "type": "cart-drawer",
+        "settings": {
+          "title": "Your Cart",
+          "checkout_text": "Checkout",
+          "drawer_width": 400,
+          "overlay_opacity": 60,
+          "drawer_bg": "#0a0a0a",
+          "item_bg": "#111111",
+          "border_color": "#1a1a1a",
+          "text_color": "#ffffff",
+          "muted_color": "#6b7280",
+          "accent_color": "#19d400",
+          "btn_text_color": "#000000"
+        }
+      }
+    },
     "content_for_index": []
   }
 }
