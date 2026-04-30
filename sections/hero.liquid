@@ -1,129 +1,41 @@
-{%- liquid
-  assign title_before = section.settings.title_before | default: 'START YOUR'
-  assign title_highlight = section.settings.title_highlight | default: 'RESELLING'
-  assign title_after = section.settings.title_after | default: 'JOURNEY TODAY'
-  assign highlight_color = section.settings.highlight_color | default: settings.color_accent | default: '#39ff14'
-  assign title_color = section.settings.title_color | default: '#ffffff'
-  assign title_size_desktop = section.settings.title_size_desktop | default: 48
-  assign title_size_mobile = section.settings.title_size_mobile | default: 28
-  assign trust_prefix = section.settings.trust_prefix | default: 'Trusted By'
-  assign trust_count = section.settings.trust_count | default: '10,000+'
-  assign trust_suffix = section.settings.trust_suffix | default: 'Resellers'
-  assign trust_count_color = section.settings.trust_count_color | default: '#fbbf24'
-  assign trust_text_color = section.settings.trust_text_color | default: '#9ca3af'
-  assign show_avatars = section.settings.show_avatars
-  assign show_glow = section.settings.show_glow
-  assign glow_color = section.settings.glow_color | default: '#39ff14'
-  assign padding_top = section.settings.padding_top | default: 80
-  assign padding_bottom = section.settings.padding_bottom | default: 60
--%}
-
-<style>
-  .hero-section {
-    text-align: center;
-    padding: {{ padding_top }}px 20px {{ padding_bottom }}px;
-    position: relative;
-    overflow: hidden;
-  }
-  {%- if show_glow -%}
-  .hero-section::before {
-    content: '';
-    position: absolute;
-    top: 50%; left: 50%;
-    width: 600px; height: 600px;
-    transform: translate(-50%, -50%);
-    background: radial-gradient(ellipse, {{ glow_color }}15 0%, transparent 70%);
-    pointer-events: none;
-    z-index: 0;
-  }
-  @media (max-width: 768px) {
-    .hero-section::before {
-      width: 300px; height: 300px;
-      background: radial-gradient(ellipse, {{ glow_color }}10 0%, transparent 70%);
-    }
-  }
-  {%- endif -%}
-  .hero-content { position: relative; z-index: 1; }
-  .hero-title {
-    font-family: '{{ section.settings.hero_font | default: 'Satoshi' }}', var(--font-heading);
-    font-size: clamp({{ title_size_mobile }}px, 6vw, {{ title_size_desktop }}px);
-    font-weight: 900;
-    text-transform: uppercase;
-    letter-spacing: -1px;
-    line-height: 1.1;
-    color: {{ title_color }};
-    margin-bottom: 24px;
-  }
-  .hero-title .highlight {
-    background: linear-gradient(135deg, {{ highlight_color }}, {{ highlight_color }}cc);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-  .hero-trust {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    margin-bottom: 16px;
-    font-size: {{ section.settings.trust_font_size | default: 15 }}px;
-    color: {{ trust_text_color }};
-  }
-  .hero-trust .count {
-    color: {{ trust_count_color }};
-    font-weight: 800;
-  }
-  .hero-avatars {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-  }
-  .hero-avatar {
-    width: {{ section.settings.avatar_size | default: 36 }}px;
-    height: {{ section.settings.avatar_size | default: 36 }}px;
-    border-radius: 50%;
-    border: 2px solid #000;
-    margin-left: -10px;
-    background: var(--color-card-elevated);
-    overflow: hidden;
-    object-fit: cover;
-  }
-  .hero-avatar:first-child { margin-left: 0; }
-  .hero-avatar-placeholder {
-    width: 100%; height: 100%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 12px; font-weight: 700;
-    background: linear-gradient(135deg, var(--color-accent), #22c55e);
-    color: #000;
-  }
-</style>
-
-<section class="hero-section">
-  <div class="hero-content container">
-    <h1 class="hero-title">
-      {{ title_before }} <span class="highlight">{{ title_highlight }}</span> {{ title_after }}
-    </h1>
-    <div class="hero-trust">
-      <span>{{ trust_prefix }}</span>
-      <span class="count">{{ trust_count }}</span>
-      <span>{{ trust_suffix }}</span>
-    </div>
-    {%- if show_avatars -%}
-      <div class="hero-avatars">
-        {%- for i in (1..10) -%}
-          {%- assign avatar_key = 'avatar_' | append: i -%}
-          {%- if section.settings[avatar_key] != blank -%}
-            <img class="hero-avatar" src="{{ section.settings[avatar_key] | image_url: width: 72 }}" alt="Customer" loading="lazy">
-          {%- else -%}
-            <div class="hero-avatar">
-              <div class="hero-avatar-placeholder">{{ i }}</div>
-            </div>
-          {%- endif -%}
-        {%- endfor -%}
-      </div>
-    {%- endif -%}
-  </div>
+<section class="vx-shell vx-shell--loading" data-vx-section="hero">
+  <div class="vx-editor-preview"><div class="vx-section-loader"><div class="vx-loader__spinner"></div></div></div>
 </section>
+
+<script type="application/json" data-vx-settings="hero">
+{
+  "hero_font": {{ section.settings.hero_font | default: 'Satoshi' | json }},
+  "title_before": {{ section.settings.title_before | default: 'START YOUR' | json }},
+  "title_highlight": {{ section.settings.title_highlight | default: 'RESELLING' | json }},
+  "title_after": {{ section.settings.title_after | default: 'JOURNEY TODAY' | json }},
+  "title_color": {{ section.settings.title_color | default: '#ffffff' | json }},
+  "highlight_color": {{ section.settings.highlight_color | default: '#39ff14' | json }},
+  "title_size_desktop": {{ section.settings.title_size_desktop | default: 48 }},
+  "title_size_mobile": {{ section.settings.title_size_mobile | default: 28 }},
+  "trust_prefix": {{ section.settings.trust_prefix | default: 'Trusted By' | json }},
+  "trust_count": {{ section.settings.trust_count | default: '10,000+' | json }},
+  "trust_suffix": {{ section.settings.trust_suffix | default: 'Resellers' | json }},
+  "trust_count_color": {{ section.settings.trust_count_color | default: '#fbbf24' | json }},
+  "trust_text_color": {{ section.settings.trust_text_color | default: '#9ca3af' | json }},
+  "trust_font_size": {{ section.settings.trust_font_size | default: 15 }},
+  "show_avatars": {{ section.settings.show_avatars | json }},
+  "avatar_size": {{ section.settings.avatar_size | default: 36 }},
+  "avatar_1": {% if section.settings.avatar_1 != blank %}{{ section.settings.avatar_1 | image_url: width: 72 | json }}{% else %}null{% endif %},
+  "avatar_2": {% if section.settings.avatar_2 != blank %}{{ section.settings.avatar_2 | image_url: width: 72 | json }}{% else %}null{% endif %},
+  "avatar_3": {% if section.settings.avatar_3 != blank %}{{ section.settings.avatar_3 | image_url: width: 72 | json }}{% else %}null{% endif %},
+  "avatar_4": {% if section.settings.avatar_4 != blank %}{{ section.settings.avatar_4 | image_url: width: 72 | json }}{% else %}null{% endif %},
+  "avatar_5": {% if section.settings.avatar_5 != blank %}{{ section.settings.avatar_5 | image_url: width: 72 | json }}{% else %}null{% endif %},
+  "avatar_6": {% if section.settings.avatar_6 != blank %}{{ section.settings.avatar_6 | image_url: width: 72 | json }}{% else %}null{% endif %},
+  "avatar_7": {% if section.settings.avatar_7 != blank %}{{ section.settings.avatar_7 | image_url: width: 72 | json }}{% else %}null{% endif %},
+  "avatar_8": {% if section.settings.avatar_8 != blank %}{{ section.settings.avatar_8 | image_url: width: 72 | json }}{% else %}null{% endif %},
+  "avatar_9": {% if section.settings.avatar_9 != blank %}{{ section.settings.avatar_9 | image_url: width: 72 | json }}{% else %}null{% endif %},
+  "avatar_10": {% if section.settings.avatar_10 != blank %}{{ section.settings.avatar_10 | image_url: width: 72 | json }}{% else %}null{% endif %},
+  "show_glow": {{ section.settings.show_glow | json }},
+  "glow_color": {{ section.settings.glow_color | default: '#39ff14' | json }},
+  "padding_top": {{ section.settings.padding_top | default: 80 }},
+  "padding_bottom": {{ section.settings.padding_bottom | default: 60 }}
+}
+</script>
 
 {% schema %}
 {

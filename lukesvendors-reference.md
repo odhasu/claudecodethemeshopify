@@ -1,7 +1,7 @@
 # lukesvendors.com — Design Reference
 
 Full section-by-section breakdown of the lukesvendors.com homepage.
-Used as the design reference for ogresells.com v2 theme.
+Used as the design reference for Vexel theme v2.
 
 ---
 
@@ -269,9 +269,9 @@ Plus: Purchase toast notifications, AI chatbot, Trust badges bar (floating/overl
 
 ---
 
-## Key Differences vs ogresells.com v2
+## Key Differences vs Vexel v2
 
-| Feature | lukesvendors | ogresells v2 |
+| Feature | lukesvendors | Vexel v2 |
 |---------|-------------|-------------|
 | Accent color | #19d400 | #19d400 ✅ |
 | Heading font | Clash Grotesk | Clash Grotesk ✅ |

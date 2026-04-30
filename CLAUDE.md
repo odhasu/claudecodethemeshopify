@@ -9,6 +9,6 @@ Read these files at the start of every session:
 - [RULES.md](RULES.md) — session rules
 - [GOALS.md](GOALS.md) — what we're building toward
 
-Also read: ~/Desktop/ogresell/CLAUDE.md for business overview.
+Also read: ~/Desktop/ogresell/CLAUDE.md for Vexel business overview.
 
 Update BUILD.md and BUGS.md at the end of every session.

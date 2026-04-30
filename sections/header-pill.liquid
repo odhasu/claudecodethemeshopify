@@ -1,274 +1,36 @@
-{%- liquid
-  assign nav_color     = section.settings.nav_color     | default: '#ffffff'
-  assign nav_hover     = section.settings.nav_hover_color | default: '#19d400'
-  assign brand_color   = section.settings.brand_color   | default: '#ffffff'
-  assign brand_text    = section.settings.brand_text    | default: shop.name
-  assign h_desk        = section.settings.header_height_desktop | default: 70
-  assign h_mob         = section.settings.header_height_mobile  | default: 58
-  assign lw_desk       = section.settings.logo_width_desktop    | default: 200
-  assign lw_mob        = section.settings.logo_width_mobile     | default: 120
-  assign badge_bg      = section.settings.badge_bg      | default: '#19d400'
-  assign badge_text    = section.settings.badge_text_color | default: '#000000'
-  assign dropdown_bg   = section.settings.dropdown_bg   | default: '#0a0a0a'
-  assign scroll_bg     = section.settings.scroll_bg     | default: 'rgba(0,0,0,0.85)'
-  assign scroll_border = section.settings.scroll_border | default: '#1a1a1a'
--%}
+<section class="vx-shell vx-shell--header" data-vx-section="header">
+  <div class="vx-editor-preview"></div>
+</section>
 
-<style>
-  .site-header {
-    position: fixed;
-    left: 0; right: 0;
-    top: var(--urgency-bar-height, 0px);
-    z-index: 999;
-    background: linear-gradient(180deg, rgba(10,10,10,0.95) 0%, rgba(0,0,0,0.85) 100%);
-    border-bottom: 1px solid rgba(255,255,255,0.06);
-    transition: background 0.3s ease, border-color 0.3s ease, top 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-  .site-header.scrolled {
-    background: {{ scroll_bg }};
-    border-bottom-color: {{ scroll_border }};
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-  }
-  .site-header__inner {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 0 32px;
-    height: {{ h_desk }}px;
-  }
-  .site-header__logo-link {
-    display: flex;
-    align-items: center;
-    flex-shrink: 0;
-  }
-  .site-header__logo img {
-    width: {{ lw_desk }}px;
-    height: auto;
-    display: block;
-  }
-  .site-header__brand {
-    font-family: var(--font-heading);
-    font-size: 22px;
-    font-weight: 900;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: {{ brand_color }};
-  }
-  .site-header__right {
-    display: flex;
-    align-items: center;
-    gap: 32px;
-  }
-  .site-header__nav {
-    display: flex;
-    align-items: center;
-    gap: 32px;
-  }
-  .site-header__nav a {
-    font-family: var(--font-body);
-    font-size: 14px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: {{ nav_color }};
-    transition: color 0.2s;
-  }
-  .site-header__nav a:hover { color: {{ nav_hover }}; }
-
-  .site-header__cart {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 38px; height: 38px;
-    color: {{ nav_color }};
-    transition: color 0.2s;
-  }
-  .site-header__cart:hover { color: {{ nav_hover }}; }
-  .site-header__cart svg { width: 20px; height: 20px; }
-  .cart-count-badge {
-    position: absolute;
-    top: 1px; right: 1px;
-    background: {{ badge_bg }};
-    color: {{ badge_text }};
-    font-size: 10px;
-    font-weight: 800;
-    min-width: 16px; height: 16px;
-    border-radius: 8px;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    padding: 0 3px;
-  }
-  .cart-count-badge.has-items { display: flex; }
-
-  /* Hamburger */
-  .site-header__hamburger {
-    display: none;
-    flex-direction: column;
-    gap: 5px;
-    cursor: pointer;
-    padding: 4px;
-    color: {{ nav_color }};
-    background: none;
-    border: none;
-  }
-  .site-header__hamburger span {
-    display: block;
-    width: 22px; height: 2px;
-    background: currentColor;
-    border-radius: 2px;
-    transition: transform 0.3s, opacity 0.3s;
-  }
-  .site-header__hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-  .site-header__hamburger.open span:nth-child(2) { opacity: 0; }
-  .site-header__hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-
-  /* Mobile dropdown */
-  .site-header__mobile-nav {
-    display: none;
-    position: absolute;
-    top: 100%; left: 0; right: 0;
-    background: {{ dropdown_bg }};
-    border-bottom: 1px solid {{ scroll_border }};
-    z-index: 998;
-    padding: 8px 0;
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-  }
-  .site-header__mobile-nav.open { display: block; }
-  .site-header__mobile-nav a {
-    display: block;
-    padding: 14px 32px;
-    font-family: var(--font-body);
-    font-size: 15px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: {{ nav_color }};
-    border-bottom: 1px solid {{ scroll_border }};
-    transition: color 0.2s;
-  }
-  .site-header__mobile-nav a:last-child { border-bottom: none; }
-  .site-header__mobile-nav a:hover { color: {{ nav_hover }}; }
-
-  @media (max-width: 768px) {
-    .site-header__inner  { height: {{ h_mob }}px; padding: 0 16px; }
-    .site-header__logo img { width: {{ lw_mob }}px; }
-    .site-header__nav    { display: none; }
-    .site-header__hamburger { display: flex; }
-  }
-</style>
-
-<header class="site-header" id="site-header">
-  <div class="site-header__inner">
-
-    <a href="/" class="site-header__logo-link" aria-label="{{ shop.name }}">
-      {%- if section.settings.logo != blank -%}
-        <div class="site-header__logo">
-          <img
-            src="{{ section.settings.logo | image_url: width: 800 }}"
-            alt="{{ shop.name }}"
-            width="{{ lw_desk }}"
-            loading="eager">
-        </div>
-      {%- else -%}
-        <span class="site-header__brand">{{ brand_text }}</span>
-      {%- endif -%}
-    </a>
-
-    <div class="site-header__right">
-      <nav class="site-header__nav" aria-label="Main navigation">
-        {%- if section.settings.menu != blank -%}
-          {%- for link in section.settings.menu.links -%}
-            <a href="{{ link.url }}">{{ link.title }}</a>
-          {%- endfor -%}
-        {%- else -%}
-          <a href="/">Home</a>
-          <a href="/collections/all">Products</a>
-        {%- endif -%}
-      </nav>
-
-      <a href="/cart" class="site-header__cart" aria-label="Cart">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
-          <line x1="3" y1="6" x2="21" y2="6"/>
-          <path d="M16 10a4 4 0 01-8 0"/>
-        </svg>
-        <span class="cart-count-badge" id="cart-count-badge"></span>
-      </a>
-
-      <button class="site-header__hamburger" id="mobile-menu-toggle" aria-label="Menu" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
-  </div>
-
-  <div class="site-header__mobile-nav" id="mobile-menu">
+<script type="application/json" data-vx-settings="header">
+{
+  "logo_url": {% if section.settings.logo != blank %}{{ section.settings.logo | image_url: width: 800 | json }}{% else %}null{% endif %},
+  "logo_width_desktop": {{ section.settings.logo_width_desktop | default: 200 }},
+  "logo_width_mobile": {{ section.settings.logo_width_mobile | default: 120 }},
+  "brand_text": {{ section.settings.brand_text | default: shop.name | json }},
+  "brand_color": {{ section.settings.brand_color | default: '#ffffff' | json }},
+  "nav_color": {{ section.settings.nav_color | default: '#ffffff' | json }},
+  "nav_hover_color": {{ section.settings.nav_hover_color | default: '#19d400' | json }},
+  "scroll_bg": {{ section.settings.scroll_bg | default: '#000000' | json }},
+  "scroll_border": {{ section.settings.scroll_border | default: '#1a1a1a' | json }},
+  "dropdown_bg": {{ section.settings.dropdown_bg | default: '#0a0a0a' | json }},
+  "badge_bg": {{ section.settings.badge_bg | default: '#19d400' | json }},
+  "badge_text_color": {{ section.settings.badge_text_color | default: '#000000' | json }},
+  "header_height_desktop": {{ section.settings.header_height_desktop | default: 70 }},
+  "header_height_mobile": {{ section.settings.header_height_mobile | default: 58 }},
+  "nav_links": [
     {%- if section.settings.menu != blank -%}
       {%- for link in section.settings.menu.links -%}
-        <a href="{{ link.url }}">{{ link.title }}</a>
+        {"title":{{ link.title | json }},"url":{{ link.url | json }}}{% unless forloop.last %},{% endunless %}
       {%- endfor -%}
-    {%- else -%}
-      <a href="/">Home</a>
-      <a href="/collections/all">Products</a>
     {%- endif -%}
-  </div>
-</header>
-
-<script>
-  (function(){
-    /* Mobile menu toggle */
-    var toggle = document.getElementById('mobile-menu-toggle');
-    var menu   = document.getElementById('mobile-menu');
-    if (toggle && menu) {
-      toggle.addEventListener('click', function() {
-        var open = menu.classList.toggle('open');
-        toggle.classList.toggle('open', open);
-        toggle.setAttribute('aria-expanded', open);
-      });
-      document.addEventListener('click', function(e) {
-        if (!e.target.closest('#site-header')) {
-          menu.classList.remove('open');
-          toggle.classList.remove('open');
-          toggle.setAttribute('aria-expanded', 'false');
-        }
-      });
-    }
-
-    /* Scroll — add solid bg after scrolling past hero */
-    var header = document.getElementById('site-header');
-    if (header) {
-      var scrollThreshold = 50;
-      var ticking = false;
-      window.addEventListener('scroll', function() {
-        if (!ticking) {
-          window.requestAnimationFrame(function() {
-            if (window.scrollY > scrollThreshold) {
-              header.classList.add('scrolled');
-            } else {
-              header.classList.remove('scrolled');
-            }
-            ticking = false;
-          });
-          ticking = true;
-        }
-      });
-    }
-
-    /* Cart count */
-    fetch('/cart.js').then(function(r){ return r.json(); }).then(function(c){
-      var badge = document.getElementById('cart-count-badge');
-      if (badge && c.item_count > 0) {
-        badge.textContent = c.item_count;
-        badge.classList.add('has-items');
-      }
-    }).catch(function(){});
-  })();
+  ]
+}
 </script>
+
+<style>
+  .vx-shell--header{min-height:auto;position:fixed;top:var(--urgency-bar-height,0px);left:0;right:0;z-index:999;background:transparent;display:block}
+</style>
 
 {% schema %}
 {
@@ -280,7 +42,7 @@
     { "type": "image_picker", "id": "logo", "label": "Logo image" },
     { "type": "range", "id": "logo_width_desktop", "label": "Logo width desktop (px)", "min": 80, "max": 500, "step": 10, "default": 200 },
     { "type": "range", "id": "logo_width_mobile",  "label": "Logo width mobile (px)",  "min": 60, "max": 260, "step": 10, "default": 120 },
-    { "type": "text",  "id": "brand_text", "label": "Brand text (if no logo)", "default": "OGVENDORS" },
+    { "type": "text",  "id": "brand_text", "label": "Brand text (if no logo)", "default": "Vexel" },
     { "type": "color", "id": "brand_color", "label": "Brand text color", "default": "#ffffff" },
 
     { "type": "header", "content": "Navigation" },

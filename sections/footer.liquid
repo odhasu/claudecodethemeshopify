@@ -1,191 +1,43 @@
-{%- liquid
-  assign bg         = section.settings.bg_color       | default: '#0a0a0a'
-  assign border_top = section.settings.border_color   | default: '#1a1a1a'
-  assign brand_color = section.settings.brand_color   | default: '#ffffff'
-  assign link_color  = section.settings.link_color    | default: '#6b7280'
-  assign link_hover  = section.settings.link_hover_color | default: '#ffffff'
-  assign copy_color  = section.settings.copyright_color | default: '#6b7280'
-  assign icon_color  = section.settings.social_icon_color | default: '#19d400'
-  assign icon_size   = section.settings.social_icon_size  | default: 20
-  assign cta_text    = section.settings.cta_text    | default: 'Get this store design'
-  assign cta_url     = section.settings.cta_url     | default: '/collections/all'
-  assign cta_color   = section.settings.cta_color   | default: '#19d400'
-  assign cta_text_color = section.settings.cta_text_color | default: '#000000'
--%}
+<section class="vx-shell vx-shell--loading" data-vx-section="footer" data-vx-footer>
+  <div class="vx-editor-preview"><div class="vx-section-loader"><div class="vx-loader__spinner"></div></div></div>
+</section>
 
-<style>
-  .site-footer {
-    background: {{ bg }};
-    border-top: 1px solid {{ border_top }};
-    padding: {{ section.settings.padding_top | default: 48 }}px 20px {{ section.settings.padding_bottom | default: 48 }}px;
-    text-align: center;
-  }
-  .footer-brand {
-    font-family: var(--font-heading);
-    font-size: {{ section.settings.brand_font_size | default: 26 }}px;
-    font-weight: 900;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: {{ brand_color }};
-    margin-bottom: 24px;
-  }
-  .footer-links {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 24px;
-    flex-wrap: wrap;
-    margin-bottom: 24px;
-  }
-  .footer-links a {
-    color: {{ link_color }};
-    font-size: 13px;
-    font-family: var(--font-body);
-    transition: color 0.2s;
-  }
-  .footer-links a:hover { color: {{ link_hover }}; }
-  .footer-socials {
-    display: flex;
-    justify-content: center;
-    gap: 16px;
-    margin-bottom: 24px;
-  }
-  .footer-social-link {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: {{ icon_size | plus: 16 }}px;
-    height: {{ icon_size | plus: 16 }}px;
-    color: {{ icon_color }};
-    transition: transform 0.2s, opacity 0.2s;
-    opacity: 0.8;
-  }
-  .footer-social-link:hover { transform: translateY(-2px); opacity: 1; }
-  .footer-social-link svg { width: {{ icon_size }}px; height: {{ icon_size }}px; }
-  .footer-cta {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 12px 32px;
-    font-family: var(--font-body);
-    font-size: 14px;
-    font-weight: 600;
-    color: {{ cta_text_color }};
-    background: linear-gradient(180deg,
-      color-mix(in srgb, {{ cta_color }} 85%, #ffffff) 0%,
-      {{ cta_color }} 50%,
-      color-mix(in srgb, {{ cta_color }} 85%, #000000) 100%);
-    border: 1.5px solid rgba(255,255,255,0.3);
-    border-radius: 50px;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-    box-shadow:
-      inset 0 1px 0 rgba(255,255,255,0.25),
-      inset 0 -1px 0 rgba(0,0,0,0.15),
-      0 0 20px color-mix(in srgb, {{ cta_color }} 25%, transparent),
-      0 2px 8px rgba(0,0,0,0.3);
-    transition: transform 0.2s, box-shadow 0.2s;
-  }
-  .footer-cta::before {
-    content: '';
-    position: absolute;
-    top: 0; left: -20%;
-    width: 60%;
-    height: 50%;
-    background: linear-gradient(180deg, rgba(255,255,255,0.2) 0%, transparent 100%);
-    border-radius: 0 0 50% 50%;
-    pointer-events: none;
-  }
-  .footer-cta:hover {
-    transform: translateY(-2px);
-    box-shadow:
-      inset 0 1px 0 rgba(255,255,255,0.3),
-      inset 0 -1px 0 rgba(0,0,0,0.15),
-      0 0 30px color-mix(in srgb, {{ cta_color }} 40%, transparent),
-      0 4px 16px rgba(0,0,0,0.3);
-  }
-  .footer-cta svg {
-    width: 14px;
-    height: 14px;
-  }
-  .footer-copyright {
-    color: {{ copy_color }};
-    font-size: 12px;
-  }
-</style>
+<script type="application/json" data-vx-settings="footer">
+{
+  "logo_url": {% if section.settings.logo != blank %}{{ section.settings.logo | image_url: height: 80 | json }}{% else %}null{% endif %},
+  "logo_height": {{ section.settings.logo_height | default: 40 }},
+  "brand_text": {{ section.settings.brand_text | default: shop.name | json }},
+  "brand_font_size": {{ section.settings.brand_font_size | default: 26 }},
+  "brand_color": {{ section.settings.brand_color | default: '#ffffff' | json }},
+  "show_policies": {{ section.settings.show_policies | json }},
+  "label_refund": {{ section.settings.label_refund | default: 'Refund' | json }},
+  "label_shipping": {{ section.settings.label_shipping | default: 'Shipping' | json }},
+  "label_privacy": {{ section.settings.label_privacy | default: 'Privacy' | json }},
+  "label_terms": {{ section.settings.label_terms | default: 'Terms' | json }},
+  "instagram_url": {{ section.settings.instagram_url | default: '' | json }},
+  "tiktok_url": {{ section.settings.tiktok_url | default: '' | json }},
+  "youtube_url": {{ section.settings.youtube_url | default: '' | json }},
+  "discord_url": {{ section.settings.discord_url | default: '' | json }},
+  "social_icon_color": {{ section.settings.social_icon_color | default: '#19d400' | json }},
+  "social_icon_size": {{ section.settings.social_icon_size | default: 20 }},
+  "show_cta": {{ section.settings.show_cta | json }},
+  "cta_text": {{ section.settings.cta_text | default: 'Get this store design' | json }},
+  "cta_url": {{ section.settings.cta_url | default: 'https://ogresells.com' | json }},
+  "cta_color": {{ section.settings.cta_color | default: '#19d400' | json }},
+  "cta_text_color": {{ section.settings.cta_text_color | default: '#000000' | json }},
+  "show_copyright": {{ section.settings.show_copyright | json }},
+  "copyright_name": {{ section.settings.copyright_name | default: shop.name | json }},
+  "bg_color": {{ section.settings.bg_color | default: '#0a0a0a' | json }},
+  "border_color": {{ section.settings.border_color | default: '#1a1a1a' | json }},
+  "link_color": {{ section.settings.link_color | default: '#6b7280' | json }},
+  "link_hover_color": {{ section.settings.link_hover_color | default: '#ffffff' | json }},
+  "copyright_color": {{ section.settings.copyright_color | default: '#6b7280' | json }},
+  "padding_top": {{ section.settings.padding_top | default: 48 }},
+  "padding_bottom": {{ section.settings.padding_bottom | default: 48 }}
+}
+</script>
 
-<footer class="site-footer">
-
-  {%- if section.settings.logo != blank -%}
-    <div style="margin-bottom: 24px;">
-      <img src="{{ section.settings.logo | image_url: height: 80 }}" alt="{{ shop.name }}" style="height: {{ section.settings.logo_height | default: 40 }}px; margin: 0 auto;">
-    </div>
-  {%- else -%}
-    <div class="footer-brand">{{ section.settings.brand_text | default: shop.name }}</div>
-  {%- endif -%}
-
-  {%- assign has_socials = false -%}
-  {%- if section.settings.instagram_url != blank or section.settings.tiktok_url != blank or section.settings.youtube_url != blank or section.settings.discord_url != blank -%}
-    {%- assign has_socials = true -%}
-  {%- endif -%}
-
-  {%- if has_socials -%}
-    <div class="footer-socials">
-      {%- if section.settings.instagram_url != blank -%}
-        <a href="{{ section.settings.instagram_url }}" class="footer-social-link" target="_blank" rel="noopener" aria-label="Instagram">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
-          </svg>
-        </a>
-      {%- endif -%}
-      {%- if section.settings.tiktok_url != blank -%}
-        <a href="{{ section.settings.tiktok_url }}" class="footer-social-link" target="_blank" rel="noopener" aria-label="TikTok">
-          <svg viewBox="0 0 24 24" fill="currentColor">
-            <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.75a4.85 4.85 0 0 1-1.01-.06z"/>
-          </svg>
-        </a>
-      {%- endif -%}
-      {%- if section.settings.youtube_url != blank -%}
-        <a href="{{ section.settings.youtube_url }}" class="footer-social-link" target="_blank" rel="noopener" aria-label="YouTube">
-          <svg viewBox="0 0 24 24" fill="currentColor">
-            <path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/>
-            <polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="#0a0a0a"/>
-          </svg>
-        </a>
-      {%- endif -%}
-      {%- if section.settings.discord_url != blank -%}
-        <a href="{{ section.settings.discord_url }}" class="footer-social-link" target="_blank" rel="noopener" aria-label="Discord">
-          <svg viewBox="0 0 24 24" fill="currentColor">
-            <path d="M20.317 4.37a19.79 19.79 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.74 19.74 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.1 13.1 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.3 12.3 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.84 19.84 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
-          </svg>
-        </a>
-      {%- endif -%}
-    </div>
-  {%- endif -%}
-
-  {%- if section.settings.show_policies -%}
-    <div class="footer-links">
-      <a href="/policies/refund-policy">{{ section.settings.label_refund | default: 'Refund Policy' }}</a>
-      <a href="/policies/shipping-policy">{{ section.settings.label_shipping | default: 'Shipping' }}</a>
-      <a href="/policies/privacy-policy">{{ section.settings.label_privacy | default: 'Privacy' }}</a>
-      <a href="/policies/terms-of-service">{{ section.settings.label_terms | default: 'Terms' }}</a>
-    </div>
-  {%- endif -%}
-
-  {%- if section.settings.show_copyright -%}
-    <div class="footer-copyright">
-      &copy; {{ 'now' | date: '%Y' }} {{ section.settings.copyright_name | default: shop.name }}. All rights reserved.
-    </div>
-  {%- endif -%}
-
-  {%- if section.settings.show_cta -%}
-    <div style="margin-top: 24px;">
-      <a href="{{ cta_url }}" class="footer-cta">{{ cta_text }} <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></a>
-    </div>
-  {%- endif -%}
-
-</footer>
+<style>.vx-shell[data-vx-section="footer"]{min-height:120px}</style>
 
 {% schema %}
 {
@@ -197,7 +49,6 @@
     { "type": "range", "id": "logo_height", "label": "Logo height (px)", "min": 20, "max": 80, "step": 5, "default": 40 },
     { "type": "text", "id": "brand_text", "label": "Brand text (if no logo)", "default": "OGVENDORS" },
     { "type": "range", "id": "brand_font_size", "label": "Brand font size (px)", "min": 16, "max": 48, "step": 2, "default": 26 },
-
     { "type": "header", "content": "Policy Links" },
     { "type": "checkbox", "id": "show_policies", "label": "Show policy links", "default": true },
     { "type": "text", "id": "label_refund", "label": "Refund label", "default": "Refund" },
@@ -205,7 +56,6 @@
     { "type": "text", "id": "label_privacy", "label": "Privacy label", "default": "Privacy" },
     { "type": "text", "id": "label_terms", "label": "Terms label", "default": "Terms" },
     { "type": "range", "id": "link_gap", "label": "Link spacing (px)", "min": 4, "max": 32, "step": 2, "default": 6 },
-
     { "type": "header", "content": "Social Links" },
     { "type": "text", "id": "instagram_url", "label": "Instagram URL" },
     { "type": "text", "id": "tiktok_url", "label": "TikTok URL" },
@@ -213,18 +63,15 @@
     { "type": "text", "id": "discord_url", "label": "Discord URL" },
     { "type": "color", "id": "social_icon_color", "label": "Icon color", "default": "#19d400" },
     { "type": "range", "id": "social_icon_size", "label": "Icon size (px)", "min": 16, "max": 32, "step": 2, "default": 20 },
-
     { "type": "header", "content": "CTA Button" },
     { "type": "checkbox", "id": "show_cta", "label": "Show CTA button", "default": true },
     { "type": "text", "id": "cta_text", "label": "Button text", "default": "Get this store design" },
     { "type": "url", "id": "cta_url", "label": "Button link" },
     { "type": "color", "id": "cta_color", "label": "Button color", "default": "#19d400" },
     { "type": "color", "id": "cta_text_color", "label": "Button text color", "default": "#000000" },
-
     { "type": "header", "content": "Copyright" },
     { "type": "checkbox", "id": "show_copyright", "label": "Show copyright", "default": true },
     { "type": "text", "id": "copyright_name", "label": "Copyright name (default: store name)" },
-
     { "type": "header", "content": "Colors" },
     { "type": "color", "id": "bg_color", "label": "Background", "default": "#0a0a0a" },
     { "type": "color", "id": "border_color", "label": "Top border", "default": "#1a1a1a" },
@@ -232,7 +79,6 @@
     { "type": "color", "id": "link_color", "label": "Link color", "default": "#6b7280" },
     { "type": "color", "id": "link_hover_color", "label": "Link hover color", "default": "#ffffff" },
     { "type": "color", "id": "copyright_color", "label": "Copyright color", "default": "#6b7280" },
-
     { "type": "header", "content": "Spacing" },
     { "type": "range", "id": "padding_top", "label": "Top padding (px)", "min": 20, "max": 100, "step": 4, "default": 48 },
     { "type": "range", "id": "padding_bottom", "label": "Bottom padding (px)", "min": 20, "max": 100, "step": 4, "default": 48 }
