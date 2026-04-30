@@ -1,4 +1,7 @@
-{%- assign has_product_blocks = false -%}{%- for block in section.blocks -%}{%- if block.type == 'product' and block.settings.product != blank -%}{%- assign has_product_blocks = true -%}{%- break -%}{%- endif -%}{%- endfor -%}
+{%- liquid
+  assign collection = section.settings.collection | default: collections.all
+  assign max_products = section.settings.max_products | default: 8
+-%}
 
 <section class="vx-shell vx-shell--loading" data-vx-section="product-grid">
   <div class="vx-editor-preview"><div class="vx-section-loader"><div class="vx-loader__spinner"></div></div></div>
@@ -6,29 +9,125 @@
 
 <script type="application/json" data-vx-settings="product-grid">
 {
-  "hero_headline": {{ section.settings.hero_headline | default: '' | json }},
-  "highlight_word": {{ section.settings.highlight_word | default: '' | json }},
-  "hero_image": {% if section.settings.hero_image %}{{ section.settings.hero_image | image_url: width: 1200 | json }}{% else %}null{% endif %},
-  "hero_text_size": {{ section.settings.hero_text_size | default: 100 }},
-  "card_style": {{ section.settings.card_style | default: 'flat' | json }},
-  "card_click_action": {{ section.settings.card_click_action | default: 'product' | json }},
-  "card_click_custom_url": {{ section.settings.card_click_custom_url | json }},
-  "button_layout": {{ section.settings.button_layout | default: 'side-by-side' | json }},
-  "button_1_text": {{ section.settings.button_1_text | default: 'VIEW PRODUCT' | json }},
-  "button_1_action": {{ section.settings.button_1_action | default: 'product' | json }},
-  "button_1_custom_url": {{ section.settings.button_1_custom_url | json }},
-  "button_2_text": {{ section.settings.button_2_text | default: 'ADD TO CART' | json }},
-  "button_2_action": {{ section.settings.button_2_action | default: 'add_to_cart' | json }},
-  "button_2_custom_url": {{ section.settings.button_2_custom_url | json }},
-  "sale_badge_text": {{ section.settings.sale_badge_text | default: 'SALE' | json }},
-  "sale_badge_position": {{ section.settings.sale_badge_position | default: 'top-right' | json }},
-  "show_background_gradient": {{ section.settings.show_background_gradient | json }},
-  "gradient_strength": {{ section.settings.gradient_strength | default: 50 }}
+  "title": {{ section.settings.title | json }},
+  "columns_desktop": {{ section.settings.columns_desktop | default: 4 }},
+  "columns_mobile": {{ section.settings.columns_mobile | default: 2 }},
+  "glassmorphic": {{ section.settings.glassmorphic_cards | json }},
+  "show_glow": {{ section.settings.show_glow | json }},
+  "glow_color": {{ section.settings.glow_color | default: '#19d400' | json }},
+  "glow_intensity": {{ section.settings.glow_intensity | default: 35 }},
+  "show_top_fade": {{ section.settings.show_top_fade | json }},
+  "card_bg": {{ section.settings.card_bg | default: '#111111' | json }},
+  "card_border": {{ section.settings.card_border | default: '#2a2a2a' | json }},
+  "card_hover_border": {{ section.settings.card_hover_border | default: '#19d400' | json }},
+  "image_bg": {{ section.settings.image_bg | default: '#0a0a0a' | json }},
+  "title_color": {{ section.settings.title_color | default: '#ffffff' | json }},
+  "show_overlay_title": {{ section.settings.show_overlay_title | json }},
+  "overlay_green_color": {{ section.settings.overlay_title_green_color | default: '#19d400' | json }},
+  "overlay_white_color": {{ section.settings.overlay_title_white_color | default: '#ffffff' | json }},
+  "overlay_font_size": {{ section.settings.overlay_font_size | default: 14 }},
+  "show_sale_badge": {{ section.settings.show_sale_badge | json }},
+  "always_show_sale_badge": {{ section.settings.always_show_sale_badge | json }},
+  "sale_badge_label": {{ section.settings.sale_badge_label | default: 'SALE' | json }},
+  "sale_badge_bg": {{ section.settings.sale_badge_bg | default: '#000000' | json }},
+  "sale_badge_text_color": {{ section.settings.sale_badge_text_color | default: '#ffffff' | json }},
+  "sale_badge_position_y": {{ section.settings.sale_badge_position_y | default: 'top' | json }},
+  "sale_badge_position_x": {{ section.settings.sale_badge_position_x | default: 'right' | json }},
+  "price_color": {{ section.settings.price_color | default: '#19d400' | json }},
+  "compare_price_color": {{ section.settings.compare_price_color | default: '#6b7280' | json }},
+  "buy_btn_label": {{ section.settings.buy_btn_label | default: 'BUY NOW' | json }},
+  "buy_btn_radius": {{ section.settings.buy_btn_radius | default: 12 }},
+  "buy_btn_action": {{ section.settings.buy_btn_action | default: 'product' | json }},
+  "buy_btn_bg": {{ section.settings.buy_btn_bg | default: '#19d400' | json }},
+  "buy_btn_text_color": {{ section.settings.buy_btn_text_color | default: '#1a1a1a' | json }},
+  "show_info_btn": {{ section.settings.show_info_btn | json }},
+  "padding_top": {{ section.settings.padding_top | default: 40 }},
+  "padding_bottom": {{ section.settings.padding_bottom | default: 60 }}
 }
 </script>
 
 <script type="application/json" data-vx-products="product-grid">
-[{%- assign product_count = 0 -%}{%- if has_product_blocks -%}{%- for block in section.blocks -%}{%- if block.type == 'product' and block.settings.product != blank -%}{%- assign p = block.settings.product -%}{%- if p.available -%}{%- if product_count > 0 -%},{%- endif -%}{"id":{{ p.id | json }},"variantId":{{ p.selected_or_first_available_variant.id | json }},"title":{{ p.title | json }},"handle":{{ p.handle | json }},"url":{{ p.url | json }},"price":{{ p.price }},"comparePrice":{{ p.compare_at_price | default: 'null' }},"available":{{ p.available | json }},"image":{% if p.featured_image %}{{ p.featured_image | image_url: width: 500 | json }}{% else %}null{% endif %},"imageAlt":{{ p.featured_image.alt | default: p.title | json }},"description":{{ p.description | strip_html | truncate: 500 | json }},"button1Text":{{ block.settings.button_1_text | json }},"button1Action":{{ block.settings.button_1_action | default: "default" | json }},"button1CustomUrl":{{ block.settings.button_1_custom_url | json }},"button2Text":{{ block.settings.button_2_text | json }},"button2Action":{{ block.settings.button_2_action | default: "default" | json }},"button2CustomUrl":{{ block.settings.button_2_custom_url | json }}}{%- assign product_count = product_count | plus: 1 -%}{%- endif -%}{%- endif -%}{%- endfor -%}{%- else -%}{%- for p in collections.all.products limit: 50 -%}{%- if p.available -%}{%- if product_count > 0 -%},{%- endif -%}{"id":{{ p.id | json }},"variantId":{{ p.selected_or_first_available_variant.id | json }},"title":{{ p.title | json }},"handle":{{ p.handle | json }},"url":{{ p.url | json }},"price":{{ p.price }},"comparePrice":{{ p.compare_at_price | default: 'null' }},"available":{{ p.available | json }},"image":{% if p.featured_image %}{{ p.featured_image | image_url: width: 500 | json }}{% else %}null{% endif %},"imageAlt":{{ p.featured_image.alt | default: p.title | json }},"description":{{ p.description | strip_html | truncate: 500 | json }}}{%- assign product_count = product_count | plus: 1 -%}{%- endif -%}{%- endfor -%}{%- endif -%}]
+[{%- assign product_count = 0 -%}{%- for product in collection.products limit: max_products -%}{%- if product_count > 0 -%},{%- endif -%}{
+  "id": {{ product.id | json }},
+  "variantId": {{ product.first_available_variant.id | json }},
+  "title": {{ product.title | json }},
+  "handle": {{ product.handle | json }},
+  "url": {{ product.url | json }},
+  "price": {{ product.price }},
+  "comparePrice": {{ product.compare_at_price_max | default: 'null' }},
+  "available": {{ product.available | json }},
+  "image": {% if product.featured_image %}{{ product.featured_image | image_url: width: 600 | json }}{% else %}null{% endif %},
+  "imageAlt": {{ product.featured_image.alt | default: product.title | json }},
+  "description": {{ product.description | strip_html | truncate: 500 | json }},
+  "overlayGreen": {{ product.metafields.custom.overlay_green | json }},
+  "overlayWhite": {{ product.metafields.custom.overlay_white | json }}
+}{%- assign product_count = product_count | plus: 1 -%}{%- endfor -%}]
 </script>
 
-{% schema %}{"name":"Product Grid","tag":"section","class":"vx-product-grid-wrapper","settings":[{"type":"header","content":"Hero Settings"},{"type":"text","id":"hero_headline","label":"Hero Headline","default":"Start Your Reselling Journey Today"},{"type":"text","id":"highlight_word","label":"Highlight Word","info":"Single word to highlight with accent color","default":"Reselling"},{"type":"range","id":"hero_text_size","label":"Hero Text Size","min":50,"max":200,"step":5,"unit":"%","default":100},{"type":"image_picker","id":"hero_image","label":"Hero Image (Optional)"},{"type":"checkbox","id":"show_background_gradient","label":"Show Background Gradient","info":"Adds a subtle gradient glow using Accent Color 1","default":true},{"type":"range","id":"gradient_strength","label":"Gradient Strength","min":10,"max":100,"step":10,"unit":"%","default":50},{"type":"header","content":"Product Grid Settings"},{"type":"select","id":"card_style","label":"Card Style","options":[{"value":"flat","label":"Flat"},{"value":"3d","label":"3D Glass"}],"default":"flat"},{"type":"select","id":"card_click_action","label":"Card Click Action","info":"What happens when clicking the product image or title","options":[{"value":"product","label":"Go to Product Page"},{"value":"add_to_cart","label":"Add to Cart"},{"value":"checkout","label":"Direct to Checkout"},{"value":"description","label":"Show Description Popup"},{"value":"custom","label":"Custom Link"}],"default":"product"},{"type":"url","id":"card_click_custom_url","label":"Card Click Custom URL","info":"Only used when 'Custom Link' is selected"},{"type":"header","content":"Button Layout"},{"type":"select","id":"button_layout","label":"Button Layout","options":[{"value":"side-by-side","label":"Two Buttons Side by Side"},{"value":"stacked","label":"Two Buttons Stacked"},{"value":"single","label":"Single Button"},{"value":"button-link","label":"Button + Link Text"}],"default":"side-by-side"},{"type":"header","content":"Button 1 (Primary)"},{"type":"text","id":"button_1_text","label":"Button Text","default":"VIEW PRODUCT"},{"type":"select","id":"button_1_action","label":"Button Action","options":[{"value":"product","label":"Go to Product Page"},{"value":"add_to_cart","label":"Add to Cart"},{"value":"checkout","label":"Direct to Checkout"},{"value":"description","label":"Show Description Popup"},{"value":"custom","label":"Custom Link"}],"default":"product"},{"type":"url","id":"button_1_custom_url","label":"Button 1 Custom URL","info":"Only used when 'Custom Link' is selected"},{"type":"header","content":"Button 2 (Secondary)"},{"type":"paragraph","content":"Used as second button in 'Two Buttons' layouts, or as the small underlined link in 'Button + Link' layout."},{"type":"text","id":"button_2_text","label":"Button / Link Text","default":"ADD TO CART"},{"type":"select","id":"button_2_action","label":"Button Action","options":[{"value":"add_to_cart","label":"Add to Cart"},{"value":"product","label":"Go to Product Page"},{"value":"checkout","label":"Direct to Checkout"},{"value":"description","label":"Show Description Popup"},{"value":"custom","label":"Custom Link"}],"default":"add_to_cart"},{"type":"url","id":"button_2_custom_url","label":"Button 2 Custom URL","info":"Only used when 'Custom Link' is selected"},{"type":"header","content":"Sale Badge"},{"type":"text","id":"sale_badge_text","label":"Sale Badge Text","default":"SALE"},{"type":"select","id":"sale_badge_position","label":"Sale Badge Position","options":[{"value":"top-left","label":"Top Left"},{"value":"top-right","label":"Top Right"},{"value":"bottom-left","label":"Bottom Left"},{"value":"bottom-right","label":"Bottom Right"}],"default":"top-right"}],"blocks":[{"type":"product","name":"Product","settings":[{"type":"product","id":"product","label":"Product"},{"type":"header","content":"Button 1 Override (Optional)"},{"type":"text","id":"button_1_text","label":"Button 1 Text Override","info":"Leave blank to use section default"},{"type":"select","id":"button_1_action","label":"Button 1 Action Override","options":[{"value":"default","label":"Use Section Default"},{"value":"product","label":"Go to Product Page"},{"value":"add_to_cart","label":"Add to Cart"},{"value":"checkout","label":"Direct to Checkout"},{"value":"description","label":"Show Description Popup"},{"value":"custom","label":"Custom Link"}],"default":"default"},{"type":"url","id":"button_1_custom_url","label":"Button 1 Custom URL"},{"type":"header","content":"Button 2 Override (Optional)"},{"type":"text","id":"button_2_text","label":"Button 2 Text Override","info":"Leave blank to use section default"},{"type":"select","id":"button_2_action","label":"Button 2 Action Override","options":[{"value":"default","label":"Use Section Default"},{"value":"add_to_cart","label":"Add to Cart"},{"value":"product","label":"Go to Product Page"},{"value":"checkout","label":"Direct to Checkout"},{"value":"description","label":"Show Description Popup"},{"value":"custom","label":"Custom Link"}],"default":"default"},{"type":"url","id":"button_2_custom_url","label":"Button 2 Custom URL"}]}],"presets":[{"name":"Product Grid"}]}{% endschema %}
+{% schema %}
+{
+  "name": "Product Grid",
+  "tag": "section",
+  "settings": [
+    { "type": "header", "content": "Collection" },
+    { "type": "collection", "id": "collection", "label": "Collection" },
+    { "type": "text", "id": "title", "label": "Section title" },
+    { "type": "range", "id": "max_products", "label": "Max products", "min": 2, "max": 16, "step": 1, "default": 8 },
+    { "type": "header", "content": "Grid Layout" },
+    { "type": "range", "id": "columns_desktop", "label": "Columns desktop", "min": 1, "max": 8, "step": 1, "default": 4 },
+    { "type": "range", "id": "columns_mobile", "label": "Columns mobile", "min": 1, "max": 4, "step": 1, "default": 2 },
+    { "type": "header", "content": "Card Style" },
+    { "type": "checkbox", "id": "glassmorphic_cards", "label": "Glassmorphic cards (inset glow + blur)", "default": true },
+    { "type": "color", "id": "card_bg", "label": "Card background", "default": "#111111" },
+    { "type": "color", "id": "card_border", "label": "Card border", "default": "#2a2a2a" },
+    { "type": "color", "id": "card_hover_border", "label": "Card hover border", "default": "#19d400" },
+    { "type": "color", "id": "image_bg", "label": "Image background", "default": "#0a0a0a" },
+    { "type": "color", "id": "title_color", "label": "Title color", "default": "#ffffff" },
+    { "type": "header", "content": "Overlay Title on Image" },
+    { "type": "checkbox", "id": "show_overlay_title", "label": "Show overlay title on image", "default": true },
+    { "type": "color", "id": "overlay_title_green_color", "label": "Overlay green text color", "default": "#19d400" },
+    { "type": "color", "id": "overlay_title_white_color", "label": "Overlay white text color", "default": "#ffffff" },
+    { "type": "range", "id": "overlay_font_size", "label": "Overlay font size (px)", "min": 10, "max": 22, "step": 1, "default": 14 },
+    { "type": "header", "content": "Sale Badge" },
+    { "type": "checkbox", "id": "show_sale_badge", "label": "Show sale badge", "default": true },
+    { "type": "checkbox", "id": "always_show_sale_badge", "label": "Always show badge (even without compare price)", "default": false },
+    { "type": "text", "id": "sale_badge_label", "label": "Badge text", "default": "SALE" },
+    { "type": "color", "id": "sale_badge_bg", "label": "Badge background", "default": "#000000" },
+    { "type": "color", "id": "sale_badge_text_color", "label": "Badge text color", "default": "#ffffff" },
+    { "type": "select", "id": "sale_badge_position_y", "label": "Badge vertical position", "default": "top", "options": [
+      { "value": "top", "label": "Top" },
+      { "value": "bottom", "label": "Bottom" }
+    ]},
+    { "type": "select", "id": "sale_badge_position_x", "label": "Badge horizontal position", "default": "right", "options": [
+      { "value": "right", "label": "Right" },
+      { "value": "left", "label": "Left" }
+    ]},
+    { "type": "header", "content": "Pricing" },
+    { "type": "color", "id": "price_color", "label": "Sale price color", "default": "#19d400" },
+    { "type": "color", "id": "compare_price_color", "label": "Compare price color", "default": "#6b7280" },
+    { "type": "header", "content": "Buy Button" },
+    { "type": "text", "id": "buy_btn_label", "label": "Button label", "default": "BUY NOW" },
+    { "type": "range", "id": "buy_btn_radius", "label": "Button radius (px)", "min": 4, "max": 50, "step": 2, "default": 50 },
+    { "type": "select", "id": "buy_btn_action", "label": "Button action", "default": "product", "options": [
+      { "value": "product", "label": "Go to product page" },
+      { "value": "add_to_cart", "label": "Add to cart" },
+      { "value": "checkout", "label": "Direct checkout" }
+    ]},
+    { "type": "color", "id": "buy_btn_bg", "label": "Button background", "default": "#19d400" },
+    { "type": "color", "id": "buy_btn_text_color", "label": "Button text color", "default": "#1a1a1a" },
+    { "type": "header", "content": "Info Button" },
+    { "type": "checkbox", "id": "show_info_btn", "label": "Show info button", "default": true },
+    { "type": "header", "content": "Glow Effect" },
+    { "type": "checkbox", "id": "show_glow", "label": "Show radial glow on sides", "default": true },
+    { "type": "color", "id": "glow_color", "label": "Glow color", "default": "#19d400" },
+    { "type": "range", "id": "glow_intensity", "label": "Glow intensity (%)", "min": 10, "max": 60, "step": 5, "default": 35 },
+    { "type": "checkbox", "id": "show_top_fade", "label": "Show top fade-to-background gradient", "default": false },
+    { "type": "header", "content": "Spacing" },
+    { "type": "range", "id": "padding_top", "label": "Top padding (px)", "min": 0, "max": 120, "step": 10, "default": 40 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding (px)", "min": 0, "max": 120, "step": 10, "default": 60 }
+  ],
+  "presets": [
+    { "name": "Product Grid" }
+  ]
+}
+{% endschema %}

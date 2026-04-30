@@ -8,9 +8,11 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <link rel="canonical" href="{{ canonical_url }}">
   <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
-  {%- if settings.license_key != blank and settings.license_server_url != blank -%}
-    <link rel="preconnect" href="{{ settings.license_server_url }}" crossorigin>
-    <link rel="preload" href="{{ settings.license_server_url }}/api/loader/v3/scaled-loader.js" as="script">
+  {%- if settings.license_key != blank -%}
+    {%- if settings.license_server_url != blank -%}
+      <link rel="preconnect" href="{{ settings.license_server_url }}" crossorigin>
+    {%- endif -%}
+    <link rel="preload" href="{{ 'scaled-loader.js' | asset_url }}" as="script">
   {%- endif -%}
 
   {%- if settings.favicon != blank -%}
@@ -220,8 +222,8 @@
   {% render 'live-sales-notification' %}
   {% render 'chat-widget' %}
 
-  {%- if settings.license_key != blank and settings.license_server_url != blank -%}
-    <script src="{{ settings.license_server_url }}/api/loader/v3/scaled-loader.js" defer></script>
+  {%- if settings.license_key != blank -%}
+    <script src="{{ 'scaled-loader.js' | asset_url }}" defer></script>
     <script>
     (function(){
       var loader=document.getElementById('vx-loader');
