@@ -1,5 +1,5 @@
 /**
- * OGVendors Theme JS
+ * Vexel Theme JS
  */
 (function() {
   'use strict';
