@@ -41,6 +41,7 @@
   "buy_btn_bg": {{ section.settings.buy_btn_bg | default: '#19d400' | json }},
   "buy_btn_text_color": {{ section.settings.buy_btn_text_color | default: '#1a1a1a' | json }},
   "show_info_btn": {{ section.settings.show_info_btn | json }},
+  "show_description": {{ section.settings.show_description | json }},
   "padding_top": {{ section.settings.padding_top | default: 40 }},
   "padding_bottom": {{ section.settings.padding_bottom | default: 60 }}
 }
@@ -115,6 +116,8 @@
     ]},
     { "type": "color", "id": "buy_btn_bg", "label": "Button background", "default": "#19d400" },
     { "type": "color", "id": "buy_btn_text_color", "label": "Button text color", "default": "#1a1a1a" },
+    { "type": "header", "content": "Description" },
+    { "type": "checkbox", "id": "show_description", "label": "Show product description on card", "default": true },
     { "type": "header", "content": "Info Button" },
     { "type": "checkbox", "id": "show_info_btn", "label": "Show info button", "default": true },
     { "type": "header", "content": "Glow Effect" },
