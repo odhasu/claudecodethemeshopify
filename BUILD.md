@@ -28,20 +28,24 @@
 - Color system — unified to #19d400 everywhere
 - Fonts — Clash Grotesk (headings) + Satoshi (body) from Fontshare
 
-## In progress — License Protection (Kenso Shell Model)
-- Convert 10 sections to shells (empty div + JSON data)
-- Build obfuscated loader (renders sections client-side after license validation)
-- Railway server (POST /api/validate + serve loader JS)
-- theme.liquid overhaul (VexelConfig, loading states, loader script)
-- Build pipeline (obfuscate + package ZIP)
+## License Protection (Kenso Shell Model) — DONE
+- All 10 sections converted to shells (empty div + JSON data)
+- Obfuscated loader built (~315KB) — renders sections client-side after license validation
+- Loader served from Shopify CDN (assets/scaled-loader.js)
+- Validation via Vercel store server → Supabase RPC (anon key)
+- 24hr grace period (localStorage), 30-min session cache
+- Footer protection (MutationObserver + periodic check)
+- theme.liquid: VexelConfig, loading states, loader from CDN
 
-## Still to build (after protection)
+## Still to build
 - Results carousel — section exists but not on homepage
 - Hero background image — needs upload in Shopify admin
-- More testimonial screenshots
+- More testimonial screenshots (up to 20 supported)
 - Real social links in footer
 
 ## Last worked on
+2026-05-09 — Hero: added bg image + gradient overlay + 2 CTA buttons; Product cards: inline descriptions; License validation fix (Supabase anon key)
+2026-05-08 — License protection end-to-end: Supabase RPC, validate endpoint fix, loader from CDN, rebranding to Vexel
 2026-04-29 — License protection plan finalized (Kenso shell model), button radius fix, header dark bg
 2026-04-28 — Cart drawer built, header/footer complete
 2026-04-21 — Luke's full replication: header rebuild, hero bg image mode, color unification
