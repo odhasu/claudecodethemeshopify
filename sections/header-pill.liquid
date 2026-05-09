@@ -1,38 +1,315 @@
-<section class="vx-shell vx-shell--header" data-vx-section="header">
-  <div class="vx-editor-preview"></div>
-</section>
-
-<script type="application/json" data-vx-settings="header">
-{
-  "logo_url": {% if section.settings.logo != blank %}{{ section.settings.logo | image_url: width: 800 | json }}{% else %}null{% endif %},
-  "logo_width_desktop": {{ section.settings.logo_width_desktop | default: 200 }},
-  "logo_width_mobile": {{ section.settings.logo_width_mobile | default: 120 }},
-  "brand_text": {{ section.settings.brand_text | default: shop.name | json }},
-  "brand_color": {{ section.settings.brand_color | default: '#ffffff' | json }},
-  "nav_color": {{ section.settings.nav_color | default: '#ffffff' | json }},
-  "nav_hover_color": {{ section.settings.nav_hover_color | default: '#19d400' | json }},
-  "scroll_bg": {{ section.settings.scroll_bg | default: '#000000' | json }},
-  "scroll_border": {{ section.settings.scroll_border | default: '#1a1a1a' | json }},
-  "dropdown_bg": {{ section.settings.dropdown_bg | default: '#0a0a0a' | json }},
-  "badge_bg": {{ section.settings.badge_bg | default: '#19d400' | json }},
-  "badge_text_color": {{ section.settings.badge_text_color | default: '#000000' | json }},
-  "header_height_desktop": {{ section.settings.header_height_desktop | default: 70 }},
-  "header_height_mobile": {{ section.settings.header_height_mobile | default: 58 }},
-  "nav_links": [
-    {%- if section.settings.menu != blank -%}
-      {%- for link in section.settings.menu.links -%}
-        {"title":{{ link.title | json }},"url":{{ link.url | json }}}{% unless forloop.last %},{% endunless %}
-      {%- endfor -%}
-    {%- endif -%}
-  ]
-}
-</script>
+{%- liquid
+  assign logo = section.settings.logo
+  assign brand_text = section.settings.brand_text | default: shop.name
+  assign brand_color = section.settings.brand_color | default: '#ffffff'
+  assign nav_color = section.settings.nav_color | default: '#ffffff'
+  assign nav_hover = section.settings.nav_hover_color | default: '#19d400'
+  assign scroll_bg = section.settings.scroll_bg | default: '#000000'
+  assign scroll_border = section.settings.scroll_border | default: '#1a1a1a'
+  assign dropdown_bg = section.settings.dropdown_bg | default: '#0a0a0a'
+  assign badge_bg = section.settings.badge_bg | default: '#19d400'
+  assign badge_text = section.settings.badge_text_color | default: '#000000'
+  assign h_desktop = section.settings.header_height_desktop | default: 70
+  assign h_mobile = section.settings.header_height_mobile | default: 58
+  assign logo_w_desktop = section.settings.logo_width_desktop | default: 200
+  assign logo_w_mobile = section.settings.logo_width_mobile | default: 120
+  assign menu = section.settings.menu
+-%}
 
 <style>
-  .vx-shell--header{min-height:auto;position:fixed;top:var(--urgency-bar-height,0px);left:0;right:0;z-index:999;background:transparent;display:block}
-  .vx-header__nav a{font-size:14px !important;font-weight:400 !important;text-transform:none !important;letter-spacing:0 !important}
-  .vx-header__nav{gap:24px !important}
+  .hp-header {
+    position: fixed;
+    top: var(--urgency-bar-height, 0px);
+    left: 0;
+    right: 0;
+    z-index: 100;
+    height: {{ h_desktop }}px;
+    background: transparent;
+    border-bottom: 1px solid transparent;
+    transition: background 0.3s ease, border-color 0.3s ease;
+    will-change: background;
+  }
+  .hp-header.hp-scrolled {
+    background: {{ scroll_bg }};
+    border-bottom-color: {{ scroll_border }};
+  }
+  .hp-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 32px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  /* Logo / Brand */
+  .hp-brand {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+  .hp-brand img {
+    height: auto;
+    width: {{ logo_w_desktop }}px;
+    display: block;
+  }
+  .hp-brand-text {
+    font-family: var(--font-heading, 'Clash Grotesk', sans-serif);
+    font-weight: 700;
+    font-style: italic;
+    font-size: 24px;
+    color: {{ brand_color }};
+    letter-spacing: -0.02em;
+    line-height: 1;
+    text-decoration: none;
+  }
+  /* Nav */
+  .hp-nav {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .hp-nav a {
+    font-family: var(--font-body, 'Satoshi', sans-serif);
+    font-size: 14px;
+    font-weight: 400;
+    color: {{ nav_color }};
+    text-decoration: none;
+    transition: color 0.2s;
+    white-space: nowrap;
+  }
+  .hp-nav a:hover {
+    color: {{ nav_hover }};
+  }
+  /* Right group */
+  .hp-right {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+  /* Cart */
+  .hp-cart {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+  }
+  .hp-cart svg {
+    width: 24px;
+    height: 24px;
+    color: {{ nav_color }};
+  }
+  .hp-cart-badge {
+    position: absolute;
+    top: -6px;
+    right: -8px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: {{ badge_bg }};
+    color: {{ badge_text }};
+    font-size: 10px;
+    font-weight: 700;
+    font-family: var(--font-body, 'Satoshi', sans-serif);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+  }
+  .hp-cart-badge:empty {
+    display: none;
+  }
+  /* Hamburger */
+  .hp-burger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    width: 28px;
+  }
+  .hp-burger span {
+    display: block;
+    height: 2px;
+    width: 100%;
+    background: {{ nav_color }};
+    border-radius: 2px;
+    transition: transform 0.3s, opacity 0.3s;
+  }
+  .hp-burger.hp-open span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+  .hp-burger.hp-open span:nth-child(2) {
+    opacity: 0;
+  }
+  .hp-burger.hp-open span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+  /* Mobile dropdown */
+  .hp-mobile-menu {
+    display: none;
+    position: fixed;
+    top: calc(var(--urgency-bar-height, 0px) + {{ h_mobile }}px);
+    left: 0;
+    right: 0;
+    background: {{ dropdown_bg }};
+    border-bottom: 1px solid {{ scroll_border }};
+    z-index: 99;
+    flex-direction: column;
+    max-height: calc(100vh - var(--urgency-bar-height, 0px) - {{ h_mobile }}px);
+    overflow-y: auto;
+  }
+  .hp-mobile-menu.hp-menu-open {
+    display: flex;
+  }
+  .hp-mobile-menu a {
+    display: block;
+    padding: 16px;
+    font-family: var(--font-body, 'Satoshi', sans-serif);
+    font-size: 15px;
+    font-weight: 400;
+    color: {{ nav_color }};
+    text-decoration: none;
+    border-bottom: 1px solid {{ scroll_border }};
+    transition: color 0.2s;
+  }
+  .hp-mobile-menu a:last-child {
+    border-bottom: none;
+  }
+  .hp-mobile-menu a:hover {
+    color: {{ nav_hover }};
+  }
+
+  @media (max-width: 767px) {
+    .hp-header {
+      height: {{ h_mobile }}px;
+    }
+    .hp-inner {
+      padding: 0 16px;
+    }
+    .hp-nav {
+      display: none;
+    }
+    .hp-burger {
+      display: flex;
+    }
+    .hp-brand img {
+      width: {{ logo_w_mobile }}px;
+    }
+    .hp-brand-text {
+      font-size: 20px;
+    }
+  }
 </style>
+
+<div class="hp-header" id="hp-header-{{ section.id }}">
+  <div class="hp-inner">
+    {%- comment -%}--- Logo / Brand ---{%- endcomment -%}
+    <a href="/" class="hp-brand">
+      {%- if logo != blank -%}
+        <img
+          src="{{ logo | image_url: width: 800 }}"
+          alt="{{ logo.alt | default: shop.name | escape }}"
+          loading="eager"
+          width="{{ logo.width }}"
+          height="{{ logo.height }}"
+        >
+      {%- else -%}
+        <span class="hp-brand-text">{{ brand_text | escape }}</span>
+      {%- endif -%}
+    </a>
+
+    {%- comment -%}--- Right side: nav + cart + burger ---{%- endcomment -%}
+    <div class="hp-right">
+      {%- if menu != blank -%}
+        <nav class="hp-nav" aria-label="Main navigation">
+          {%- for link in menu.links -%}
+            <a href="{{ link.url }}">{{ link.title | escape }}</a>
+          {%- endfor -%}
+        </nav>
+      {%- endif -%}
+
+      <a href="{{ routes.cart_url }}" class="hp-cart" aria-label="Cart">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <path d="M16 10a4 4 0 01-8 0"/>
+        </svg>
+        <span class="hp-cart-badge" data-cart-count>{{ cart.item_count }}</span>
+      </a>
+
+      <button class="hp-burger" id="hp-burger-{{ section.id }}" aria-label="Menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </div>
+</div>
+
+{%- if menu != blank -%}
+  <div class="hp-mobile-menu" id="hp-mobile-{{ section.id }}">
+    {%- for link in menu.links -%}
+      <a href="{{ link.url }}">{{ link.title | escape }}</a>
+    {%- endfor -%}
+  </div>
+{%- endif -%}
+
+<script>
+  (function() {
+    var header = document.getElementById('hp-header-{{ section.id }}');
+    var burger = document.getElementById('hp-burger-{{ section.id }}');
+    var mobile = document.getElementById('hp-mobile-{{ section.id }}');
+    if (!header) return;
+
+    /* Scroll background */
+    var ticking = false;
+    function onScroll() {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(function() {
+        var sy = window.pageYOffset || document.documentElement.scrollTop;
+        if (sy > 10) {
+          header.classList.add('hp-scrolled');
+        } else {
+          header.classList.remove('hp-scrolled');
+        }
+        ticking = false;
+      });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    /* Hamburger */
+    if (burger && mobile) {
+      burger.addEventListener('click', function() {
+        var open = burger.classList.toggle('hp-open');
+        mobile.classList.toggle('hp-menu-open');
+        burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+
+      /* Close on link click */
+      mobile.querySelectorAll('a').forEach(function(a) {
+        a.addEventListener('click', function() {
+          burger.classList.remove('hp-open');
+          mobile.classList.remove('hp-menu-open');
+          burger.setAttribute('aria-expanded', 'false');
+        });
+      });
+    }
+  })();
+</script>
 
 {% schema %}
 {

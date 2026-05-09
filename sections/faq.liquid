@@ -1,37 +1,148 @@
-<section class="vx-shell vx-shell--loading" data-vx-section="faq">
-  <div class="vx-editor-preview"><div class="vx-section-loader"><div class="vx-loader__spinner"></div></div></div>
-</section>
+<style>
+  #faq-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+  #faq-{{ section.id }} .faq__container {
+    max-width: {{ section.settings.max_width }}px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  #faq-{{ section.id }} .faq__title {
+    text-align: center;
+    font-family: var(--font-heading, 'Clash Grotesk', sans-serif);
+    font-weight: 700;
+    font-size: 28px;
+    text-transform: uppercase;
+    color: {{ section.settings.title_color }};
+    margin: 0 0 32px;
+    line-height: 1.2;
+  }
+  #faq-{{ section.id }} .faq__items {
+    display: flex;
+    flex-direction: column;
+    gap: {{ section.settings.item_gap }}px;
+  }
+  #faq-{{ section.id }} .faq__item {
+    background: {{ section.settings.card_bg }};
+    border: 1px solid {{ section.settings.card_border }};
+    border-radius: {{ section.settings.card_radius }}px;
+    padding: {{ section.settings.card_padding }}px;
+    transition: border-color 0.3s ease;
+  }
+  #faq-{{ section.id }} .faq__item.is-open {
+    border-color: {{ section.settings.card_border_open }};
+  }
+  #faq-{{ section.id }} .faq__question {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    gap: 16px;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+  #faq-{{ section.id }} .faq__question-text {
+    color: {{ section.settings.question_color }};
+    font-size: {{ section.settings.question_font_size }}px;
+    font-weight: 600;
+    line-height: 1.4;
+    margin: 0;
+  }
+  #faq-{{ section.id }} .faq__toggle {
+    width: {{ section.settings.toggle_size }}px;
+    height: {{ section.settings.toggle_size }}px;
+    min-width: {{ section.settings.toggle_size }}px;
+    border-radius: 50%;
+    background: {{ section.settings.toggle_bg }};
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s ease;
+  }
+  #faq-{{ section.id }} .faq__item.is-open .faq__toggle {
+    background: {{ section.settings.toggle_bg_open }};
+  }
+  #faq-{{ section.id }} .faq__toggle svg {
+    width: 14px;
+    height: 14px;
+    transition: transform 0.3s ease;
+    color: {{ section.settings.toggle_icon_color }};
+  }
+  #faq-{{ section.id }} .faq__item.is-open .faq__toggle svg {
+    transform: rotate(180deg);
+    color: {{ section.settings.toggle_icon_open }};
+  }
+  #faq-{{ section.id }} .faq__answer-wrapper {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease;
+  }
+  #faq-{{ section.id }} .faq__answer {
+    padding-top: 12px;
+    color: {{ section.settings.answer_color }};
+    font-size: {{ section.settings.answer_font_size }}px;
+    line-height: 1.6;
+  }
+  #faq-{{ section.id }} .faq__answer p {
+    margin: 0;
+  }
+</style>
 
-<script type="application/json" data-vx-settings="faq">
-{
-  "title": {{ section.settings.title | default: 'Frequently Asked Questions' | json }},
-  "title_color": {{ section.settings.title_color | default: '#ffffff' | json }},
-  "card_bg": {{ section.settings.card_bg | default: '#111111' | json }},
-  "card_border": {{ section.settings.card_border | default: '#2a2a2a' | json }},
-  "card_border_open": {{ section.settings.card_border_open | default: '#19d400' | json }},
-  "card_radius": {{ section.settings.card_radius | default: 12 }},
-  "card_padding": {{ section.settings.card_padding | default: 18 }},
-  "item_gap": {{ section.settings.item_gap | default: 12 }},
-  "max_width": {{ section.settings.max_width | default: 700 }},
-  "question_color": {{ section.settings.question_color | default: '#ffffff' | json }},
-  "answer_color": {{ section.settings.answer_color | default: '#9ca3af' | json }},
-  "question_font_size": {{ section.settings.question_font_size | default: 15 }},
-  "answer_font_size": {{ section.settings.answer_font_size | default: 14 }},
-  "toggle_size": {{ section.settings.toggle_size | default: 32 }},
-  "toggle_bg": {{ section.settings.toggle_bg | default: '#1a1a1a' | json }},
-  "toggle_bg_open": {{ section.settings.toggle_bg_open | default: '#19d400' | json }},
-  "toggle_icon_color": {{ section.settings.toggle_icon_color | default: '#ffffff' | json }},
-  "toggle_icon_open": {{ section.settings.toggle_icon_open | default: '#1a1a1a' | json }},
-  "padding_top": {{ section.settings.padding_top | default: 60 }},
-  "padding_bottom": {{ section.settings.padding_bottom | default: 60 }},
-  "blocks": [
-    {%- for block in section.blocks -%}
-      {%- if block.type == 'question' -%}
-        {"type":"question","settings":{"question":{{ block.settings.question | json }},"answer":{{ block.settings.answer | json }}}}{% unless forloop.last %},{% endunless %}
-      {%- endif -%}
-    {%- endfor -%}
-  ]
-}
+<div id="faq-{{ section.id }}">
+  <div class="faq__container">
+    <h2 class="faq__title">{{ section.settings.title }}</h2>
+    <div class="faq__items" data-faq-accordion>
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'question' -%}
+          <div class="faq__item{% if forloop.first %} is-open{% endif %}" data-faq-item {{ block.shopify_attributes }}>
+            <div class="faq__question" data-faq-trigger>
+              <span class="faq__question-text">{{ block.settings.question }}</span>
+              <div class="faq__toggle">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </div>
+            </div>
+            <div class="faq__answer-wrapper" data-faq-answer {% if forloop.first %}style="max-height: 500px;"{% endif %}>
+              <div class="faq__answer">{{ block.settings.answer }}</div>
+            </div>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+<script>
+  (function() {
+    var section = document.getElementById('faq-{{ section.id }}');
+    if (!section) return;
+
+    var items = section.querySelectorAll('[data-faq-item]');
+
+    items.forEach(function(item) {
+      var trigger = item.querySelector('[data-faq-trigger]');
+      var answer = item.querySelector('[data-faq-answer]');
+
+      trigger.addEventListener('click', function() {
+        var isOpen = item.classList.contains('is-open');
+
+        // Close all items
+        items.forEach(function(other) {
+          other.classList.remove('is-open');
+          var otherAnswer = other.querySelector('[data-faq-answer]');
+          otherAnswer.style.maxHeight = '0';
+        });
+
+        // Open clicked item if it was closed
+        if (!isOpen) {
+          item.classList.add('is-open');
+          answer.style.maxHeight = answer.scrollHeight + 'px';
+        }
+      });
+    });
+  })();
 </script>
 
 {% schema %}

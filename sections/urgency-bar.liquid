@@ -1,47 +1,231 @@
 {%- unless template.name == 'index' or section.settings.show_on_all_pages -%}
-  {%- style -%}.vx-shell[data-vx-section="urgency-bar"] { display: none !important; }{%- endstyle -%}
+  {%- style -%}.urgency-bar-section { display: none !important; }{%- endstyle -%}
 {%- endunless -%}
 
-<section class="vx-shell vx-shell--loading" data-vx-section="urgency-bar">
-  <div class="vx-editor-preview"><div class="vx-section-loader"><div class="vx-loader__spinner"></div></div></div>
-</section>
+{%- liquid
+  assign bg = section.settings.bg_color | default: '#000000'
+  assign text_color = section.settings.text_color | default: '#ffffff'
+  assign accent = section.settings.accent_color | default: '#19d400'
+  assign icon_color = section.settings.icon_color | default: '#19d400'
+  assign dot_color = section.settings.dot_color | default: '#19d400'
+  assign divider_color = section.settings.divider_color | default: '#333333'
+  assign border_color = section.settings.border_color | default: '#1a1a1a'
+  assign bar_height = section.settings.bar_height | default: 36
+  assign font_size = section.settings.font_size | default: 13
+  assign scroll_speed = section.settings.scroll_speed | default: 30
+  assign min_viewers = section.settings.min_viewers | default: 10
+  assign max_viewers = section.settings.max_viewers | default: 100
+  assign reveal_on_scroll = section.settings.reveal_on_scroll
+  assign reveal_distance = section.settings.reveal_distance | default: 80
+-%}
 
-<script type="application/json" data-vx-settings="urgency-bar">
-{
-  "reveal_on_scroll": {{ section.settings.reveal_on_scroll | json }},
-  "reveal_distance": {{ section.settings.reveal_distance | default: 80 }},
-  "show_on_all_pages": {{ section.settings.show_on_all_pages | json }},
-  "bg_color": {{ section.settings.bg_color | default: '#000000' | json }},
-  "text_color": {{ section.settings.text_color | default: '#ffffff' | json }},
-  "accent_color": {{ section.settings.accent_color | default: '#19d400' | json }},
-  "icon_color": {{ section.settings.icon_color | default: '#19d400' | json }},
-  "dot_color": {{ section.settings.dot_color | default: '#19d400' | json }},
-  "divider_color": {{ section.settings.divider_color | default: '#333333' | json }},
-  "border_color": {{ section.settings.border_color | default: '#1a1a1a' | json }},
-  "bar_height": {{ section.settings.bar_height | default: 36 }},
-  "font_size": {{ section.settings.font_size | default: 13 }},
-  "scroll_speed": {{ section.settings.scroll_speed | default: 30 }},
-  "min_viewers": {{ section.settings.min_viewers | default: 10 }},
-  "max_viewers": {{ section.settings.max_viewers | default: 100 }},
-  "show_countdown": {{ section.settings.show_countdown | json }},
-  "show_rating": {{ section.settings.show_rating | json }},
-  "show_viewers": {{ section.settings.show_viewers | json }},
-  "show_private": {{ section.settings.show_private | json }},
-  "show_personally_verified": {{ section.settings.show_personally_verified | json }},
-  "countdown_prefix": {{ section.settings.countdown_prefix | default: 'Price goes up in' | json }},
-  "rating_value": {{ section.settings.rating_value | default: '4.96/5' | json }},
-  "rating_count": {{ section.settings.rating_count | default: '2,400+' | json }},
-  "viewers_text": {{ section.settings.viewers_text | default: 'people viewing right now' | json }},
-  "private_text": {{ section.settings.private_text | default: 'Private suppliers not found anywhere else' | json }},
-  "personally_verified_text": {{ section.settings.personally_verified_text | default: 'All suppliers personally verified' | json }},
-  "blocks": [
-    {%- for block in section.blocks -%}
-      {%- if block.type == 'custom_item' -%}
-        {"type":"custom_item","settings":{"text":{{ block.settings.text | json }}}}{% unless forloop.last %},{% endunless %}
+<style>
+  .ub-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 200;
+    background: {{ bg }};
+    height: {{ bar_height }}px;
+    border-bottom: 1px solid {{ border_color }};
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    font-family: var(--font-body, 'Satoshi', sans-serif);
+    font-size: {{ font_size }}px;
+    color: {{ text_color }};
+    transform: translateY(-100%);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform;
+  }
+  .ub-bar.ub-visible {
+    transform: translateY(0);
+  }
+  .ub-track {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    animation: ub-scroll {{ scroll_speed }}s linear infinite;
+    will-change: transform;
+  }
+  .ub-bar:hover .ub-track {
+    animation-play-state: paused;
+  }
+  @keyframes ub-scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  .ub-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 0 16px;
+    flex-shrink: 0;
+  }
+  .ub-item svg {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+  }
+  .ub-accent {
+    color: {{ accent }};
+  }
+  .ub-divider {
+    color: {{ divider_color }};
+    font-size: 8px;
+    padding: 0 4px;
+    flex-shrink: 0;
+    line-height: 1;
+  }
+  /* Pulsing dot */
+  .ub-pulse {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: {{ dot_color }};
+    flex-shrink: 0;
+    position: relative;
+  }
+  .ub-pulse::after {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    border-radius: 50%;
+    background: {{ dot_color }};
+    opacity: 0;
+    animation: ub-pulse-ring 2s ease-out infinite;
+  }
+  @keyframes ub-pulse-ring {
+    0% { transform: scale(0.5); opacity: 0.6; }
+    100% { transform: scale(1.8); opacity: 0; }
+  }
+</style>
+
+<div class="ub-bar" id="ub-bar-{{ section.id }}" data-reveal="{{ reveal_on_scroll }}" data-reveal-distance="{{ reveal_distance }}" data-bar-height="{{ bar_height }}">
+  <div class="ub-track">
+    {%- comment -%}--- First copy of marquee items ---{%- endcomment -%}
+    {%- for i in (1..2) -%}
+
+      {%- if section.settings.show_viewers -%}
+        <span class="ub-item">
+          <span class="ub-pulse"></span>
+          <span><span class="ub-viewer-count" data-min="{{ min_viewers }}" data-max="{{ max_viewers }}">{{ min_viewers }}</span> {{ section.settings.viewers_text | default: 'people viewing right now' }}</span>
+        </span>
+        <span class="ub-divider">&#10039;</span>
       {%- endif -%}
+
+      {%- if section.settings.show_private -%}
+        <span class="ub-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="{{ icon_color }}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <span>{{ section.settings.private_text | default: 'Private suppliers not found anywhere else' }}</span>
+        </span>
+        <span class="ub-divider">&#10039;</span>
+      {%- endif -%}
+
+      {%- if section.settings.show_personally_verified -%}
+        <span class="ub-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="{{ icon_color }}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          <span>All suppliers personally <span class="ub-accent">verified</span></span>
+        </span>
+        <span class="ub-divider">&#10039;</span>
+      {%- endif -%}
+
+      {%- if section.settings.show_countdown -%}
+        <span class="ub-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="{{ icon_color }}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <span>{{ section.settings.countdown_prefix | default: 'Price goes up in' }} <span class="ub-accent ub-countdown">59:59</span></span>
+        </span>
+        <span class="ub-divider">&#10039;</span>
+      {%- endif -%}
+
+      {%- if section.settings.show_rating -%}
+        <span class="ub-item">
+          <svg viewBox="0 0 24 24" fill="{{ icon_color }}" stroke="{{ icon_color }}" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <span>Rated <span class="ub-accent">{{ section.settings.rating_value | default: '4.96/5' }}</span> by {{ section.settings.rating_count | default: '2,400+' }} resellers</span>
+        </span>
+        <span class="ub-divider">&#10039;</span>
+      {%- endif -%}
+
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'custom_item' and block.settings.text != blank -%}
+          <span class="ub-item" {{ block.shopify_attributes }}>
+            <span>{{ block.settings.text }}</span>
+          </span>
+          <span class="ub-divider">&#10039;</span>
+        {%- endif -%}
+      {%- endfor -%}
+
     {%- endfor -%}
-  ]
-}
+  </div>
+</div>
+
+<script>
+  (function() {
+    var bar = document.getElementById('ub-bar-{{ section.id }}');
+    if (!bar) return;
+
+    var reveal = bar.getAttribute('data-reveal') === 'true';
+    var revealDist = parseInt(bar.getAttribute('data-reveal-distance'), 10) || 80;
+    var barH = parseInt(bar.getAttribute('data-bar-height'), 10) || 36;
+    var shown = false;
+
+    /* Viewer count */
+    var vcEls = bar.querySelectorAll('.ub-viewer-count');
+    if (vcEls.length) {
+      var mn = parseInt(vcEls[0].getAttribute('data-min'), 10) || 10;
+      var mx = parseInt(vcEls[0].getAttribute('data-max'), 10) || 100;
+      function setViewers() {
+        var v = Math.floor(Math.random() * (mx - mn + 1)) + mn;
+        vcEls.forEach(function(el) { el.textContent = v; });
+      }
+      setViewers();
+      setInterval(setViewers, 5000);
+    }
+
+    /* Countdown to next hour */
+    var cdEls = bar.querySelectorAll('.ub-countdown');
+    if (cdEls.length) {
+      function updateCD() {
+        var now = new Date();
+        var mins = 59 - now.getMinutes();
+        var secs = 59 - now.getSeconds();
+        var str = (mins < 10 ? '0' : '') + mins + ':' + (secs < 10 ? '0' : '') + secs;
+        cdEls.forEach(function(el) { el.textContent = str; });
+      }
+      updateCD();
+      setInterval(updateCD, 1000);
+    }
+
+    /* Scroll reveal */
+    if (reveal) {
+      var ticking = false;
+      function onScroll() {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(function() {
+          var sy = window.pageYOffset || document.documentElement.scrollTop;
+          if (sy > revealDist && !shown) {
+            shown = true;
+            bar.classList.add('ub-visible');
+            document.documentElement.style.setProperty('--urgency-bar-height', barH + 'px');
+          } else if (sy <= revealDist && shown) {
+            shown = false;
+            bar.classList.remove('ub-visible');
+            document.documentElement.style.setProperty('--urgency-bar-height', '0px');
+          }
+          ticking = false;
+        });
+      }
+      document.documentElement.style.setProperty('--urgency-bar-height', '0px');
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+    } else {
+      /* Always visible */
+      bar.classList.add('ub-visible');
+      document.documentElement.style.setProperty('--urgency-bar-height', barH + 'px');
+    }
+  })();
 </script>
 
 {% schema %}
