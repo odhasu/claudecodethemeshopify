@@ -1,3 +1,15 @@
+{%- liquid
+  assign has_images = false
+  for i in (1..20)
+    assign img_key = 'image_' | append: i
+    if section.settings[img_key] != blank
+      assign has_images = true
+      break
+    endif
+  endfor
+-%}
+
+{%- if has_images -%}
 <section class="vx-shell vx-shell--loading" data-vx-section="testimonials">
   <div class="vx-editor-preview"><div class="vx-section-loader"><div class="vx-loader__spinner"></div></div></div>
 </section>
@@ -21,6 +33,7 @@
   {%- endfor -%}
 }
 </script>
+{%- endif -%}
 
 {% schema %}
 {

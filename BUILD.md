@@ -44,6 +44,7 @@
 - Real social links in footer
 
 ## Last worked on
+2026-05-09 — Luke's replication pass: testimonials hide when empty (no more spinner), unified all colors #39ff14 to #19d400 across entire theme, hero font default to Clash Grotesk 110px, hero font options cleaned to only loaded fonts, product grid button radius synced to 50px
 2026-05-09 — Hero: added bg image + gradient overlay + 2 CTA buttons; Product cards: inline descriptions; License validation fix (Supabase anon key)
 2026-05-08 — License protection end-to-end: Supabase RPC, validate endpoint fix, loader from CDN, rebranding to Vexel
 2026-04-29 — License protection plan finalized (Kenso shell model), button radius fix, header dark bg

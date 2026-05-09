@@ -124,7 +124,7 @@
       { "type": "textarea", "id": "chat_greeting", "label": "Greeting message", "default": "yooo whats good! u looking to start reselling? lmk if u need help picking the right suppliers 🔥" },
       { "type": "text", "id": "chat_placeholder", "label": "Input placeholder", "default": "Ask me anything..." },
       { "type": "header", "content": "Appearance" },
-      { "type": "color", "id": "chat_btn_bg", "label": "Button color", "default": "#39ff14" },
+      { "type": "color", "id": "chat_btn_bg", "label": "Button color", "default": "#19d400" },
       { "type": "range", "id": "chat_btn_size", "label": "Button size (px)", "min": 44, "max": 80, "step": 4, "default": 60 },
       { "type": "range", "id": "chat_window_width", "label": "Chat window width (px)", "min": 300, "max": 500, "step": 20, "default": 380 },
       { "type": "color", "id": "chat_window_bg", "label": "Window background", "default": "#111111" },

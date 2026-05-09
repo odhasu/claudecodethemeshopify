@@ -13,6 +13,11 @@
 - Add real social URLs to footer
 
 ## Fixed
+- Testimonials loading spinner — section now hides entirely when no images are configured (no more empty spinner)
+- Color inconsistency (#39ff14 remnants) — unified ALL defaults and stored values to #19d400 across every file
+- Hero font default — changed from Satoshi to Clash Grotesk (matches Luke's), size from 64px to 110px
+- Hero font options — removed 10 unloaded Google Fonts, kept only Clash Grotesk and Satoshi
+- Product grid buy button radius — Liquid default synced to 50px (fully rounded, matches schema and Luke's)
 - License protection — Kenso shell model fully working (Supabase RPC + Vercel + CDN loader)
 - Hero missing features — added bg image, gradient overlay, 2 CTA buttons (matching Luke's)
 - Product cards — added inline description text (2-line clamp)
