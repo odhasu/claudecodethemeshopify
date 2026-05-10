@@ -122,23 +122,9 @@
       clip: rect(0,0,0,0); white-space: nowrap; border: 0;
     }
 
-    /* Shell loading states */
-    [data-vx-section]:empty { display: none !important; }
-    .vx-shell--loading:not(:empty) {
-      min-height: 200px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: var(--color-bg);
-    }
-    .vx-shell--header { min-height: auto; }
+    /* Shell states — full-page loader handles visibility */
+    .vx-shell--loading .vx-editor-preview { display: none; }
     .vx-shell:not(.vx-shell--loading) .vx-editor-preview { display: none; }
-    .vx-section-loader {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100px;
-    }
 
     /* Loading overlay */
     body.is-loading { overflow: hidden !important; }
@@ -228,24 +214,27 @@
     (function(){
       var loader=document.getElementById('vx-loader');
       if(!loader)return;
-      var hidden=false;
-      function hideLoader(){
+      var start=Date.now(),hidden=false;
+      function reveal(){
         if(hidden)return;hidden=true;
-        document.body.classList.remove('is-loading');
-        loader.classList.add('is-hidden');
-        setTimeout(function(){loader.remove()},500);
+        var wait=Math.max(0,1000-(Date.now()-start));
+        setTimeout(function(){
+          document.body.classList.remove('is-loading');
+          loader.classList.add('is-hidden');
+          setTimeout(function(){loader.remove()},600);
+        },wait);
       }
       var shells=document.querySelectorAll('[data-vx-section]');
-      if(shells.length===0){hideLoader();return}
-      var observer=new MutationObserver(function(mutations){
-        mutations.forEach(function(m){
-          if(m.target.hasAttribute&&m.target.hasAttribute('data-vx-section')&&m.target.children.length>0&&!m.target.classList.contains('vx-shell--loading')){
-            hideLoader();
-          }
-        });
-      });
-      shells.forEach(function(shell){observer.observe(shell,{childList:true,attributes:true,attributeFilter:['class']})});
-      setTimeout(hideLoader,5000);
+      if(!shells.length){reveal();return}
+      function check(){
+        for(var i=0;i<shells.length;i++){
+          if(shells[i].classList.contains('vx-shell--loading'))return;
+        }
+        reveal();
+      }
+      var obs=new MutationObserver(check);
+      shells.forEach(function(s){obs.observe(s,{childList:true,attributes:true,attributeFilter:['class']})});
+      setTimeout(reveal,5000);
     })();
     </script>
   {%- else -%}

@@ -33,26 +33,6 @@
         "personally_verified_text": "All suppliers personally verified"
       }
     },
-    "header-pill": {
-      "type": "header-pill",
-      "settings": {
-        "logo": "shopify://shop_images/fixed.avif",
-        "logo_width_desktop": 200,
-        "logo_width_mobile": 120,
-        "brand_text": "Vexel",
-        "brand_color": "#ffffff",
-        "menu": "main-menu",
-        "nav_color": "#ffffff",
-        "nav_hover_color": "#19d400",
-        "scroll_bg": "#000000",
-        "scroll_border": "#1a1a1a",
-        "dropdown_bg": "#0a0a0a",
-        "badge_bg": "#19d400",
-        "badge_text_color": "#000000",
-        "header_height_desktop": 70,
-        "header_height_mobile": 58
-      }
-    }
   },
-  "order": ["urgency-bar", "header-pill"]
+  "order": ["urgency-bar"]
 }
