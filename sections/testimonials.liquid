@@ -1,115 +1,26 @@
-{%- liquid
-  assign has_images = false
-  for i in (1..20)
-    assign img_key = 'image_' | append: i
-    if section.settings[img_key] != blank
-      assign has_images = true
-      break
-    endif
-  endfor
--%}
+<section class="vx-shell vx-shell--loading" data-vx-section="testimonials">
+  <div class="vx-editor-preview"><div class="vx-section-loader"><div class="vx-loader__spinner"></div></div></div>
+</section>
 
-{%- if has_images -%}
-<style>
-  #testimonials-{{ section.id }} {
-    background: {{ section.settings.bg_color }};
-    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
-    overflow: hidden;
-  }
-
-  #testimonials-{{ section.id }} .tm-heading {
-    font-family: 'Clash Grotesk', sans-serif;
-    font-weight: 700;
-    font-size: 28px;
-    text-transform: uppercase;
-    color: {{ section.settings.title_color }};
-    text-align: center;
-    margin: 0 0 32px;
-    padding: 0 20px;
-  }
-
-  #testimonials-{{ section.id }} .tm-wrapper {
-    position: relative;
-    max-width: {{ section.settings.max_width }}px;
-    margin: 0 auto;
-    overflow: hidden;
-  }
-
-  #testimonials-{{ section.id }} .tm-wrapper::before,
-  #testimonials-{{ section.id }} .tm-wrapper::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    width: 80px;
-    z-index: 2;
-    pointer-events: none;
-  }
-
-  #testimonials-{{ section.id }} .tm-wrapper::before {
-    left: 0;
-    background: linear-gradient(to right, {{ section.settings.bg_color }}, transparent);
-  }
-
-  #testimonials-{{ section.id }} .tm-wrapper::after {
-    right: 0;
-    background: linear-gradient(to left, {{ section.settings.bg_color }}, transparent);
-  }
-
-  #testimonials-{{ section.id }} .tm-track {
-    display: flex;
-    gap: {{ section.settings.gap }}px;
-    width: max-content;
-    animation: tm-scroll-{{ section.id }} {{ section.settings.scroll_speed }}s linear infinite;
-  }
-
-  #testimonials-{{ section.id }} .tm-wrapper:hover .tm-track {
-    animation-play-state: paused;
-  }
-
-  #testimonials-{{ section.id }} .tm-track img {
-    height: {{ section.settings.image_height }}px;
-    width: auto;
-    border-radius: {{ section.settings.image_radius }}px;
-    object-fit: cover;
-    display: block;
-    flex-shrink: 0;
-  }
-
-  @keyframes tm-scroll-{{ section.id }} {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
-  }
-
-  @media (max-width: 749px) {
-    #testimonials-{{ section.id }} .tm-track img {
-      height: {{ section.settings.image_height_mobile }}px;
-    }
-  }
-</style>
-
-<div id="testimonials-{{ section.id }}">
-  <h2 class="tm-heading">{{ section.settings.title }}</h2>
-  <div class="tm-wrapper">
-    <div class="tm-track">
-      {%- comment -%} First set {%- endcomment -%}
-      {%- for i in (1..20) -%}
-        {%- assign img_key = 'image_' | append: i -%}
-        {%- if section.settings[img_key] != blank -%}
-          <img src="{{ section.settings[img_key] | image_url: height: 500 }}" alt="Customer testimonial {{ i }}" loading="lazy">
-        {%- endif -%}
-      {%- endfor -%}
-      {%- comment -%} Duplicate set for seamless loop {%- endcomment -%}
-      {%- for i in (1..20) -%}
-        {%- assign img_key = 'image_' | append: i -%}
-        {%- if section.settings[img_key] != blank -%}
-          <img src="{{ section.settings[img_key] | image_url: height: 500 }}" alt="Customer testimonial {{ i }}" loading="lazy">
-        {%- endif -%}
-      {%- endfor -%}
-    </div>
-  </div>
-</div>
-{%- endif -%}
+<script type="application/json" data-vx-settings="testimonials">
+{
+  "title": {{ section.settings.title | default: 'What Our Customers Say' | json }},
+  "title_color": {{ section.settings.title_color | default: '#ffffff' | json }},
+  "bg_color": {{ section.settings.bg_color | default: '#000000' | json }},
+  "scroll_speed": {{ section.settings.scroll_speed | default: 20 }},
+  "max_width": {{ section.settings.max_width | default: 1400 }},
+  "image_height": {{ section.settings.image_height | default: 250 }},
+  "image_height_mobile": {{ section.settings.image_height_mobile | default: 180 }},
+  "image_radius": {{ section.settings.image_radius | default: 12 }},
+  "gap": {{ section.settings.gap | default: 16 }},
+  "padding_top": {{ section.settings.padding_top | default: 60 }},
+  "padding_bottom": {{ section.settings.padding_bottom | default: 60 }},
+  {%- for i in (1..20) -%}
+    {%- assign img_key = 'image_' | append: i -%}
+    "image_{{ i }}": {% if section.settings[img_key] != blank %}{{ section.settings[img_key] | image_url: height: 500 | json }}{% else %}null{% endif %}{% unless i == 20 %},{% endunless %}
+  {%- endfor -%}
+}
+</script>
 
 {% schema %}
 {

@@ -1,57 +1,58 @@
 # Theme — Context
 
-## What this is
-Vexel Shopify theme — premium theme product for resellers, replicating lukesvendors.com design.
+## What it is
+Vexel — a premium Shopify theme product sold to resellers. Built from scratch, replicating lukesvendors.com design. License-protected via obfuscated loader + Railway validation server (Kenso shell model).
 
 ## Repo
-- GitHub: odhasu/claudecodethemeshopify
-- Branch: v2 (working branch, never touch main)
-- Loader repo: odhasu/vexel-loader (license protection, separate)
+GitHub: odhasu/claudecodethemeshopify
+- main — V1, live on Shopify, never touch
+- v2 — active development, all work goes here
+
+Working dir: /Users/oscargraafmans/Desktop/ogresell/theme
 
 ## Stack
-- Shopify Liquid (native rendering, no client-side loader)
-- Clash Grotesk + Satoshi (Fontshare)
-- CSS variables for theming
-- Vanilla JS for interactivity (marquees, FAQ toggle, modals)
+Shopify Liquid (shell sections), vanilla CSS, vanilla JS. No frameworks.
+License protection: obfuscated client-side loader (javascript-obfuscator) + Railway server for validation.
 
-## Architecture
-All sections render directly in Liquid — HTML, CSS, and JS are inline in each section file. No shells, no loaders, no build step.
+## Architecture (Kenso shell model)
+Sections are empty shells — just a div + JSON data. An obfuscated loader JS validates the license against a Railway server, then renders all section HTML client-side. Without a valid license, the theme shows nothing.
 
 ## File structure
-```
 layout/
-  theme.liquid         — main layout (fonts, CSS vars, global styles)
-  password.liquid      — password page
-
+  theme.liquid         — root layout, CSS vars, VexelConfig, loading screen, loader script
 sections/
-  urgency-bar.liquid   — scrolling marquee bar (header group)
-  header-pill.liquid   — fixed header (header group)
-  hero.liquid          — hero section with headline + CTA
-  product-grid.liquid  — product cards grid
-  testimonials.liquid  — image carousel
-  faq.liquid           — accordion FAQ
-  reviews.liquid       — customer reviews grid
-  trust-badges.liquid  — scrolling badges bar (footer group)
-  footer.liquid        — site footer (footer group)
-  cart-drawer.liquid   — slide-out cart
-  bundle-builder.liquid — bundle discount builder
-  results-carousel.liquid — results showcase
-  main-product.liquid  — product page
-  main-cart.liquid     — cart page
-
-snippets/
-  live-sales-notification.liquid — purchase toast popup
-  chat-widget.liquid   — chatbot widget
-  meta-tags.liquid     — SEO meta tags
-
+  urgency-bar.liquid   — shell + JSON
+  header-pill.liquid   — shell + JSON
+  hero.liquid          — shell + JSON
+  product-grid.liquid  — shell + JSON + products JSON
+  trust-badges.liquid  — shell + JSON
+  testimonials.liquid  — shell + JSON
+  reviews.liquid       — shell + JSON
+  faq.liquid           — shell + JSON
+  footer.liquid        — shell + JSON (protected — removal breaks theme)
+  cart-drawer.liquid    — regular Liquid (no shell)
+  main-product.liquid  — regular Liquid
 assets/
-  theme.css            — global utility CSS
-  theme.js             — scroll reveal + utilities
-
+  theme.css            — global styles
+  theme.js             — global JS (loader dismiss, scroll behavior)
+snippets/
+  chat-widget.liquid
+  live-sales-notification.liquid
+  meta-tags.liquid
 config/
-  settings_schema.json — theme settings schema
-  settings_data.json   — theme settings values
-
+  settings_schema.json — global theme settings (includes License section)
+  settings_data.json   — saved setting values
 templates/
-  index.json           — homepage template
-```
+  index.json           — homepage sections + order
+sections/
+  header-group.json    — header sections + order
+  footer-group.json    — footer sections + order
+
+## Related projects
+- License server (Railway): /Users/oscargraafmans/Desktop/ogresell/runtime/
+- Dashboard + store: /Users/oscargraafmans/Desktop/ogresell/store/
+- Obfuscated loader source: runtime/src/loader.js -> runtime/dist/scaled-loader.js
+
+## Design reference
+lukesvendors.com — check before building anything visual
+Kenso theme — /tmp/kenso-extract/ — architecture reference for shell model

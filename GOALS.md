@@ -1,20 +1,27 @@
 # Theme — Goals
 
 ## What we're building
-Vexel — a premium Shopify theme product for resellers. 1:1 replica of lukesvendors.com design. Native Liquid rendering (no loader needed for visuals).
+Vexel — a premium Shopify theme product for resellers. Replicates lukesvendors.com design. License-protected using the Kenso shell model (obfuscated loader + server validation).
 
-## Current sprint — Visual replication
-1. All sections rendering natively in Liquid (DONE)
-2. Upload content in Shopify admin (images, social links, menu items)
-3. Mobile polish pass
-4. Results carousel section on homepage
+## Current sprint — License Protection (Kenso Shell Model)
+1. Convert all 10 sections to shells (empty div + JSON data)
+2. Build obfuscated loader that validates license + renders sections client-side
+3. Set up Railway server (POST /api/validate + serve loader JS)
+4. Update theme.liquid (VexelConfig, loading states, loader script)
+5. Build pipeline (obfuscate loader, package theme ZIP)
 
-## License protection (separate)
-Loader moved to odhasu/vexel-loader. Will be re-integrated later as an optional layer on top of the native theme.
+## Content tasks (after protection is done)
+- Upload hero background image in Shopify admin
+- Upload more customer testimonial screenshots
+- Add real social links to footer
+- Results carousel section on homepage
+- Mobile polish pass
 
 ## What success looks like
-- Page loads fast (no client-side rendering delay)
-- Visually identical to lukesvendors.com
+- Page loads fast (< 2s first load, < 500ms cached)
+- Without valid license: nothing renders, shows error page
+- Footer removal = loading screen forever
+- Obfuscated code — resellers can't easily bypass
 - Every section configurable through Shopify theme editor
 - Mobile looks as good as desktop
 - Distributed as ZIP, customers install on their Shopify store

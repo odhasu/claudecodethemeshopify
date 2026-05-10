@@ -1,117 +1,26 @@
-<style>
-  #trust-badges-{{ section.id }} {
-    background: {{ section.settings.bg_color }};
-    border-top: 1px solid {{ section.settings.border_top }};
-    border-bottom: 1px solid {{ section.settings.border_bot }};
-    padding: 10px 0;
-    overflow: hidden;
-  }
+<section class="vx-shell vx-shell--loading" data-vx-section="trust-badges">
+  <div class="vx-editor-preview"><div class="vx-section-loader"><div class="vx-loader__spinner"></div></div></div>
+</section>
 
-  #trust-badges-{{ section.id }} .tb-track {
-    display: flex;
-    align-items: center;
-    width: max-content;
-    animation: tb-scroll-{{ section.id }} {{ section.settings.scroll_speed }}s linear infinite;
-  }
-
-  #trust-badges-{{ section.id }}:hover .tb-track {
-    animation-play-state: paused;
-  }
-
-  #trust-badges-{{ section.id }} .tb-badge {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    white-space: nowrap;
-    padding: 0 16px;
-  }
-
-  #trust-badges-{{ section.id }} .tb-badge svg {
-    width: 16px;
-    height: 16px;
-    flex-shrink: 0;
-    fill: {{ section.settings.icon_color }};
-  }
-
-  #trust-badges-{{ section.id }} .tb-badge span {
-    font-family: 'Satoshi', sans-serif;
-    font-size: 13px;
-    font-weight: 500;
-    color: {{ section.settings.text_color }};
-  }
-
-  #trust-badges-{{ section.id }} .tb-sep {
-    color: {{ section.settings.icon_color }};
-    font-size: 8px;
-    opacity: 0.5;
-    flex-shrink: 0;
-  }
-
-  @keyframes tb-scroll-{{ section.id }} {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
-  }
-</style>
-
-{%- capture badge_1_svg -%}
-  {%- case section.settings.badge_1_icon -%}
-    {%- when 'users' -%}<svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-    {%- when 'shield' -%}<svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-    {%- when 'headset' -%}<svg viewBox="0 0 24 24"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
-    {%- when 'bolt' -%}<svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-    {%- when 'star' -%}<svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-  {%- endcase -%}
-{%- endcapture -%}
-
-{%- capture badge_2_svg -%}
-  {%- case section.settings.badge_2_icon -%}
-    {%- when 'users' -%}<svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-    {%- when 'shield' -%}<svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-    {%- when 'headset' -%}<svg viewBox="0 0 24 24"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
-    {%- when 'bolt' -%}<svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-    {%- when 'star' -%}<svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-  {%- endcase -%}
-{%- endcapture -%}
-
-{%- capture badge_3_svg -%}
-  {%- case section.settings.badge_3_icon -%}
-    {%- when 'users' -%}<svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-    {%- when 'shield' -%}<svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-    {%- when 'headset' -%}<svg viewBox="0 0 24 24"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
-    {%- when 'bolt' -%}<svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-    {%- when 'star' -%}<svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-  {%- endcase -%}
-{%- endcapture -%}
-
-{%- capture badge_4_svg -%}
-  {%- case section.settings.badge_4_icon -%}
-    {%- when 'users' -%}<svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-    {%- when 'shield' -%}<svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-    {%- when 'headset' -%}<svg viewBox="0 0 24 24"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
-    {%- when 'bolt' -%}<svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-    {%- when 'star' -%}<svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-  {%- endcase -%}
-{%- endcapture -%}
-
-{%- capture badge_set -%}
-  <div class="tb-badge">{{ badge_1_svg }}<span>{{ section.settings.badge_1_text }}</span></div>
-  {%- if section.settings.show_separator -%}<span class="tb-sep">&#9679;</span>{%- endif -%}
-  <div class="tb-badge">{{ badge_2_svg }}<span>{{ section.settings.badge_2_text }}</span></div>
-  {%- if section.settings.show_separator -%}<span class="tb-sep">&#9679;</span>{%- endif -%}
-  <div class="tb-badge">{{ badge_3_svg }}<span>{{ section.settings.badge_3_text }}</span></div>
-  {%- if section.settings.show_separator -%}<span class="tb-sep">&#9679;</span>{%- endif -%}
-  <div class="tb-badge">{{ badge_4_svg }}<span>{{ section.settings.badge_4_text }}</span></div>
-  {%- if section.settings.show_separator -%}<span class="tb-sep">&#9679;</span>{%- endif -%}
-{%- endcapture -%}
-
-<div id="trust-badges-{{ section.id }}">
-  <div class="tb-track">
-    {{ badge_set }}
-    {{ badge_set }}
-    {{ badge_set }}
-    {{ badge_set }}
-  </div>
-</div>
+<script type="application/json" data-vx-settings="trust-badges">
+{
+  "bg_color": {{ section.settings.bg_color | default: '#000000' | json }},
+  "border_top": {{ section.settings.border_top | default: '#1a1a1a' | json }},
+  "border_bot": {{ section.settings.border_bot | default: '#1a1a1a' | json }},
+  "icon_color": {{ section.settings.icon_color | default: '#19d400' | json }},
+  "text_color": {{ section.settings.text_color | default: '#ffffff' | json }},
+  "scroll_speed": {{ section.settings.scroll_speed | default: 30 }},
+  "show_separator": {{ section.settings.show_separator | json }},
+  "badge_1_text": {{ section.settings.badge_1_text | default: '5,000+ Happy Customers' | json }},
+  "badge_1_icon": {{ section.settings.badge_1_icon | default: 'users' | json }},
+  "badge_2_text": {{ section.settings.badge_2_text | default: 'Verified Seller' | json }},
+  "badge_2_icon": {{ section.settings.badge_2_icon | default: 'shield' | json }},
+  "badge_3_text": {{ section.settings.badge_3_text | default: '24/7 Support' | json }},
+  "badge_3_icon": {{ section.settings.badge_3_icon | default: 'headset' | json }},
+  "badge_4_text": {{ section.settings.badge_4_text | default: 'Instant Access' | json }},
+  "badge_4_icon": {{ section.settings.badge_4_icon | default: 'bolt' | json }}
+}
+</script>
 
 {% schema %}
 {

@@ -1,185 +1,43 @@
-<style>
-  #footer-{{ section.id }} {
-    background: {{ section.settings.bg_color }};
-    border-top: 1px solid {{ section.settings.border_color }};
-    padding: {{ section.settings.padding_top }}px 20px {{ section.settings.padding_bottom }}px;
-  }
+<section class="vx-shell vx-shell--loading" data-vx-section="footer" data-vx-footer>
+  <div class="vx-editor-preview"><div class="vx-section-loader"><div class="vx-loader__spinner"></div></div></div>
+</section>
 
-  #footer-{{ section.id }} .ft-inner {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 24px;
-  }
+<script type="application/json" data-vx-settings="footer">
+{
+  "logo_url": {% if section.settings.logo != blank %}{{ section.settings.logo | image_url: height: 80 | json }}{% else %}null{% endif %},
+  "logo_height": {{ section.settings.logo_height | default: 40 }},
+  "brand_text": {{ section.settings.brand_text | default: shop.name | json }},
+  "brand_font_size": {{ section.settings.brand_font_size | default: 26 }},
+  "brand_color": {{ section.settings.brand_color | default: '#ffffff' | json }},
+  "show_policies": {{ section.settings.show_policies | json }},
+  "label_refund": {{ section.settings.label_refund | default: 'Refund' | json }},
+  "label_shipping": {{ section.settings.label_shipping | default: 'Shipping' | json }},
+  "label_privacy": {{ section.settings.label_privacy | default: 'Privacy' | json }},
+  "label_terms": {{ section.settings.label_terms | default: 'Terms' | json }},
+  "instagram_url": {{ section.settings.instagram_url | default: '' | json }},
+  "tiktok_url": {{ section.settings.tiktok_url | default: '' | json }},
+  "youtube_url": {{ section.settings.youtube_url | default: '' | json }},
+  "discord_url": {{ section.settings.discord_url | default: '' | json }},
+  "social_icon_color": {{ section.settings.social_icon_color | default: '#19d400' | json }},
+  "social_icon_size": {{ section.settings.social_icon_size | default: 20 }},
+  "show_cta": {{ section.settings.show_cta | json }},
+  "cta_text": {{ section.settings.cta_text | default: 'Get this store design' | json }},
+  "cta_url": {{ section.settings.cta_url | default: 'https://vexelthemes.com' | json }},
+  "cta_color": {{ section.settings.cta_color | default: '#19d400' | json }},
+  "cta_text_color": {{ section.settings.cta_text_color | default: '#000000' | json }},
+  "show_copyright": {{ section.settings.show_copyright | json }},
+  "copyright_name": {{ section.settings.copyright_name | default: shop.name | json }},
+  "bg_color": {{ section.settings.bg_color | default: '#0a0a0a' | json }},
+  "border_color": {{ section.settings.border_color | default: '#1a1a1a' | json }},
+  "link_color": {{ section.settings.link_color | default: '#6b7280' | json }},
+  "link_hover_color": {{ section.settings.link_hover_color | default: '#ffffff' | json }},
+  "copyright_color": {{ section.settings.copyright_color | default: '#6b7280' | json }},
+  "padding_top": {{ section.settings.padding_top | default: 48 }},
+  "padding_bottom": {{ section.settings.padding_bottom | default: 48 }}
+}
+</script>
 
-  #footer-{{ section.id }} .ft-brand {
-    font-family: 'Clash Grotesk', sans-serif;
-    font-weight: 700;
-    font-style: italic;
-    font-size: {{ section.settings.brand_font_size }}px;
-    color: {{ section.settings.brand_color }};
-    text-decoration: none;
-    line-height: 1;
-  }
-
-  #footer-{{ section.id }} .ft-brand img {
-    height: {{ section.settings.logo_height }}px;
-    width: auto;
-    display: block;
-  }
-
-  #footer-{{ section.id }} .ft-socials {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-  }
-
-  #footer-{{ section.id }} .ft-socials a {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: {{ section.settings.social_icon_color }};
-    transition: opacity 0.2s;
-  }
-
-  #footer-{{ section.id }} .ft-socials a:hover {
-    opacity: 0.7;
-  }
-
-  #footer-{{ section.id }} .ft-socials svg {
-    width: {{ section.settings.social_icon_size }}px;
-    height: {{ section.settings.social_icon_size }}px;
-    fill: currentColor;
-  }
-
-  #footer-{{ section.id }} .ft-cta {
-    display: inline-block;
-    background: {{ section.settings.cta_color }};
-    color: {{ section.settings.cta_text_color }};
-    font-family: 'Satoshi', sans-serif;
-    font-weight: 700;
-    font-size: 14px;
-    padding: 14px 32px;
-    border-radius: 50px;
-    text-transform: uppercase;
-    letter-spacing: 0.03em;
-    text-decoration: none;
-    border: none;
-    cursor: pointer;
-    transition: opacity 0.2s;
-  }
-
-  #footer-{{ section.id }} .ft-cta:hover {
-    opacity: 0.85;
-  }
-
-  #footer-{{ section.id }} .ft-policies {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-
-  #footer-{{ section.id }} .ft-policies a {
-    color: {{ section.settings.link_color }};
-    font-family: 'Satoshi', sans-serif;
-    font-size: 13px;
-    text-decoration: none;
-    transition: color 0.2s;
-  }
-
-  #footer-{{ section.id }} .ft-policies a:hover {
-    color: {{ section.settings.link_hover_color }};
-  }
-
-  #footer-{{ section.id }} .ft-policies .ft-pipe {
-    color: {{ section.settings.link_color }};
-    font-size: 13px;
-    user-select: none;
-  }
-
-  #footer-{{ section.id }} .ft-copyright {
-    color: {{ section.settings.copyright_color }};
-    font-family: 'Satoshi', sans-serif;
-    font-size: 12px;
-    margin: 0;
-  }
-</style>
-
-<div id="footer-{{ section.id }}">
-  <div class="ft-inner">
-    {%- comment -%} Brand / Logo {%- endcomment -%}
-    {%- if section.settings.logo != blank -%}
-      <div class="ft-brand">
-        <img src="{{ section.settings.logo | image_url: height: 80 }}" alt="{{ shop.name }}">
-      </div>
-    {%- else -%}
-      <div class="ft-brand">{{ section.settings.brand_text | default: shop.name }}</div>
-    {%- endif -%}
-
-    {%- comment -%} Social Icons {%- endcomment -%}
-    {%- if section.settings.instagram_url != blank or section.settings.tiktok_url != blank or section.settings.youtube_url != blank or section.settings.discord_url != blank -%}
-      <div class="ft-socials">
-        {%- if section.settings.instagram_url != blank -%}
-          <a href="{{ section.settings.instagram_url }}" target="_blank" rel="noopener" aria-label="Instagram">
-            <svg viewBox="0 0 24 24"><path d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2zm0 1.5A4.25 4.25 0 0 0 3.5 7.75v8.5A4.25 4.25 0 0 0 7.75 20.5h8.5A4.25 4.25 0 0 0 20.5 16.25v-8.5A4.25 4.25 0 0 0 16.25 3.5h-8.5zM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 1.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7zm5.25-2.5a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/></svg>
-          </a>
-        {%- endif -%}
-        {%- if section.settings.tiktok_url != blank -%}
-          <a href="{{ section.settings.tiktok_url }}" target="_blank" rel="noopener" aria-label="TikTok">
-            <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1v-3.52a6.37 6.37 0 0 0-.79-.05A6.34 6.34 0 0 0 3.15 15a6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V9.37a8.16 8.16 0 0 0 4.76 1.52v-3.4a4.85 4.85 0 0 1-1-.8z"/></svg>
-          </a>
-        {%- endif -%}
-        {%- if section.settings.youtube_url != blank -%}
-          <a href="{{ section.settings.youtube_url }}" target="_blank" rel="noopener" aria-label="YouTube">
-            <svg viewBox="0 0 24 24"><path d="M23.5 6.19a3.02 3.02 0 0 0-2.12-2.14C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.38.55A3.02 3.02 0 0 0 .5 6.19 31.6 31.6 0 0 0 0 12a31.6 31.6 0 0 0 .5 5.81 3.02 3.02 0 0 0 2.12 2.14c1.88.55 9.38.55 9.38.55s7.5 0 9.38-.55a3.02 3.02 0 0 0 2.12-2.14A31.6 31.6 0 0 0 24 12a31.6 31.6 0 0 0-.5-5.81zM9.75 15.02V8.98L15.5 12l-5.75 3.02z"/></svg>
-          </a>
-        {%- endif -%}
-        {%- if section.settings.discord_url != blank -%}
-          <a href="{{ section.settings.discord_url }}" target="_blank" rel="noopener" aria-label="Discord">
-            <svg viewBox="0 0 24 24"><path d="M20.32 4.37A19.8 19.8 0 0 0 15.44 3c-.22.4-.47.93-.65 1.35a18.3 18.3 0 0 0-5.58 0A13.6 13.6 0 0 0 8.56 3a19.74 19.74 0 0 0-4.88 1.37C.53 9.05-.32 13.6.1 18.08a19.9 19.9 0 0 0 6.07 3.06 14.6 14.6 0 0 0 1.3-2.12 12.9 12.9 0 0 1-2.05-.98c.17-.13.34-.26.5-.39a14.18 14.18 0 0 0 12.16 0c.17.14.33.27.5.4a12.97 12.97 0 0 1-2.06.97 14.6 14.6 0 0 0 1.3 2.12 19.86 19.86 0 0 0 6.08-3.06c.5-5.18-.84-9.68-3.58-13.7zM8.01 15.33c-1.18 0-2.15-1.09-2.15-2.42s.95-2.42 2.15-2.42 2.17 1.09 2.15 2.42c0 1.33-.95 2.42-2.15 2.42zm7.98 0c-1.18 0-2.15-1.09-2.15-2.42s.95-2.42 2.15-2.42 2.17 1.09 2.15 2.42c0 1.33-.95 2.42-2.15 2.42z"/></svg>
-          </a>
-        {%- endif -%}
-      </div>
-    {%- endif -%}
-
-    {%- comment -%} CTA Button {%- endcomment -%}
-    {%- if section.settings.show_cta -%}
-      <a href="{{ section.settings.cta_url | default: 'https://vexelthemes.com' }}" class="ft-cta" target="_blank" rel="noopener">
-        {{ section.settings.cta_text | default: 'Get this store design' }}
-      </a>
-    {%- endif -%}
-
-    {%- comment -%} Policy Links {%- endcomment -%}
-    {%- if section.settings.show_policies -%}
-      <div class="ft-policies">
-        {%- if shop.policies.refund_policy != blank -%}
-          <a href="{{ shop.policies.refund_policy.url }}">{{ section.settings.label_refund | default: 'Refund' }}</a>
-          <span class="ft-pipe">|</span>
-        {%- endif -%}
-        {%- if shop.policies.shipping_policy != blank -%}
-          <a href="{{ shop.policies.shipping_policy.url }}">{{ section.settings.label_shipping | default: 'Shipping' }}</a>
-          <span class="ft-pipe">|</span>
-        {%- endif -%}
-        {%- if shop.policies.privacy_policy != blank -%}
-          <a href="{{ shop.policies.privacy_policy.url }}">{{ section.settings.label_privacy | default: 'Privacy' }}</a>
-          <span class="ft-pipe">|</span>
-        {%- endif -%}
-        {%- if shop.policies.terms_of_service != blank -%}
-          <a href="{{ shop.policies.terms_of_service.url }}">{{ section.settings.label_terms | default: 'Terms' }}</a>
-        {%- endif -%}
-      </div>
-    {%- endif -%}
-
-    {%- comment -%} Copyright {%- endcomment -%}
-    {%- if section.settings.show_copyright -%}
-      <p class="ft-copyright">&copy; {{ 'now' | date: '%Y' }} {{ section.settings.copyright_name | default: shop.name }}</p>
-    {%- endif -%}
-  </div>
-</div>
+<style>.vx-shell[data-vx-section="footer"]{min-height:120px}</style>
 
 {% schema %}
 {

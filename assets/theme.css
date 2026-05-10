@@ -15,7 +15,7 @@
 
 /* Selection color */
 ::selection {
-  background: var(--color-accent, #19d400);
+  background: var(--color-accent, #39ff14);
   color: #000;
 }
 
@@ -27,6 +27,6 @@
 
 /* Focus visible */
 *:focus-visible {
-  outline: 2px solid var(--color-accent, #19d400);
+  outline: 2px solid var(--color-accent, #39ff14);
   outline-offset: 2px;
 }

@@ -1,461 +1,68 @@
 {%- liquid
   assign collection = section.settings.collection | default: collections.all
   assign max_products = section.settings.max_products | default: 8
-  assign columns_desktop = section.settings.columns_desktop | default: 4
-  assign columns_mobile = section.settings.columns_mobile | default: 2
-  assign card_bg = section.settings.card_bg | default: '#111111'
-  assign card_border = section.settings.card_border | default: '#2a2a2a'
-  assign card_hover_border = section.settings.card_hover_border | default: '#19d400'
-  assign image_bg = section.settings.image_bg | default: '#0a0a0a'
-  assign title_color = section.settings.title_color | default: '#ffffff'
-  assign overlay_green_color = section.settings.overlay_title_green_color | default: '#19d400'
-  assign overlay_white_color = section.settings.overlay_title_white_color | default: '#ffffff'
-  assign overlay_font_size = section.settings.overlay_font_size | default: 14
-  assign sale_badge_label = section.settings.sale_badge_label | default: 'SALE'
-  assign sale_badge_bg = section.settings.sale_badge_bg | default: '#000000'
-  assign sale_badge_text_color = section.settings.sale_badge_text_color | default: '#ffffff'
-  assign sale_badge_position_y = section.settings.sale_badge_position_y | default: 'top'
-  assign sale_badge_position_x = section.settings.sale_badge_position_x | default: 'right'
-  assign price_color = section.settings.price_color | default: '#19d400'
-  assign compare_price_color = section.settings.compare_price_color | default: '#6b7280'
-  assign buy_btn_label = section.settings.buy_btn_label | default: 'BUY NOW'
-  assign buy_btn_radius = section.settings.buy_btn_radius | default: 50
-  assign buy_btn_action = section.settings.buy_btn_action | default: 'product'
-  assign buy_btn_bg = section.settings.buy_btn_bg | default: '#19d400'
-  assign buy_btn_text_color = section.settings.buy_btn_text_color | default: '#1a1a1a'
-  assign glow_color = section.settings.glow_color | default: '#19d400'
-  assign glow_intensity = section.settings.glow_intensity | default: 35
-  assign padding_top = section.settings.padding_top | default: 40
-  assign padding_bottom = section.settings.padding_bottom | default: 60
 -%}
 
-<style>
-  #shopify-section-{{ section.id }} .product-grid-section {
-    position: relative;
-    padding: {{ padding_top }}px 20px {{ padding_bottom }}px;
-    max-width: 1400px;
-    margin: 0 auto;
-    overflow: hidden;
-  }
+<section class="vx-shell vx-shell--loading" data-vx-section="product-grid">
+  <div class="vx-editor-preview"><div class="vx-section-loader"><div class="vx-loader__spinner"></div></div></div>
+</section>
 
-  {%- if section.settings.show_glow -%}
-  #shopify-section-{{ section.id }} .pg-glow {
-    position: absolute;
-    width: 400px;
-    height: 400px;
-    border-radius: 50%;
-    background: radial-gradient(circle, {{ glow_color }}{{ glow_intensity | times: 255 | divided_by: 100 | round | modulo: 256 }} 0%, transparent 70%);
-    pointer-events: none;
-    z-index: 0;
-    filter: blur(80px);
-    opacity: 0.5;
-  }
-  #shopify-section-{{ section.id }} .pg-glow--left {
-    left: -200px;
-    top: 20%;
-  }
-  #shopify-section-{{ section.id }} .pg-glow--right {
-    right: -200px;
-    bottom: 20%;
-  }
-  {%- endif -%}
+<script type="application/json" data-vx-settings="product-grid">
+{
+  "title": {{ section.settings.title | json }},
+  "columns_desktop": {{ section.settings.columns_desktop | default: 4 }},
+  "columns_mobile": {{ section.settings.columns_mobile | default: 2 }},
+  "glassmorphic": {{ section.settings.glassmorphic_cards | json }},
+  "show_glow": {{ section.settings.show_glow | json }},
+  "glow_color": {{ section.settings.glow_color | default: '#19d400' | json }},
+  "glow_intensity": {{ section.settings.glow_intensity | default: 35 }},
+  "show_top_fade": {{ section.settings.show_top_fade | json }},
+  "card_bg": {{ section.settings.card_bg | default: '#111111' | json }},
+  "card_border": {{ section.settings.card_border | default: '#2a2a2a' | json }},
+  "card_hover_border": {{ section.settings.card_hover_border | default: '#19d400' | json }},
+  "image_bg": {{ section.settings.image_bg | default: '#0a0a0a' | json }},
+  "title_color": {{ section.settings.title_color | default: '#ffffff' | json }},
+  "show_overlay_title": {{ section.settings.show_overlay_title | json }},
+  "overlay_green_color": {{ section.settings.overlay_title_green_color | default: '#19d400' | json }},
+  "overlay_white_color": {{ section.settings.overlay_title_white_color | default: '#ffffff' | json }},
+  "overlay_font_size": {{ section.settings.overlay_font_size | default: 14 }},
+  "show_sale_badge": {{ section.settings.show_sale_badge | json }},
+  "always_show_sale_badge": {{ section.settings.always_show_sale_badge | json }},
+  "sale_badge_label": {{ section.settings.sale_badge_label | default: 'SALE' | json }},
+  "sale_badge_bg": {{ section.settings.sale_badge_bg | default: '#000000' | json }},
+  "sale_badge_text_color": {{ section.settings.sale_badge_text_color | default: '#ffffff' | json }},
+  "sale_badge_position_y": {{ section.settings.sale_badge_position_y | default: 'top' | json }},
+  "sale_badge_position_x": {{ section.settings.sale_badge_position_x | default: 'right' | json }},
+  "price_color": {{ section.settings.price_color | default: '#19d400' | json }},
+  "compare_price_color": {{ section.settings.compare_price_color | default: '#6b7280' | json }},
+  "buy_btn_label": {{ section.settings.buy_btn_label | default: 'BUY NOW' | json }},
+  "buy_btn_radius": {{ section.settings.buy_btn_radius | default: 12 }},
+  "buy_btn_action": {{ section.settings.buy_btn_action | default: 'product' | json }},
+  "buy_btn_bg": {{ section.settings.buy_btn_bg | default: '#19d400' | json }},
+  "buy_btn_text_color": {{ section.settings.buy_btn_text_color | default: '#1a1a1a' | json }},
+  "show_info_btn": {{ section.settings.show_info_btn | json }},
+  "show_description": {{ section.settings.show_description | json }},
+  "padding_top": {{ section.settings.padding_top | default: 40 }},
+  "padding_bottom": {{ section.settings.padding_bottom | default: 60 }}
+}
+</script>
 
-  {%- if section.settings.show_top_fade -%}
-  #shopify-section-{{ section.id }} .pg-top-fade {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 80px;
-    background: linear-gradient(to bottom, var(--color-bg, #000), transparent);
-    pointer-events: none;
-    z-index: 1;
-  }
-  {%- endif -%}
-
-  #shopify-section-{{ section.id }} .pg-section-title {
-    font-family: var(--font-heading, 'Clash Grotesk'), sans-serif;
-    font-size: 28px;
-    font-weight: 700;
-    color: #fff;
-    text-align: center;
-    margin-bottom: 32px;
-    position: relative;
-    z-index: 2;
-  }
-
-  #shopify-section-{{ section.id }} .pg-grid {
-    display: grid;
-    grid-template-columns: repeat({{ columns_desktop }}, 1fr);
-    gap: 16px;
-    position: relative;
-    z-index: 2;
-  }
-
-  #shopify-section-{{ section.id }} .pg-card {
-    background: {{ card_bg }};
-    border: 1px solid {{ card_border }};
-    border-radius: 12px;
-    overflow: hidden;
-    transition: border-color 0.2s ease;
-    display: flex;
-    flex-direction: column;
-    {%- if section.settings.glassmorphic_cards -%}
-    backdrop-filter: blur(12px);
-    box-shadow: inset 0 0 30px rgba(255,255,255,0.03);
-    {%- endif -%}
-  }
-
-  #shopify-section-{{ section.id }} .pg-card:hover {
-    border-color: {{ card_hover_border }};
-  }
-
-  #shopify-section-{{ section.id }} .pg-card-image {
-    position: relative;
-    background: {{ image_bg }};
-    padding-bottom: 100%;
-    overflow: hidden;
-  }
-
-  #shopify-section-{{ section.id }} .pg-card-image img {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    padding: 20px;
-  }
-
-  #shopify-section-{{ section.id }} .pg-badge {
-    position: absolute;
-    {{ sale_badge_position_y }}: 10px;
-    {{ sale_badge_position_x }}: 10px;
-    background: {{ sale_badge_bg }};
-    color: {{ sale_badge_text_color }};
-    font-size: 11px;
-    font-weight: 700;
-    text-transform: uppercase;
-    padding: 4px 12px;
-    border-radius: 999px;
-    backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    z-index: 3;
-    font-family: var(--font-body, 'Satoshi'), sans-serif;
-    letter-spacing: 0.03em;
-  }
-
-  #shopify-section-{{ section.id }} .pg-overlay-title {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: {{ overlay_green_color }};
-    padding: 6px 12px;
-    font-size: {{ overlay_font_size }}px;
-    font-weight: 700;
-    font-family: var(--font-body, 'Satoshi'), sans-serif;
-    display: flex;
-    gap: 6px;
-    z-index: 2;
-    line-height: 1.3;
-  }
-
-  #shopify-section-{{ section.id }} .pg-overlay-white {
-    color: {{ overlay_white_color }};
-  }
-
-  #shopify-section-{{ section.id }} .pg-overlay-green {
-    color: {{ overlay_green_color }};
-  }
-
-  #shopify-section-{{ section.id }} .pg-card-body {
-    padding: 16px;
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-  }
-
-  #shopify-section-{{ section.id }} .pg-product-title {
-    font-size: 15px;
-    font-weight: 600;
-    color: {{ title_color }};
-    margin: 0 0 4px;
-    font-family: var(--font-body, 'Satoshi'), sans-serif;
-    line-height: 1.3;
-  }
-
-  #shopify-section-{{ section.id }} .pg-product-desc {
-    font-size: 13px;
-    color: var(--color-text-muted, #9ca3af);
-    margin: 0 0 10px;
-    font-family: var(--font-body, 'Satoshi'), sans-serif;
-    line-height: 1.4;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-
-  #shopify-section-{{ section.id }} .pg-prices {
-    display: flex;
-    align-items: baseline;
-    gap: 8px;
-    margin-bottom: 10px;
-  }
-
-  #shopify-section-{{ section.id }} .pg-price-compare {
-    text-decoration: line-through;
-    color: {{ compare_price_color }};
-    font-size: 14px;
-    font-family: var(--font-body, 'Satoshi'), sans-serif;
-  }
-
-  #shopify-section-{{ section.id }} .pg-price-sale {
-    color: {{ price_color }};
-    font-size: 18px;
-    font-weight: 700;
-    font-family: var(--font-body, 'Satoshi'), sans-serif;
-  }
-
-  #shopify-section-{{ section.id }} .pg-btn-row {
-    display: flex;
-    gap: 8px;
-    margin-top: auto;
-  }
-
-  #shopify-section-{{ section.id }} .pg-info-btn {
-    width: 44px;
-    height: 44px;
-    min-width: 44px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid #333;
-    border-radius: 8px;
-    background: transparent;
-    cursor: pointer;
-    transition: border-color 0.2s;
-    padding: 0;
-  }
-
-  #shopify-section-{{ section.id }} .pg-info-btn:hover {
-    border-color: #fff;
-  }
-
-  #shopify-section-{{ section.id }} .pg-info-btn svg {
-    width: 18px;
-    height: 18px;
-    stroke: #fff;
-    fill: none;
-  }
-
-  #shopify-section-{{ section.id }} .pg-buy-btn {
-    flex-grow: 1;
-    background: {{ buy_btn_bg }};
-    color: {{ buy_btn_text_color }};
-    font-weight: 700;
-    font-size: 14px;
-    text-transform: uppercase;
-    letter-spacing: 0.03em;
-    padding: 12px;
-    border-radius: {{ buy_btn_radius }}px;
-    text-align: center;
-    text-decoration: none;
-    border: none;
-    cursor: pointer;
-    font-family: var(--font-body, 'Satoshi'), sans-serif;
-    transition: opacity 0.2s, transform 0.15s;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  #shopify-section-{{ section.id }} .pg-buy-btn:hover {
-    opacity: 0.9;
-    transform: translateY(-1px);
-  }
-
-  @media (max-width: 749px) {
-    #shopify-section-{{ section.id }} .pg-grid {
-      grid-template-columns: repeat({{ columns_mobile }}, 1fr);
-    }
-
-    #shopify-section-{{ section.id }} .pg-card-image img {
-      padding: 12px;
-    }
-
-    #shopify-section-{{ section.id }} .pg-card-body {
-      padding: 12px;
-    }
-
-    #shopify-section-{{ section.id }} .pg-price-sale {
-      font-size: 16px;
-    }
-
-    #shopify-section-{{ section.id }} .pg-buy-btn {
-      font-size: 12px;
-      padding: 10px 8px;
-    }
-
-    #shopify-section-{{ section.id }} .pg-info-btn {
-      width: 38px;
-      height: 38px;
-      min-width: 38px;
-    }
-  }
-</style>
-
-<div class="product-grid-section" data-section-type="product-grid">
-  {%- if section.settings.show_glow -%}
-    <div class="pg-glow pg-glow--left"></div>
-    <div class="pg-glow pg-glow--right"></div>
-  {%- endif -%}
-
-  {%- if section.settings.show_top_fade -%}
-    <div class="pg-top-fade"></div>
-  {%- endif -%}
-
-  {%- if section.settings.title != blank -%}
-    <h2 class="pg-section-title">{{ section.settings.title }}</h2>
-  {%- endif -%}
-
-  <div class="pg-grid">
-    {%- for product in collection.products limit: max_products -%}
-      {%- liquid
-        assign has_compare = false
-        if product.compare_at_price_max > product.price
-          assign has_compare = true
-        endif
-        assign overlay_green = product.metafields.custom.overlay_green
-        assign overlay_white = product.metafields.custom.overlay_white
-        assign has_overlay = false
-        if section.settings.show_overlay_title
-          if overlay_green != blank or overlay_white != blank
-            assign has_overlay = true
-          endif
-        endif
-        assign show_badge = false
-        if section.settings.show_sale_badge
-          if has_compare or section.settings.always_show_sale_badge
-            assign show_badge = true
-          endif
-        endif
-      -%}
-
-      <div class="pg-card" data-product-variant-id="{{ product.first_available_variant.id }}">
-        <div class="pg-card-image">
-          {%- if show_badge -%}
-            <span class="pg-badge">{{ sale_badge_label }}</span>
-          {%- endif -%}
-
-          {%- if product.featured_image -%}
-            <img
-              src="{{ product.featured_image | image_url: width: 600 }}"
-              alt="{{ product.featured_image.alt | default: product.title | escape }}"
-              loading="lazy"
-              width="600"
-              height="600"
-            >
-          {%- endif -%}
-
-          {%- if has_overlay -%}
-            <div class="pg-overlay-title">
-              {%- if overlay_white != blank -%}
-                <span class="pg-overlay-white">{{ overlay_white }}</span>
-              {%- endif -%}
-              {%- if overlay_green != blank -%}
-                <span class="pg-overlay-green">{{ overlay_green }}</span>
-              {%- endif -%}
-            </div>
-          {%- endif -%}
-        </div>
-
-        <div class="pg-card-body">
-          {%- unless has_overlay -%}
-            <h3 class="pg-product-title">{{ product.title }}</h3>
-          {%- endunless -%}
-
-          {%- if section.settings.show_description and product.description != blank -%}
-            <p class="pg-product-desc">{{ product.description | strip_html | truncate: 120 }}</p>
-          {%- endif -%}
-
-          <div class="pg-prices">
-            {%- if has_compare -%}
-              <span class="pg-price-compare">{{ product.compare_at_price_max | money }}</span>
-            {%- endif -%}
-            <span class="pg-price-sale">{{ product.price | money }}</span>
-          </div>
-
-          <div class="pg-btn-row">
-            {%- if section.settings.show_info_btn -%}
-              <a href="{{ product.url }}" class="pg-info-btn" aria-label="View {{ product.title }}">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                  <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
-                  <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
-                </svg>
-              </a>
-            {%- endif -%}
-
-            {%- if buy_btn_action == 'product' -%}
-              <a href="{{ product.url }}" class="pg-buy-btn">{{ buy_btn_label }}</a>
-            {%- elsif buy_btn_action == 'checkout' -%}
-              <a href="/cart/{{ product.first_available_variant.id }}:1" class="pg-buy-btn">{{ buy_btn_label }}</a>
-            {%- else -%}
-              <button
-                type="button"
-                class="pg-buy-btn"
-                data-pg-add-to-cart
-                data-variant-id="{{ product.first_available_variant.id }}"
-              >
-                {{ buy_btn_label }}
-              </button>
-            {%- endif -%}
-          </div>
-        </div>
-      </div>
-    {%- endfor -%}
-  </div>
-</div>
-
-<script>
-  (function() {
-    var section = document.getElementById('shopify-section-{{ section.id }}');
-    if (!section) return;
-
-    section.querySelectorAll('[data-pg-add-to-cart]').forEach(function(btn) {
-      btn.addEventListener('click', function(e) {
-        e.preventDefault();
-        var variantId = btn.getAttribute('data-variant-id');
-        if (!variantId) return;
-
-        var originalText = btn.textContent;
-        btn.textContent = 'Adding...';
-        btn.disabled = true;
-
-        fetch('/cart/add.js', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ items: [{ id: parseInt(variantId), quantity: 1 }] })
-        })
-        .then(function(res) {
-          if (!res.ok) throw new Error('Failed');
-          btn.textContent = 'Added!';
-          setTimeout(function() {
-            btn.textContent = originalText;
-            btn.disabled = false;
-          }, 1500);
-          document.dispatchEvent(new CustomEvent('cart:updated'));
-        })
-        .catch(function() {
-          btn.textContent = 'Error';
-          setTimeout(function() {
-            btn.textContent = originalText;
-            btn.disabled = false;
-          }, 1500);
-        });
-      });
-    });
-  })();
+<script type="application/json" data-vx-products="product-grid">
+[{%- assign product_count = 0 -%}{%- for product in collection.products limit: max_products -%}{%- if product_count > 0 -%},{%- endif -%}{
+  "id": {{ product.id | json }},
+  "variantId": {{ product.first_available_variant.id | json }},
+  "title": {{ product.title | json }},
+  "handle": {{ product.handle | json }},
+  "url": {{ product.url | json }},
+  "price": {{ product.price }},
+  "comparePrice": {{ product.compare_at_price_max | default: 'null' }},
+  "available": {{ product.available | json }},
+  "image": {% if product.featured_image %}{{ product.featured_image | image_url: width: 600 | json }}{% else %}null{% endif %},
+  "imageAlt": {{ product.featured_image.alt | default: product.title | json }},
+  "description": {{ product.description | strip_html | truncate: 500 | json }},
+  "overlayGreen": {{ product.metafields.custom.overlay_green | json }},
+  "overlayWhite": {{ product.metafields.custom.overlay_white | json }}
+}{%- assign product_count = product_count | plus: 1 -%}{%- endfor -%}]
 </script>
 
 {% schema %}
@@ -471,7 +78,7 @@
     { "type": "range", "id": "columns_desktop", "label": "Columns desktop", "min": 1, "max": 8, "step": 1, "default": 4 },
     { "type": "range", "id": "columns_mobile", "label": "Columns mobile", "min": 1, "max": 4, "step": 1, "default": 2 },
     { "type": "header", "content": "Card Style" },
-    { "type": "checkbox", "id": "glassmorphic_cards", "label": "Glassmorphic cards (inset glow + blur)", "default": false },
+    { "type": "checkbox", "id": "glassmorphic_cards", "label": "Glassmorphic cards (inset glow + blur)", "default": true },
     { "type": "color", "id": "card_bg", "label": "Card background", "default": "#111111" },
     { "type": "color", "id": "card_border", "label": "Card border", "default": "#2a2a2a" },
     { "type": "color", "id": "card_hover_border", "label": "Card hover border", "default": "#19d400" },
@@ -510,9 +117,9 @@
     { "type": "color", "id": "buy_btn_bg", "label": "Button background", "default": "#19d400" },
     { "type": "color", "id": "buy_btn_text_color", "label": "Button text color", "default": "#1a1a1a" },
     { "type": "header", "content": "Description" },
-    { "type": "checkbox", "id": "show_description", "label": "Show product description on card", "default": false },
+    { "type": "checkbox", "id": "show_description", "label": "Show product description on card", "default": true },
     { "type": "header", "content": "Info Button" },
-    { "type": "checkbox", "id": "show_info_btn", "label": "Show info button", "default": false },
+    { "type": "checkbox", "id": "show_info_btn", "label": "Show info button", "default": true },
     { "type": "header", "content": "Glow Effect" },
     { "type": "checkbox", "id": "show_glow", "label": "Show radial glow on sides", "default": true },
     { "type": "color", "id": "glow_color", "label": "Glow color", "default": "#19d400" },

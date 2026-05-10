@@ -1,12 +1,12 @@
 {%- liquid
   assign product = product
-  assign accent = section.settings.accent_color | default: '#19d400'
+  assign accent = section.settings.accent_color | default: '#39ff14'
   assign card_bg = section.settings.card_bg | default: '#111111'
   assign card_border = section.settings.card_border | default: '#2a2a2a'
   assign star_color = section.settings.star_color | default: '#fbbf24'
-  assign avatar_bg = section.settings.avatar_bg | default: '#19d400'
+  assign avatar_bg = section.settings.avatar_bg | default: '#39ff14'
   assign avatar_text = section.settings.avatar_text_color | default: '#000000'
-  assign write_btn_bg = section.settings.write_btn_bg | default: '#19d400'
+  assign write_btn_bg = section.settings.write_btn_bg | default: '#39ff14'
   assign write_btn_text = section.settings.write_btn_text_color | default: '#000000'
   assign review_columns = section.settings.review_columns | default: 3
   assign reviews_per_page = section.settings.reviews_per_page | default: 10
@@ -720,7 +720,7 @@
     { "type": "checkbox", "id": "show_more_payment", "label": "Show 'More payment options' link", "default": true },
     { "type": "textarea", "id": "disclaimer", "label": "Disclaimer text (below description)", "default": "DISCLAIMER : Vendors will be sent directly to you after purchasing, all purchases are FINAL & NON-Refundable. I am NOT associated with the brands." },
     { "type": "header", "content": "Colors" },
-    { "type": "color", "id": "accent_color", "label": "Accent color", "default": "#19d400" },
+    { "type": "color", "id": "accent_color", "label": "Accent color", "default": "#39ff14" },
     { "type": "color", "id": "card_bg", "label": "Card background", "default": "#111111" },
     { "type": "color", "id": "card_border", "label": "Card border", "default": "#2a2a2a" },
     { "type": "header", "content": "Reviews" },
@@ -732,9 +732,9 @@
     { "type": "range", "id": "reviews_per_page", "label": "Reviews per page", "min": 3, "max": 20, "step": 1, "default": 10 },
     { "type": "header", "content": "Review Colors" },
     { "type": "color", "id": "star_color", "label": "Star color", "default": "#fbbf24" },
-    { "type": "color", "id": "avatar_bg", "label": "Avatar background", "default": "#19d400" },
+    { "type": "color", "id": "avatar_bg", "label": "Avatar background", "default": "#39ff14" },
     { "type": "color", "id": "avatar_text_color", "label": "Avatar text color", "default": "#000000" },
-    { "type": "color", "id": "write_btn_bg", "label": "Write review button bg", "default": "#19d400" },
+    { "type": "color", "id": "write_btn_bg", "label": "Write review button bg", "default": "#39ff14" },
     { "type": "color", "id": "write_btn_text_color", "label": "Write review button text", "default": "#000000" },
     { "type": "header", "content": "Spacing" },
     { "type": "range", "id": "reviews_padding_top", "label": "Reviews top padding (px)", "min": 0, "max": 120, "step": 10, "default": 60 },
