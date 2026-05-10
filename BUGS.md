@@ -13,6 +13,11 @@
 - Add real social URLs to footer
 
 ## Fixed
+- Per-section spinners — removed, full-page loader handles everything now
+- Testimonials spinner stuck — no more per-section spinners, content loads behind full-page loader
+- Header nav clutter — removed HOME/CATALOG/CONTACT bar entirely
+- Footer too many settings — stripped to essentials (brand/social/CTA/copyright only)
+- Hero not centered — added CSS overrides for centered content + buttons
 - License protection — Kenso shell model fully working (Supabase RPC + Vercel + CDN loader)
 - Hero missing features — added bg image, gradient overlay, 2 CTA buttons (matching Luke's)
 - Product cards — added inline description text (2-line clamp)

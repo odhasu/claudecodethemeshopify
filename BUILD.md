@@ -2,10 +2,10 @@
 
 ## Section order (matches Luke's)
 1. Urgency bar — header group
-2. Header full-width — header group
-3. Hero
-4. Product grid
-5. Testimonials
+2. Hero
+3. Product grid
+4. Testimonials
+5. Results carousel
 6. FAQ
 7. Reviews
 8. Trust badges — footer group
@@ -24,9 +24,12 @@
 - Cart drawer — slide-out panel, AJAX quantity controls (stays as Liquid, no shell)
 
 ## Other done
-- Loading screen — dual counter-rotating arc spinner
+- Loading screen — full-page spinner, 1s minimum, smooth fade reveal (no per-section spinners)
 - Color system — unified to #19d400 everywhere
 - Fonts — Clash Grotesk (headings) + Satoshi (body) from Fontshare
+- Hero — content + buttons centered via CSS overrides
+- Footer — settings locked down (only brand/social/CTA/copyright editable), refund policy link added
+- Header nav — removed (no HOME/CATALOG/CONTACT bar)
 
 ## License Protection (Kenso Shell Model) — DONE
 - All 10 sections converted to shells (empty div + JSON data)
@@ -38,12 +41,12 @@
 - theme.liquid: VexelConfig, loading states, loader from CDN
 
 ## Still to build
-- Results carousel — section exists but not on homepage
 - Hero background image — needs upload in Shopify admin
 - More testimonial screenshots (up to 20 supported)
 - Real social links in footer
 
 ## Last worked on
+2026-05-10 — Removed header nav, removed per-section spinners, smooth 1s loader reveal, centered hero, stripped footer settings, added refund policy
 2026-05-09 — Hero: added bg image + gradient overlay + 2 CTA buttons; Product cards: inline descriptions; License validation fix (Supabase anon key)
 2026-05-08 — License protection end-to-end: Supabase RPC, validate endpoint fix, loader from CDN, rebranding to Vexel
 2026-04-29 — License protection plan finalized (Kenso shell model), button radius fix, header dark bg
