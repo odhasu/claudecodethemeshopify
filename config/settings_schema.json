@@ -1,18 +1,18 @@
 [
   {
     "name": "theme_info",
-    "theme_name": "Vexel Theme",
-    "theme_version": "2.0.0",
-    "theme_author": "Vexel",
-    "theme_documentation_url": "https://vexelthemes.com",
-    "theme_support_url": "https://vexelthemes.com"
+    "theme_name": "OGVendors Theme",
+    "theme_version": "1.0.0",
+    "theme_author": "OGVendors",
+    "theme_documentation_url": "https://ogvendors.com",
+    "theme_support_url": "https://ogvendors.com"
   },
   {
     "name": "Colors",
     "settings": [
       { "type": "header", "content": "Primary Colors" },
-      { "type": "color", "id": "color_accent", "label": "Accent color", "default": "#19d400" },
-      { "type": "color", "id": "color_accent_hover", "label": "Accent hover", "default": "#15b800" },
+      { "type": "color", "id": "color_accent", "label": "Accent color", "default": "#39ff14" },
+      { "type": "color", "id": "color_accent_hover", "label": "Accent hover", "default": "#2de010" },
       { "type": "color", "id": "color_background", "label": "Page background", "default": "#0a0a0a" },
       { "type": "color", "id": "color_card_bg", "label": "Card background", "default": "#111111" },
       { "type": "color", "id": "color_card_elevated", "label": "Card elevated", "default": "#1a1a1a" },
@@ -30,9 +30,8 @@
   {
     "name": "Typography",
     "settings": [
-      { "type": "select", "id": "heading_font", "label": "Heading font", "default": "Clash Grotesk", "options": [
-        { "value": "Clash Grotesk", "label": "Clash Grotesk (like Luke's)" },
-        { "value": "Satoshi", "label": "Satoshi" },
+      { "type": "select", "id": "heading_font", "label": "Heading font", "default": "Satoshi", "options": [
+        { "value": "Satoshi", "label": "Satoshi (like Luke's Vendors)" },
         { "value": "Anton", "label": "Anton" },
         { "value": "Inter", "label": "Inter" },
         { "value": "Bebas Neue", "label": "Bebas Neue" },
@@ -45,7 +44,7 @@
         { "value": "Rubik", "label": "Rubik" },
         { "value": "Raleway", "label": "Raleway" }
       ]},
-      { "type": "select", "id": "body_font", "label": "Body font", "default": "Satoshi", "options": [
+      { "type": "select", "id": "body_font", "label": "Body font", "default": "Inter", "options": [
         { "value": "system-ui, -apple-system, sans-serif", "label": "System Default" },
         { "value": "Inter", "label": "Inter" },
         { "value": "DM Sans", "label": "DM Sans" },
@@ -74,7 +73,7 @@
     "settings": [
       { "type": "image_picker", "id": "favicon", "label": "Favicon" },
       { "type": "image_picker", "id": "logo", "label": "Logo (used globally)" },
-      { "type": "text", "id": "brand_name", "label": "Brand name", "default": "Vexel" }
+      { "type": "text", "id": "brand_name", "label": "Brand name", "default": "OGVENDORS" }
     ]
   },
   {
