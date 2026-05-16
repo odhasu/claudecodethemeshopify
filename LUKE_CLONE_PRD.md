@@ -65,11 +65,27 @@ This section has two parts: a **hero headline** at the top, then the **product c
 
 **Product cards:**
 - Card style: 3D Glass (glassmorphic inset glow)
-- Button layout: Two buttons side-by-side
-  - Button 1 (primary, accent color): `VIEW PRODUCT` → goes to product page
-  - Button 2 (secondary, dark): `ADD TO CART` → adds to cart
 - Sale badge: `SALE` — top-right corner
-- Shows: title, price, compare-at (strikethrough), image
+- Shows: title, price (accent color), compare-at (strikethrough + muted), image
+
+**Button row (two buttons side-by-side):**
+
+```
+[ ⓘ ]  [        BUY NOW        ]
+```
+
+| Button | Style | Action |
+|---|---|---|
+| Left — Info icon | Dark square, rounded corners (~10px radius), ~52px tall, ⓘ circle icon | Opens product detail popup |
+| Right — BUY NOW | Accent color, same height/radius, bold heading font, uppercase, glass glow effect | Goes to product page / checkout |
+
+**Button design details (from Luke's site):**
+- Both buttons same height (~52px)
+- Same corner radius — rounded rectangle, NOT a full pill
+- BUY NOW: glass/glow effect — inner white highlight at top + outer accent-color glow underneath
+- BUY NOW: font is heading font (Clash Grotesk / Satoshi), extrabold, ~14px, uppercase
+- Info icon: ⓘ circle outline, stroked, no fill
+- Info button background: dark (#1a1a1a), subtle border
 
 ---
 
@@ -88,7 +104,7 @@ Same card layout as the primary grid.
 **Headline:**
 - `More Products You'll Love`
 
-Same button layout, same card style, same badge.
+Same card style, same button layout (ⓘ + BUY NOW), same badge.
 
 ---
 
