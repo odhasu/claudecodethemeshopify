@@ -46,6 +46,7 @@
 - Real social links in footer
 
 ## Last worked on
+2026-05-16 — Added secondary-product-grid section (scoped CSS via section.id, same feature set as primary, defaults to 4 cols / 4 products)
 2026-05-10 — Removed header nav, removed per-section spinners, smooth 1s loader reveal, centered hero, stripped footer settings, added refund policy
 2026-05-09 — Hero: added bg image + gradient overlay + 2 CTA buttons; Product cards: inline descriptions; License validation fix (Supabase anon key)
 2026-05-08 — License protection end-to-end: Supabase RPC, validate endpoint fix, loader from CDN, rebranding to Vexel
