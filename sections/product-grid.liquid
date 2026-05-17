@@ -9,6 +9,7 @@
   assign card_bg = section.settings.card_bg | default: '#111111'
   assign card_border = section.settings.card_border | default: '#2a2a2a'
   assign card_hover_border = section.settings.card_hover_border | default: '#39ff14'
+  assign card_hover_effects = section.settings.card_hover_effects
   assign image_bg = section.settings.image_bg | default: '#0a0a0a'
   assign sale_badge_bg = section.settings.sale_badge_bg | default: 'rgba(0,0,0,0.5)'
   assign sale_badge_text = section.settings.sale_badge_text_color | default: '#ffffff'
@@ -127,6 +128,7 @@
     {%- endif %}
   }
   .product-card:hover {
+    {%- if card_hover_effects %}
     transform: translateY(-3px);
     border-color: {{ card_hover_border }};
     box-shadow:
@@ -137,6 +139,7 @@
       {%- endif %}
       0 8px 32px {{ card_hover_border }}33,
       0 2px 12px rgba(0,0,0,0.3);
+    {%- endif %}
   }
 
   /* Card inner wrapper for subtle inset reveal */
@@ -159,7 +162,9 @@
     transition: transform 0.4s;
   }
   .product-card-title a { color: inherit; }
+  {%- if card_hover_effects %}
   .product-card:hover .product-card-image img { transform: scale(1.03); }
+  {%- endif %}
 
   .product-card-overlay {
     position: absolute;
@@ -610,6 +615,7 @@
     { "type": "color", "id": "card_bg", "label": "Card background", "default": "#111111" },
     { "type": "color", "id": "card_border", "label": "Card border", "default": "#2a2a2a" },
     { "type": "color", "id": "card_hover_border", "label": "Card hover border", "default": "#39ff14" },
+    { "type": "checkbox", "id": "card_hover_effects", "label": "Card hover effects (lift + image zoom + border colour)", "default": true },
     { "type": "color", "id": "image_bg", "label": "Image background", "default": "#0a0a0a" },
     { "type": "color", "id": "title_color", "label": "Title color", "default": "#ffffff" },
     { "type": "header", "content": "Overlay Title on Image" },
