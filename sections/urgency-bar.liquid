@@ -13,6 +13,7 @@
   assign min_viewers = section.settings.min_viewers | default: 10
   assign max_viewers = section.settings.max_viewers | default: 100
   assign icon_color = section.settings.icon_color | default: accent
+  assign ub_sticky = section.settings.sticky
 -%}
 
 <style>
@@ -27,7 +28,15 @@
     right: 0;
     border-bottom: 1px solid {{ section.settings.border_color | default: '#1a1a1a' }};
     z-index: 201;
+    {%- if ub_sticky %}
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    {%- endif %}
   }
+  {%- if ub_sticky %}
+  .urgency-bar.ub--hidden {
+    transform: translateY(-100%);
+  }
+  {%- endif %}
   .urgency-bar:hover .urgency-track { animation-play-state: paused; }
   .urgency-track {
     display: flex;
@@ -187,6 +196,38 @@
       setTimeout(driftViewers, nextUpdate);
     }
     setTimeout(driftViewers, (60 + Math.floor(Math.random() * 120)) * 1000);
+
+    // Sticky scroll behavior
+    {%- if ub_sticky %}
+    var ubEl = document.querySelector('.urgency-bar');
+    if (ubEl) {
+      var ubLastY = window.scrollY;
+      var ubTicking = false;
+
+      function ubDispatch(hidden) {
+        document.dispatchEvent(new CustomEvent('vx:ub-toggle', {
+          detail: { hidden: hidden, height: {{ bar_height }} }
+        }));
+      }
+      function ubShow() { ubEl.classList.remove('ub--hidden'); ubDispatch(false); }
+      function ubHide() { ubEl.classList.add('ub--hidden');    ubDispatch(true);  }
+
+      window.addEventListener('scroll', function() {
+        if (!ubTicking) {
+          requestAnimationFrame(function() {
+            var y = window.scrollY;
+            var dy = y - ubLastY;
+            if (y <= 10)      { ubShow(); }
+            else if (dy > 3)  { ubShow(); }
+            else if (dy < -3) { ubHide(); }
+            ubLastY = y;
+            ubTicking = false;
+          });
+          ubTicking = true;
+        }
+      }, { passive: true });
+    }
+    {%- endif %}
   })();
 </script>
 
@@ -198,6 +239,7 @@
   "settings": [
     { "type": "header", "content": "Visibility" },
     { "type": "checkbox", "id": "show_on_all_pages", "label": "Show on all pages (not just homepage)", "default": false },
+    { "type": "checkbox", "id": "sticky", "label": "Sticky (shows on scroll down, hides on scroll up)", "default": false },
     { "type": "header", "content": "Colors" },
     { "type": "color", "id": "bg_color", "label": "Background color", "default": "#000000" },
     { "type": "color", "id": "text_color", "label": "Text color", "default": "#ffffff" },

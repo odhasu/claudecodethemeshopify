@@ -9,6 +9,7 @@
   assign bar_bg        = section.settings.bar_bg        | default: '#000000'
   assign bar_height    = section.settings.bar_height    | default: 56
   assign bar_offset    = section.settings.urgency_bar_height | default: 40
+  assign hdr_sticky    = section.settings.sticky
   assign bar_border    = section.settings.bar_border    | default: 'none'
   assign show_cart     = section.settings.show_cart
   assign badge_bg      = section.settings.badge_bg      | default: settings.color_accent | default: '#39ff14'
@@ -25,6 +26,7 @@
     height: {{ bar_height }}px;
     display: flex;
     align-items: center;
+    transition: top 0.3s cubic-bezier(0.4, 0, 0.2, 1){%- if hdr_sticky %}, transform 0.3s cubic-bezier(0.4, 0, 0.2, 1){%- endif %};
     {%- if bar_border == 'bottom' %}
     border-bottom: 1px solid {{ section.settings.border_color | default: '#1a1a1a' }};
     {%- endif %}
@@ -120,6 +122,13 @@
   }
   .lv-cart-badge.active { display: flex; }
 
+  /* ── Sticky hidden state ─────────────────────────────────── */
+  {%- if hdr_sticky %}
+  .lv-header.lv--hidden {
+    transform: translateY(calc(-100% - {{ bar_offset }}px));
+  }
+  {%- endif %}
+
   /* ── Spacer ───────────────────────────────────────────────── */
   .lv-header-spacer { height: {{ bar_offset | plus: bar_height }}px; }
 
@@ -197,7 +206,12 @@
 
 <script>
 (function() {
-  var badge = document.getElementById('lv-cart-badge');
+  var hdr    = document.querySelector('.lv-header');
+  var badge  = document.getElementById('lv-cart-badge');
+  var offset = {{ bar_offset }};   // urgency bar height
+  var hdrH   = {{ bar_height }};   // header height
+
+  /* ── Cart badge ──────────────────────────────────────────── */
   if (badge) {
     fetch('/cart.js')
       .then(function(r) { return r.json(); })
@@ -209,6 +223,37 @@
       })
       .catch(function() {});
   }
+
+  if (!hdr) return;
+
+  /* ── React to urgency bar showing/hiding ─────────────────── */
+  document.addEventListener('vx:ub-toggle', function(e) {
+    hdr.style.top = e.detail.hidden ? '0px' : offset + 'px';
+  });
+
+  /* ── Header sticky scroll behavior ──────────────────────── */
+  {%- if hdr_sticky %}
+  var hdrLastY  = window.scrollY;
+  var hdrTick   = false;
+
+  function hdrShow() { hdr.classList.remove('lv--hidden'); }
+  function hdrHide() { hdr.classList.add('lv--hidden');    }
+
+  window.addEventListener('scroll', function() {
+    if (!hdrTick) {
+      requestAnimationFrame(function() {
+        var y  = window.scrollY;
+        var dy = y - hdrLastY;
+        if (y <= 10)      { hdrShow(); }
+        else if (dy > 3)  { hdrShow(); }
+        else if (dy < -3) { hdrHide(); }
+        hdrLastY = y;
+        hdrTick  = false;
+      });
+      hdrTick = true;
+    }
+  }, { passive: true });
+  {%- endif %}
 })();
 </script>
 
@@ -225,6 +270,7 @@
     { "type": "range", "id": "brand_font_size", "label": "Brand font size (px)", "min": 11, "max": 28, "step": 1, "default": 16 },
     { "type": "color", "id": "brand_color", "label": "Brand text color", "default": "#ffffff" },
     { "type": "header", "content": "Bar" },
+    { "type": "checkbox", "id": "sticky", "label": "Sticky (shows on scroll down, hides on scroll up)", "default": false },
     { "type": "range", "id": "urgency_bar_height", "label": "Urgency bar height (px) — must match urgency bar setting", "min": 0, "max": 60, "step": 4, "default": 40 },
     { "type": "color", "id": "bar_bg", "label": "Background color", "default": "#000000" },
     { "type": "range", "id": "bar_height", "label": "Bar height (px)", "min": 44, "max": 80, "step": 4, "default": 56 },
