@@ -1,416 +1,202 @@
 {%- liquid
-  assign pill_bg       = section.settings.pill_bg       | default: 'rgba(0,0,0,0.82)'
-  assign pill_border   = section.settings.pill_border   | default: 'rgba(255,255,255,0.10)'
-  assign pill_width    = section.settings.pill_width    | default: 380
-  assign pill_top      = section.settings.pill_top      | default: 16
-  assign icon_size     = section.settings.icon_size     | default: 40
-  assign icon_bg       = section.settings.icon_bg       | default: 'rgba(255,255,255,0.06)'
-  assign icon_border   = section.settings.icon_border   | default: 'rgba(255,255,255,0.10)'
+  assign logo_height   = section.settings.logo_height   | default: 28
+  assign brand_text    = section.settings.brand_text    | default: shop.name
+  assign brand_size    = section.settings.brand_font_size | default: 16
   assign brand_color   = section.settings.brand_color   | default: '#ffffff'
+  assign nav_color     = section.settings.nav_color     | default: '#aaaaaa'
+  assign nav_hover     = section.settings.nav_hover_color | default: '#ffffff'
+  assign icon_color    = section.settings.icon_color    | default: '#ffffff'
+  assign bar_bg        = section.settings.bar_bg        | default: '#000000'
+  assign bar_height    = section.settings.bar_height    | default: 56
+  assign bar_border    = section.settings.bar_border    | default: 'none'
+  assign show_cart     = section.settings.show_cart
   assign badge_bg      = section.settings.badge_bg      | default: settings.color_accent | default: '#39ff14'
   assign badge_color   = section.settings.badge_text_color | default: '#000000'
-  assign dropdown_bg   = section.settings.dropdown_bg   | default: 'rgba(8,8,8,0.96)'
-  assign dropdown_border = section.settings.dropdown_border | default: 'rgba(255,255,255,0.08)'
-  assign dropdown_text = section.settings.dropdown_text_color | default: '#ffffff'
-  assign dropdown_hover = section.settings.dropdown_hover_color | default: settings.color_accent | default: '#39ff14'
-  assign blur_amount   = section.settings.blur_amount   | default: 20
-  assign show_cart     = section.settings.show_cart
-  assign show_menu     = section.settings.show_menu
 -%}
 
 <style>
-  /* ── Wrapper — fixed, full-width, centres the pill ───────── */
-  .kpill-wrapper {
+  /* ── Bar ──────────────────────────────────────────────────── */
+  .lv-header {
     position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
+    top: 0; left: 0; right: 0;
     z-index: 200;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: {{ pill_top }}px;
-    padding-left: 16px;
-    padding-right: 16px;
-    pointer-events: none;
-  }
-
-  /* Spacer pushes page content below the pill */
-  .kpill-spacer {
-    height: {{ pill_top | plus: icon_size | plus: 16 }}px;
-  }
-
-  /* ── The Pill ─────────────────────────────────────────────── */
-  .kpill {
+    background: {{ bar_bg }};
+    height: {{ bar_height }}px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 10px;
-    width: {{ pill_width }}px;
-    max-width: calc(100vw - 32px);
-    background: {{ pill_bg }};
-    border: 1px solid {{ pill_border }};
-    border-radius: 9999px;
-    padding: 5px 5px;
-    pointer-events: all;
-    backdrop-filter: blur({{ blur_amount }}px) saturate(1.6);
-    -webkit-backdrop-filter: blur({{ blur_amount }}px) saturate(1.6);
-    box-shadow:
-      0 8px 32px rgba(0,0,0,0.55),
-      0 1px 0 rgba(255,255,255,0.06) inset,
-      0 0 0 1px rgba(255,255,255,0.03) inset;
-
-    /* Entrance animation */
-    animation: kpillSlideIn 0.45s cubic-bezier(0.34, 1.26, 0.64, 1) forwards;
+    {%- if bar_border == 'bottom' %}
+    border-bottom: 1px solid {{ section.settings.border_color | default: '#1a1a1a' }};
+    {%- endif %}
   }
 
-  @keyframes kpillSlideIn {
-    0%  { opacity: 0; transform: translateY(-20px) scale(0.96); }
-    100%{ opacity: 1; transform: translateY(0)     scale(1);    }
+  .lv-header-inner {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    width: 100%;
+    padding: 0 {{ section.settings.padding_x | default: 24 }}px;
   }
 
-  /* Scrolled state — stronger shadow, slightly less transparent */
-  .kpill.scrolled {
-    box-shadow:
-      0 12px 40px rgba(0,0,0,0.7),
-      0 1px 0 rgba(255,255,255,0.08) inset,
-      0 0 0 1px rgba(255,255,255,0.04) inset;
+  /* ── Logo / Brand ─────────────────────────────────────────── */
+  .lv-logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    justify-content: flex-start;
+  }
+  .lv-logo img {
+    height: {{ logo_height }}px;
+    width: auto;
+    display: block;
+  }
+  .lv-brand {
+    font-family: var(--font-heading, 'DM Sans', sans-serif);
+    font-size: {{ brand_size }}px;
+    font-weight: 800;
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    color: {{ brand_color }};
+    white-space: nowrap;
+    text-decoration: none;
+    line-height: 1;
   }
 
-  /* ── Icon buttons (cart + hamburger) ─────────────────────── */
-  .kpill-btn {
-    width: {{ icon_size }}px;
-    height: {{ icon_size }}px;
-    border-radius: 9999px;
-    background: {{ icon_bg }};
-    border: 1px solid {{ icon_border }};
+  /* ── Nav (center) ─────────────────────────────────────────── */
+  .lv-nav {
+    display: flex;
+    align-items: center;
+    gap: {{ section.settings.nav_gap | default: 28 }}px;
+    justify-content: center;
+  }
+  .lv-nav a {
+    font-size: {{ section.settings.nav_font_size | default: 14 }}px;
+    font-weight: {{ section.settings.nav_font_weight | default: 400 }};
+    color: {{ nav_color }};
+    text-decoration: none;
+    transition: color 0.15s;
+    white-space: nowrap;
+    line-height: 1;
+  }
+  .lv-nav a:hover { color: {{ nav_hover }}; }
+
+  /* ── Right side — cart ───────────────────────────────────── */
+  .lv-right {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 12px;
+  }
+  .lv-cart {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: {{ brand_color }};
-    cursor: pointer;
-    flex-shrink: 0;
-    position: relative;
-    transition: background 0.2s, border-color 0.2s;
+    color: {{ icon_color }};
     text-decoration: none;
+    line-height: 1;
   }
-  .kpill-btn:hover {
-    background: rgba(255,255,255,0.12);
-    border-color: rgba(255,255,255,0.2);
-  }
-  .kpill-btn svg {
-    width: 18px;
-    height: 18px;
+  .lv-cart svg {
+    width: 20px;
+    height: 20px;
     display: block;
   }
-  .kpill-btn--placeholder {
-    visibility: hidden;
-    pointer-events: none;
-  }
-
-  /* Cart badge */
-  .kpill-cart-badge {
+  .lv-cart-badge {
     position: absolute;
-    top: -3px; right: -3px;
+    top: -6px; right: -7px;
     background: {{ badge_bg }};
     color: {{ badge_color }};
     font-size: 9px;
     font-weight: 800;
-    min-width: 16px;
-    height: 16px;
+    min-width: 15px;
+    height: 15px;
     border-radius: 999px;
     display: none;
     align-items: center;
     justify-content: center;
-    padding: 0 4px;
+    padding: 0 3px;
     line-height: 1;
-    border: 2px solid {{ pill_bg }};
   }
-  .kpill-cart-badge.active { display: flex; }
+  .lv-cart-badge.active { display: flex; }
 
-  /* Hamburger lines */
-  .kpill-hamburger {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-    transition: transform 0.3s;
-  }
-  .kpill-hamburger span {
-    display: block;
-    width: 16px;
-    height: 1.5px;
-    background: {{ brand_color }};
-    border-radius: 2px;
-    transition: transform 0.3s, opacity 0.3s, width 0.3s;
-  }
-  .kpill-btn.is-open .kpill-hamburger span:nth-child(1) {
-    transform: translateY(5.5px) rotate(45deg);
-  }
-  .kpill-btn.is-open .kpill-hamburger span:nth-child(2) {
-    opacity: 0;
-    width: 0;
-  }
-  .kpill-btn.is-open .kpill-hamburger span:nth-child(3) {
-    transform: translateY(-5.5px) rotate(-45deg);
-  }
-
-  /* ── Center — logo or brand name ─────────────────────────── */
-  .kpill-center {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 0;
-  }
-  .kpill-logo {
-    display: block;
-    height: {{ section.settings.logo_height | default: 28 }}px;
-    width: auto;
-    object-fit: contain;
-  }
-  .kpill-logo-mobile {
-    display: none;
-    height: {{ section.settings.logo_height | default: 28 | minus: 4 }}px;
-    width: auto;
-    object-fit: contain;
-  }
-  .kpill-brand {
-    font-family: var(--font-heading);
-    font-size: {{ section.settings.brand_font_size | default: 15 }}px;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: {{ brand_color }};
-    white-space: nowrap;
-    text-decoration: none;
-  }
-
-  /* ── Dropdown ─────────────────────────────────────────────── */
-  .kpill-dropdown {
-    width: {{ pill_width }}px;
-    max-width: calc(100vw - 32px);
-    background: {{ dropdown_bg }};
-    border: 1px solid {{ dropdown_border }};
-    border-radius: 20px;
-    margin-top: 8px;
-    overflow: hidden;
-    pointer-events: all;
-    backdrop-filter: blur({{ blur_amount }}px) saturate(1.4);
-    -webkit-backdrop-filter: blur({{ blur_amount }}px) saturate(1.4);
-    box-shadow: 0 16px 48px rgba(0,0,0,0.6);
-
-    /* Hidden by default */
-    max-height: 0;
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(-6px);
-    transition: max-height 0.3s ease, opacity 0.25s ease, transform 0.25s ease, visibility 0.25s;
-  }
-  .kpill-dropdown.open {
-    max-height: 400px;
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-  }
-
-  .kpill-nav {
-    list-style: none;
-    margin: 0;
-    padding: 6px 0;
-  }
-  .kpill-nav li {
-    border-bottom: 1px solid {{ dropdown_border }};
-  }
-  .kpill-nav li:last-child { border-bottom: none; }
-  .kpill-nav a {
-    display: block;
-    padding: 14px 24px;
-    font-size: 13px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: {{ dropdown_text }};
-    text-decoration: none;
-    text-align: center;
-    transition: color 0.15s, background 0.15s;
-  }
-  .kpill-nav a:hover {
-    color: {{ dropdown_hover }};
-    background: rgba(255,255,255,0.03);
-  }
+  /* ── Spacer ───────────────────────────────────────────────── */
+  .lv-header-spacer { height: {{ bar_height }}px; }
 
   /* ── Mobile ───────────────────────────────────────────────── */
-  @media (max-width: 480px) {
-    .kpill-wrapper {
-      padding-top: {{ pill_top | minus: 4 | at_least: 8 }}px;
+  @media (max-width: 640px) {
+    .lv-header-inner {
+      padding: 0 16px;
     }
-    .kpill {
-      width: calc(100vw - 32px);
+    .lv-nav {
+      gap: 18px;
     }
-    .kpill-dropdown { width: calc(100vw - 32px); }
-    {%- if section.settings.logo_mobile != blank or section.settings.logo != blank %}
-    .kpill-logo { display: none; }
-    .kpill-logo-mobile { display: block; }
-    {%- endif %}
+    .lv-nav a {
+      font-size: 13px;
+    }
+    .lv-brand {
+      font-size: {{ brand_size | minus: 2 }}px;
+    }
   }
 </style>
 
-<div class="kpill-spacer"></div>
+<div class="lv-header-spacer"></div>
 
-<div class="kpill-wrapper" id="kpill-wrapper">
-  <div class="kpill" id="kpill">
+<header class="lv-header" role="banner">
+  <div class="lv-header-inner">
 
-    <!-- LEFT: Cart -->
-    {%- if show_cart != false -%}
-      <a href="/cart" class="kpill-btn" aria-label="Cart" id="kpill-cart">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
-          <line x1="3" y1="6" x2="21" y2="6"/>
-          <path d="M16 10a4 4 0 01-8 0"/>
-        </svg>
-        <span class="kpill-cart-badge" id="kpill-cart-badge">0</span>
-      </a>
-    {%- else -%}
-      <div class="kpill-btn kpill-btn--placeholder" aria-hidden="true"></div>
-    {%- endif -%}
-
-    <!-- CENTER: Logo or brand name -->
-    <div class="kpill-center">
+    <!-- LEFT: Logo / Brand -->
+    <a href="/" class="lv-logo" aria-label="{{ shop.name }}">
       {%- if section.settings.logo != blank -%}
-        <a href="/" aria-label="{{ shop.name }}">
-          <img
-            class="kpill-logo"
-            src="{{ section.settings.logo | image_url: height: 80 }}"
-            alt="{{ shop.name }}"
-            width="auto"
-            height="{{ section.settings.logo_height | default: 28 }}"
-          >
-          {%- if section.settings.logo_mobile != blank -%}
-            <img
-              class="kpill-logo-mobile"
-              src="{{ section.settings.logo_mobile | image_url: height: 60 }}"
-              alt="{{ shop.name }}"
-              width="auto"
-              height="{{ section.settings.logo_height | default: 28 | minus: 4 }}"
-            >
-          {%- else -%}
-            <img
-              class="kpill-logo-mobile"
-              src="{{ section.settings.logo | image_url: height: 60 }}"
-              alt="{{ shop.name }}"
-              width="auto"
-              height="{{ section.settings.logo_height | default: 28 | minus: 4 }}"
-            >
-          {%- endif -%}
-        </a>
+        <img
+          src="{{ section.settings.logo | image_url: height: 80 }}"
+          alt="{{ shop.name }}"
+          width="auto"
+          height="{{ logo_height }}"
+        >
       {%- else -%}
-        <a href="/" class="kpill-brand">{{ section.settings.brand_text | default: shop.name }}</a>
+        <span class="lv-brand">{{ brand_text }}</span>
+      {%- endif -%}
+    </a>
+
+    <!-- CENTER: Nav -->
+    <nav class="lv-nav" aria-label="Main navigation">
+      {%- if section.settings.nav_link_1_text != blank -%}
+        <a href="{{ section.settings.nav_link_1_url | default: '/' }}">{{ section.settings.nav_link_1_text }}</a>
+      {%- endif -%}
+      {%- if section.settings.nav_link_2_text != blank -%}
+        <a href="{{ section.settings.nav_link_2_url | default: '/collections/all' }}">{{ section.settings.nav_link_2_text }}</a>
+      {%- endif -%}
+      {%- if section.settings.nav_link_3_text != blank -%}
+        <a href="{{ section.settings.nav_link_3_url }}">{{ section.settings.nav_link_3_text }}</a>
+      {%- endif -%}
+      {%- if section.settings.nav_link_4_text != blank -%}
+        <a href="{{ section.settings.nav_link_4_url }}">{{ section.settings.nav_link_4_text }}</a>
+      {%- endif -%}
+      {%- if section.settings.nav_link_1_text == blank and section.settings.nav_link_2_text == blank -%}
+        <a href="/">Home</a>
+        <a href="/collections/all">Products</a>
+      {%- endif -%}
+    </nav>
+
+    <!-- RIGHT: Cart -->
+    <div class="lv-right">
+      {%- if show_cart != false -%}
+        <a href="/cart" class="lv-cart" aria-label="Cart" id="lv-cart">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+            <path d="M1 1h4l2.68 13.39a2 2 0 001.99 1.61h9.72a2 2 0 001.99-1.76l1.07-7.68H6"/>
+          </svg>
+          <span class="lv-cart-badge" id="lv-cart-badge"></span>
+        </a>
       {%- endif -%}
     </div>
 
-    <!-- RIGHT: Hamburger -->
-    {%- if show_menu != false -%}
-      <button class="kpill-btn" id="kpill-menu-btn" aria-label="Open menu" aria-expanded="false">
-        <div class="kpill-hamburger">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-      </button>
-    {%- else -%}
-      <div class="kpill-btn kpill-btn--placeholder" aria-hidden="true"></div>
-    {%- endif -%}
-
-  </div><!-- /.kpill -->
-
-  <!-- Dropdown nav -->
-  {%- if show_menu != false -%}
-    <div class="kpill-dropdown" id="kpill-dropdown" role="dialog" aria-label="Navigation">
-      <ul class="kpill-nav">
-        {%- if section.settings.nav_link_1_text != blank -%}
-          <li><a href="{{ section.settings.nav_link_1_url | default: '/' }}">{{ section.settings.nav_link_1_text }}</a></li>
-        {%- endif -%}
-        {%- if section.settings.nav_link_2_text != blank -%}
-          <li><a href="{{ section.settings.nav_link_2_url | default: '/collections/all' }}">{{ section.settings.nav_link_2_text }}</a></li>
-        {%- endif -%}
-        {%- if section.settings.nav_link_3_text != blank -%}
-          <li><a href="{{ section.settings.nav_link_3_url }}">{{ section.settings.nav_link_3_text }}</a></li>
-        {%- endif -%}
-        {%- if section.settings.nav_link_4_text != blank -%}
-          <li><a href="{{ section.settings.nav_link_4_url }}">{{ section.settings.nav_link_4_text }}</a></li>
-        {%- endif -%}
-        {%- if section.settings.nav_link_5_text != blank -%}
-          <li><a href="{{ section.settings.nav_link_5_url }}">{{ section.settings.nav_link_5_text }}</a></li>
-        {%- endif -%}
-        {%- if section.settings.nav_link_6_text != blank -%}
-          <li><a href="{{ section.settings.nav_link_6_url }}">{{ section.settings.nav_link_6_text }}</a></li>
-        {%- endif -%}
-        {%- if section.settings.nav_link_1_text == blank and section.settings.nav_link_2_text == blank -%}
-          <li><a href="/">Home</a></li>
-          <li><a href="/collections/all">Products</a></li>
-        {%- endif -%}
-      </ul>
-    </div>
-  {%- endif -%}
-
-</div><!-- /.kpill-wrapper -->
+  </div>
+</header>
 
 <script>
 (function() {
-  var pill     = document.getElementById('kpill');
-  var menuBtn  = document.getElementById('kpill-menu-btn');
-  var dropdown = document.getElementById('kpill-dropdown');
-  var badge    = document.getElementById('kpill-cart-badge');
-  var isOpen   = false;
-
-  /* ── Menu toggle ─────────────────────────────────────────── */
-  if (menuBtn && dropdown) {
-    menuBtn.addEventListener('click', function(e) {
-      e.stopPropagation();
-      isOpen = !isOpen;
-      dropdown.classList.toggle('open', isOpen);
-      menuBtn.classList.toggle('is-open', isOpen);
-      menuBtn.setAttribute('aria-expanded', isOpen);
-    });
-
-    document.addEventListener('click', function(e) {
-      if (isOpen && !e.target.closest('#kpill-wrapper')) {
-        isOpen = false;
-        dropdown.classList.remove('open');
-        menuBtn.classList.remove('is-open');
-        menuBtn.setAttribute('aria-expanded', 'false');
-      }
-    });
-
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape' && isOpen) {
-        isOpen = false;
-        dropdown.classList.remove('open');
-        menuBtn.classList.remove('is-open');
-        menuBtn.setAttribute('aria-expanded', 'false');
-      }
-    });
-  }
-
-  /* ── Scroll state — adds heavier shadow when page is scrolled */
-  if (pill) {
-    var ticking = false;
-    window.addEventListener('scroll', function() {
-      if (!ticking) {
-        requestAnimationFrame(function() {
-          pill.classList.toggle('scrolled', window.scrollY > 10);
-          ticking = false;
-        });
-        ticking = true;
-      }
-    }, { passive: true });
-  }
-
-  /* ── Cart badge ──────────────────────────────────────────── */
+  var badge = document.getElementById('lv-cart-badge');
   if (badge) {
     fetch('/cart.js')
       .then(function(r) { return r.json(); })
@@ -427,37 +213,36 @@
 
 {% schema %}
 {
-  "name": "Header Pill",
+  "name": "Header Bar",
   "tag": "header",
-  "class": "kenso-header-minimal-wrapper",
+  "class": "vx-header-wrapper",
   "settings": [
     { "type": "header", "content": "Logo" },
-    { "type": "image_picker", "id": "logo", "label": "Desktop logo", "info": "Recommended max height: 64px" },
-    { "type": "image_picker", "id": "logo_mobile", "label": "Mobile logo (optional)", "info": "Falls back to desktop logo if not set" },
+    { "type": "image_picker", "id": "logo", "label": "Logo image", "info": "If blank, brand text is shown" },
     { "type": "range", "id": "logo_height", "label": "Logo height (px)", "min": 16, "max": 56, "step": 2, "default": 28 },
-    { "type": "text", "id": "brand_text", "label": "Brand text (if no logo)", "default": "OGVENDORS" },
-    { "type": "range", "id": "brand_font_size", "label": "Brand font size (px)", "min": 11, "max": 24, "step": 1, "default": 15 },
-    { "type": "header", "content": "Pill" },
-    { "type": "color", "id": "pill_bg", "label": "Pill background", "info": "Use rgba for transparency, e.g. rgba(0,0,0,0.82)", "default": "#000000" },
-    { "type": "color", "id": "pill_border", "label": "Pill border", "info": "Use rgba for subtle border, e.g. rgba(255,255,255,0.10)", "default": "#2a2a2a" },
-    { "type": "range", "id": "pill_width", "label": "Pill width (px)", "min": 280, "max": 560, "step": 10, "default": 380 },
-    { "type": "range", "id": "pill_top", "label": "Distance from top (px)", "min": 8, "max": 40, "step": 2, "default": 16 },
-    { "type": "range", "id": "blur_amount", "label": "Backdrop blur (px)", "min": 0, "max": 40, "step": 2, "default": 20 },
-    { "type": "header", "content": "Icon Buttons" },
-    { "type": "range", "id": "icon_size", "label": "Icon button size (px)", "min": 32, "max": 52, "step": 2, "default": 40 },
-    { "type": "color", "id": "icon_bg", "label": "Icon button background", "default": "#111111" },
-    { "type": "color", "id": "icon_border", "label": "Icon button border", "default": "#2a2a2a" },
-    { "type": "color", "id": "brand_color", "label": "Icon and text color", "default": "#ffffff" },
-    { "type": "checkbox", "id": "show_cart", "label": "Show cart button", "default": true },
-    { "type": "checkbox", "id": "show_menu", "label": "Show hamburger menu", "default": true },
-    { "type": "color", "id": "badge_bg", "label": "Cart badge background", "default": "#39ff14" },
-    { "type": "color", "id": "badge_text_color", "label": "Cart badge text", "default": "#000000" },
-    { "type": "header", "content": "Dropdown Menu" },
-    { "type": "color", "id": "dropdown_bg", "label": "Dropdown background", "default": "#080808" },
-    { "type": "color", "id": "dropdown_border", "label": "Dropdown border", "default": "#222222" },
-    { "type": "color", "id": "dropdown_text_color", "label": "Dropdown link color", "default": "#ffffff" },
-    { "type": "color", "id": "dropdown_hover_color", "label": "Dropdown link hover", "default": "#39ff14" },
-    { "type": "header", "content": "Navigation Links" },
+    { "type": "text", "id": "brand_text", "label": "Brand text (if no logo)" },
+    { "type": "range", "id": "brand_font_size", "label": "Brand font size (px)", "min": 11, "max": 28, "step": 1, "default": 16 },
+    { "type": "color", "id": "brand_color", "label": "Brand text color", "default": "#ffffff" },
+    { "type": "header", "content": "Bar" },
+    { "type": "color", "id": "bar_bg", "label": "Background color", "default": "#000000" },
+    { "type": "range", "id": "bar_height", "label": "Bar height (px)", "min": 44, "max": 80, "step": 4, "default": 56 },
+    { "type": "range", "id": "padding_x", "label": "Side padding (px)", "min": 12, "max": 60, "step": 4, "default": 24 },
+    { "type": "select", "id": "bar_border", "label": "Bottom border", "default": "none", "options": [
+      { "value": "none", "label": "None" },
+      { "value": "bottom", "label": "Show border" }
+    ]},
+    { "type": "color", "id": "border_color", "label": "Border color", "default": "#1a1a1a" },
+    { "type": "header", "content": "Navigation" },
+    { "type": "color", "id": "nav_color", "label": "Link color", "default": "#aaaaaa" },
+    { "type": "color", "id": "nav_hover_color", "label": "Link hover color", "default": "#ffffff" },
+    { "type": "range", "id": "nav_font_size", "label": "Font size (px)", "min": 11, "max": 18, "step": 1, "default": 14 },
+    { "type": "select", "id": "nav_font_weight", "label": "Font weight", "default": "400", "options": [
+      { "value": "300", "label": "Light" },
+      { "value": "400", "label": "Regular" },
+      { "value": "500", "label": "Medium" },
+      { "value": "600", "label": "Semibold" }
+    ]},
+    { "type": "range", "id": "nav_gap", "label": "Gap between links (px)", "min": 12, "max": 56, "step": 4, "default": 28 },
     { "type": "text", "id": "nav_link_1_text", "label": "Link 1 text", "default": "Home" },
     { "type": "url",  "id": "nav_link_1_url",  "label": "Link 1 URL" },
     { "type": "text", "id": "nav_link_2_text", "label": "Link 2 text", "default": "Products" },
@@ -466,13 +251,14 @@
     { "type": "url",  "id": "nav_link_3_url",  "label": "Link 3 URL" },
     { "type": "text", "id": "nav_link_4_text", "label": "Link 4 text" },
     { "type": "url",  "id": "nav_link_4_url",  "label": "Link 4 URL" },
-    { "type": "text", "id": "nav_link_5_text", "label": "Link 5 text" },
-    { "type": "url",  "id": "nav_link_5_url",  "label": "Link 5 URL" },
-    { "type": "text", "id": "nav_link_6_text", "label": "Link 6 text" },
-    { "type": "url",  "id": "nav_link_6_url",  "label": "Link 6 URL" }
+    { "type": "header", "content": "Cart" },
+    { "type": "checkbox", "id": "show_cart", "label": "Show cart icon", "default": true },
+    { "type": "color", "id": "icon_color", "label": "Cart icon color", "default": "#ffffff" },
+    { "type": "color", "id": "badge_bg", "label": "Cart badge background", "default": "#39ff14" },
+    { "type": "color", "id": "badge_text_color", "label": "Cart badge text", "default": "#000000" }
   ],
   "presets": [
-    { "name": "Header Pill" }
+    { "name": "Header Bar" }
   ]
 }
 {% endschema %}
