@@ -207,6 +207,61 @@
   {% render 'live-sales-notification' %}
   {% render 'chat-widget' %}
 
+  <style>
+    @keyframes vxFadeUp {
+      from { opacity: 0; transform: translateY(32px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .vx-reveal { opacity: 0; }
+    .vx-reveal.vx-in {
+      animation: vxFadeUp 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+  </style>
+  <script>
+    (function() {
+      function initReveal() {
+        // Hero — stagger title → trust row → avatars
+        document.querySelectorAll('.hero-title, .hero-trust, .hero-avatars').forEach(function(el, i) {
+          el.classList.add('vx-reveal');
+          el.style.animationDelay = (i * 0.14) + 's';
+          el.classList.add('vx-in');
+        });
+
+        // Section titles
+        document.querySelectorAll('.section-title').forEach(function(el) {
+          el.classList.add('vx-reveal');
+        });
+
+        // Product cards — stagger by column (left to right per row)
+        document.querySelectorAll('.product-card').forEach(function(card, i) {
+          card.classList.add('vx-reveal');
+          card.style.animationDelay = ((i % 4) * 0.08) + 's';
+        });
+
+        var obs = new IntersectionObserver(function(entries) {
+          entries.forEach(function(e) {
+            if (e.isIntersecting) {
+              e.target.classList.add('vx-in');
+              obs.unobserve(e.target);
+            }
+          });
+        }, { threshold: 0.08, rootMargin: '0px 0px -20px 0px' });
+
+        document.querySelectorAll('.vx-reveal:not(.vx-in)').forEach(function(el) {
+          obs.observe(el);
+        });
+      }
+
+      var loader = document.getElementById('vx-loader');
+      if (!loader) { document.addEventListener('DOMContentLoaded', initReveal); return; }
+      new MutationObserver(function(_, mo) {
+        if (loader.classList.contains('vx-ok')) {
+          mo.disconnect();
+          setTimeout(initReveal, 80);
+        }
+      }).observe(loader, { attributes: true, attributeFilter: ['class'] });
+    })();
+  </script>
   <script src="{{ 'theme.js' | asset_url }}" defer></script>
 
   {%- if settings.custom_js != blank -%}

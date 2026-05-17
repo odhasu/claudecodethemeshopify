@@ -342,7 +342,7 @@
   </div>
 </section>
 
-{%- if show_details_btn -%}
+{%- if show_details_btn or icon_btn_type == 'info' -%}
 <div class="product-detail-modal" id="product-detail-modal-{{ sid }}">
   <div class="product-detail-modal__backdrop" onclick="closeProductDetail('{{ sid }}')"></div>
   <div class="product-detail-modal__content">
