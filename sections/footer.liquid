@@ -10,6 +10,8 @@
   assign icon_box_bg = section.settings.social_icon_bg | default: 'transparent'
   assign cta_bg = section.settings.cta_bg_color | default: '#19d400'
   assign cta_text = section.settings.cta_text_color | default: '#000000'
+  assign cta_radius = section.settings.cta_border_radius | default: 999
+  assign cta_style = section.settings.cta_style | default: 'solid_glow'
   assign cta_r = cta_bg | color_extract: 'red'
   assign cta_g = cta_bg | color_extract: 'green'
   assign cta_b = cta_bg | color_extract: 'blue'
@@ -75,24 +77,45 @@
     align-items: center;
     gap: 6px;
     padding: 11px 26px;
-    border-radius: 999px;
+    border-radius: {{ cta_radius }}px;
     border: none;
-    background:
-      linear-gradient(180deg, rgba(255,255,255,0.32) 0%, rgba(255,255,255,0) 55%, rgba(0,0,0,0.14) 100%),
-      {{ cta_bg }};
     color: {{ cta_text }};
     font-weight: 600;
     font-size: 14px;
+    transition: box-shadow 0.2s, background 0.2s;
+    {%- if cta_style == 'solid_glow' %}
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.32) 0%, rgba(255,255,255,0) 55%, rgba(0,0,0,0.14) 100%),
+      {{ cta_bg }};
     box-shadow:
       0 6px 28px rgba({{ cta_r }}, {{ cta_g }}, {{ cta_b }}, 0.6),
       0 2px 6px rgba(0,0,0,0.25);
-    transition: box-shadow 0.2s;
+    {%- elsif cta_style == 'glass' %}
+    background: {{ cta_bg }};
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.28),
+      inset 0 -1px 0 rgba(0,0,0,0.18),
+      0 4px 20px rgba({{ cta_r }}, {{ cta_g }}, {{ cta_b }}, 0.55),
+      0 1px 4px rgba(0,0,0,0.25);
+    {%- else %}
+    background: {{ cta_bg }};
+    {%- endif %}
   }
   .footer-cta:hover {
+    {%- if cta_style == 'solid_glow' %}
     box-shadow:
       0 4px 12px rgba({{ cta_r }}, {{ cta_g }}, {{ cta_b }}, 0.45),
       0 8px 24px rgba({{ cta_r }}, {{ cta_g }}, {{ cta_b }}, 0.28),
       0 2px 6px rgba(0,0,0,0.3);
+    {%- elsif cta_style == 'glass' %}
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.35),
+      inset 0 -1px 0 rgba(0,0,0,0.18),
+      0 8px 32px rgba({{ cta_r }}, {{ cta_g }}, {{ cta_b }}, 0.75),
+      0 0 48px rgba({{ cta_r }}, {{ cta_g }}, {{ cta_b }}, 0.28);
+    {%- else %}
+    opacity: 0.88;
+    {%- endif %}
   }
 </style>
 
@@ -172,8 +195,14 @@
     { "type": "checkbox", "id": "show_cta", "label": "Show CTA button", "default": true },
     { "type": "text", "id": "cta_label", "label": "Button text", "default": "Get this store design" },
     { "type": "url", "id": "cta_url", "label": "Button link" },
-    { "type": "color", "id": "cta_bg_color", "label": "Button background", "default": "#19d400" },
+    { "type": "color", "id": "cta_bg_color", "label": "Button color", "default": "#19d400" },
     { "type": "color", "id": "cta_text_color", "label": "Button text color", "default": "#000000" },
+    { "type": "range", "id": "cta_border_radius", "label": "Button corner radius (px)", "min": 0, "max": 999, "step": 2, "default": 999 },
+    { "type": "select", "id": "cta_style", "label": "Button style", "default": "solid_glow", "options": [
+      { "value": "none", "label": "Plain" },
+      { "value": "glass", "label": "Glass — inner highlight + outer glow" },
+      { "value": "solid_glow", "label": "Solid Glow — top shine + bottom radial glow" }
+    ]},
     { "type": "header", "content": "Copyright" },
     { "type": "checkbox", "id": "show_copyright", "label": "Show copyright", "default": true },
     { "type": "header", "content": "Colors" },
