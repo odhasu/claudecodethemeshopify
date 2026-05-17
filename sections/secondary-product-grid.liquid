@@ -37,7 +37,7 @@
   assign btn_radius = section.settings.buy_btn_border_radius | default: 10
   assign btn_font_size = section.settings.buy_btn_font_size | default: 14
   assign btn_font_weight = section.settings.buy_btn_font_weight | default: '800'
-  assign btn_glass = section.settings.buy_btn_glass_enabled
+  assign btn_style = section.settings.buy_btn_style | default: 'solid_glow'
   assign icon_btn_type = section.settings.icon_btn_type | default: 'info'
   assign sid = section.id
 -%}
@@ -192,23 +192,34 @@
     font-family: var(--font-heading);
     text-transform: uppercase; letter-spacing: 0.04em;
     display: flex; align-items: center; justify-content: center; border: none; cursor: pointer;
-    transition: box-shadow 0.25s, transform 0.2s, opacity 0.2s;
-    {%- if btn_glass %}
+    transition: box-shadow 0.25s, transform 0.2s, opacity 0.2s, background 0.2s;
+    {%- if btn_style == 'glass' %}
     box-shadow:
       inset 0 1px 0 rgba(255,255,255,0.28),
       inset 0 -1px 0 rgba(0,0,0,0.18),
       0 4px 20px rgba({{ btn_bg | color_extract: 'red' }}, {{ btn_bg | color_extract: 'green' }}, {{ btn_bg | color_extract: 'blue' }}, 0.55),
       0 1px 4px rgba(0,0,0,0.25);
+    {%- elsif btn_style == 'solid_glow' %}
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0) 52%, rgba(0,0,0,0.10) 100%),
+      {{ btn_bg }};
+    box-shadow:
+      0 6px 28px rgba({{ btn_bg | color_extract: 'red' }}, {{ btn_bg | color_extract: 'green' }}, {{ btn_bg | color_extract: 'blue' }}, 0.65),
+      0 2px 6px rgba(0,0,0,0.25);
     {%- endif %}
   }
   .spg-card-{{ sid }} .btn-buy:hover {
     transform: translateY(-1px);
-    {%- if btn_glass %}
+    {%- if btn_style == 'glass' %}
     box-shadow:
       inset 0 1px 0 rgba(255,255,255,0.35),
       inset 0 -1px 0 rgba(0,0,0,0.18),
       0 8px 32px rgba({{ btn_bg | color_extract: 'red' }}, {{ btn_bg | color_extract: 'green' }}, {{ btn_bg | color_extract: 'blue' }}, 0.75),
       0 0 48px rgba({{ btn_bg | color_extract: 'red' }}, {{ btn_bg | color_extract: 'green' }}, {{ btn_bg | color_extract: 'blue' }}, 0.28);
+    {%- elsif btn_style == 'solid_glow' %}
+    box-shadow:
+      0 10px 40px rgba({{ btn_bg | color_extract: 'red' }}, {{ btn_bg | color_extract: 'green' }}, {{ btn_bg | color_extract: 'blue' }}, 0.80),
+      0 3px 10px rgba(0,0,0,0.3);
     {%- else %}
     opacity: 0.88;
     {%- endif %}
@@ -428,7 +439,11 @@
       { "value": "800", "label": "Extrabold" },
       { "value": "900", "label": "Black" }
     ]},
-    { "type": "checkbox", "id": "buy_btn_glass_enabled", "label": "Glass / glow effect", "default": true, "info": "Adds inner highlight + outer colour glow to the button" },
+    { "type": "select", "id": "buy_btn_style", "label": "Button style", "default": "solid_glow", "options": [
+      { "value": "none", "label": "Plain" },
+      { "value": "glass", "label": "Glass — inner highlight + outer glow" },
+      { "value": "solid_glow", "label": "Solid Glow — top shine + bottom radial glow" }
+    ]},
     { "type": "header", "content": "Icon Button (left of Buy Now)" },
     { "type": "select", "id": "icon_btn_type", "label": "Icon button type", "default": "info", "options": [
       { "value": "info", "label": "ⓘ Info — opens product detail popup" },
