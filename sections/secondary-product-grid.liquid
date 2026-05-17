@@ -209,18 +209,20 @@
     {%- endif %}
   }
   .spg-card-{{ sid }} .btn-buy:hover {
+    {%- if btn_style == 'solid_glow' %}
+    box-shadow:
+      0 4px 12px rgba({{ btn_bg | color_extract: 'red' }}, {{ btn_bg | color_extract: 'green' }}, {{ btn_bg | color_extract: 'blue' }}, 0.45),
+      0 8px 24px rgba({{ btn_bg | color_extract: 'red' }}, {{ btn_bg | color_extract: 'green' }}, {{ btn_bg | color_extract: 'blue' }}, 0.25),
+      0 2px 6px rgba(0,0,0,0.35);
+    {%- elsif btn_style == 'glass' %}
     transform: translateY(-1px);
-    {%- if btn_style == 'glass' %}
     box-shadow:
       inset 0 1px 0 rgba(255,255,255,0.35),
       inset 0 -1px 0 rgba(0,0,0,0.18),
       0 8px 32px rgba({{ btn_bg | color_extract: 'red' }}, {{ btn_bg | color_extract: 'green' }}, {{ btn_bg | color_extract: 'blue' }}, 0.75),
       0 0 48px rgba({{ btn_bg | color_extract: 'red' }}, {{ btn_bg | color_extract: 'green' }}, {{ btn_bg | color_extract: 'blue' }}, 0.28);
-    {%- elsif btn_style == 'solid_glow' %}
-    box-shadow:
-      0 10px 40px rgba({{ btn_bg | color_extract: 'red' }}, {{ btn_bg | color_extract: 'green' }}, {{ btn_bg | color_extract: 'blue' }}, 0.80),
-      0 3px 10px rgba(0,0,0,0.3);
     {%- else %}
+    transform: translateY(-1px);
     opacity: 0.88;
     {%- endif %}
   }
