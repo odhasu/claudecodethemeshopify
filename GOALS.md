@@ -1,27 +1,24 @@
 # Theme — Goals
 
 ## What we're building
-Vexel — a premium Shopify theme product for resellers. Replicates lukesvendors.com design. License-protected using the Kenso shell model (obfuscated loader + server validation).
+Vexel — a premium Shopify theme for resellers. Visually replicates lukesvendors.com. License-protected (Kenso shell model).
 
-## Current sprint — License Protection (Kenso Shell Model)
-1. Convert all 10 sections to shells (empty div + JSON data)
-2. Build obfuscated loader that validates license + renders sections client-side
-3. Set up Railway server (POST /api/validate + serve loader JS)
-4. Update theme.liquid (VexelConfig, loading states, loader script)
-5. Build pipeline (obfuscate loader, package theme ZIP)
+## Current sprint — Luke's theme replication
+All sections are built. Focus now is on content setup and polish.
 
-## Content tasks (after protection is done)
-- Upload hero background image in Shopify admin
-- Upload more customer testimonial screenshots
-- Add real social links to footer
-- Results carousel section on homepage
-- Mobile polish pass
+### Next steps in order
+1. Set homepage section order in Shopify admin (see BUILD.md for order)
+2. Upload product photos + set up 11 products (prices, compare-at, descriptions) — see LUKE_CLONE_PRD.md
+3. Upload hero background image
+4. Upload testimonial screenshots
+5. Mobile polish pass
+6. Results carousel content
 
-## What success looks like
-- Page loads fast (< 2s first load, < 500ms cached)
-- Without valid license: nothing renders, shows error page
-- Footer removal = loading screen forever
-- Obfuscated code — resellers can't easily bypass
-- Every section configurable through Shopify theme editor
-- Mobile looks as good as desktop
-- Distributed as ZIP, customers install on their Shopify store
+## Done
+- All sections built: urgency bar, header bar, hero, product grid, secondary grid, bundle builder, divider, testimonials, trust bar, reviews, FAQ, footer
+- Header exactly matches Luke's: full-width black bar, logo left, nav center, cart right
+- Scroll behavior: 3-mode setting on both urgency bar and header (always follow / smart sticky / stay at top)
+- License protection: Kenso shell model, obfuscated loader, Supabase validation
+
+## Design reference
+lukesvendors.com — check this before any visual work

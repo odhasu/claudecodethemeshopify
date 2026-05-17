@@ -1,55 +1,58 @@
-# Theme — Build Status
+# Theme — Build Status (V3)
 
-## Section order (matches Luke's)
+## Section order for homepage (set in Shopify admin — NOT index.json)
 1. Urgency bar — header group
-2. Hero
-3. Product grid
-4. Testimonials
-5. Results carousel
-6. FAQ
-7. Reviews
-8. Trust badges — footer group
-9. Footer — footer group
+2. Header bar — header group
+3. Hero
+4. Product grid
+5. Divider
+6. Secondary product grid
+7. Bundle builder
+8. Testimonials
+9. Trust bar
+10. Reviews
+11. FAQ
+12. Footer — footer group
 
-## Sections — Liquid (done, needs shell conversion)
-- Urgency bar — scrolling marquee, countdown timer, live viewer count, slides in on scroll
-- Header — full-width fixed bar, logo left, nav right, cart icon, mobile hamburger + dropdown
-- Hero — inline headline, green highlight, CTA buttons, glow, background image mode
-- Product grid — glassmorphic cards, info modal, BUY NOW button, green glow background
-- Trust badges — scrolling marquee, 4 badges, green icons, positioned before footer
-- Footer — brand name, policy links, social icons, copyright
-- Testimonials — horizontal scrolling image carousel, fade-out edges
-- FAQ — accordion, first item open by default, green glow border on open item
-- Reviews — card grid, star rating summary, write-a-review button
-- Cart drawer — slide-out panel, AJAX quantity controls (stays as Liquid, no shell)
+## Sections — all built ✓
+- **Urgency bar** — scrolling marquee, countdown timer, live viewer count, 3-mode scroll behavior (follow / smart sticky / stay at top)
+- **Header bar** — full-width black bar, logo left, nav center, cart right, 3-mode scroll behavior, cart badge, adjusts top when urgency bar hides
+- **Hero** — inline headline, green highlight, CTA buttons, background image mode, glow
+- **Product grid** — glassmorphic cards, ⓘ info modal, BUY NOW + cart icon buttons, glass/glow button style, buy_btn_height/radius/font settings
+- **Secondary product grid** — same as product grid, scoped CSS via section.id, defaults to 4 cols / 4 products
+- **Bundle builder** — bundle upsell section
+- **Divider** — gradient-glow, gradient, solid, dashed, dotted styles; full/contained/narrow width
+- **Testimonials** — horizontal auto-scrolling image carousel, fade-out edges
+- **Trust bar** — scrolling marquee, 8 icon options, bg style setting
+- **Reviews** — card grid, star rating summary, write-a-review button
+- **FAQ** — accordion, first item open by default, green glow border on open item
+- **Footer** — brand name, policy links, social icons, copyright
+- **Main product** — product page with social proof (live checkout counter drift, resellers badge)
+- **Cart drawer** — slide-out panel, AJAX quantity controls
 
 ## Other done
-- Loading screen — full-page spinner, 1s minimum, smooth fade reveal (no per-section spinners)
-- Color system — unified to #19d400 everywhere
+- Loading screen — full-page spinner, 1s minimum, smooth fade reveal
 - Fonts — Clash Grotesk (headings) + Satoshi (body) from Fontshare
-- Hero — content + buttons centered via CSS overrides
-- Footer — settings locked down (only brand/social/CTA/copyright editable), refund policy link added
-- Header nav — removed (no HOME/CATALOG/CONTACT bar)
+- Color system — #19d400 accent throughout
+- Header/urgency bar ZIP backup — Desktop/header-urgency-bar-v1.zip
 
-## License Protection (Kenso Shell Model) — DONE
-- All 10 sections converted to shells (empty div + JSON data)
-- Obfuscated loader built (~315KB) — renders sections client-side after license validation
-- Loader served from Shopify CDN (assets/scaled-loader.js)
+## License Protection (Kenso Shell Model) — DONE (V2, carry over)
+- All sections converted to shells (empty div + JSON data)
+- Obfuscated loader (~315KB) served from Shopify CDN
 - Validation via Vercel store server → Supabase RPC (anon key)
 - 24hr grace period (localStorage), 30-min session cache
 - Footer protection (MutationObserver + periodic check)
-- theme.liquid: VexelConfig, loading states, loader from CDN
 
-## Still to build
-- Hero background image — needs upload in Shopify admin
-- More testimonial screenshots (up to 20 supported)
-- Real social links in footer
+## Still to do
+- Set homepage section order in Shopify admin (user does this)
+- Upload hero background image in Shopify admin
+- Set up 11 products with correct prices + compare-at prices (see LUKE_CLONE_PRD.md)
+- Upload product photos + testimonial screenshots
+- Add real social links to footer
+- Mobile polish pass
+- Results carousel — built but needs content
 
 ## Last worked on
-2026-05-16 — Added secondary-product-grid section (scoped CSS via section.id, same feature set as primary, defaults to 4 cols / 4 products)
-2026-05-10 — Removed header nav, removed per-section spinners, smooth 1s loader reveal, centered hero, stripped footer settings, added refund policy
-2026-05-09 — Hero: added bg image + gradient overlay + 2 CTA buttons; Product cards: inline descriptions; License validation fix (Supabase anon key)
-2026-05-08 — License protection end-to-end: Supabase RPC, validate endpoint fix, loader from CDN, rebranding to Vexel
-2026-04-29 — License protection plan finalized (Kenso shell model), button radius fix, header dark bg
-2026-04-28 — Cart drawer built, header/footer complete
-2026-04-21 — Luke's full replication: header rebuild, hero bg image mode, color unification
+2026-05-17 — Header rebuilt as full-width bar (Luke's layout exact), urgency bar + header 3-mode scroll behavior setting, stacking fix (both fixed, header offset below urgency bar)
+2026-05-16 — Added secondary-product-grid, divider, trust-bar sections; button glass/glow settings on product grid; ⓘ info icon / cart button layout
+2026-05-10 — Removed header nav, smooth loader, centered hero, stripped footer

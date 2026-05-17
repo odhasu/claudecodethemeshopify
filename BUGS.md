@@ -5,31 +5,30 @@
 - Hero bg image — setting exists, needs image upload in Shopify admin
 - Footer Instagram URL — placeholder, needs real URL
 - Testimonials — few images uploaded, supports up to 20 (upload in Shopify admin)
-- Store admin settings still show "OGSELL" — update brand name/nav links in Shopify Customize
+- Store admin still shows old brand name/nav links — update in Shopify Customize
+- urgency_bar_height setting in header must manually match urgency bar's bar_height setting — not auto-synced
 
-## Todo — Content
+## Todo — Content (Shopify admin)
+- Set homepage section order (see BUILD.md order)
 - Upload hero background image
-- Upload more testimonial screenshots
+- Upload product photos for all 11 products (see LUKE_CLONE_PRD.md)
+- Upload testimonial screenshots
 - Add real social URLs to footer
+- Set up 11 products with prices + compare-at prices
 
-## Fixed
-- Per-section spinners — removed, full-page loader handles everything now
-- Testimonials spinner stuck — no more per-section spinners, content loads behind full-page loader
-- Header nav clutter — removed HOME/CATALOG/CONTACT bar entirely
-- Footer too many settings — stripped to essentials (brand/social/CTA/copyright only)
-- Hero not centered — added CSS overrides for centered content + buttons
-- License protection — Kenso shell model fully working (Supabase RPC + Vercel + CDN loader)
-- Hero missing features — added bg image, gradient overlay, 2 CTA buttons (matching Luke's)
-- Product cards — added inline description text (2-line clamp)
-- Validate endpoint — Vercel env var was overriding Supabase anon key with wrong project's service role key
-- 3s page lag — removed license validation blocking window.load
-- Google Fonts bloat — replaced 12 fonts with Fontshare (Clash Grotesk + Satoshi)
-- Sticky header broken — rebuilt as full-width bar with correct urgency bar offset
-- Buttons inconsistent — all sections standardized to #19d400
+## Fixed this session
+- Header sliding behind urgency bar on scroll — both now fixed, header offset = urgency bar height, adjusts top on UB toggle event
+- Urgency bar/header z-index conflict — urgency bar z-index 201, header z-index 200
+- Header was pill shape — rebuilt as full-width black bar matching Luke's layout (logo left, nav center, cart right)
+- Theme changes not visible — was not pushing to GitHub (Shopify deploys from v3 branch)
+- Sticky behavior missing — added 3-mode behavior select to both urgency bar and header
+
+## Fixed (previous sessions)
+- Per-section spinners — removed, full-page loader handles everything
+- License protection — Kenso shell model fully working
+- Hero missing features — bg image, gradient overlay, 2 CTA buttons
 - Color split (#39ff14 vs #19d400) — unified to #19d400
 - FAQ first item not open — now opens on DOMContentLoaded
-- Section order wrong — now matches Luke's
-- Trust badges position — moved to footer group
-- Header pill — replaced with full-width fixed header
-- Buy button radius — was hardcoded 50px, now uses btn_radius setting
-- Header background — was transparent, now dark gradient by default
+- Buy button radius — was hardcoded, now uses btn_radius setting
+- Header background — was transparent, now dark by default
+- 3s page lag — removed license validation blocking window.load
