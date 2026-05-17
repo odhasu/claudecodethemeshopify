@@ -349,35 +349,16 @@
     <button class="product-detail-modal__close" onclick="closeProductDetail('{{ sid }}')">&times;</button>
     <h3 class="product-detail-modal__title" id="pdm-title-{{ sid }}"></h3>
     <div class="product-detail-modal__body" id="pdm-body-{{ sid }}"></div>
-    <div class="product-detail-modal__price">
-      <span class="price-sale" id="pdm-price-{{ sid }}"></span>
-      <span class="price-compare" id="pdm-compare-{{ sid }}" style="display:none;"></span>
-    </div>
-    <div class="product-detail-modal__actions">
-      <a href="#" class="btn-buy" id="pdm-buy-{{ sid }}" style="flex:1;">{{ btn_label }}</a>
-    </div>
   </div>
 </div>
 
 <script>
   (function() {
     var sid = '{{ sid }}';
-    window['openProductDetail_' + sid] = function(title, desc, price, compare, compareRaw, priceRaw, url, variantId) {
+    window['openProductDetail_' + sid] = function(title, desc) {
       var modal = document.getElementById('product-detail-modal-' + sid);
       document.getElementById('pdm-title-' + sid).textContent = title;
       document.getElementById('pdm-body-' + sid).innerHTML = desc ? '<p>' + desc + '</p>' : '<p>No description available.</p>';
-      document.getElementById('pdm-price-' + sid).textContent = price;
-      var cmp = document.getElementById('pdm-compare-' + sid);
-      if (compareRaw > priceRaw) { cmp.textContent = compare; cmp.style.display = 'inline'; }
-      else { cmp.style.display = 'none'; }
-      var buyBtn = document.getElementById('pdm-buy-' + sid);
-      {%- if btn_action == 'checkout' -%}
-        buyBtn.href = '#'; buyBtn.onclick = function(e) { e.preventDefault(); buyNowCheckout(variantId); };
-      {%- elsif btn_action == 'add_to_cart' -%}
-        buyBtn.href = '#'; buyBtn.onclick = function(e) { e.preventDefault(); addToCartAndNotify(variantId); };
-      {%- else -%}
-        buyBtn.href = url; buyBtn.onclick = null;
-      {%- endif -%}
       modal.classList.add('open');
       document.body.style.overflow = 'hidden';
     };

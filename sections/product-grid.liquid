@@ -516,13 +516,6 @@
     <button class="product-detail-modal__close" onclick="closeProductDetail()">&times;</button>
     <h3 class="product-detail-modal__title" id="pdm-title"></h3>
     <div class="product-detail-modal__body" id="pdm-body"></div>
-    <div class="product-detail-modal__price">
-      <span class="price-sale" id="pdm-price"></span>
-      <span class="price-compare" id="pdm-compare" style="display:none;"></span>
-    </div>
-    <div class="product-detail-modal__actions">
-      <a href="#" class="btn-buy" id="pdm-buy" style="flex:1;">{{ btn_label }}</a>
-    </div>
   </div>
 </div>
 {%- endif -%}
@@ -571,29 +564,10 @@
   }
 
   {%- if show_details_btn or icon_btn_type == 'info' -%}
-  function openProductDetail(title, desc, price, compare, compareRaw, priceRaw, url, variantId) {
+  function openProductDetail(title, desc) {
     var modal = document.getElementById('product-detail-modal');
     document.getElementById('pdm-title').textContent = title;
     document.getElementById('pdm-body').innerHTML = desc ? '<p>' + desc + '</p>' : '<p>No description available.</p>';
-    document.getElementById('pdm-price').textContent = price;
-    var cmp = document.getElementById('pdm-compare');
-    if (compareRaw > priceRaw) {
-      cmp.textContent = compare;
-      cmp.style.display = 'inline';
-    } else {
-      cmp.style.display = 'none';
-    }
-    var buyBtn = document.getElementById('pdm-buy');
-    {%- if btn_action == 'checkout' -%}
-      buyBtn.href = '#';
-      buyBtn.onclick = function(e) { e.preventDefault(); buyNowCheckout(variantId); };
-    {%- elsif btn_action == 'add_to_cart' -%}
-      buyBtn.href = '#';
-      buyBtn.onclick = function(e) { e.preventDefault(); addToCartAndNotify(variantId); };
-    {%- else -%}
-      buyBtn.href = url;
-      buyBtn.onclick = null;
-    {%- endif -%}
     modal.classList.add('open');
     document.body.style.overflow = 'hidden';
   }
