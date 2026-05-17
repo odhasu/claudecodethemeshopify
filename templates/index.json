@@ -38,7 +38,7 @@
       "type": "product-grid",
       "settings": {
         "collection": "",
-        "title": "aaa",
+        "title": "",
         "max_products": 16,
         "columns_desktop": 4,
         "columns_mobile": 2,
