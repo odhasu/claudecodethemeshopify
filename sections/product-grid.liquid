@@ -98,6 +98,16 @@
         radial-gradient(ellipse 500px 350px at 90% 20%, rgba({{ glow_r }},{{ glow_g }},{{ glow_b }},0.12) 0%, transparent 65%) !important;
     }
   }
+  @media (max-width: 480px) {
+    .btn-buy, .btn-cart-icon {
+      height: 44px !important;
+    }
+    .btn-cart-icon {
+      width: 44px !important;
+    }
+    .product-card-info { padding: 10px; }
+    .product-card-title { font-size: 11px; }
+  }
 
   /* Glassmorphic card — keanusvendors style */
   .product-card {

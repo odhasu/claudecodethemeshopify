@@ -93,6 +93,12 @@
   @media (max-width: 768px) {
     .spg-grid-{{ sid }} { grid-template-columns: repeat({{ columns_mobile }}, 1fr); }
   }
+  @media (max-width: 480px) {
+    .spg-card-{{ sid }} .btn-buy, .spg-card-{{ sid }} .btn-cart-icon { height: 44px !important; }
+    .spg-card-{{ sid }} .btn-cart-icon { width: 44px !important; }
+    .spg-card-{{ sid }} .product-card-info { padding: 10px; }
+    .spg-card-{{ sid }} .product-card-title { font-size: 11px; }
+  }
 
   .spg-card-{{ sid }} {
     background: {{ card_bg }};

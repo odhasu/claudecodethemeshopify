@@ -140,13 +140,9 @@
   @media (max-width: 640px) {
     .lv-header-inner {
       padding: 0 16px;
+      grid-template-columns: 1fr auto;
     }
-    .lv-nav {
-      gap: 18px;
-    }
-    .lv-nav a {
-      font-size: 13px;
-    }
+    .lv-nav { display: none; }
     .lv-brand {
       font-size: {{ brand_size | minus: 2 }}px;
     }
