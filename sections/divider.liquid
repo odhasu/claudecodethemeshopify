@@ -1,0 +1,89 @@
+{%- liquid
+  assign style = section.settings.style | default: 'gradient-glow'
+  assign color = section.settings.color | default: settings.color_accent | default: '#39ff14'
+  assign thickness = section.settings.thickness | default: 1
+  assign width = section.settings.width | default: 'full'
+  assign pt = section.settings.padding_top | default: 20
+  assign pb = section.settings.padding_bottom | default: 20
+  assign r = color | color_extract: 'red'
+  assign g = color | color_extract: 'green'
+  assign b = color | color_extract: 'blue'
+-%}
+
+<style>
+  .vx-divider-{{ section.id }} {
+    padding: {{ pt }}px 20px {{ pb }}px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  .vx-divider-line-{{ section.id }} {
+    height: {{ thickness }}px;
+    {%- if width == 'contained' %}
+    max-width: var(--max-width, 1200px);
+    width: 100%;
+    {%- elsif width == 'narrow' %}
+    max-width: 600px;
+    width: 100%;
+    {%- else %}
+    width: 100%;
+    {%- endif %}
+
+    {%- if style == 'gradient-glow' %}
+    background: linear-gradient(to right, transparent 0%, rgba({{ r }},{{ g }},{{ b }},0.9) 30%, rgba({{ r }},{{ g }},{{ b }},0.9) 70%, transparent 100%);
+    box-shadow: 0 0 18px rgba({{ r }},{{ g }},{{ b }},0.6), 0 0 40px rgba({{ r }},{{ g }},{{ b }},0.25);
+
+    {%- elsif style == 'gradient' %}
+    background: linear-gradient(to right, transparent 0%, rgba({{ r }},{{ g }},{{ b }},0.8) 50%, transparent 100%);
+
+    {%- elsif style == 'solid' %}
+    background: {{ color }};
+
+    {%- elsif style == 'dashed' %}
+    background: none;
+    border-top: {{ thickness }}px dashed {{ color }};
+    height: 0;
+
+    {%- elsif style == 'dotted' %}
+    background: none;
+    border-top: {{ thickness }}px dotted {{ color }};
+    height: 0;
+
+    {%- else %}
+    background: var(--color-border, #2a2a2a);
+    {%- endif %}
+  }
+</style>
+
+<div class="vx-divider-{{ section.id }}">
+  <div class="vx-divider-line-{{ section.id }}"></div>
+</div>
+
+{% schema %}
+{
+  "name": "Divider",
+  "tag": "section",
+  "settings": [
+    { "type": "select", "id": "style", "label": "Style", "default": "gradient-glow", "options": [
+      { "value": "gradient-glow", "label": "Gradient glow (accent colour)" },
+      { "value": "gradient", "label": "Gradient fade" },
+      { "value": "solid", "label": "Solid line" },
+      { "value": "dashed", "label": "Dashed" },
+      { "value": "dotted", "label": "Dotted" },
+      { "value": "border", "label": "Border colour" }
+    ]},
+    { "type": "color", "id": "color", "label": "Line colour", "default": "#39ff14" },
+    { "type": "range", "id": "thickness", "label": "Thickness (px)", "min": 1, "max": 6, "step": 1, "default": 1 },
+    { "type": "select", "id": "width", "label": "Width", "default": "full", "options": [
+      { "value": "full", "label": "Full width" },
+      { "value": "contained", "label": "Contained (max-width)" },
+      { "value": "narrow", "label": "Narrow (600px)" }
+    ]},
+    { "type": "range", "id": "padding_top", "label": "Top spacing (px)", "min": 0, "max": 80, "step": 4, "default": 20 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom spacing (px)", "min": 0, "max": 80, "step": 4, "default": 20 }
+  ],
+  "presets": [
+    { "name": "Divider" }
+  ]
+}
+{% endschema %}
