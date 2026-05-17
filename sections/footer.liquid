@@ -1,12 +1,15 @@
 {%- liquid
-  assign bg = section.settings.bg_color | default: '#0a0a0a'
+  assign bg = section.settings.bg_color | default: '#000000'
   assign border_top = section.settings.border_color | default: '#1a1a1a'
   assign brand_color = section.settings.brand_color | default: '#ffffff'
   assign link_color = section.settings.link_color | default: '#6b7280'
   assign link_hover = section.settings.link_hover_color | default: '#ffffff'
   assign copyright_color = section.settings.copyright_color | default: '#6b7280'
-  assign icon_color = section.settings.social_icon_color | default: '#6b7280'
-  assign icon_hover = section.settings.social_icon_hover | default: '#ffffff'
+  assign icon_color = section.settings.social_icon_color | default: '#ffffff'
+  assign icon_box_border = section.settings.social_icon_border | default: '#333333'
+  assign icon_box_bg = section.settings.social_icon_bg | default: 'transparent'
+  assign cta_bg = section.settings.cta_bg_color | default: '#19d400'
+  assign cta_text = section.settings.cta_text_color | default: '#000000'
 -%}
 
 <style>
@@ -19,9 +22,7 @@
   .footer-brand {
     font-family: var(--font-heading);
     font-size: {{ section.settings.brand_font_size | default: 22 }}px;
-    font-weight: 900;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
+    font-weight: 700;
     color: {{ brand_color }};
     margin-bottom: 20px;
   }
@@ -29,23 +30,31 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 20px;
+    gap: 10px;
     margin-bottom: 24px;
   }
   .footer-social a {
-    color: {{ icon_color }};
+    width: 40px; height: 40px;
+    border-radius: 8px;
+    background: {{ icon_box_bg }};
+    border: 1px solid {{ icon_box_border }};
     display: flex;
     align-items: center;
-    transition: color 0.2s;
+    justify-content: center;
+    color: {{ icon_color }};
+    transition: border-color 0.2s, color 0.2s;
   }
-  .footer-social a:hover { color: {{ icon_hover }}; }
-  .footer-social svg { width: 20px; height: 20px; }
+  .footer-social a:hover {
+    border-color: #ffffff;
+    color: #ffffff;
+  }
+  .footer-social svg { width: 18px; height: 18px; }
   .footer-links {
     display: flex;
     justify-content: center;
     gap: 20px;
     flex-wrap: wrap;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
   }
   .footer-links a {
     color: {{ link_color }};
@@ -55,8 +64,22 @@
   .footer-links a:hover { color: {{ link_hover }}; }
   .footer-copyright {
     color: {{ copyright_color }};
-    font-size: 12px;
+    font-size: 13px;
+    margin-bottom: 20px;
   }
+  .footer-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 11px 24px;
+    border-radius: 999px;
+    background: {{ cta_bg }};
+    color: {{ cta_text }};
+    font-weight: 600;
+    font-size: 14px;
+    transition: opacity 0.2s;
+  }
+  .footer-cta:hover { opacity: 0.88; }
 </style>
 
 <footer class="site-footer">
@@ -99,19 +122,20 @@
   {%- endif -%}
 
   <div class="footer-links">
-    {%- for link in section.settings.menu.links -%}
-      <a href="{{ link.url }}">{{ link.title }}</a>
-    {%- endfor -%}
-    {%- if section.settings.menu == blank -%}
-      <a href="/policies/refund-policy">Refund Policy</a>
-      <a href="/policies/privacy-policy">Privacy Policy</a>
-      <a href="/policies/terms-of-service">Terms of Service</a>
-      <a href="/policies/shipping-policy">Shipping Policy</a>
-    {%- endif -%}
+    <a href="/policies/refund-policy">Refund Policy</a>
+    <a href="/policies/shipping-policy">Shipping</a>
+    <a href="/policies/privacy-policy">Privacy</a>
+    <a href="/policies/terms-of-service">Terms</a>
   </div>
 
   {%- if section.settings.show_copyright -%}
     <div class="footer-copyright">&copy; {{ 'now' | date: '%Y' }} {{ section.settings.brand_text | default: shop.name }}. All rights reserved.</div>
+  {%- endif -%}
+
+  {%- if section.settings.show_cta -%}
+    <a href="{{ section.settings.cta_url | default: '#' }}" class="footer-cta" target="_blank" rel="noopener">
+      {{ section.settings.cta_label | default: 'Get this store design' }} ↗
+    </a>
   {%- endif -%}
 </footer>
 
@@ -130,16 +154,21 @@
     { "type": "url", "id": "youtube_url", "label": "YouTube URL" },
     { "type": "url", "id": "discord_url", "label": "Discord URL" },
     { "type": "url", "id": "tiktok_url", "label": "TikTok URL" },
-    { "type": "header", "content": "Navigation" },
-    { "type": "link_list", "id": "menu", "label": "Footer menu", "default": "footer" },
+    { "type": "header", "content": "CTA Button" },
+    { "type": "checkbox", "id": "show_cta", "label": "Show CTA button", "default": true },
+    { "type": "text", "id": "cta_label", "label": "Button text", "default": "Get this store design" },
+    { "type": "url", "id": "cta_url", "label": "Button link" },
+    { "type": "color", "id": "cta_bg_color", "label": "Button background", "default": "#19d400" },
+    { "type": "color", "id": "cta_text_color", "label": "Button text color", "default": "#000000" },
     { "type": "header", "content": "Copyright" },
     { "type": "checkbox", "id": "show_copyright", "label": "Show copyright", "default": true },
     { "type": "header", "content": "Colors" },
-    { "type": "color", "id": "bg_color", "label": "Background", "default": "#0a0a0a" },
+    { "type": "color", "id": "bg_color", "label": "Background", "default": "#000000" },
     { "type": "color", "id": "border_color", "label": "Top border", "default": "#1a1a1a" },
-    { "type": "color", "id": "brand_color", "label": "Brand color", "default": "#ffffff" },
-    { "type": "color", "id": "social_icon_color", "label": "Social icon color", "default": "#6b7280" },
-    { "type": "color", "id": "social_icon_hover", "label": "Social icon hover color", "default": "#ffffff" },
+    { "type": "color", "id": "brand_color", "label": "Brand name color", "default": "#ffffff" },
+    { "type": "color", "id": "social_icon_color", "label": "Social icon color", "default": "#ffffff" },
+    { "type": "color", "id": "social_icon_border", "label": "Social icon box border", "default": "#333333" },
+    { "type": "color", "id": "social_icon_bg", "label": "Social icon box background", "default": "#000000" },
     { "type": "color", "id": "link_color", "label": "Link color", "default": "#6b7280" },
     { "type": "color", "id": "link_hover_color", "label": "Link hover color", "default": "#ffffff" },
     { "type": "color", "id": "copyright_color", "label": "Copyright color", "default": "#6b7280" },
