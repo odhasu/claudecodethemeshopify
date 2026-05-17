@@ -21,9 +21,12 @@
     color: {{ text_color }};
     height: {{ bar_height }}px;
     overflow: hidden;
-    position: relative;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
     border-bottom: 1px solid {{ section.settings.border_color | default: '#1a1a1a' }};
-    z-index: 100;
+    z-index: 201;
   }
   .urgency-bar:hover .urgency-track { animation-play-state: paused; }
   .urgency-track {

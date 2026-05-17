@@ -8,6 +8,7 @@
   assign icon_color    = section.settings.icon_color    | default: '#ffffff'
   assign bar_bg        = section.settings.bar_bg        | default: '#000000'
   assign bar_height    = section.settings.bar_height    | default: 56
+  assign bar_offset    = section.settings.urgency_bar_height | default: 40
   assign bar_border    = section.settings.bar_border    | default: 'none'
   assign show_cart     = section.settings.show_cart
   assign badge_bg      = section.settings.badge_bg      | default: settings.color_accent | default: '#39ff14'
@@ -18,7 +19,7 @@
   /* ── Bar ──────────────────────────────────────────────────── */
   .lv-header {
     position: fixed;
-    top: 0; left: 0; right: 0;
+    top: {{ bar_offset }}px; left: 0; right: 0;
     z-index: 200;
     background: {{ bar_bg }};
     height: {{ bar_height }}px;
@@ -120,7 +121,7 @@
   .lv-cart-badge.active { display: flex; }
 
   /* ── Spacer ───────────────────────────────────────────────── */
-  .lv-header-spacer { height: {{ bar_height }}px; }
+  .lv-header-spacer { height: {{ bar_offset | plus: bar_height }}px; }
 
   /* ── Mobile ───────────────────────────────────────────────── */
   @media (max-width: 640px) {
@@ -224,6 +225,7 @@
     { "type": "range", "id": "brand_font_size", "label": "Brand font size (px)", "min": 11, "max": 28, "step": 1, "default": 16 },
     { "type": "color", "id": "brand_color", "label": "Brand text color", "default": "#ffffff" },
     { "type": "header", "content": "Bar" },
+    { "type": "range", "id": "urgency_bar_height", "label": "Urgency bar height (px) — must match urgency bar setting", "min": 0, "max": 60, "step": 4, "default": 40 },
     { "type": "color", "id": "bar_bg", "label": "Background color", "default": "#000000" },
     { "type": "range", "id": "bar_height", "label": "Bar height (px)", "min": 44, "max": 80, "step": 4, "default": 56 },
     { "type": "range", "id": "padding_x", "label": "Side padding (px)", "min": 12, "max": 60, "step": 4, "default": 24 },
