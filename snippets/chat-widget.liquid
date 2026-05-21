@@ -30,7 +30,7 @@
       align-items: center;
       justify-content: center;
       z-index: 160;
-      box-shadow: 0 4px 20px rgba(57,255,20,0.3);
+      box-shadow: 0 4px 20px rgba({{ btn_bg | color_extract: 'red' }}, {{ btn_bg | color_extract: 'green' }}, {{ btn_bg | color_extract: 'blue' }}, 0.35);
       cursor: pointer;
       transition: transform 0.2s;
       border: none;
@@ -76,7 +76,7 @@
       align-items: center;
       justify-content: center;
       z-index: 160;
-      box-shadow: 0 4px 20px rgba(57,255,20,0.3);
+      box-shadow: 0 4px 20px rgba({{ btn_bg | color_extract: 'red' }}, {{ btn_bg | color_extract: 'green' }}, {{ btn_bg | color_extract: 'blue' }}, 0.35);
       cursor: pointer;
       transition: transform 0.2s;
       border: none;
@@ -107,12 +107,22 @@
       border: 1px solid #2a2a2a;
       border-radius: 16px;
       z-index: 161;
-      display: none;
+      display: flex;
       flex-direction: column;
       overflow: hidden;
       box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transform: translateY(12px) scale(0.97);
+      transition: opacity 0.25s ease, visibility 0.25s, transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
     }
-    .chat-window.open { display: flex; }
+    .chat-window.open {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: all;
+      transform: translateY(0) scale(1);
+    }
     .chat-close-btn {
       position: absolute;
       top: 10px; right: 12px;
