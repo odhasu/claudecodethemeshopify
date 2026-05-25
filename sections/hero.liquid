@@ -2,7 +2,7 @@
   assign title_before = section.settings.title_before | default: 'START YOUR'
   assign title_highlight = section.settings.title_highlight | default: 'RESELLING'
   assign title_after = section.settings.title_after | default: 'JOURNEY TODAY'
-  assign highlight_color = section.settings.highlight_color | default: settings.color_accent | default: '#39ff14'
+  assign highlight_color = section.settings.highlight_color | default: settings.color_accent | default: '#19d400'
   assign title_color = section.settings.title_color | default: '#ffffff'
   assign title_size_desktop = section.settings.title_size_desktop | default: 48
   assign title_size_mobile = section.settings.title_size_mobile | default: 28
@@ -13,7 +13,7 @@
   assign trust_text_color = section.settings.trust_text_color | default: '#9ca3af'
   assign show_avatars = section.settings.show_avatars
   assign show_glow = section.settings.show_glow
-  assign glow_color = section.settings.glow_color | default: '#39ff14'
+  assign glow_color = section.settings.glow_color | default: '#19d400'
   assign padding_top = section.settings.padding_top | default: 80
   assign padding_bottom = section.settings.padding_bottom | default: 60
 -%}
@@ -150,8 +150,8 @@
     { "type": "text", "id": "title_highlight", "label": "Highlighted word(s)", "default": "RESELLING" },
     { "type": "text", "id": "title_after", "label": "Text after highlight", "default": "JOURNEY TODAY" },
     { "type": "color", "id": "title_color", "label": "Title color", "default": "#ffffff" },
-    { "type": "color", "id": "highlight_color", "label": "Highlight color", "default": "#39ff14" },
-    { "type": "range", "id": "title_size_desktop", "label": "Title size desktop (px)", "min": 24, "max": 80, "step": 2, "default": 48 },
+    { "type": "color", "id": "highlight_color", "label": "Highlight color", "default": "#19d400" },
+    { "type": "range", "id": "title_size_desktop", "label": "Title size desktop (px)", "min": 24, "max": 120, "step": 2, "default": 80 },
     { "type": "range", "id": "title_size_mobile", "label": "Title size mobile (px)", "min": 18, "max": 48, "step": 2, "default": 28 },
     { "type": "header", "content": "Trust Line" },
     { "type": "text", "id": "trust_prefix", "label": "Trust prefix", "default": "Trusted By" },
@@ -175,7 +175,7 @@
     { "type": "image_picker", "id": "avatar_10", "label": "Avatar 10" },
     { "type": "header", "content": "Glow Effect" },
     { "type": "checkbox", "id": "show_glow", "label": "Show green glow", "default": true },
-    { "type": "color", "id": "glow_color", "label": "Glow color", "default": "#39ff14" },
+    { "type": "color", "id": "glow_color", "label": "Glow color", "default": "#19d400" },
     { "type": "header", "content": "Spacing" },
     { "type": "range", "id": "padding_top", "label": "Top padding (px)", "min": 20, "max": 160, "step": 10, "default": 80 },
     { "type": "range", "id": "padding_bottom", "label": "Bottom padding (px)", "min": 20, "max": 160, "step": 10, "default": 60 }

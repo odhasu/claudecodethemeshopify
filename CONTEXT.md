@@ -1,52 +1,52 @@
 # Theme — Context
 
 ## What it is
-Vexel — a premium Shopify theme product sold to resellers. Built from scratch, replicating lukesvendors.com design. License-protected via obfuscated loader + Railway validation server (Kenso shell model).
+Vexel — a premium Shopify theme product sold to resellers. Built from scratch, replicating lukesvendors.com design. License-protected via local checksum validation (theme.js) + Railway server (built, not yet wired up).
 
 ## Repo
 GitHub: odhasu/claudecodethemeshopify
-- main — V1, live on Shopify, never touch
-- v2 — active development, all work goes here
+- main — V1, do not touch
+- v3 — active branch, all work goes here
 
 Working dir: /Users/oscargraafmans/Desktop/ogresell/theme
 
 ## Stack
-Shopify Liquid (shell sections), vanilla CSS, vanilla JS. No frameworks.
-License protection: obfuscated client-side loader (javascript-obfuscator) + Railway server for validation.
+Shopify Liquid (full sections — NOT shells), vanilla CSS, vanilla JS. No frameworks.
+License: local checksum in theme.js validates key format. Railway server exists at /Desktop/ogresell/runtime/ but is not yet connected.
 
-## Architecture (Kenso shell model)
-Sections are empty shells — just a div + JSON data. An obfuscated loader JS validates the license against a Railway server, then renders all section HTML client-side. Without a valid license, the theme shows nothing.
+## Architecture (current — V3)
+Sections are full Liquid — they render HTML directly. This is NOT the Kenso shell model.
+The shell model + client-side renderer exists in runtime/src/loader.js but is not used in V3.
+theme.js validates the license key format locally, then dismisses the loader.
 
 ## File structure
 layout/
-  theme.liquid         — root layout, CSS vars, VexelConfig, loading screen, loader script
+  theme.liquid         — root layout, CSS vars, loading screen, theme.js
 sections/
-  urgency-bar.liquid   — shell + JSON
-  header-pill.liquid   — shell + JSON
-  hero.liquid          — shell + JSON
-  product-grid.liquid  — shell + JSON + products JSON
-  trust-badges.liquid  — shell + JSON
-  testimonials.liquid  — shell + JSON
-  reviews.liquid       — shell + JSON
-  faq.liquid           — shell + JSON
-  footer.liquid        — shell + JSON (protected — removal breaks theme)
-  cart-drawer.liquid    — regular Liquid (no shell)
-  main-product.liquid  — regular Liquid
+  urgency-bar.liquid   — full Liquid
+  header-pill.liquid   — full Liquid
+  hero.liquid          — full Liquid
+  product-grid.liquid  — full Liquid
+  secondary-product-grid.liquid — full Liquid
+  bundle-builder.liquid
+  divider.liquid
+  testimonials.liquid
+  trust-bar.liquid
+  reviews.liquid
+  faq.liquid
+  footer.liquid
+  cart-drawer.liquid
+  main-product.liquid
 assets/
   theme.css            — global styles
-  theme.js             — global JS (loader dismiss, scroll behavior)
+  theme.js             — license validation (local checksum) + scroll reveal
 snippets/
   chat-widget.liquid
   live-sales-notification.liquid
   meta-tags.liquid
 config/
-  settings_schema.json — global theme settings (includes License section)
-  settings_data.json   — saved setting values
-templates/
-  index.json           — homepage sections + order
-sections/
-  header-group.json    — header sections + order
-  footer-group.json    — footer sections + order
+  settings_schema.json
+  settings_data.json
 
 ## Related projects
 - License server (Railway): /Users/oscargraafmans/Desktop/ogresell/runtime/
@@ -55,4 +55,3 @@ sections/
 
 ## Design reference
 lukesvendors.com — check before building anything visual
-Kenso theme — /tmp/kenso-extract/ — architecture reference for shell model

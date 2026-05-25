@@ -6,7 +6,6 @@
 - Footer Instagram URL — placeholder, needs real URL
 - Testimonials — few images uploaded, supports up to 20 (upload in Shopify admin)
 - Store admin still shows old brand name/nav links — update in Shopify Customize
-- urgency_bar_height setting in header must manually match urgency bar's bar_height setting — not auto-synced
 
 ## Todo — Content (Shopify admin)
 - Set homepage section order (see BUILD.md order)
@@ -17,6 +16,7 @@
 - Set up 11 products with prices + compare-at prices
 
 ## Fixed this session
+- urgency_bar_height no longer needs manual sync — header auto-detects actual UB height via JS + CSS custom property
 - Header sliding behind urgency bar on scroll — both now fixed, header offset = urgency bar height, adjusts top on UB toggle event
 - Urgency bar/header z-index conflict — urgency bar z-index 201, header z-index 200
 - Header was pill shape — rebuilt as full-width black bar matching Luke's layout (logo left, nav center, cart right)

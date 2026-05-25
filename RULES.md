@@ -1,6 +1,6 @@
 # Theme — Session Rules
 
-- Always work on v2 branch, never touch main
+- Always work on v3 branch, never touch main
 - Push after every edit
 - Every visual value = theme setting (never hardcode colors, sizes, text)
 - No recaps, no summaries

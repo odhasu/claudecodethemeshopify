@@ -42,10 +42,15 @@
     assign body_font = settings.body_font | default: 'system-ui, -apple-system, sans-serif'
   -%}
 
+  <!-- Fontshare — Clash Grotesk (headings) + Satoshi (body) -->
+  <link rel="preconnect" href="https://api.fontshare.com">
+  <link href="https://api.fontshare.com/v2/css2?f[]=clash-grotesk@400,500,600,700,800,900&f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
+
+  <!-- Google Fonts — fallback options for other heading/body choices -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   {%- liquid
-    assign gfonts = 'Anton,Satoshi,Inter,Bebas+Neue,Poppins,Montserrat,Oswald,Outfit,Space+Grotesk,DM+Sans,Rubik,Raleway'
+    assign gfonts = 'Anton,Inter,Bebas+Neue,Poppins,Montserrat,Oswald,Outfit,Space+Grotesk,DM+Sans,Rubik,Raleway'
     assign gfonts_arr = gfonts | split: ','
     assign load_fonts = ''
     for f in gfonts_arr
