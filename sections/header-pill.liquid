@@ -17,13 +17,15 @@
 -%}
 
 <style>
+  :root { --vx-ub-h: {{ bar_offset }}px; }
+
   /* ── Bar ──────────────────────────────────────────────────── */
   .lv-header {
     {%- if hdr_behavior == 'stay' %}
     position: relative;
     {%- else %}
     position: fixed;
-    top: {{ bar_offset }}px; left: 0; right: 0;
+    top: var(--vx-ub-h); left: 0; right: 0;
     z-index: 200;
     transition: top 0.3s cubic-bezier(0.4, 0, 0.2, 1){%- if hdr_behavior == 'smart' %}, transform 0.3s cubic-bezier(0.4, 0, 0.2, 1){%- endif %};
     {%- endif %}
@@ -129,12 +131,12 @@
   /* ── Smart sticky hidden state ───────────────────────────── */
   {%- if hdr_behavior == 'smart' %}
   .lv-header.lv--hidden {
-    transform: translateY(calc(-100% - {{ bar_offset }}px));
+    transform: translateY(calc(-100% - var(--vx-ub-h)));
   }
   {%- endif %}
 
   /* ── Spacer (only needed when header is fixed) ────────────── */
-  .lv-header-spacer { height: {%- if hdr_behavior == 'stay' %}0{%- else %}{{ bar_offset | plus: bar_height }}{%- endif %}px; }
+  .lv-header-spacer { height: {%- if hdr_behavior == 'stay' %}0px{%- else %}calc(var(--vx-ub-h) + {{ bar_height }}px){%- endif %}; }
 
   /* ── Mobile ───────────────────────────────────────────────── */
   @media (max-width: 640px) {
@@ -208,7 +210,20 @@
 (function() {
   var hdr    = document.querySelector('.lv-header');
   var badge  = document.getElementById('lv-cart-badge');
-  var offset = {{ bar_offset }};   // urgency bar height
+  var offset = {{ bar_offset }};   // urgency bar height (fallback; overridden below)
+
+  // Auto-sync: measure actual urgency bar height so settings don't need to be manually matched
+  (function() {
+    var ubEl = document.querySelector('.urgency-bar');
+    if (!ubEl) return;
+    var h = ubEl.offsetHeight;
+    if (h > 0) {
+      offset = h;
+      document.documentElement.style.setProperty('--vx-ub-h', h + 'px');
+      var spacer = document.querySelector('.lv-header-spacer');
+      if (spacer) spacer.style.height = (h + {{ bar_height }}) + 'px';
+    }
+  })();
   var hdrH   = {{ bar_height }};   // header height
 
   /* ── Cart badge ──────────────────────────────────────────── */
@@ -229,7 +244,10 @@
   /* ── React to urgency bar showing/hiding ─────────────────── */
   {%- unless hdr_behavior == 'stay' %}
   document.addEventListener('vx:ub-toggle', function(e) {
-    hdr.style.top = e.detail.hidden ? '0px' : offset + 'px';
+    var h = e.detail.hidden ? 0 : (e.detail.height || offset);
+    offset = h;
+    document.documentElement.style.setProperty('--vx-ub-h', h + 'px');
+    hdr.style.top = h + 'px';
   });
   {%- endunless %}
 
@@ -277,7 +295,7 @@
       { "value": "smart",  "label": "Smart sticky (shows on scroll down)" },
       { "value": "stay",   "label": "Stay at top (scrolls away with page)" }
     ]},
-    { "type": "range", "id": "urgency_bar_height", "label": "Urgency bar height (px) — must match urgency bar setting", "min": 0, "max": 60, "step": 4, "default": 40 },
+    { "type": "range", "id": "urgency_bar_height", "label": "Urgency bar height (px) — fallback only, auto-detected at runtime", "min": 0, "max": 60, "step": 4, "default": 40 },
     { "type": "color", "id": "bar_bg", "label": "Background color", "default": "#000000" },
     { "type": "range", "id": "bar_height", "label": "Bar height (px)", "min": 44, "max": 80, "step": 4, "default": 56 },
     { "type": "range", "id": "padding_x", "label": "Side padding (px)", "min": 12, "max": 60, "step": 4, "default": 24 },
