@@ -1,7 +1,7 @@
-# Theme — Context
+# Context
 
 ## What it is
-Vexel — a premium Shopify theme product sold to resellers. Built from scratch, replicating lukesvendors.com design. License-protected via local checksum validation (theme.js) + Railway server (built, not yet wired up).
+Vexel — a premium Shopify theme for resellers. Replicates lukesvendors.com design. License-protected via local checksum validation (theme.js). Railway server exists but is not yet connected.
 
 ## Repo
 GitHub: odhasu/claudecodethemeshopify
@@ -11,47 +11,45 @@ GitHub: odhasu/claudecodethemeshopify
 Working dir: /Users/oscargraafmans/Desktop/ogresell/theme
 
 ## Stack
-Shopify Liquid (full sections — NOT shells), vanilla CSS, vanilla JS. No frameworks.
-License: local checksum in theme.js validates key format. Railway server exists at /Desktop/ogresell/runtime/ but is not yet connected.
-
-## Architecture (current — V3)
-Sections are full Liquid — they render HTML directly. This is NOT the Kenso shell model.
-The shell model + client-side renderer exists in runtime/src/loader.js but is not used in V3.
-theme.js validates the license key format locally, then dismisses the loader.
+Shopify Liquid (full sections — not shells), vanilla CSS, vanilla JS. No frameworks.
 
 ## File structure
+
+```
 layout/
-  theme.liquid         — root layout, CSS vars, loading screen, theme.js
+  theme.liquid                    — root layout, CSS vars, loading screen, theme.js
+
 sections/
-  urgency-bar.liquid   — full Liquid
-  header-pill.liquid   — full Liquid
-  hero.liquid          — full Liquid
-  product-grid.liquid  — full Liquid
-  secondary-product-grid.liquid — full Liquid
-  bundle-builder.liquid
-  divider.liquid
-  testimonials.liquid
-  trust-bar.liquid
-  reviews.liquid
-  faq.liquid
-  footer.liquid
-  cart-drawer.liquid
-  main-product.liquid
+  urgency-bar.liquid              — scrolling marquee, countdown, live viewer count
+  header-pill.liquid              — full-width sticky bar (logo left, nav center, cart right)
+  hero.liquid                     — headline, green highlight, CTA buttons, avatar row
+  product-grid.liquid             — glassmorphic cards, info modal, BUY NOW + cart buttons
+  secondary-product-grid.liquid   — same as product grid, scoped CSS
+  bundle-builder.liquid           — bundle upsell, discount codes
+  divider.liquid                  — gradient-glow / solid / dashed / dotted styles
+  testimonials.liquid             — horizontal auto-scrolling image carousel
+  trust-bar.liquid                — scrolling badge marquee
+  reviews.liquid                  — card grid, star summary, write-a-review button
+  faq.liquid                      — accordion, first item open, green glow on open
+  footer.liquid                   — brand, policy links, social icons, copyright
+  results-carousel.liquid         — built, needs content
+  main-product.liquid             — product page, live counter, resellers badge
+  main-cart.liquid                — cart page (cart drawer is inline here)
+
 assets/
-  theme.css            — global styles
-  theme.js             — license validation (local checksum) + scroll reveal
+  theme.css                       — global styles
+  theme.js                        — license validation + scroll reveal
+
 snippets/
   chat-widget.liquid
   live-sales-notification.liquid
   meta-tags.liquid
+
 config/
   settings_schema.json
   settings_data.json
+```
 
 ## Related projects
 - License server (Railway): /Users/oscargraafmans/Desktop/ogresell/runtime/
 - Dashboard + store: /Users/oscargraafmans/Desktop/ogresell/store/
-- Obfuscated loader source: runtime/src/loader.js -> runtime/dist/scaled-loader.js
-
-## Design reference
-lukesvendors.com — check before building anything visual
