@@ -1,6 +1,6 @@
 {%- liquid
   assign style = section.settings.style | default: 'gradient-glow'
-  assign color = section.settings.color | default: settings.color_accent | default: '#39ff14'
+  assign color = section.settings.color | default: settings.color_accent | default: '#19d400'
   assign thickness = section.settings.thickness | default: 1
   assign width = section.settings.width | default: 'full'
   assign pt = section.settings.padding_top | default: 20
@@ -72,7 +72,7 @@
       { "value": "dotted", "label": "Dotted" },
       { "value": "border", "label": "Border colour" }
     ]},
-    { "type": "color", "id": "color", "label": "Line colour", "default": "#39ff14" },
+    { "type": "color", "id": "color", "label": "Line colour", "default": "#19d400" },
     { "type": "range", "id": "thickness", "label": "Thickness (px)", "min": 1, "max": 6, "step": 1, "default": 1 },
     { "type": "select", "id": "width", "label": "Width", "default": "full", "options": [
       { "value": "full", "label": "Full width" },

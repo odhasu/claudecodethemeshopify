@@ -43,6 +43,13 @@
     }
   }
   {%- endif -%}
+  @media (max-width: 640px) {
+    .hero-section {
+      padding-top: {{ padding_top | times: 0.65 | round }}px;
+      padding-bottom: {{ padding_bottom | times: 0.65 | round }}px;
+    }
+    .hero-title { letter-spacing: -0.5px; }
+  }
   .hero-content { position: relative; z-index: 1; }
   .hero-title {
     font-family: '{{ section.settings.hero_font | default: 'Satoshi' }}', var(--font-heading);
@@ -64,7 +71,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
+    flex-wrap: wrap;
+    gap: 4px 8px;
     margin-bottom: 16px;
     font-size: {{ section.settings.trust_font_size | default: 15 }}px;
     color: {{ trust_text_color }};

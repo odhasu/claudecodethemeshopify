@@ -1,7 +1,7 @@
 {%- liquid
   assign bg_style = section.settings.bg_style | default: 'transparent'
   assign text_color = section.settings.text_color | default: settings.color_text_muted | default: '#9ca3af'
-  assign icon_color = section.settings.icon_color | default: settings.color_accent | default: '#39ff14'
+  assign icon_color = section.settings.icon_color | default: settings.color_accent | default: '#19d400'
   assign sep_color = section.settings.separator_color | default: '#333333'
   assign bar_height = section.settings.bar_height | default: 48
   assign font_size = section.settings.font_size | default: 13
@@ -123,7 +123,7 @@
       { "value": "gradient", "label": "Subtle gradient" }
     ]},
     { "type": "color", "id": "text_color", "label": "Text colour", "default": "#9ca3af" },
-    { "type": "color", "id": "icon_color", "label": "Icon colour", "default": "#39ff14" },
+    { "type": "color", "id": "icon_color", "label": "Icon colour", "default": "#19d400" },
     { "type": "color", "id": "separator_color", "label": "Separator dot colour", "default": "#333333" },
     { "type": "checkbox", "id": "show_separators", "label": "Show separator dots", "default": true },
     { "type": "range", "id": "bar_height", "label": "Bar height (px)", "min": 36, "max": 72, "step": 4, "default": 48 },

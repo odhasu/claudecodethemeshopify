@@ -1,5 +1,5 @@
 {%- liquid
-  assign accent = section.settings.accent_color | default: '#39ff14'
+  assign accent = section.settings.accent_color | default: '#19d400'
   assign card_bg = section.settings.card_bg | default: '#111111'
   assign card_border = section.settings.card_border | default: '#2a2a2a'
 -%}
@@ -39,7 +39,7 @@
     transition: box-shadow 0.3s, transform 0.2s;
   }
   .cart-empty-btn:hover {
-    box-shadow: 0 4px 20px rgba(57,255,20,0.4);
+    box-shadow: 0 4px 20px rgba(25,212,0,0.4);
     transform: translateY(-1px);
   }
 
@@ -173,10 +173,10 @@
     border: none;
     cursor: pointer;
     transition: box-shadow 0.3s, transform 0.2s;
-    box-shadow: 0 2px 12px rgba(57,255,20,0.35);
+    box-shadow: 0 2px 12px rgba(25,212,0,0.35);
   }
   .cart-checkout-btn:hover {
-    box-shadow: 0 4px 24px rgba(57,255,20,0.55);
+    box-shadow: 0 4px 24px rgba(25,212,0,0.55);
     transform: translateY(-1px);
   }
   .cart-continue {
@@ -284,7 +284,7 @@
     { "type": "text", "id": "checkout_text", "label": "Checkout button text", "default": "Checkout" },
     { "type": "text", "id": "tax_note", "label": "Tax/shipping note", "default": "Taxes and shipping calculated at checkout." },
     { "type": "header", "content": "Colors" },
-    { "type": "color", "id": "accent_color", "label": "Accent color", "default": "#39ff14" },
+    { "type": "color", "id": "accent_color", "label": "Accent color", "default": "#19d400" },
     { "type": "color", "id": "card_bg", "label": "Card background", "default": "#111111" },
     { "type": "color", "id": "card_border", "label": "Card border", "default": "#2a2a2a" }
   ]

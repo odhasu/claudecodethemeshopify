@@ -12,7 +12,7 @@
   assign hdr_behavior  = section.settings.behavior | default: 'follow'
   assign bar_border    = section.settings.bar_border    | default: 'none'
   assign show_cart     = section.settings.show_cart
-  assign badge_bg      = section.settings.badge_bg      | default: settings.color_accent | default: '#39ff14'
+  assign badge_bg      = section.settings.badge_bg      | default: settings.color_accent | default: '#19d400'
   assign badge_color   = section.settings.badge_text_color | default: '#000000'
 -%}
 
@@ -326,7 +326,7 @@
     { "type": "header", "content": "Cart" },
     { "type": "checkbox", "id": "show_cart", "label": "Show cart icon", "default": true },
     { "type": "color", "id": "icon_color", "label": "Cart icon color", "default": "#ffffff" },
-    { "type": "color", "id": "badge_bg", "label": "Cart badge background", "default": "#39ff14" },
+    { "type": "color", "id": "badge_bg", "label": "Cart badge background", "default": "#19d400" },
     { "type": "color", "id": "badge_text_color", "label": "Cart badge text", "default": "#000000" }
   ],
   "presets": [

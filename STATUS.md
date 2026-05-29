@@ -2,24 +2,20 @@
 
 ## Next actions (priority order)
 
-**[dev] — code work**
-1. Mobile polish pass — all sections at 375px
-2. Results carousel — built but needs content wired up
-3. Cart drawer — locate in main-cart.liquid and test on live store
-
 **[admin] — Oscar does these in Shopify**
-4. Set homepage section order (see Section order below)
-5. Create 11 products with prices + compare-at (see LUKE_CLONE_PRD.md)
-6. Upload product photos
-7. Upload 10–20 testimonial screenshots
-8. Add real social URLs to footer (placeholder Instagram currently)
-9. Update store name + nav links in Shopify Customize
-10. Policy pages (Refund, Shipping, Privacy, Terms)
+1. Set homepage section order (see Section order below)
+2. Create 11 products with prices + compare-at (see LUKE_CLONE_PRD.md)
+3. Upload product photos
+4. Upload 10–20 results screenshots to results-carousel section (add as blocks in Shopify Customize)
+5. Upload 10–20 testimonial screenshots
+6. Add real social URLs to footer (placeholder Instagram currently)
+7. Update store name + nav links in Shopify Customize
+8. Policy pages (Refund, Shipping, Privacy, Terms)
 
 ---
 
 ## Active bugs
-- None confirmed
+- None
 
 ---
 
@@ -62,10 +58,11 @@
 ---
 
 ## Recently fixed
+- #39ff14 wrong green purged from all 12 files — now #19d400 everywhere
+- rgba(57,255,20) glow values fixed to rgba(25,212,0) in cart, reviews, 404
+- Hero: trust line flex-wrap added, mobile padding reduced (65% of desktop)
+- Results carousel is fully wired — just needs images uploaded in Shopify admin
 - urgency_bar_height auto-syncs via JS + CSS var — no manual sync needed
-- Header sliding behind urgency bar on scroll — fixed, offset = urgency bar height
+- Header sliding behind urgency bar on scroll — fixed
 - Header rebuilt as full-width black bar (logo left, nav center, cart right)
 - Font loading fixed — Fontshare CDN for Satoshi + Clash Grotesk
-- Accent color unified to #19d400 across all sections
-- Chat widget: smooth open/close animation + glow color fix
-- Footer CTA: corner radius + button style setting (plain/glass/solid glow)
