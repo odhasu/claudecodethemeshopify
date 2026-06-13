@@ -49,7 +49,6 @@
       setTimeout(function() { loader.style.display = 'none'; }, 500);
     }
     initScrollReveal();
-    initFooterProtection();
     initIntegrityMonitor();
   }
 
