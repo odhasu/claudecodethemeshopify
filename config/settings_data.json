@@ -14,7 +14,7 @@
     "color_error": "#ef4444",
     "heading_font": "Clash Grotesk",
     "body_font": "Satoshi",
-    "max_page_width": 1400,
+    "max_page_width": 1200,
     "section_spacing": 50,
     "grid_gap": 16,
     "border_radius_card": 12,

@@ -21,6 +21,7 @@
   "bar_height": {{ section.settings.bar_height | default: 36 }},
   "font_size": {{ section.settings.font_size | default: 13 }},
   "scroll_speed": {{ section.settings.scroll_speed | default: 30 }},
+  "divider_style": {{ section.settings.divider_style | default: 'asterisk' | json }},
   "min_viewers": {{ section.settings.min_viewers | default: 10 }},
   "max_viewers": {{ section.settings.max_viewers | default: 100 }},
   "show_countdown": {{ section.settings.show_countdown | json }},
@@ -67,6 +68,9 @@
     { "type": "range", "id": "bar_height", "label": "Bar height (px)", "min": 24, "max": 60, "step": 2, "default": 36 },
     { "type": "range", "id": "font_size", "label": "Font size (px)", "min": 10, "max": 18, "step": 1, "default": 13 },
     { "type": "range", "id": "scroll_speed", "label": "Scroll speed (seconds)", "min": 10, "max": 80, "step": 5, "default": 30 },
+    { "type": "select", "id": "divider_style", "label": "Divider", "default": "asterisk", "options": [
+      { "value": "asterisk", "label": "Asterisk" }, { "value": "none", "label": "None" }
+    ]},
     { "type": "header", "content": "Viewer Count" },
     { "type": "range", "id": "min_viewers", "label": "Min viewers", "min": 1, "max": 50, "step": 1, "default": 10 },
     { "type": "range", "id": "max_viewers", "label": "Max viewers", "min": 20, "max": 100, "step": 5, "default": 100 },

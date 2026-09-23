@@ -33,6 +33,25 @@
         "personally_verified_text": "All suppliers personally verified"
       }
     },
+    "header": {
+      "type": "header-pill",
+      "name": "Header",
+      "settings": {
+        "logo_width_desktop": 400,
+        "logo_width_mobile": 200,
+        "brand_text": "Vexel",
+        "brand_color": "#ffffff",
+        "nav_color": "#d1d5db",
+        "nav_hover_color": "#19d400",
+        "scroll_bg": "rgba(0,0,0,0.82)",
+        "scroll_border": "#1a1a1a",
+        "dropdown_bg": "#0a0a0a",
+        "badge_bg": "#19d400",
+        "badge_text_color": "#000000",
+        "header_height_desktop": 96,
+        "header_height_mobile": 58
+      }
+    }
   },
-  "order": ["urgency-bar"]
+  "order": ["urgency-bar", "header"]
 }

@@ -5,18 +5,18 @@
 <script type="application/json" data-vx-settings="header">
 {
   "logo_url": {% if section.settings.logo != blank %}{{ section.settings.logo | image_url: width: 800 | json }}{% else %}null{% endif %},
-  "logo_width_desktop": {{ section.settings.logo_width_desktop | default: 200 }},
-  "logo_width_mobile": {{ section.settings.logo_width_mobile | default: 120 }},
+  "logo_width_desktop": {{ section.settings.logo_width_desktop | default: 400 }},
+  "logo_width_mobile": {{ section.settings.logo_width_mobile | default: 200 }},
   "brand_text": {{ section.settings.brand_text | default: shop.name | json }},
   "brand_color": {{ section.settings.brand_color | default: '#ffffff' | json }},
-  "nav_color": {{ section.settings.nav_color | default: '#ffffff' | json }},
+  "nav_color": {{ section.settings.nav_color | default: '#d1d5db' | json }},
   "nav_hover_color": {{ section.settings.nav_hover_color | default: '#19d400' | json }},
   "scroll_bg": {{ section.settings.scroll_bg | default: '#000000' | json }},
   "scroll_border": {{ section.settings.scroll_border | default: '#1a1a1a' | json }},
   "dropdown_bg": {{ section.settings.dropdown_bg | default: '#0a0a0a' | json }},
   "badge_bg": {{ section.settings.badge_bg | default: '#19d400' | json }},
   "badge_text_color": {{ section.settings.badge_text_color | default: '#000000' | json }},
-  "header_height_desktop": {{ section.settings.header_height_desktop | default: 70 }},
+  "header_height_desktop": {{ section.settings.header_height_desktop | default: 96 }},
   "header_height_mobile": {{ section.settings.header_height_mobile | default: 58 }},
   "nav_links": [
     {%- if section.settings.menu != blank -%}
@@ -40,14 +40,14 @@
   "settings": [
     { "type": "header", "content": "Logo" },
     { "type": "image_picker", "id": "logo", "label": "Logo image" },
-    { "type": "range", "id": "logo_width_desktop", "label": "Logo width desktop (px)", "min": 80, "max": 500, "step": 10, "default": 200 },
-    { "type": "range", "id": "logo_width_mobile",  "label": "Logo width mobile (px)",  "min": 60, "max": 260, "step": 10, "default": 120 },
+    { "type": "range", "id": "logo_width_desktop", "label": "Logo width desktop (px)", "min": 80, "max": 500, "step": 10, "default": 400 },
+    { "type": "range", "id": "logo_width_mobile",  "label": "Logo width mobile (px)",  "min": 60, "max": 260, "step": 10, "default": 200 },
     { "type": "text",  "id": "brand_text", "label": "Brand text (if no logo)", "default": "Vexel" },
     { "type": "color", "id": "brand_color", "label": "Brand text color", "default": "#ffffff" },
 
     { "type": "header", "content": "Navigation" },
     { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu" },
-    { "type": "color", "id": "nav_color",       "label": "Nav link color",  "default": "#ffffff" },
+    { "type": "color", "id": "nav_color",       "label": "Nav link color",  "default": "#d1d5db" },
     { "type": "color", "id": "nav_hover_color", "label": "Nav hover color", "default": "#19d400" },
 
     { "type": "header", "content": "Colors" },
@@ -58,7 +58,7 @@
     { "type": "color", "id": "badge_text_color", "label": "Cart badge text",      "default": "#000000" },
 
     { "type": "header", "content": "Layout" },
-    { "type": "range", "id": "header_height_desktop", "label": "Height desktop (px)", "min": 50, "max": 120, "step": 2, "default": 70 },
+    { "type": "range", "id": "header_height_desktop", "label": "Height desktop (px)", "min": 50, "max": 120, "step": 2, "default": 96 },
     { "type": "range", "id": "header_height_mobile",  "label": "Height mobile (px)",  "min": 44, "max": 90,  "step": 2, "default": 58 }
   ],
   "presets": [{ "name": "Header" }]
