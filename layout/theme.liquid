@@ -37,6 +37,10 @@
   {%- liquid
     assign accent = settings.color_accent | default: '#19d400'
     assign accent_hover = settings.color_accent_hover | default: '#15b800'
+    assign brand_name = settings.brand_name | default: shop.name
+    if brand_name == 'Vexel'
+      assign brand_name = shop.name
+    endif
     assign bg = settings.color_background | default: '#000000'
     assign card_bg = settings.color_card_bg | default: '#111111'
     assign card_elevated = settings.color_card_elevated | default: '#1a1a1a'
@@ -53,7 +57,7 @@
   <link href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@400,500,600,700&display=swap" rel="stylesheet">
   <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
 
-  <script>window.VexelConfig={licenseKey:{{ settings.license_key | json }},shopDomain:{{ request.host | json }},permanentDomain:{{ shop.permanent_domain | json }},apiUrl:{{ settings.license_server_url | default: '' | json }},colors:{accent1:{{ accent | json }},background:{{ bg | json }},text:{{ text_primary | json }},textMuted:{{ text_muted | json }},cardBg:{{ card_bg | json }},border:{{ border_color | json }}},brandName:{{ settings.brand_name | default: shop.name | json }},logoUrl:{% if settings.logo %}{{ settings.logo | image_url: width: 400 | json }}{% else %}null{% endif %}};</script>
+  <script>window.VexelConfig={licenseKey:{{ settings.license_key | json }},shopDomain:{{ request.host | json }},permanentDomain:{{ shop.permanent_domain | json }},apiUrl:{{ settings.license_server_url | default: '' | json }},colors:{accent1:{{ accent | json }},background:{{ bg | json }},text:{{ text_primary | json }},textMuted:{{ text_muted | json }},cardBg:{{ card_bg | json }},border:{{ border_color | json }}},brandName:{{ brand_name | json }},logoUrl:{% if settings.logo %}{{ settings.logo | image_url: width: 400 | json }}{% else %}null{% endif %}};</script>
 
   <style>
     :root {
