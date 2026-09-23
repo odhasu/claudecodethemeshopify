@@ -1,6 +1,7 @@
 # Theme — Bugs & Todo
 
 ## Active / verification
+- Public OGSELL storefront is blocked by "License Invalid": the configured validation server returns `invalid_key` for the saved key. Issue or reactivate a valid key for ogsellsz.myshopify.com; do not disable protection in the distributable theme.
 - Verify cart add + checkout flow on the target Shopify theme preview; checkout depends on valid Shopify variants and storefront configuration.
 - The reference uses a populated review feed; this theme's review form is presentational and does not persist or moderate submissions. Connect a review app for production reviews.
 - Add the store's testimonial images, logo, and social links in Shopify Customize. Reference assets and product catalog imagery were intentionally not copied.
