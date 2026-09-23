@@ -12,7 +12,7 @@
     {%- if settings.license_server_url != blank -%}
       <link rel="preconnect" href="{{ settings.license_server_url }}" crossorigin>
     {%- endif -%}
-    <link rel="preload" href="{{ 'scaled-loader.js' | asset_url }}" as="script">
+    <link rel="preload" href="{{ 'scaled-loader-current.js' | asset_url }}" as="script">
   {%- endif -%}
 
   {%- if settings.favicon != blank -%}
@@ -213,7 +213,7 @@
   {% render 'chat-widget' %}
 
   {%- if settings.license_key != blank -%}
-    <script src="{{ 'scaled-loader.js' | asset_url }}" defer></script>
+    <script src="{{ 'scaled-loader-current.js' | asset_url }}" defer></script>
     <script>
     (function(){
       var loader=document.getElementById('vx-loader');
