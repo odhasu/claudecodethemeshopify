@@ -43,12 +43,14 @@
 - Matched compact transparent header, smaller logo/nav, hero spacing/type scale, flat product cards, sale badge, card controls and purchase action styling.
 - Product title/image/info controls open the details overlay; BUY NOW adds the selected variant and continues to checkout.
 - Product image and title now use buttons for the details overlay, matching the reference's control semantics; BUY NOW remains a checkout link.
+- Restored the hero trust line and overlapping avatar system visible on the current reference; theme image settings use store-owned portraits, with neutral placeholders until those are uploaded.
 - Matched FAQ sizing/open-state treatment, single-column reviews layout, trust-separator glyph, and 12-item display limit.
 - Product catalog data and product images were not changed. Reference customer screenshots, review feed, and store-specific branding/social links remain configured by the store owner.
 
 ## Store setup still needed
 - Replace or reactivate the saved license key for ogsellsz.myshopify.com; the configured validation server currently returns `invalid_key` on the public storefront.
 - Add the store's own testimonial screenshots and social links in Shopify Customize.
+- Upload the store's own customer avatar images in Hero settings to replace neutral placeholders.
 - Connect a real reviews app/feed if live submitted reviews and moderation are required; the bundled review form is only a front-end placeholder.
 - Verify cart/checkout behavior and saved settings in the target Shopify theme preview before publishing.
 

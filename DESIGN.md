@@ -49,4 +49,4 @@ lukesvendors.com — check this first before building anything visual.
 - Headline: 110px desktop / 48px mobile, Clash Grotesk, uppercase
 - Green highlight on one word in the headline
 - Two CTA buttons: BUY NOW (green) + ADD TO CART (secondary)
-- No badge, no trust row, no stats row in hero
+- Trust line and overlapping avatar stack beneath the headline; no badge or stats row
