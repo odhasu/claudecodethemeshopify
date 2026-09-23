@@ -44,6 +44,7 @@
 - Product title/image/info controls open the details overlay; BUY NOW adds the selected variant and continues to checkout.
 - Product image and title now use buttons for the details overlay, matching the reference's control semantics; BUY NOW remains a checkout link.
 - Restored the hero trust line and overlapping avatar system visible on the current reference; theme image settings use store-owned portraits, with neutral placeholders until those are uploaded.
+- Tuned hero headline size, top/bottom spacing, and avatar size against a matched 375px reference view so the trust row sits at the same height without moving the product grid.
 - Matched FAQ sizing/open-state treatment, single-column reviews layout, trust-separator glyph, and 12-item display limit.
 - Product catalog data and product images were not changed. Reference customer screenshots, review feed, and store-specific branding/social links remain configured by the store owner.
 
