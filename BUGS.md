@@ -1,19 +1,16 @@
 # Theme — Bugs & Todo
 
-## Active
-- Cart drawer — needs testing on live store
-- Hero bg image — setting exists, needs image upload in Shopify admin
-- Footer Instagram URL — placeholder, needs real URL
-- Testimonials — few images uploaded, supports up to 20 (upload in Shopify admin)
-- Store admin settings still show the local brand defaults — update brand/logo/nav labels in Shopify Customize when the store identity is finalized
+## Active / verification
+- Verify cart add + checkout flow on the target Shopify theme preview; checkout depends on valid Shopify variants and storefront configuration.
+- The reference uses a populated review feed; this theme's review form is presentational and does not persist or moderate submissions. Connect a review app for production reviews.
+- Add the store's testimonial images, logo, and social links in Shopify Customize. Reference assets and product catalog imagery were intentionally not copied.
 
 ## Todo — Content
-- Upload hero background image
 - Upload more testimonial screenshots
 - Add real social URLs to footer
 
 ## Fixed
-- Reference layout pass — header/nav proportions, compact hero, card actions/badge placement, FAQ-before-reviews order, review summary stack, trust bar height, and footer CTA now match the reference structure
+- Reference layout pass — compact header/hero, product card actions/badge placement, FAQ-before-reviews order, single-column reviews, 44px trust bar and footer structure aligned; store content/integrations remain store-owned
 - Per-section spinners — removed, full-page loader handles everything now
 - Testimonials spinner stuck — no more per-section spinners, content loads behind full-page loader
 - Header nav clutter — removed HOME/CATALOG/CONTACT bar entirely

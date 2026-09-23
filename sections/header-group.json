@@ -37,8 +37,8 @@
       "type": "header-pill",
       "name": "Header",
       "settings": {
-        "logo_width_desktop": 400,
-        "logo_width_mobile": 200,
+        "logo_width_desktop": 120,
+        "logo_width_mobile": 120,
         "brand_text": "Vexel",
         "brand_color": "#ffffff",
         "nav_color": "#d1d5db",
@@ -48,8 +48,8 @@
         "dropdown_bg": "#0a0a0a",
         "badge_bg": "#19d400",
         "badge_text_color": "#000000",
-        "header_height_desktop": 96,
-        "header_height_mobile": 58
+        "header_height_desktop": 64,
+        "header_height_mobile": 48
       }
     }
   },

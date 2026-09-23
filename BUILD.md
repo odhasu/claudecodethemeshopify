@@ -10,11 +10,11 @@
 8. Trust badges — footer group
 9. Footer — footer group
 
-## Sections — Liquid (done, needs shell conversion)
+## Sections — Liquid shells + runtime rendering
 - Urgency bar — scrolling marquee, countdown timer, live viewer count, slides in on scroll
 - Header — transparent fixed bar, title-case nav, cart icon, mobile hamburger + dropdown
 - Hero — centered headline, green highlight, trust row/avatar stack, optional CTA/image mode
-- Product grid — flat dark cards, bottom-right sale badge, info button, BUY NOW button, radial glow background
+- Product grid — flat dark cards, bottom-right sale badge, details overlay, direct-checkout BUY NOW button
 - Trust badges — scrolling marquee, 4 badges, green icons, positioned before footer
 - Footer — brand name, policy links, social icons, copyright
 - Testimonials — horizontal scrolling image carousel, fade-out edges
@@ -39,13 +39,19 @@
 - Footer protection (MutationObserver + periodic check)
 - theme.liquid: VexelConfig, loading states, loader from CDN
 
-## Still to build
-- Hero background image — needs upload in Shopify admin
-- More testimonial screenshots (up to 20 supported)
-- Real social links in footer
+## Reference theme pass — 2026-09-23
+- Matched compact transparent header, smaller logo/nav, hero spacing/type scale, flat product cards, sale badge, card controls and purchase action styling.
+- Product title/image/info controls open the details overlay; BUY NOW adds the selected variant and continues to checkout.
+- Matched FAQ sizing/open-state treatment, single-column reviews layout, trust-separator glyph, and 12-item display limit.
+- Product catalog data and product images were not changed. Reference customer screenshots, review feed, and store-specific branding/social links remain configured by the store owner.
+
+## Store setup still needed
+- Add the store's own testimonial screenshots and social links in Shopify Customize.
+- Connect a real reviews app/feed if live submitted reviews and moderation are required; the bundled review form is only a front-end placeholder.
+- Verify cart/checkout behavior and saved settings in the target Shopify theme preview before publishing.
 
 ## Last worked on
-2026-09-23 — Reference pass: transparent header, compact hero, flat cards, FAQ/review layout, 44px trust bar, protected footer CTA
+2026-09-23 — Reference pass: compact transparent header, flat cards/details overlay, direct checkout, FAQ/review layout and trust-bar styling
 2026-05-10 — Removed header nav, removed per-section spinners, smooth 1s loader reveal, centered hero, stripped footer settings, added refund policy
 2026-05-09 — Hero: added bg image + gradient overlay + 2 CTA buttons; Product cards: inline descriptions; License validation fix (Supabase anon key)
 2026-05-08 — License protection end-to-end: Supabase RPC, validate endpoint fix, loader from CDN, rebranding to Vexel
