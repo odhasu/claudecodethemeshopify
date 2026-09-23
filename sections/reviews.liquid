@@ -25,7 +25,7 @@
   "blocks": [
     {%- for block in section.blocks -%}
       {%- if block.type == 'review' -%}
-        {"type":"review","settings":{"name":{{ block.settings.name | json }},"date":{{ block.settings.date | json }},"stars":{{ block.settings.stars | default: 5 }},"text":{{ block.settings.text | json }}}}{% unless forloop.last %},{% endunless %}
+        {"type":"review","settings":{"name":{{ block.settings.name | json }},"date":{{ block.settings.date | json }},"stars":{{ block.settings.stars | default: 5 }},"text":{{ block.settings.text | json }},"avatar":{% if block.settings.avatar != blank %}{{ block.settings.avatar | image_url: width: 100 | json }}{% else %}null{% endif %},"photo":{% if block.settings.photo != blank %}{{ block.settings.photo | image_url: width: 1000 | json }}{% else %}null{% endif %}}}{% unless forloop.last %},{% endunless %}
       {%- endif -%}
     {%- endfor -%}
   ]
@@ -66,8 +66,10 @@
       "settings": [
         { "type": "text", "id": "name", "label": "Reviewer name", "default": "John D." },
         { "type": "text", "id": "date", "label": "Date", "default": "2 weeks ago" },
+        { "type": "image_picker", "id": "avatar", "label": "Reviewer avatar" },
         { "type": "range", "id": "stars", "label": "Star rating", "min": 1, "max": 5, "step": 1, "default": 5 },
-        { "type": "textarea", "id": "text", "label": "Review text", "default": "Amazing vendor list! Already made back my investment." }
+        { "type": "textarea", "id": "text", "label": "Review text", "default": "Amazing vendor list! Already made back my investment." },
+        { "type": "image_picker", "id": "photo", "label": "Review photo (optional)" }
       ]
     }
   ],
