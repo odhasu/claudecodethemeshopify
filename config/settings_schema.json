@@ -74,7 +74,7 @@
     "settings": [
       { "type": "image_picker", "id": "favicon", "label": "Favicon" },
       { "type": "image_picker", "id": "logo", "label": "Logo (used globally)" },
-      { "type": "text", "id": "brand_name", "label": "Brand name", "default": "Vexel" }
+      { "type": "text", "id": "brand_name", "label": "Brand name", "default": "OGSELL" }
     ]
   },
   {
