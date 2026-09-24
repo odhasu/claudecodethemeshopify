@@ -124,4 +124,82 @@
   document.addEventListener('keydown', function(event) {
     if (event.key === 'Escape') closeDescription();
   });
+
+  var reviewTrigger = null;
+  function enhanceReviewModal() {
+    var modal = document.getElementById('vx-review-modal');
+    if (!modal || modal.dataset.vxEnhanced === 'true') return modal;
+
+    var stars = '';
+    for (var rating = 1; rating <= 5; rating++) {
+      stars += '<button type="button" class="vx-review-modal__star" data-vx-review-star="' + rating + '" aria-label="' + rating + ' star" aria-pressed="false"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg></button>';
+    }
+
+    modal.innerHTML = '<div class="vx-review-modal__card">' +
+      '<button class="vx-review-modal__close" type="button" data-vx-close-review aria-label="Close">&times;</button>' +
+      '<h3 class="vx-review-modal__title" id="vx-review-modal-title">Write a Review</h3>' +
+      '<div class="vx-review-modal__stars" role="group" aria-label="Rating">' + stars + '</div>' +
+      '<input class="vx-review-modal__input" type="text" placeholder="Your name" aria-label="Your name" maxlength="100" autocomplete="name">' +
+      '<textarea class="vx-review-modal__textarea" placeholder="Share your experience (optional)" aria-label="Share your experience" maxlength="5000"></textarea>' +
+      '<div class="vx-review-modal__media" aria-disabled="true" title="Media uploads require a review service"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><path d="m21 15-5-5L5 21"></path></svg>Add Photos or Video</div>' +
+      '<p class="vx-review-modal__status" role="status" hidden></p>' +
+      '<button class="vx-review-modal__submit" type="button" data-vx-submit-review>Submit Review</button>' +
+      '</div>';
+    modal.dataset.vxEnhanced = 'true';
+    modal.setAttribute('role', 'dialog');
+    modal.setAttribute('aria-modal', 'true');
+    modal.setAttribute('aria-labelledby', 'vx-review-modal-title');
+    return modal;
+  }
+
+  document.addEventListener('click', function(event) {
+    var open = event.target.closest('[data-vx-open-review]');
+    if (open) {
+      reviewTrigger = open;
+      var openingModal = enhanceReviewModal();
+      if (openingModal) {
+        openingModal.querySelector('.vx-review-modal__status').hidden = true;
+      }
+      return;
+    }
+
+    if (event.target.closest('[data-vx-close-review]')) {
+      queueMicrotask(function() {
+        if (reviewTrigger) reviewTrigger.focus();
+        reviewTrigger = null;
+      });
+      return;
+    }
+
+    var star = event.target.closest('[data-vx-review-star]');
+    if (star) {
+      var selected = Number(star.getAttribute('data-vx-review-star'));
+      star.parentElement.querySelectorAll('[data-vx-review-star]').forEach(function(item) {
+        var active = Number(item.getAttribute('data-vx-review-star')) <= selected;
+        item.classList.toggle('is-selected', active);
+        item.setAttribute('aria-pressed', String(active));
+        item.querySelector('svg').setAttribute('fill', active ? 'currentColor' : 'none');
+      });
+      return;
+    }
+
+    var submit = event.target.closest('[data-vx-submit-review]');
+    if (submit) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      var status = submit.parentElement.querySelector('.vx-review-modal__status');
+      status.textContent = 'Review submission is not available yet. Please contact the store directly.';
+      status.hidden = false;
+      return;
+    }
+  }, true);
+
+  document.addEventListener('keydown', function(event) {
+    if (event.key !== 'Escape') return;
+    var modal = document.getElementById('vx-review-modal');
+    if (!modal || modal.style.display !== 'flex') return;
+    modal.style.display = 'none';
+    if (reviewTrigger) reviewTrigger.focus();
+    reviewTrigger = null;
+  });
 })();

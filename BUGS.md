@@ -4,7 +4,7 @@
 - Verify the live OGSELL storefront after the GitHub-connected theme sync; the theme no longer requires a license key, but the storefront should be checked for section rendering and loader reveal.
 - Shopify editor settings remain out of sync with `v2`'s `templates/index.json` after the GitHub update (for example, Product Grid still displays "Go to product page" and no info button). The runtime currently forces the rendered BUY NOW link to direct checkout. Reconcile the saved editor values with GitHub deliberately; editor saves can rewrite unrelated homepage settings.
 - Verify cart add + checkout flow on the target Shopify theme preview; checkout depends on valid Shopify variants and storefront configuration.
-- The reference uses a populated review feed; this theme's review form is presentational and does not persist or moderate submissions. Connect a review app for production reviews.
+- The reference uses a populated review feed; this theme's dialog now matches its appearance but does not persist or moderate submissions. Submit explicitly reports that reviews are unavailable, and media upload is disabled. Connect a review app for production reviews.
 - Add the store's testimonial images, customer avatars, logo, and social links in Shopify Customize. Reference assets and product catalog imagery were intentionally not copied.
 - Three of four current OGSELL products have empty descriptions. Their info controls now link to product pages; add store-owned descriptions to populate reference-style dialogs.
 

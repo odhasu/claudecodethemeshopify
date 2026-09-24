@@ -68,6 +68,112 @@
   text-underline-offset: 3px;
 }
 
+/* Review dialog. The review feed itself remains store-owned content. */
+.vx-review-modal {
+  background: rgba(0, 0, 0, .5) !important;
+  backdrop-filter: blur(4px);
+  padding: 16px !important;
+}
+.vx-review-modal__card {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 32px;
+  border: 1px solid #333;
+  border-radius: 16px;
+  background: var(--color-card-bg);
+}
+.vx-review-modal__close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid #333;
+  border-radius: 50%;
+  background: #1a1a1a;
+  color: var(--color-text);
+  font-size: 20px;
+  line-height: 1;
+}
+.vx-review-modal__title {
+  margin: 0 0 20px;
+  font: 700 20px/30px var(--font-heading);
+  text-transform: uppercase;
+}
+.vx-review-modal__stars {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 16px;
+}
+.vx-review-modal__star {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 35px;
+  padding: 2px;
+  color: var(--color-text-muted);
+}
+.vx-review-modal__star.is-selected {
+  color: var(--color-stars);
+}
+.vx-review-modal__input,
+.vx-review-modal__textarea {
+  display: block;
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #333;
+  border-radius: 10px;
+  background: #1a1a1a;
+  color: var(--color-text);
+  font: 16px var(--font-body);
+}
+.vx-review-modal__input {
+  height: 45px;
+  margin-bottom: 12px;
+}
+.vx-review-modal__textarea {
+  height: 80px;
+  min-height: 80px;
+  margin-bottom: 18px;
+  resize: vertical;
+}
+.vx-review-modal__media {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 41.5px;
+  margin-bottom: 20px;
+  padding: 10px 16px;
+  border: 1px dashed #333;
+  border-radius: 10px;
+  background: #1a1a1a;
+  color: var(--color-text-muted);
+  font: 500 13px/19.5px var(--font-body);
+  cursor: not-allowed;
+}
+.vx-review-modal__status {
+  margin-bottom: 12px;
+  color: var(--color-text-muted);
+  font-size: 13px;
+}
+.vx-review-modal__status[hidden] {
+  display: none;
+}
+.vx-review-modal__submit {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  border-radius: 10px;
+  background: var(--color-accent);
+  color: var(--color-text);
+  font: 700 15px var(--font-heading);
+}
+
 @media (min-width: 769px) {
   .vx-header .vx-header__nav {
     position: absolute;

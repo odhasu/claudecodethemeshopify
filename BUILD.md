@@ -73,6 +73,11 @@
 - Hidden the trust strip and chat button on 404 and cart pages. Header navigation is centered on desktop pages, and the cart icon is hidden on mobile.
 - Shopify Theme Check reports zero errors and 11 warnings after these page updates.
 
+## Review dialog pass — 2026-09-24
+- Matched the reference review dialog's 480px desktop card, 429px height, blurred backdrop, outlined rating stars, unlabeled placeholder fields, media control appearance, and submit button. Checked the 375px layout as well.
+- Replaced the false "Thank you" alert with an honest unavailable message; no review data is sent or stored. The media control is visibly present but disabled until a review service is connected.
+- Rating selection, close control, and Escape behavior were checked in the local preview. Shopify Theme Check remains at zero errors and 11 warnings.
+
 ## Store setup still needed
 - Add the store's own testimonial screenshots and social links in Shopify Customize.
 - Upload the store's own customer avatar images in Hero settings to replace neutral placeholders.
