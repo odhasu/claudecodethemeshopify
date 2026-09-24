@@ -48,6 +48,12 @@
 - Matched FAQ sizing/open-state treatment, single-column reviews layout, trust-separator glyph, and 12-item display limit.
 - Product catalog data and product images were not changed. Reference customer screenshots, review feed, and store-specific branding/social links remain configured by the store owner.
 
+## Button fidelity — 2026-09-24
+- Product BUY NOW keeps the direct add-to-cart/checkout link, but now matches the reference's Clash Grotesk weight, responsive size, 42–48px height, compact padding, flat green fill, and stronger glass inset/glow shadow.
+- The Shopify Product Grid saved radius was changed from 50px to 10px to match the reference.
+- Footer "Get this store design" is a compact flat-green badge with the reference's 12px radius, 8px/18px padding, Satoshi 12px label, arrow shape, shadows, hover, and external-new-tab behavior. Its URL remains store-owned.
+- Detailed comparison and build handoff are in `CHAT-HANDOFF.md`.
+
 ## Store setup still needed
 - Replace or reactivate the saved license key for ogsellsz.myshopify.com; the configured validation server currently returns `invalid_key` on the public storefront.
 - Add the store's own testimonial screenshots and social links in Shopify Customize.
@@ -56,6 +62,7 @@
 - Verify cart/checkout behavior and saved settings in the target Shopify theme preview before publishing.
 
 ## Last worked on
+2026-09-24 — Measured and aligned BUY NOW and footer CTA buttons; documented conversation decisions in CHAT-HANDOFF.md
 2026-09-23 — Reference pass: compact transparent header, flat cards/details overlay, direct checkout, FAQ/review layout and trust-bar styling
 2026-05-10 — Removed header nav, removed per-section spinners, smooth 1s loader reveal, centered hero, stripped footer settings, added refund policy
 2026-05-09 — Hero: added bg image + gradient overlay + 2 CTA buttons; Product cards: inline descriptions; License validation fix (Supabase anon key)

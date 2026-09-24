@@ -2,6 +2,7 @@
 
 ## Active / verification
 - Public OGSELL storefront is blocked by "License Invalid": the configured validation server returns `invalid_key` for the saved key. Issue or reactivate a valid key for ogsellsz.myshopify.com; do not disable protection in the distributable theme.
+- Confirm the synced `v2` BUY NOW and footer CTA styles in Shopify's theme editor after the button update; a Shopify editor save can rewrite unrelated homepage settings in `templates/index.json`.
 - Verify cart add + checkout flow on the target Shopify theme preview; checkout depends on valid Shopify variants and storefront configuration.
 - The reference uses a populated review feed; this theme's review form is presentational and does not persist or moderate submissions. Connect a review app for production reviews.
 - Add the store's testimonial images, customer avatars, logo, and social links in Shopify Customize. Reference assets and product catalog imagery were intentionally not copied.
@@ -11,6 +12,7 @@
 - Add real social URLs to footer
 
 ## Fixed
+- BUY NOW and footer CTA styling — matched the reference's compact shapes, typography, flat green fill, inset/glow shadows, and footer new-tab behavior while keeping OGSELL's checkout variants and footer URL
 - Reference layout pass — compact header/hero, product card actions/badge placement, FAQ-before-reviews order, single-column reviews, 44px trust bar and footer structure aligned; store content/integrations remain store-owned
 - Per-section spinners — removed, full-page loader handles everything now
 - Testimonials spinner stuck — no more per-section spinners, content loads behind full-page loader
