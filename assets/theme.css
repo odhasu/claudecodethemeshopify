@@ -34,8 +34,10 @@
 /* Homepage alignment shared by the hero and product grid. */
 .template-index #MainContent {
   background:
-    radial-gradient(ellipse 75% 35% at 0% 24%, rgba(var(--color-accent-rgb), var(--homepage-glow-opacity)) 0%, transparent 72%),
-    radial-gradient(ellipse 60% 30% at 100% 40%, rgba(var(--color-accent-rgb), var(--homepage-glow-opacity)) 0%, transparent 75%);
+    radial-gradient(800px 500px at 5% 365px, rgba(var(--color-accent-rgb), var(--homepage-glow-opacity)) 0%, transparent 70%),
+    radial-gradient(700px 450px at 95% 640px, rgba(var(--color-accent-rgb), var(--homepage-glow-opacity)) 0%, transparent 70%),
+    radial-gradient(900px 600px at 50% 1000px, rgba(var(--color-accent-rgb), var(--homepage-glow-opacity)) 0%, transparent 70%);
+  background-repeat: no-repeat;
 }
 .template-index .vx-hero .vx-hero__content {
   padding-inline: var(--homepage-inline-padding);

@@ -68,7 +68,7 @@
 - The user's existing Product Grid top-padding change to 20px was preserved.
 
 ## Cart and 404 pass — 2026-09-24
-- The reference Products route currently resolves to a 404 page. Matched the 404 code, heading, description, button, main height, and footer boundary at 1280px and 375px.
+- Matched the 404 code, heading, description, button, main height, and footer boundary at 1280px and 375px.
 - Matched the reference empty cart's content width, title position, dark Continue Shopping button, and footer boundary at desktop and mobile widths. Its continue link now returns to the homepage, matching the reference and avoiding the 404 route.
 - Hidden the trust strip and chat button on 404 and cart pages. Header navigation is centered on desktop pages, and the cart icon is hidden on mobile.
 - Shopify Theme Check reports zero errors and 11 warnings after these page updates.
@@ -98,7 +98,14 @@
 - Restored ten existing OGSELL testimonial images from Shopify Files to the homepage carousel. The image references came from the store's earlier curated marquee; Shopify's remote homepage template matches the local file, and the live storefront displays all ten.
 - Reviewed the existing Shopify Files for branding and hero portraits. The available brand graphics belong to other names, and no clearly suitable customer portrait was identified. The OGSELL text wordmark and neutral avatar placeholders remain in place.
 
+## Background and collection pass — 2026-09-24
+- Started `shopify theme dev` for `ogsellsz`; the local preview is `http://127.0.0.1:9292/`.
+- Matched the reference's three broad green glows behind the hero and product grid, with the homepage glow still controlled by the global theme setting.
+- The Products navigation and chat links now return to the homepage. Direct visits to `/collections/all` also return home, including when Shopify initially serves its 404 template for that path.
+- Kept OGSELL's review content separate from the reference. The product image, title, and info controls already share the same description-dialog behavior; products without Shopify descriptions continue to show a product-details link in that dialog.
+
 ## Last worked on
+2026-09-24 — Tuned homepage background and routed the all collection page back home in the Shopify dev preview
 2026-09-24 — Restored ten existing OGSELL testimonial images to the live homepage through `180fcc6`
 2026-09-24 — Audited live v2 theme, verified checkout, fixed cart navigation, and synced homepage settings through `2b7927f`
 2026-09-24 — Aligned product description popup styling and entity rendering; pushed through `946252c`
