@@ -105,7 +105,9 @@
     title.textContent = product.title;
     body.replaceChildren();
     if (product.description && product.description.trim()) {
-      body.textContent = product.description;
+      var descriptionDecoder = document.createElement('textarea');
+      descriptionDecoder.innerHTML = product.description;
+      body.textContent = descriptionDecoder.value;
     } else {
       var detailsLink = document.createElement('a');
       detailsLink.href = product.url;

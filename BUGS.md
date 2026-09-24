@@ -13,6 +13,7 @@
 - Add real social URLs to footer
 
 ## Fixed
+- Product description popup styling — aligned backdrop, card radius, close control, and body typography; decoded literal HTML entities in store descriptions
 - Header cart glyph — now matches the reference's cart icon while retaining the `/cart` destination
 - 404 and empty cart layout — matched reference typography, spacing, buttons, and footer start on desktop/mobile; cart Continue Shopping now links home
 - Empty product detail popup — now shows the product title and a product-page link when description content is missing; populated descriptions render in the dialog

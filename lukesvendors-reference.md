@@ -3,6 +3,8 @@
 Full section-by-section breakdown of the lukesvendors.com homepage.
 Used as the design reference for Vexel theme v2.
 
+Historical snapshot: the live reference changed after this was written. The live page and current `BUILD.md` comparison notes take precedence, including the current text-only hero and product description popup.
+
 ---
 
 ## Page Order

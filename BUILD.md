@@ -79,6 +79,10 @@
 - Rating selection, close control, and Escape behavior were checked in the local preview. Shopify Theme Check remains at zero errors and 11 warnings.
 - Replaced the header's shopping-bag glyph with the reference cart glyph, keeping the existing `/cart` link and store-owned branding.
 
+## Product dialog polish — 2026-09-24
+- Matched the reference description popup's 16px card radius, 36px close control, 15px/1.7 body type, and lighter 4px-blurred backdrop at desktop and mobile sizes.
+- Decoded HTML entities in OGSELL's own plain-text product descriptions before display, so `&amp;` renders as `&`.
+
 ## Store setup still needed
 - Add the store's own testimonial screenshots and social links in Shopify Customize.
 - Upload the store's own customer avatar images in Hero settings to replace neutral placeholders.
