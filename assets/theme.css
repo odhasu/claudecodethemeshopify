@@ -209,8 +209,6 @@
 
 .template-404 [data-vx-section="trust-badges"],
 .template-cart [data-vx-section="trust-badges"],
-.template-404 #chat-fab,
-.template-cart #chat-fab,
 .template-404 #live-sales-toast,
 .template-cart #live-sales-toast {
   display: none;

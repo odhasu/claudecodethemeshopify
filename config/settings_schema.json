@@ -108,34 +108,6 @@
     ]
   },
   {
-    "name": "AI Chatbot",
-    "settings": [
-      { "type": "header", "content": "General" },
-      { "type": "checkbox", "id": "chat_enabled", "label": "Enable Chatbot", "default": true },
-      { "type": "select", "id": "chat_mode", "label": "Chat Mode", "default": "builtin", "info": "Tidio gives you real AI + live chat. Built-in uses keyword matching.", "options": [
-        { "value": "tidio", "label": "Tidio (AI + Live Chat)" },
-        { "value": "builtin", "label": "Built-in (keyword matching)" },
-        { "value": "external", "label": "External (custom script)" }
-      ]},
-      { "type": "header", "content": "Tidio Settings" },
-      { "type": "text", "id": "chat_tidio_key", "label": "Tidio Public Key", "info": "Find this in Tidio dashboard → Settings → Installation → copy the key from the script URL (the part after tidio.co/ and before .js)" },
-      { "type": "checkbox", "id": "chat_custom_tidio_button", "label": "Use custom green button (instead of Tidio default)", "default": true, "info": "Shows our green chat button that opens Tidio when clicked" },
-      { "type": "header", "content": "External Chat Script" },
-      { "type": "textarea", "id": "chat_external_script", "label": "External embed code", "info": "Paste any chat widget embed code (Crisp, Intercom, etc.)" },
-      { "type": "header", "content": "Built-in Chat Settings" },
-      { "type": "text", "id": "chat_name", "label": "Chatbot Name", "default": "Reselling Assistant", "info": "Name shown in chat header" },
-      { "type": "textarea", "id": "chat_greeting", "label": "Greeting message", "default": "yooo whats good! u looking to start reselling? lmk if u need help picking the right suppliers 🔥" },
-      { "type": "text", "id": "chat_placeholder", "label": "Input placeholder", "default": "Ask me anything..." },
-      { "type": "header", "content": "Appearance" },
-      { "type": "color", "id": "chat_btn_bg", "label": "Button color", "default": "#39ff14" },
-      { "type": "range", "id": "chat_btn_size", "label": "Button size (px)", "min": 44, "max": 80, "step": 4, "default": 60 },
-      { "type": "range", "id": "chat_window_width", "label": "Chat window width (px)", "min": 300, "max": 500, "step": 20, "default": 380 },
-      { "type": "color", "id": "chat_window_bg", "label": "Window background", "default": "#111111" },
-      { "type": "range", "id": "chat_bottom", "label": "Bottom offset (px)", "min": 12, "max": 60, "step": 4, "default": 24 },
-      { "type": "range", "id": "chat_right", "label": "Right offset (px)", "min": 12, "max": 60, "step": 4, "default": 24 }
-    ]
-  },
-  {
     "name": "Custom Code",
     "settings": [
       { "type": "textarea", "id": "custom_css", "label": "Custom CSS" },

@@ -35,7 +35,6 @@ assets/
   theme.css            — global styles
   theme.js             — global JS (loader reveal, scroll behavior, dialogs and header enhancements)
 snippets/
-  chat-widget.liquid
   live-sales-notification.liquid
   meta-tags.liquid
 config/

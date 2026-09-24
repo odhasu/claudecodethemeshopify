@@ -70,7 +70,7 @@
 ## Cart and 404 pass — 2026-09-24
 - Matched the 404 code, heading, description, button, main height, and footer boundary at 1280px and 375px.
 - Matched the reference empty cart's content width, title position, dark Continue Shopping button, and footer boundary at desktop and mobile widths. Its continue link now returns to the homepage, matching the reference and avoiding the 404 route.
-- Hidden the trust strip and chat button on 404 and cart pages. Header navigation is centered on desktop pages, and the cart icon is hidden on mobile.
+- Hidden the trust strip on 404 and cart pages. Header navigation is centered on desktop pages, and the cart icon is hidden on mobile.
 - Shopify Theme Check reports zero errors and 11 warnings after these page updates.
 
 ## Review dialog pass — 2026-09-24
@@ -104,7 +104,11 @@
 - The Products navigation and chat links now return to the homepage. Shopify URL redirect `1011588858197` forwards `/collections/all` to `/`; the theme also returns that path home if Shopify serves its 404 template in the dev preview.
 - Kept OGSELL's review content separate from the reference. The product image, title, and info controls already share the same description-dialog behavior; products without Shopify descriptions continue to show a product-details link in that dialog.
 
+## Chatbot removal — 2026-09-24
+- Removed the built-in chatbot from the storefront, along with its theme snippet, settings, and unused styles. The live-sales notification remains separate.
+
 ## Last worked on
+2026-09-24 — Removed the storefront chatbot and its theme settings
 2026-09-24 — Tuned homepage background and routed the all collection page back home in the Shopify dev preview
 2026-09-24 — Restored ten existing OGSELL testimonial images to the live homepage through `180fcc6`
 2026-09-24 — Audited live v2 theme, verified checkout, fixed cart navigation, and synced homepage settings through `2b7927f`

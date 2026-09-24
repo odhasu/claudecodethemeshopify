@@ -33,17 +33,6 @@
     "live_sales_duration": 7,
     "live_sales_min_interval": 8,
     "live_sales_max_interval": 20,
-    "chat_enabled": true,
-    "chat_mode": "builtin",
-    "chat_name": "OG Assistant",
-    "chat_greeting": "Hey! 👋 Welcome! Looking to start your reselling journey? I can help you pick the right bundle.",
-    "chat_placeholder": "Ask me anything...",
-    "chat_btn_bg": "#19d400",
-    "chat_btn_size": 60,
-    "chat_window_width": 380,
-    "chat_window_bg": "#111111",
-    "chat_bottom": 24,
-    "chat_right": 24,
     "sections": {
       "cart-drawer": {
         "type": "cart-drawer",

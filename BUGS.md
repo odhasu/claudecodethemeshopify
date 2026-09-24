@@ -9,6 +9,7 @@
 - Add real social URLs to footer
 
 ## Fixed
+- Removed the unwanted storefront chatbot, its settings, and its unused theme styles
 - Homepage background now uses three broad, theme-adjustable green glows like the current reference; Products links and a Shopify URL redirect send `/collections/all` home
 - Restored ten existing OGSELL testimonial images from Shopify Files to the live homepage carousel; verified that the live storefront displays them and Shopify's homepage template matches `v2`
 - Live homepage settings synced — Shopify's `templates/index.json` now matches `v2`, including the preserved 20px Product Grid top padding
