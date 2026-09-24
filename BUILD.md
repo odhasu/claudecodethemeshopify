@@ -101,7 +101,7 @@
 ## Background and collection pass — 2026-09-24
 - Started `shopify theme dev` for `ogsellsz`; the local preview is `http://127.0.0.1:9292/`.
 - Matched the reference's three broad green glows behind the hero and product grid, with the homepage glow still controlled by the global theme setting.
-- The Products navigation and chat links now return to the homepage. Direct visits to `/collections/all` also return home, including when Shopify initially serves its 404 template for that path.
+- The Products navigation and chat links now return to the homepage. Shopify URL redirect `1011588858197` forwards `/collections/all` to `/`; the theme also returns that path home if Shopify serves its 404 template in the dev preview.
 - Kept OGSELL's review content separate from the reference. The product image, title, and info controls already share the same description-dialog behavior; products without Shopify descriptions continue to show a product-details link in that dialog.
 
 ## Last worked on
