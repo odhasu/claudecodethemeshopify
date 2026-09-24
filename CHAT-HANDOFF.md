@@ -31,6 +31,8 @@ Saving that single setting caused Shopify's GitHub integration to commit its old
 
 - Check `git status`, `node --check` on runtime source and both generated assets, JSON section schemas, and `git diff --check` before pushing.
 - Verify the synced theme in Shopify's editor and compare computed button styles/links with the reference at the same viewport. Shopify's GitHub log can confirm a theme update; the editor may need a refresh to load the new CDN asset version.
+- Verified after refreshing the Shopify editor on 2026-09-24: product `BUY NOW` is a 42px-high, 10px-radius Clash Grotesk/900 link with the strong green/inset shadow and OGSELL's `/cart/add?...&return_to=/checkout` URL. Footer CTA is 34px high with 12px radius, 8px × 18px padding, and `target="_blank" rel="noopener noreferrer"` to `https://vexelthemes.com`.
+- The editor's saved Product Grid settings still show older values (including "Go to product page" and no info button) despite the `v2` template defaults. The runtime forces BUY NOW to checkout, so the rendered link is correct. Reconcile these editor settings separately and inspect the resulting full-template Git diff after any save.
 - The public OGSELL storefront is currently blocked by the theme's license check (`invalid_key` from its configured validation server). Do not disable license protection in the distributable theme. A valid owner-store license is needed for public-store verification.
 - Customer portraits, testimonial screenshots, product images, catalog/review counts, and OGSELL-specific copy are content, not theme code to copy from the reference.
 

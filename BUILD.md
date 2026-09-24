@@ -52,6 +52,7 @@
 - Product BUY NOW keeps the direct add-to-cart/checkout link, but now matches the reference's Clash Grotesk weight, responsive size, 42–48px height, compact padding, flat green fill, and stronger glass inset/glow shadow.
 - The Shopify Product Grid saved radius was changed from 50px to 10px to match the reference.
 - Footer "Get this store design" is a compact flat-green badge with the reference's 12px radius, 8px/18px padding, Satoshi 12px label, arrow shape, shadows, hover, and external-new-tab behavior. Its URL remains store-owned.
+- Verified in Shopify's refreshed theme editor preview after GitHub sync: BUY NOW renders at 42px high with 10px radius, Clash Grotesk/900, and the expected checkout URL; the footer badge renders at 34px high with 12px radius and `target="_blank"`.
 - Detailed comparison and build handoff are in `CHAT-HANDOFF.md`.
 
 ## Store setup still needed
