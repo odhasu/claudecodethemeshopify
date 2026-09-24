@@ -65,6 +65,20 @@
     reveals.forEach(function(el) { observer.observe(el); });
   }
 
+  function updateCartIcon() {
+    var icon = document.querySelector('.vx-header__cart svg');
+    if (!icon || icon.dataset.vxCartIcon === 'reference') return;
+    icon.innerHTML = '<circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"></path>';
+    icon.dataset.vxCartIcon = 'reference';
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', updateCartIcon);
+  } else {
+    updateCartIcon();
+  }
+  document.addEventListener('shopify:section:load', updateCartIcon);
+
   var descriptionTrigger = null;
   document.addEventListener('click', function(event) {
     var trigger = event.target.closest('[data-vx-desc]');

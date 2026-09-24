@@ -77,6 +77,7 @@
 - Matched the reference review dialog's 480px desktop card, 429px height, blurred backdrop, outlined rating stars, unlabeled placeholder fields, media control appearance, and submit button. Checked the 375px layout as well.
 - Replaced the false "Thank you" alert with an honest unavailable message; no review data is sent or stored. The media control is visibly present but disabled until a review service is connected.
 - Rating selection, close control, and Escape behavior were checked in the local preview. Shopify Theme Check remains at zero errors and 11 warnings.
+- Replaced the header's shopping-bag glyph with the reference cart glyph, keeping the existing `/cart` link and store-owned branding.
 
 ## Store setup still needed
 - Add the store's own testimonial screenshots and social links in Shopify Customize.
