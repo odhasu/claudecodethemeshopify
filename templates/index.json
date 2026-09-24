@@ -105,7 +105,17 @@
         "image_radius": 12,
         "gap": 16,
         "padding_top": 60,
-        "padding_bottom": 60
+        "padding_bottom": 60,
+        "image_1": "shopify://shop_images/IMG_0459.webp",
+        "image_2": "shopify://shop_images/IMG_0461.webp",
+        "image_3": "shopify://shop_images/IMG_0462.webp",
+        "image_4": "shopify://shop_images/Photo_Sep_10_2025_3_43_37_PM.webp",
+        "image_5": "shopify://shop_images/IMG_0468.webp",
+        "image_6": "shopify://shop_images/b5d9dc5ba0bec1c95a19fc045f726b74.jpg",
+        "image_7": "shopify://shop_images/IMG_7281.webp",
+        "image_8": "shopify://shop_images/IMG_0467.webp",
+        "image_9": "shopify://shop_images/3e51884a71daea267e8a457dfd1a8b89.webp",
+        "image_10": "shopify://shop_images/IMG_0457.webp"
       }
     },
     "reviews": {
