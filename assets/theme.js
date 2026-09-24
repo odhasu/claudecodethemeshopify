@@ -11,7 +11,7 @@
       return;
     }
 
-    var start = Date.now();
+    var minimumIntro = 850;
     var hidden = false;
     var observer;
     function reveal() {
@@ -23,7 +23,7 @@
         loader.classList.add('is-hidden');
         initScrollReveal();
         setTimeout(function() { loader.remove(); }, 600);
-      }, Math.max(0, 1000 - (Date.now() - start)));
+      }, Math.max(0, minimumIntro - performance.now()));
     }
 
     var shells = document.querySelectorAll('[data-vx-section]');
@@ -42,7 +42,7 @@
       observer.observe(shell, { childList: true, attributes: true, attributeFilter: ['class'] });
     });
     check();
-    setTimeout(reveal, 5000);
+    setTimeout(reveal, Math.max(0, 3000 - performance.now()));
   }
 
   if (document.readyState === 'loading') {

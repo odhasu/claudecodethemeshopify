@@ -54,8 +54,7 @@
   -%}
 
   <link rel="preconnect" href="https://api.fontshare.com">
-  <link href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@400,500,600,700&display=swap" rel="stylesheet">
-  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
+  <link href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@400,500,600,700&f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
 
   <script>window.VexelConfig={colors:{accent1:{{ accent | json }},background:{{ bg | json }},text:{{ text_primary | json }},textMuted:{{ text_muted | json }},cardBg:{{ card_bg | json }},border:{{ border_color | json }}},brandName:{{ brand_name | json }},logoUrl:{% if settings.logo %}{{ settings.logo | image_url: width: 400 | json }}{% else %}null{% endif %}};</script>
 

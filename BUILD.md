@@ -23,7 +23,7 @@
 - Cart drawer — slide-out panel, AJAX quantity controls (stays as Liquid, no shell)
 
 ## Other done
-- Loading screen — full-page spinner, 1s minimum, smooth fade reveal (no per-section spinners)
+- Loading screen — full-page spinner, 850ms minimum from navigation, smooth fade reveal after sections render (no per-section spinners)
 - Color system — unified to #19d400 everywhere
 - Fonts — Clash Grotesk (headings) + Satoshi (body) from Fontshare
 - Hero — content + buttons centered via CSS overrides
@@ -107,7 +107,13 @@
 ## Chatbot removal — 2026-09-24
 - Removed the built-in chatbot from the storefront, along with its theme snippet, settings, and unused styles. The live-sales notification remains separate.
 
+## Loading optimization — 2026-09-24
+- The section renderer no longer dismisses the loading overlay itself; `theme.js` owns the reveal after all section shells finish rendering.
+- The intro has an 850ms minimum from navigation start and a 3s safety fallback. The 500ms overlay fade remains smooth.
+- Combined the two Fontshare CSS requests into one stylesheet request.
+
 ## Last worked on
+2026-09-24 — Balanced loader reveal and combined font stylesheet requests
 2026-09-24 — Removed the storefront chatbot and its theme settings
 2026-09-24 — Tuned homepage background and routed the all collection page back home in the Shopify dev preview
 2026-09-24 — Restored ten existing OGSELL testimonial images to the live homepage through `180fcc6`

@@ -9,6 +9,7 @@
 - Add real social URLs to footer
 
 ## Fixed
+- Loader reveal race — the runtime renderer no longer bypasses the balanced minimum intro; reveal now waits for rendered shells, with a 3s safety fallback
 - Removed the unwanted storefront chatbot, its settings, and its unused theme styles
 - Homepage background now uses three broad, theme-adjustable green glows like the current reference; Products links and a Shopify URL redirect send `/collections/all` home
 - Restored ten existing OGSELL testimonial images from Shopify Files to the live homepage carousel; verified that the live storefront displays them and Shopify's homepage template matches `v2`
