@@ -88,6 +88,7 @@
 - Add real social links in Shopify Customize.
 - Upload the store's own customer avatar images in Hero settings to replace neutral placeholders.
 - Connect a real reviews app/feed if live submitted reviews and moderation are required; the bundled review form is only a front-end placeholder.
+- Provide or approve a current OGSELL logo if an image should replace the text wordmark. Shopify Files currently holds an “OG’S SUPPLIERS” graphic and older “Recuerdos Vividos” logos, which do not match the current OGSELL name.
 
 ## Live audit — 2026-09-24
 - Shopify CLI access to `ogsellsz` is active; theme `196616782165` (`claudecodethemeshopify/v2`) is live. Its remote loader and layout matched the local files before this cart change.
@@ -95,6 +96,7 @@
 - The header cart icon opened the drawer, while the reference navigates to `/cart`. The runtime source now leaves the header link to navigate normally and sends the drawer's empty-cart Continue shopping link home. Both loader assets were rebuilt.
 - Committed the preserved Product Grid 20px top padding and synced the full `v2` homepage template. Shopify's remote `templates/index.json` now matches the local file exactly; a refreshed storefront shows the intended hero and grid spacing.
 - Restored ten existing OGSELL testimonial images from Shopify Files to the homepage carousel. The image references came from the store's earlier curated marquee; Shopify's remote homepage template matches the local file, and the live storefront displays all ten.
+- Reviewed the existing Shopify Files for branding and hero portraits. The available brand graphics belong to other names, and no clearly suitable customer portrait was identified. The OGSELL text wordmark and neutral avatar placeholders remain in place.
 - `ogresells.com` displayed Shopify's unavailable page. Shopify Domains lists `www.ogresells.com` as connected but does not list the bare domain; this remains open in BUGS.md.
 
 ## Last worked on
