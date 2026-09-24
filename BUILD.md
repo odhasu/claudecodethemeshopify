@@ -112,7 +112,13 @@
 - The intro has an 850ms minimum from navigation start and a 3s safety fallback. The 500ms overlay fade remains smooth.
 - Combined the two Fontshare CSS requests into one stylesheet request.
 
+## Scroll polish — 2026-09-24
+- The urgency bar now changes state only when the scroll threshold is crossed, with a small buffer to avoid flicker while scrolling back and forth.
+- The fixed header follows the bar with a transform instead of animating its top position. Its background and blur ease in on scroll.
+- The header's scroll listener is passive and its initial state is applied when the section renders.
+
 ## Last worked on
+2026-09-24 — Smoothed urgency bar and fixed header motion while scrolling
 2026-09-24 — Balanced loader reveal and combined font stylesheet requests
 2026-09-24 — Removed the storefront chatbot and its theme settings
 2026-09-24 — Tuned homepage background and routed the all collection page back home in the Shopify dev preview
