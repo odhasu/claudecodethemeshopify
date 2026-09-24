@@ -67,6 +67,12 @@
 - Added intrinsic image dimensions on cart, order, and product pages; Shopify Theme Check now reports zero errors (14 existing warnings).
 - The user's existing Product Grid top-padding change to 20px was preserved.
 
+## Cart and 404 pass — 2026-09-24
+- The reference Products route currently resolves to a 404 page. Matched the 404 code, heading, description, button, main height, and footer boundary at 1280px and 375px.
+- Matched the reference empty cart's content width, title position, dark Continue Shopping button, and footer boundary at desktop and mobile widths. Its continue link now returns to the homepage, matching the reference and avoiding the 404 route.
+- Hidden the trust strip and chat button on 404 and cart pages. Header navigation is centered on desktop pages, and the cart icon is hidden on mobile.
+- Shopify Theme Check reports zero errors and 11 warnings after these page updates.
+
 ## Store setup still needed
 - Add the store's own testimonial screenshots and social links in Shopify Customize.
 - Upload the store's own customer avatar images in Hero settings to replace neutral placeholders.
@@ -74,6 +80,7 @@
 - Verify cart/checkout behavior and saved settings in the target Shopify theme preview before publishing.
 
 ## Last worked on
+2026-09-24 — Aligned 404 and empty cart pages at desktop/mobile widths
 2026-09-24 — Aligned desktop/mobile homepage geometry and fixed empty product description popup
 2026-09-24 — Removed license protection from the v2 theme while retaining shell rendering
 2026-09-24 — Measured and aligned BUY NOW and footer CTA buttons; documented conversation decisions in CHAT-HANDOFF.md

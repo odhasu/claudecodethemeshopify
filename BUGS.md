@@ -13,6 +13,7 @@
 - Add real social URLs to footer
 
 ## Fixed
+- 404 and empty cart layout — matched reference typography, spacing, buttons, and footer start on desktop/mobile; cart Continue Shopping now links home
 - Empty product detail popup — now shows the product title and a product-page link when description content is missing; populated descriptions render in the dialog
 - Desktop/mobile homepage alignment — headline, grid width/gaps, mobile spacing, continuous glow, and mobile header controls matched against current reference screenshots
 - License gate — removed key/server validation, the invalid-license page, and footer tamper lock from the v2 theme while preserving the shell renderer

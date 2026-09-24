@@ -6,40 +6,41 @@
 
 <style>
   .cart-page {
-    max-width: 800px;
+    max-width: {{ section.settings.page_width | default: 560 }}px;
     margin: 0 auto;
-    padding: 40px 20px 80px;
+    padding: {{ section.settings.padding_top | default: 140 }}px 16px {{ section.settings.padding_bottom | default: 80 }}px;
   }
   .cart-title {
     font-family: var(--font-heading);
-    font-size: clamp(24px, 4vw, 36px);
+    font-size: {{ section.settings.title_size | default: 32 }}px;
+    font-weight: 800;
     text-transform: uppercase;
-    text-align: center;
+    text-align: left;
     margin-bottom: 32px;
   }
   .cart-empty {
     text-align: center;
-    padding: 60px 20px;
+    padding: 64px 0;
   }
   .cart-empty p {
     color: var(--color-text-muted);
-    font-size: 16px;
-    margin-bottom: 24px;
+    font-size: 15px;
+    margin-bottom: 0;
   }
   .cart-empty-btn {
     display: inline-block;
-    padding: 14px 36px;
-    border-radius: 28px;
-    background: {{ accent }};
-    color: #000;
-    font-weight: 800;
+    margin-top: 16px;
+    padding: 12px 28px;
+    border: 1px solid var(--color-border);
+    border-radius: {{ section.settings.empty_button_radius | default: 10 }}px;
+    background: var(--color-card-elevated);
+    color: var(--color-text);
+    font-weight: 600;
     font-size: 14px;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    transition: box-shadow 0.3s, transform 0.2s;
+    transition: border-color 0.2s, transform 0.2s;
   }
   .cart-empty-btn:hover {
-    box-shadow: 0 4px 20px rgba(57,255,20,0.4);
+    border-color: var(--color-accent);
     transform: translateY(-1px);
   }
 
@@ -197,6 +198,8 @@
   }
 
   @media (max-width: 600px) {
+    .cart-page { padding-top: {{ section.settings.mobile_padding_top | default: 120 }}px; padding-bottom: {{ section.settings.mobile_padding_bottom | default: 60 }}px; }
+    .cart-title { font-size: {{ section.settings.mobile_title_size | default: 24 }}px; }
     .cart-item { flex-wrap: wrap; }
     .cart-item-img { width: 72px; height: 72px; }
   }
@@ -208,7 +211,7 @@
   {%- if cart.item_count == 0 -%}
     <div class="cart-empty">
       <p>{{ section.settings.empty_text | default: "Your cart is empty" }}</p>
-      <a href="/collections/all" class="cart-empty-btn">{{ section.settings.continue_text | default: 'Continue Shopping' }}</a>
+      <a href="{{ routes.root_url }}" class="cart-empty-btn">{{ section.settings.continue_text | default: 'Continue Shopping' }}</a>
     </div>
   {%- else -%}
     <div class="cart-items" id="cart-items">
@@ -251,7 +254,7 @@
       <form action="/checkout" method="post">
         <button type="submit" class="cart-checkout-btn">{{ section.settings.checkout_text | default: 'Checkout' }}</button>
       </form>
-      <a href="/collections/all" class="cart-continue">{{ section.settings.continue_text | default: 'Continue Shopping' }} →</a>
+      <a href="{{ routes.root_url }}" class="cart-continue">{{ section.settings.continue_text | default: 'Continue Shopping' }} →</a>
     </div>
   {%- endif -%}
 </section>
@@ -283,6 +286,15 @@
     { "type": "text", "id": "continue_text", "label": "Continue shopping text", "default": "Continue Shopping" },
     { "type": "text", "id": "checkout_text", "label": "Checkout button text", "default": "Checkout" },
     { "type": "text", "id": "tax_note", "label": "Tax/shipping note", "default": "Taxes and shipping calculated at checkout." },
+    { "type": "range", "id": "empty_button_radius", "label": "Empty cart button radius (px)", "min": 0, "max": 30, "step": 2, "default": 10 },
+    { "type": "header", "content": "Layout" },
+    { "type": "range", "id": "page_width", "label": "Cart width (px)", "min": 400, "max": 900, "step": 10, "default": 560 },
+    { "type": "range", "id": "padding_top", "label": "Top padding (px)", "min": 40, "max": 200, "step": 10, "default": 140 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding (px)", "min": 20, "max": 140, "step": 10, "default": 80 },
+    { "type": "range", "id": "mobile_padding_top", "label": "Mobile top padding (px)", "min": 40, "max": 180, "step": 10, "default": 120 },
+    { "type": "range", "id": "mobile_padding_bottom", "label": "Mobile bottom padding (px)", "min": 20, "max": 120, "step": 10, "default": 60 },
+    { "type": "range", "id": "title_size", "label": "Title size (px)", "min": 20, "max": 48, "step": 2, "default": 32 },
+    { "type": "range", "id": "mobile_title_size", "label": "Mobile title size (px)", "min": 18, "max": 36, "step": 2, "default": 24 },
     { "type": "header", "content": "Colors" },
     { "type": "color", "id": "accent_color", "label": "Accent color", "default": "#39ff14" },
     { "type": "color", "id": "card_bg", "label": "Card background", "default": "#111111" },

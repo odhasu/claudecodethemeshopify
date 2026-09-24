@@ -1,44 +1,80 @@
 <style>
   .page-404 {
-    text-align: center;
-    padding: 120px 20px;
-    min-height: 50vh;
+    min-height: {{ section.settings.min_height | default: 570 }}px;
+    padding: 64px 16px;
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
+    text-align: center;
+  }
+  .page-404__code {
+    margin-bottom: 24px;
+    color: var(--color-accent);
+    font-family: var(--font-body);
+    font-size: clamp(96px, 12vw, {{ section.settings.code_size | default: 150 }}px);
+    font-weight: 900;
+    line-height: 1;
   }
   .page-404 h1 {
-    font-family: var(--font-heading);
-    font-size: clamp(48px, 10vw, 96px);
-    color: var(--color-accent);
     margin-bottom: 16px;
+    color: var(--color-text);
+    font-family: var(--font-body);
+    font-size: clamp(28px, 5vw, {{ section.settings.heading_size | default: 36 }}px);
+    font-weight: 700;
+    line-height: 1.2;
   }
-  .page-404 p { color: var(--color-text-muted); font-size: 18px; margin-bottom: 32px; }
-  .page-404 a {
+  .page-404 p {
+    margin-bottom: 32px;
+    color: var(--color-text-muted);
+    font-size: 16px;
+  }
+  .page-404__button {
     display: inline-block;
-    padding: 14px 32px;
-    border-radius: var(--radius-button);
+    padding: 16px 32px;
+    border-radius: {{ section.settings.button_radius | default: 12 }}px;
     background: var(--color-accent);
-    color: #000;
-    font-weight: 800;
-    text-transform: uppercase;
-    font-size: 14px;
-    transition: box-shadow 0.3s;
+    color: var(--color-text);
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1;
+    box-shadow: 0 0 20px color-mix(in srgb, var(--color-accent) 20%, transparent);
+    transition: transform .2s ease, box-shadow .2s ease;
   }
-  .page-404 a:hover { box-shadow: 0 4px 15px rgba(57,255,20,0.4); }
+  .page-404__button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 30px color-mix(in srgb, var(--color-accent) 35%, transparent);
+  }
+  @media (max-width: 768px) {
+    .page-404 { min-height: {{ section.settings.mobile_height_percent | default: 60 }}vh; }
+    .page-404__code { font-size: {{ section.settings.mobile_code_size | default: 80 }}px; }
+    .page-404 h1 { font-size: {{ section.settings.mobile_heading_size | default: 24 }}px; }
+  }
 </style>
 
 <section class="page-404">
-  <h1>404</h1>
-  <p>Page not found</p>
-  <a href="/">Continue Shopping</a>
+  <div class="page-404__content">
+    <div class="page-404__code" aria-hidden="true">404</div>
+    <h1>{{ section.settings.heading | default: 'Page Not Found' | escape }}</h1>
+    <p>{{ section.settings.description | default: "The page you were looking for doesn't exist." | escape }}</p>
+    <a class="page-404__button" href="{{ routes.root_url }}">{{ section.settings.button_label | default: 'Continue Shopping' | escape }}</a>
+  </div>
 </section>
 
 {% schema %}
 {
   "name": "Main 404",
   "tag": "section",
-  "settings": []
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Page Not Found" },
+    { "type": "text", "id": "description", "label": "Description", "default": "The page you were looking for doesn't exist." },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Continue Shopping" },
+    { "type": "range", "id": "min_height", "label": "Minimum height (px)", "min": 400, "max": 800, "step": 10, "default": 570 },
+    { "type": "range", "id": "code_size", "label": "404 size (px)", "min": 90, "max": 180, "step": 10, "default": 150 },
+    { "type": "range", "id": "heading_size", "label": "Heading size (px)", "min": 24, "max": 48, "step": 2, "default": 36 },
+    { "type": "range", "id": "mobile_height_percent", "label": "Mobile height (% of viewport)", "min": 40, "max": 100, "step": 5, "default": 60 },
+    { "type": "range", "id": "mobile_code_size", "label": "Mobile 404 size (px)", "min": 60, "max": 120, "step": 5, "default": 80 },
+    { "type": "range", "id": "mobile_heading_size", "label": "Mobile heading size (px)", "min": 18, "max": 36, "step": 2, "default": 24 },
+    { "type": "range", "id": "button_radius", "label": "Button radius (px)", "min": 0, "max": 30, "step": 2, "default": 12 }
+  ]
 }
 {% endschema %}

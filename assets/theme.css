@@ -69,7 +69,7 @@
 }
 
 @media (min-width: 769px) {
-  .template-index .vx-header .vx-header__nav {
+  .vx-header .vx-header__nav {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
@@ -77,6 +77,15 @@
   .template-index .vx-pg .vx-pg-inner {
     padding-inline: var(--homepage-inline-padding);
   }
+}
+
+.template-404 [data-vx-section="trust-badges"],
+.template-cart [data-vx-section="trust-badges"],
+.template-404 #chat-fab,
+.template-cart #chat-fab,
+.template-404 #live-sales-toast,
+.template-cart #live-sales-toast {
+  display: none;
 }
 
 @media (max-width: 768px) {
@@ -92,7 +101,7 @@
   .template-index .vx-pg .vx-btn-buy {
     padding-inline: 4px;
   }
-  .template-index .vx-header .vx-header__cart {
+  .vx-header .vx-header__cart {
     display: none;
   }
 }
