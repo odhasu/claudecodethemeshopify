@@ -1,27 +1,20 @@
 # Theme — Goals
 
 ## What we're building
-Vexel — a premium Shopify theme product for resellers. Replicates lukesvendors.com design. License-protected using the Kenso shell model (obfuscated loader + server validation).
+Vexel — a Shopify theme for resellers that closely matches lukesvendors.com while keeping OGSELL's own products, images, copy, and destinations.
 
-## Current sprint — License Protection (Kenso Shell Model)
-1. Convert all 10 sections to shells (empty div + JSON data)
-2. Build obfuscated loader that validates license + renders sections client-side
-3. Set up Railway server (POST /api/validate + serve loader JS)
-4. Update theme.liquid (VexelConfig, loading states, loader script)
-5. Build pipeline (obfuscate loader, package theme ZIP)
+## Current direction
+- Keep the client-side shell renderer, but do not require a license key or validation server to display the storefront.
+- Maintain the GitHub-connected `v2` theme; leave `main` untouched.
+- Continue matching the reference's theme controls and responsive layouts, while keeping content store-owned.
 
-## Content tasks (after protection is done)
-- Upload hero background image in Shopify admin
-- Upload more customer testimonial screenshots
-- Add real social links to footer
-- Results carousel section on homepage
-- Mobile polish pass
+## Content tasks
+- Upload the store's hero and customer testimonial images.
+- Add real social links to the footer.
+- Connect a production reviews app if review submissions must persist.
 
 ## What success looks like
-- Page loads fast (< 2s first load, < 500ms cached)
-- Without valid license: nothing renders, shows error page
-- Footer removal = loading screen forever
-- Obfuscated code — resellers can't easily bypass
-- Every section configurable through Shopify theme editor
-- Mobile looks as good as desktop
-- Distributed as ZIP, customers install on their Shopify store
+- The storefront renders without a license key or license-server availability.
+- The loader reveals all sections quickly and works in the Shopify editor.
+- Mobile and desktop layouts are consistent with the reference.
+- Every section remains configurable through Shopify theme settings.

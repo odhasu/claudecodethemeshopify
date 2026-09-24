@@ -1,7 +1,7 @@
 # Theme — Context
 
 ## What it is
-Vexel — a premium Shopify theme product sold to resellers. Built from scratch, replicating lukesvendors.com design. License-protected via obfuscated loader + Railway validation server (Kenso shell model).
+Vexel — a Shopify theme product for resellers. Built from scratch, replicating lukesvendors.com design. The theme renders its shell sections client-side without a license check.
 
 ## Repo
 GitHub: odhasu/claudecodethemeshopify
@@ -11,11 +11,10 @@ GitHub: odhasu/claudecodethemeshopify
 Working dir: /Users/oscargraafmans/Desktop/ogresell/theme
 
 ## Stack
-Shopify Liquid (shell sections), vanilla CSS, vanilla JS. No frameworks.
-License protection: obfuscated client-side loader (javascript-obfuscator) + Railway server for validation.
+Shopify Liquid (shell sections), vanilla CSS, vanilla JS. No frameworks. The renderer is built from a separate runtime work directory and bundled into theme assets.
 
 ## Architecture (Kenso shell model)
-Sections are empty shells — just a div + JSON data. An obfuscated loader JS validates the license against a Railway server, then renders all section HTML client-side. Without a valid license, the theme shows nothing.
+Sections are empty shells — just a div + JSON data. The bundled loader renders section HTML client-side on every storefront and editor load. No key or validation server is required.
 
 ## File structure
 layout/
@@ -40,7 +39,7 @@ snippets/
   live-sales-notification.liquid
   meta-tags.liquid
 config/
-  settings_schema.json — global theme settings (includes License section)
+  settings_schema.json — global theme settings
   settings_data.json   — saved setting values
 templates/
   index.json           — homepage sections + order
@@ -49,9 +48,9 @@ sections/
   footer-group.json    — footer sections + order
 
 ## Related projects
-- License server (Railway): /Users/oscargraafmans/Desktop/ogresell/runtime/
+- Runtime work directory (renderer source and build script): /Users/oscargraafmans/Desktop/ogresell/runtime/work/runtime-theme/
 - Dashboard + store: /Users/oscargraafmans/Desktop/ogresell/store/
-- Obfuscated loader source: runtime/src/loader.js -> runtime/dist/scaled-loader.js
+- Loader source: runtime/work/runtime-theme/src/loader.js -> runtime/work/runtime-theme/dist/scaled-loader.js -> both theme loader assets
 
 ## Design reference
 lukesvendors.com — check before building anything visual

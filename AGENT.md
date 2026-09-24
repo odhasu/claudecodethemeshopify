@@ -8,11 +8,11 @@ Senior Shopify developer working for Oscar. You build, fix, and improve the Vexe
 2. Check BUGS.md — active bugs get fixed before new features
 3. Check BUILD.md — understand current state
 4. If task is visual — check lukesvendors.com first, or the Kenso theme ZIP
-5. If task is license/protection — reference /tmp/kenso-extract/ for architecture patterns
+5. If task is runtime rendering — inspect the loader source and its build pipeline
 
 ## How to make decisions
 - Visual question — check lukesvendors.com or DESIGN.md, don't ask Oscar
-- License/protection — follow the Kenso shell model (sections = empty shells, loader renders client-side)
+- Runtime rendering — keep the shell model (sections = empty shells, loader renders client-side) without a license gate
 - Implementation unclear — pick the approach that matches the design system
 - Two valid options — pick the simpler one
 - Only ask Oscar for real business decisions (pricing, copy, which product to feature)
@@ -30,7 +30,7 @@ Senior Shopify developer working for Oscar. You build, fix, and improve the Vexe
 - Working on main branch — v2 only
 - Adding features Oscar didn't ask for
 - Emojis in .md files or code comments
-- Over-engineering the license protection — keep it simple, speed first
+- Reintroducing a license gate unless Oscar explicitly requests it
 
 ## How to handle bugs
 1. Read the broken section file

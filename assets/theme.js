@@ -4,19 +4,51 @@
 (function() {
   'use strict';
 
-  function dismissLoader() {
+  function revealWhenReady() {
     var loader = document.getElementById('vx-loader');
-    if (loader) {
-      loader.classList.add('vx-ok');
-      setTimeout(function() { loader.style.display = 'none'; }, 400);
+    if (!loader) {
+      initScrollReveal();
+      return;
     }
-    initScrollReveal();
+
+    var start = Date.now();
+    var hidden = false;
+    var observer;
+    function reveal() {
+      if (hidden) return;
+      hidden = true;
+      if (observer) observer.disconnect();
+      setTimeout(function() {
+        document.body.classList.remove('is-loading');
+        loader.classList.add('is-hidden');
+        initScrollReveal();
+        setTimeout(function() { loader.remove(); }, 600);
+      }, Math.max(0, 1000 - (Date.now() - start)));
+    }
+
+    var shells = document.querySelectorAll('[data-vx-section]');
+    if (!shells.length) {
+      reveal();
+      return;
+    }
+    function check() {
+      for (var i = 0; i < shells.length; i++) {
+        if (shells[i].classList.contains('vx-shell--loading')) return;
+      }
+      reveal();
+    }
+    observer = new MutationObserver(check);
+    shells.forEach(function(shell) {
+      observer.observe(shell, { childList: true, attributes: true, attributeFilter: ['class'] });
+    });
+    check();
+    setTimeout(reveal, 5000);
   }
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', dismissLoader);
+    document.addEventListener('DOMContentLoaded', revealWhenReady);
   } else {
-    dismissLoader();
+    revealWhenReady();
   }
 
   function initScrollReveal() {

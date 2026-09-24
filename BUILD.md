@@ -30,14 +30,18 @@
 - Footer — settings locked down (only brand/social/CTA/copyright editable), refund policy link added
 - Header nav — restored as the two-link reference pattern (Home / Products)
 
-## License Protection (Kenso Shell Model) — DONE
+## Client-side section rendering — license-free
 - All 10 sections converted to shells (empty div + JSON data)
-- Runtime loader — renders sections client-side after license validation
-- Loader served from Shopify CDN (assets/scaled-loader.js)
-- Validation via Vercel store server → Supabase RPC (anon key)
-- 24hr grace period (localStorage), 30-min session cache
-- Footer protection (MutationObserver + periodic check)
+- Runtime loader — renders sections client-side on every storefront and editor load
+- Loader served from Shopify CDN (`assets/scaled-loader-current.js`; mirrored in `assets/scaled-loader.js`)
+- No license key, validation request, grace cache, or footer tamper lock
 - theme.liquid: VexelConfig, loading states, loader from CDN
+
+## License removal — 2026-09-24
+- Removed the key gate from `theme.liquid`, the validation/setup/error paths from the client-side renderer, and the License & Protection theme settings.
+- Moved loader-reveal logic into `assets/theme.js` and deferred that asset, preserving the loading animation without inline-script parsing errors.
+- Rebuilt both loader assets. The separate licensing server was not changed.
+- Existing Product Grid top-padding edit in `templates/index.json` was preserved, not included in this theme change.
 
 ## Reference theme pass — 2026-09-23
 - Matched compact transparent header, smaller logo/nav, hero spacing/type scale, flat product cards, sale badge, card controls and purchase action styling.
@@ -56,13 +60,13 @@
 - Detailed comparison and build handoff are in `CHAT-HANDOFF.md`.
 
 ## Store setup still needed
-- Replace or reactivate the saved license key for ogsellsz.myshopify.com; the configured validation server currently returns `invalid_key` on the public storefront.
 - Add the store's own testimonial screenshots and social links in Shopify Customize.
 - Upload the store's own customer avatar images in Hero settings to replace neutral placeholders.
 - Connect a real reviews app/feed if live submitted reviews and moderation are required; the bundled review form is only a front-end placeholder.
 - Verify cart/checkout behavior and saved settings in the target Shopify theme preview before publishing.
 
 ## Last worked on
+2026-09-24 — Removed license protection from the v2 theme while retaining shell rendering
 2026-09-24 — Measured and aligned BUY NOW and footer CTA buttons; documented conversation decisions in CHAT-HANDOFF.md
 2026-09-23 — Reference pass: compact transparent header, flat cards/details overlay, direct checkout, FAQ/review layout and trust-bar styling
 2026-05-10 — Removed header nav, removed per-section spinners, smooth 1s loader reveal, centered hero, stripped footer settings, added refund policy

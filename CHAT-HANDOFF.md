@@ -6,6 +6,7 @@ This file preserves the actionable context from the conversation, not a verbatim
 
 - Match the theme system on `https://lukesvendors.com/` as closely as possible in OGSELL's GitHub-connected Shopify theme. Keep OGSELL's products, prices, images, customer content, and store-specific destinations.
 - Work on `odhasu/claudecodethemeshopify` branch `v2` and push completed theme edits there.
+- On 2026-09-24, Oscar explicitly requested removal of the v2 theme's license protection. The theme now renders without a key or validation server; do not reintroduce the gate unless asked.
 - Current focus: replicate the product-card `BUY NOW` control and footer `Get this store design` badge, including shapes, typography, shadows, colors, and link behavior.
 - Keep Markdown notes of progress and unresolved items so later work can resume from evidence.
 
@@ -33,7 +34,7 @@ Saving that single setting caused Shopify's GitHub integration to commit its old
 - Verify the synced theme in Shopify's editor and compare computed button styles/links with the reference at the same viewport. Shopify's GitHub log can confirm a theme update; the editor may need a refresh to load the new CDN asset version.
 - Verified after refreshing the Shopify editor on 2026-09-24: product `BUY NOW` is a 42px-high, 10px-radius Clash Grotesk/900 link with the strong green/inset shadow and OGSELL's `/cart/add?...&return_to=/checkout` URL. Footer CTA is 34px high with 12px radius, 8px × 18px padding, and `target="_blank" rel="noopener noreferrer"` to `https://vexelthemes.com`.
 - The editor's saved Product Grid settings still show older values (including "Go to product page" and no info button) despite the `v2` template defaults. The runtime forces BUY NOW to checkout, so the rendered link is correct. Reconcile these editor settings separately and inspect the resulting full-template Git diff after any save.
-- The public OGSELL storefront is currently blocked by the theme's license check (`invalid_key` from its configured validation server). Do not disable license protection in the distributable theme. A valid owner-store license is needed for public-store verification.
+- The v2 theme's license gate has been removed. Verify the public storefront after Shopify sync; the separate licensing server has not been modified.
 - Customer portraits, testimonial screenshots, product images, catalog/review counts, and OGSELL-specific copy are content, not theme code to copy from the reference.
 
 See `BUILD.md` for implemented systems and `BUGS.md` for outstanding verification.
