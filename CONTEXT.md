@@ -5,10 +5,10 @@ Vexel — a Shopify theme product for resellers. Built from scratch, replicating
 
 ## Repo
 GitHub: odhasu/claudecodethemeshopify
-- main — V1, live on Shopify, never touch
-- v2 — active development, all work goes here
+- main — V1 branch, never touch
+- v2 — active development branch; Shopify currently marks its connected theme as live
 
-Working dir: /Users/oscargraafmans/Desktop/ogresell/theme
+Working dir: /Users/oscargraafmans/Desktop/ogresell main/theme
 
 ## Stack
 Shopify Liquid (shell sections), vanilla CSS, vanilla JS. No frameworks. The renderer is built from a separate runtime work directory and bundled into theme assets.
@@ -28,12 +28,12 @@ sections/
   testimonials.liquid  — shell + JSON
   reviews.liquid       — shell + JSON
   faq.liquid           — shell + JSON
-  footer.liquid        — shell + JSON (protected — removal breaks theme)
-  cart-drawer.liquid    — regular Liquid (no shell)
+  footer.liquid        — shell + JSON
+  cart-drawer.liquid   — shell + JSON
   main-product.liquid  — regular Liquid
 assets/
   theme.css            — global styles
-  theme.js             — global JS (loader dismiss, scroll behavior)
+  theme.js             — global JS (loader reveal, scroll behavior, dialogs and header enhancements)
 snippets/
   chat-widget.liquid
   live-sales-notification.liquid
@@ -50,7 +50,13 @@ sections/
 ## Related projects
 - Runtime work directory (renderer source and build script): /Users/oscargraafmans/Desktop/ogresell/runtime/work/runtime-theme/
 - Dashboard + store: /Users/oscargraafmans/Desktop/ogresell/store/
-- Loader source: runtime/work/runtime-theme/src/loader.js -> runtime/work/runtime-theme/dist/scaled-loader.js -> both theme loader assets
+- Loader source: runtime/work/runtime-theme/src/loader.js -> runtime/work/runtime-theme/dist/scaled-loader.js -> theme loader assets
+
+## Current state (2026-09-24)
+- Recent visual work is recorded in BUILD.md: homepage, cart/404, review dialog, header cart glyph, and product description dialog.
+- Shopify Theme Check last reported zero errors and 11 warnings after the cart/404 and review-dialog changes.
+- The earlier 20px Product Grid padding edit was committed as `2b7927f`, and the live Shopify template matches `v2`.
+- See BUGS.md for the custom-domain, content, and review-service follow-ups.
 
 ## Design reference
 lukesvendors.com — check before building anything visual

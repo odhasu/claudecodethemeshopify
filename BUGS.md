@@ -1,9 +1,7 @@
 # Theme — Bugs & Todo
 
 ## Active / verification
-- Verify the live OGSELL storefront after the GitHub-connected theme sync; the theme no longer requires a license key, but the storefront should be checked for section rendering and loader reveal.
-- Shopify editor settings remain out of sync with `v2`'s `templates/index.json` after the GitHub update (for example, Product Grid still displays "Go to product page" and no info button). The runtime currently forces the rendered BUY NOW link to direct checkout. Reconcile the saved editor values with GitHub deliberately; editor saves can rewrite unrelated homepage settings.
-- Verify cart add + checkout flow on the target Shopify theme preview; checkout depends on valid Shopify variants and storefront configuration.
+- `ogresells.com` displayed Shopify's "This store is unavailable" page on 2026-09-24. Shopify Domains lists `www.ogresells.com` as connected but omits the bare domain, although its A record points to Shopify. Connect the bare domain after store-setting approval.
 - The reference uses a populated review feed; this theme's dialog now matches its appearance but does not persist or moderate submissions. Submit explicitly reports that reviews are unavailable, and media upload is disabled. Connect a review app for production reviews.
 - Add the store's testimonial images, customer avatars, logo, and social links in Shopify Customize. Reference assets and product catalog imagery were intentionally not copied.
 - Three of four current OGSELL products have empty descriptions. Their info controls now link to product pages; add store-owned descriptions to populate reference-style dialogs.
@@ -13,6 +11,9 @@
 - Add real social URLs to footer
 
 ## Fixed
+- Live homepage settings synced — Shopify's `templates/index.json` now matches `v2`, including the preserved 20px Product Grid top padding
+- Header cart icon now follows `/cart` like the reference; the drawer's empty-cart Continue shopping link returns home
+- Live loader/checkout verification — `ogsellsz.myshopify.com` rendered sections without a license key, and BUY NOW added a valid variant and reached Shopify checkout; the test cart was emptied afterward
 - Product description popup styling — aligned backdrop, card radius, close control, and body typography; decoded literal HTML entities in store descriptions
 - Header cart glyph — now matches the reference's cart icon while retaining the `/cart` destination
 - 404 and empty cart layout — matched reference typography, spacing, buttons, and footer start on desktop/mobile; cart Continue Shopping now links home

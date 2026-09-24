@@ -7,8 +7,8 @@
 4. Testimonials
 5. FAQ
 6. Reviews
-8. Trust badges — footer group
-9. Footer — footer group
+7. Trust badges — footer group
+8. Footer — footer group
 
 ## Sections — Liquid shells + runtime rendering
 - Urgency bar — scrolling marquee, countdown timer, live viewer count, slides in on scroll
@@ -82,14 +82,24 @@
 ## Product dialog polish — 2026-09-24
 - Matched the reference description popup's 16px card radius, 36px close control, 15px/1.7 body type, and lighter 4px-blurred backdrop at desktop and mobile sizes.
 - Decoded HTML entities in OGSELL's own plain-text product descriptions before display, so `&amp;` renders as `&`.
+- Latest pushed theme commit is `2b7927f` on branch `v2`.
 
 ## Store setup still needed
 - Add the store's own testimonial screenshots and social links in Shopify Customize.
 - Upload the store's own customer avatar images in Hero settings to replace neutral placeholders.
 - Connect a real reviews app/feed if live submitted reviews and moderation are required; the bundled review form is only a front-end placeholder.
-- Verify cart/checkout behavior and saved settings in the target Shopify theme preview before publishing.
+
+## Live audit — 2026-09-24
+- Shopify CLI access to `ogsellsz` is active; theme `196616782165` (`claudecodethemeshopify/v2`) is live. Its remote loader and layout matched the local files before this cart change.
+- The permanent Shopify domain rendered the homepage, product description fallback, review dialog, cart page, and checkout without a license key. BUY NOW added a valid variant and reached checkout; the test item was removed afterward.
+- The header cart icon opened the drawer, while the reference navigates to `/cart`. The runtime source now leaves the header link to navigate normally and sends the drawer's empty-cart Continue shopping link home. Both loader assets were rebuilt.
+- Committed the preserved Product Grid 20px top padding and synced the full `v2` homepage template. Shopify's remote `templates/index.json` now matches the local file exactly; a refreshed storefront shows the intended hero and grid spacing.
+- `ogresells.com` displayed Shopify's unavailable page. Shopify Domains lists `www.ogresells.com` as connected but does not list the bare domain; this remains open in BUGS.md.
 
 ## Last worked on
+2026-09-24 — Audited live v2 theme, verified checkout, fixed cart navigation, and synced homepage settings through `2b7927f`
+2026-09-24 — Aligned product description popup styling and entity rendering; pushed through `946252c`
+2026-09-24 — Aligned review dialog and header cart icon; pushed through `8b4e7c3`
 2026-09-24 — Aligned 404 and empty cart pages at desktop/mobile widths
 2026-09-24 — Aligned desktop/mobile homepage geometry and fixed empty product description popup
 2026-09-24 — Removed license protection from the v2 theme while retaining shell rendering

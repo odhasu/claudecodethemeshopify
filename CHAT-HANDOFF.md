@@ -7,7 +7,7 @@ This file preserves the actionable context from the conversation, not a verbatim
 - Match the theme system on `https://lukesvendors.com/` as closely as possible in OGSELL's GitHub-connected Shopify theme. Keep OGSELL's products, prices, images, customer content, and store-specific destinations.
 - Work on `odhasu/claudecodethemeshopify` branch `v2` and push completed theme edits there.
 - On 2026-09-24, Oscar explicitly requested removal of the v2 theme's license protection. The theme now renders without a key or validation server; do not reintroduce the gate unless asked.
-- Current focus: replicate the product-card `BUY NOW` control and footer `Get this store design` badge, including shapes, typography, shadows, colors, and link behavior.
+- Current focus: continue a visual and functional audit against the live reference and Shopify preview. The button fidelity pass is complete; see `BUILD.md` for recent page/dialog changes and `BUGS.md` for open checks.
 - Keep Markdown notes of progress and unresolved items so later work can resume from evidence.
 
 ## Authoritative locations
@@ -33,8 +33,12 @@ Saving that single setting caused Shopify's GitHub integration to commit its old
 - Check `git status`, `node --check` on runtime source and both generated assets, JSON section schemas, and `git diff --check` before pushing.
 - Verify the synced theme in Shopify's editor and compare computed button styles/links with the reference at the same viewport. Shopify's GitHub log can confirm a theme update; the editor may need a refresh to load the new CDN asset version.
 - Verified after refreshing the Shopify editor on 2026-09-24: product `BUY NOW` is a 42px-high, 10px-radius Clash Grotesk/900 link with the strong green/inset shadow and OGSELL's `/cart/add?...&return_to=/checkout` URL. Footer CTA is 34px high with 12px radius, 8px × 18px padding, and `target="_blank" rel="noopener noreferrer"` to `https://vexelthemes.com`.
-- The editor's saved Product Grid settings still show older values (including "Go to product page" and no info button) despite the `v2` template defaults. The runtime forces BUY NOW to checkout, so the rendered link is correct. Reconcile these editor settings separately and inspect the resulting full-template Git diff after any save.
-- The v2 theme's license gate has been removed. Verify the public storefront after Shopify sync; the separate licensing server has not been modified.
+- The editor's older Product Grid values were reconciled by syncing the full `v2` homepage template. The runtime still forces BUY NOW to checkout. Inspect the resulting full-template Git diff after any future editor save.
+- The v2 theme's license gate has been removed. The permanent Shopify domain rendered the storefront and checkout without a key after sync; the separate licensing server has not been modified.
+- Recent commits through 2026-09-24: `2b7927f` homepage settings sync, `f44f04a` cart navigation, `946252c` product description dialog, `8b4e7c3` header cart icon, `416576a` review dialog, `1603602` cart/404 layouts, `89cd3a8` homepage/product dialog alignment. Branch `v2` was pushed through `2b7927f`.
+- The earlier 20px Product Grid top-padding edit was committed as `2b7927f`; Shopify's live `templates/index.json` now matches `v2`.
+- The cart navigation fix was pushed as `f44f04a`: the header cart icon opens `/cart`, and the drawer's empty state returns home. Both live loader assets synced and the cart route was verified in the browser.
+- `ogresells.com` currently shows Shopify's unavailable page. Shopify Domains lists only `www.ogresells.com` as connected alongside the myshopify domains; the bare domain is absent.
 - Customer portraits, testimonial screenshots, product images, catalog/review counts, and OGSELL-specific copy are content, not theme code to copy from the reference.
 
 See `BUILD.md` for implemented systems and `BUGS.md` for outstanding verification.
