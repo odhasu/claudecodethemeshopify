@@ -59,6 +59,14 @@
 - Verified in Shopify's refreshed theme editor preview after GitHub sync: BUY NOW renders at 42px high with 10px radius, Clash Grotesk/900, and the expected checkout URL; the footer badge renders at 34px high with 12px radius and `target="_blank"`.
 - Detailed comparison and build handoff are in `CHAT-HANDOFF.md`.
 
+## Layout and description pass — 2026-09-24
+- Compared the 1280px and 375px reference against the local Shopify preview. The homepage headline now remains on one line at desktop, while the mobile headline and first card align within roughly 6px of the reference.
+- Matched desktop grid inset, 24px column gap, natural card heights, mobile 12px gap, and mobile header controls. Layout spacing and glow strength use theme settings.
+- Replaced the visible green band between hero and grid with a continuous homepage glow.
+- Product description controls now open a titled, keyboard-closeable dialog. Products without descriptions show a link to their product page instead of an empty dialog.
+- Added intrinsic image dimensions on cart, order, and product pages; Shopify Theme Check now reports zero errors (14 existing warnings).
+- The user's existing Product Grid top-padding change to 20px was preserved.
+
 ## Store setup still needed
 - Add the store's own testimonial screenshots and social links in Shopify Customize.
 - Upload the store's own customer avatar images in Hero settings to replace neutral placeholders.
@@ -66,6 +74,7 @@
 - Verify cart/checkout behavior and saved settings in the target Shopify theme preview before publishing.
 
 ## Last worked on
+2026-09-24 — Aligned desktop/mobile homepage geometry and fixed empty product description popup
 2026-09-24 — Removed license protection from the v2 theme while retaining shell rendering
 2026-09-24 — Measured and aligned BUY NOW and footer CTA buttons; documented conversation decisions in CHAT-HANDOFF.md
 2026-09-23 — Reference pass: compact transparent header, flat cards/details overlay, direct checkout, FAQ/review layout and trust-bar styling

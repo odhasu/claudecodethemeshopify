@@ -15,7 +15,7 @@
       {%- for item in order.line_items -%}
         <tr>
           <td style="display:flex;align-items:center;gap:12px;">
-            {%- if item.image -%}<img src="{{ item.image | image_url: width: 120 }}" alt="{{ item.title }}">{%- endif -%}
+            {%- if item.image -%}<img src="{{ item.image | image_url: width: 120 }}" alt="{{ item.title | escape }}" width="{{ item.image.width }}" height="{{ item.image.height }}">{%- endif -%}
             {{ item.title }}
           </td>
           <td>{{ item.quantity }}</td>

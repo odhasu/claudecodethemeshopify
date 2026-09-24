@@ -216,7 +216,7 @@
         <div class="cart-item" data-line="{{ forloop.index }}" data-key="{{ item.key }}">
           <div class="cart-item-img">
             {%- if item.image -%}
-              <a href="{{ item.url }}"><img src="{{ item.image | image_url: width: 200 }}" alt="{{ item.title | escape }}"></a>
+              <a href="{{ item.url }}"><img src="{{ item.image | image_url: width: 200 }}" alt="{{ item.title | escape }}" width="{{ item.image.width }}" height="{{ item.image.height }}"></a>
             {%- endif -%}
           </div>
           <div class="cart-item-info">

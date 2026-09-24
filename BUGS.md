@@ -6,12 +6,15 @@
 - Verify cart add + checkout flow on the target Shopify theme preview; checkout depends on valid Shopify variants and storefront configuration.
 - The reference uses a populated review feed; this theme's review form is presentational and does not persist or moderate submissions. Connect a review app for production reviews.
 - Add the store's testimonial images, customer avatars, logo, and social links in Shopify Customize. Reference assets and product catalog imagery were intentionally not copied.
+- Three of four current OGSELL products have empty descriptions. Their info controls now link to product pages; add store-owned descriptions to populate reference-style dialogs.
 
 ## Todo — Content
 - Upload more testimonial screenshots
 - Add real social URLs to footer
 
 ## Fixed
+- Empty product detail popup — now shows the product title and a product-page link when description content is missing; populated descriptions render in the dialog
+- Desktop/mobile homepage alignment — headline, grid width/gaps, mobile spacing, continuous glow, and mobile header controls matched against current reference screenshots
 - License gate — removed key/server validation, the invalid-license page, and footer tamper lock from the v2 theme while preserving the shell renderer
 - BUY NOW and footer CTA styling — matched the reference's compact shapes, typography, flat green fill, inset/glow shadows, and footer new-tab behavior while keeping OGSELL's checkout variants and footer URL
 - Reference layout pass — compact header/hero, product card actions/badge placement, FAQ-before-reviews order, single-column reviews, 44px trust bar and footer structure aligned; store content/integrations remain store-owned

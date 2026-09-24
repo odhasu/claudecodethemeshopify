@@ -422,7 +422,7 @@
   <div class="pp-gallery">
     <div class="pp-main-img" id="pp-main-img">
       {%- if product.featured_image -%}
-        <img src="{{ product.featured_image | image_url: width: 800 }}" alt="{{ product.title | escape }}" id="pp-main-photo">
+        <img src="{{ product.featured_image | image_url: width: 800 }}" alt="{{ product.title | escape }}" width="{{ product.featured_image.width }}" height="{{ product.featured_image.height }}" id="pp-main-photo">
       {%- endif -%}
     </div>
 
@@ -454,7 +454,7 @@
       <div class="pp-thumbs">
         {%- for image in product.images -%}
           <div class="pp-thumb{% if forloop.first %} active{% endif %}" onclick="ppSwitchImg(this, '{{ image | image_url: width: 800 }}')">
-            <img src="{{ image | image_url: width: 150 }}" alt="{{ product.title | escape }}">
+            <img src="{{ image | image_url: width: 150 }}" alt="{{ product.title | escape }}" width="{{ image.width }}" height="{{ image.height }}">
           </div>
         {%- endfor -%}
       </div>

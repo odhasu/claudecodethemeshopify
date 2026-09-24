@@ -64,4 +64,64 @@
     }, { threshold: 0.1 });
     reveals.forEach(function(el) { observer.observe(el); });
   }
+
+  var descriptionTrigger = null;
+  document.addEventListener('click', function(event) {
+    var trigger = event.target.closest('[data-vx-desc]');
+    if (!trigger) return;
+
+    var modal = document.getElementById('vx-detail-modal');
+    var productsData = document.querySelector('script[data-vx-products="product-grid"]');
+    if (!modal || !productsData) return;
+
+    var products;
+    try { products = JSON.parse(productsData.textContent); }
+    catch (error) { return; }
+
+    var handle = trigger.getAttribute('data-vx-desc');
+    var product = products.find(function(item) { return item.handle === handle; });
+    if (!product) return;
+
+    event.preventDefault();
+    event.stopPropagation();
+
+    var title = modal.querySelector('#vx-pdm-title');
+    var body = modal.querySelector('#vx-pdm-body');
+    var price = modal.querySelector('#vx-pdm-price');
+    title.textContent = product.title;
+    body.replaceChildren();
+    if (product.description && product.description.trim()) {
+      body.textContent = product.description;
+    } else {
+      var detailsLink = document.createElement('a');
+      detailsLink.href = product.url;
+      detailsLink.className = 'vx-detail-modal__fallback';
+      detailsLink.textContent = 'View product details';
+      body.appendChild(detailsLink);
+    }
+    price.hidden = true;
+    modal.classList.add('open');
+    modal.setAttribute('role', 'dialog');
+    modal.setAttribute('aria-modal', 'true');
+    modal.setAttribute('aria-labelledby', 'vx-pdm-title');
+    descriptionTrigger = trigger;
+    modal.querySelector('.vx-detail-modal__close').focus();
+  }, true);
+
+  function closeDescription() {
+    var modal = document.getElementById('vx-detail-modal');
+    if (!modal || !modal.classList.contains('open')) return;
+    modal.classList.remove('open');
+    if (descriptionTrigger) descriptionTrigger.focus();
+    descriptionTrigger = null;
+  }
+
+  document.addEventListener('click', function(event) {
+    if (event.target.closest('.vx-detail-modal__close') || event.target.classList.contains('vx-detail-modal__bg')) {
+      closeDescription();
+    }
+  });
+  document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') closeDescription();
+  });
 })();
