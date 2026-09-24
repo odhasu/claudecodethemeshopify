@@ -1,7 +1,6 @@
 # Theme — Bugs & Todo
 
 ## Active / verification
-- `ogresells.com` displayed Shopify's "This store is unavailable" page on 2026-09-24. Shopify Domains lists `www.ogresells.com` as connected but omits the bare domain, although its A record points to Shopify. Connect the bare domain after store-setting approval.
 - The reference uses a populated review feed; this theme's dialog now matches its appearance but does not persist or moderate submissions. Submit explicitly reports that reviews are unavailable, and media upload is disabled. Connect a review app for production reviews.
 - Add suitable store-owned customer portraits and real social links in Shopify Customize. Shopify Files has no clearly suitable hero portraits; its “OG’S SUPPLIERS” and older “Recuerdos Vividos” logos do not match the current OGSELL text wordmark. Reference assets and product catalog imagery were intentionally not copied.
 - Three of four current OGSELL products have empty descriptions. Their info controls now link to product pages; add store-owned descriptions to populate reference-style dialogs.

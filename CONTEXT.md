@@ -56,7 +56,7 @@ sections/
 - Recent visual work is recorded in BUILD.md: homepage, cart/404, review dialog, header cart glyph, and product description dialog.
 - Shopify Theme Check last reported zero errors and 11 warnings after the cart/404 and review-dialog changes.
 - The earlier 20px Product Grid padding edit was committed as `2b7927f`, and the live Shopify template matches `v2`.
-- See BUGS.md for the custom-domain, content, and review-service follow-ups.
+- Use `ogsellsz.myshopify.com` for storefront work. See BUGS.md for content and review-service follow-ups.
 
 ## Design reference
 lukesvendors.com — check before building anything visual

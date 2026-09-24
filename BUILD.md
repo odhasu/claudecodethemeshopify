@@ -97,7 +97,6 @@
 - Committed the preserved Product Grid 20px top padding and synced the full `v2` homepage template. Shopify's remote `templates/index.json` now matches the local file exactly; a refreshed storefront shows the intended hero and grid spacing.
 - Restored ten existing OGSELL testimonial images from Shopify Files to the homepage carousel. The image references came from the store's earlier curated marquee; Shopify's remote homepage template matches the local file, and the live storefront displays all ten.
 - Reviewed the existing Shopify Files for branding and hero portraits. The available brand graphics belong to other names, and no clearly suitable customer portrait was identified. The OGSELL text wordmark and neutral avatar placeholders remain in place.
-- `ogresells.com` displayed Shopify's unavailable page. Shopify Domains lists `www.ogresells.com` as connected but does not list the bare domain; this remains open in BUGS.md.
 
 ## Last worked on
 2026-09-24 — Restored ten existing OGSELL testimonial images to the live homepage through `180fcc6`

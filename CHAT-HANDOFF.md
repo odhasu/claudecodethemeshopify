@@ -38,7 +38,6 @@ Saving that single setting caused Shopify's GitHub integration to commit its old
 - Recent commits through 2026-09-24: `2b7927f` homepage settings sync, `f44f04a` cart navigation, `946252c` product description dialog, `8b4e7c3` header cart icon, `416576a` review dialog, `1603602` cart/404 layouts, `89cd3a8` homepage/product dialog alignment. Branch `v2` was pushed through `2b7927f`.
 - The earlier 20px Product Grid top-padding edit was committed as `2b7927f`; Shopify's live `templates/index.json` now matches `v2`.
 - The cart navigation fix was pushed as `f44f04a`: the header cart icon opens `/cart`, and the drawer's empty state returns home. Both live loader assets synced and the cart route was verified in the browser.
-- `ogresells.com` currently shows Shopify's unavailable page. Shopify Domains lists only `www.ogresells.com` as connected alongside the myshopify domains; the bare domain is absent.
 - Customer portraits, testimonial screenshots, product images, catalog/review counts, and OGSELL-specific copy are content, not theme code to copy from the reference.
 
 See `BUILD.md` for implemented systems and `BUGS.md` for outstanding verification.
