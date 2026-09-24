@@ -82,10 +82,10 @@
 ## Product dialog polish — 2026-09-24
 - Matched the reference description popup's 16px card radius, 36px close control, 15px/1.7 body type, and lighter 4px-blurred backdrop at desktop and mobile sizes.
 - Decoded HTML entities in OGSELL's own plain-text product descriptions before display, so `&amp;` renders as `&`.
-- Latest pushed theme commit is `2b7927f` on branch `v2`.
+- The live `v2` theme includes the restored testimonial images through `180fcc6`.
 
 ## Store setup still needed
-- Add the store's own testimonial screenshots and social links in Shopify Customize.
+- Add real social links in Shopify Customize.
 - Upload the store's own customer avatar images in Hero settings to replace neutral placeholders.
 - Connect a real reviews app/feed if live submitted reviews and moderation are required; the bundled review form is only a front-end placeholder.
 
@@ -94,9 +94,11 @@
 - The permanent Shopify domain rendered the homepage, product description fallback, review dialog, cart page, and checkout without a license key. BUY NOW added a valid variant and reached checkout; the test item was removed afterward.
 - The header cart icon opened the drawer, while the reference navigates to `/cart`. The runtime source now leaves the header link to navigate normally and sends the drawer's empty-cart Continue shopping link home. Both loader assets were rebuilt.
 - Committed the preserved Product Grid 20px top padding and synced the full `v2` homepage template. Shopify's remote `templates/index.json` now matches the local file exactly; a refreshed storefront shows the intended hero and grid spacing.
+- Restored ten existing OGSELL testimonial images from Shopify Files to the homepage carousel. The image references came from the store's earlier curated marquee; Shopify's remote homepage template matches the local file, and the live storefront displays all ten.
 - `ogresells.com` displayed Shopify's unavailable page. Shopify Domains lists `www.ogresells.com` as connected but does not list the bare domain; this remains open in BUGS.md.
 
 ## Last worked on
+2026-09-24 — Restored ten existing OGSELL testimonial images to the live homepage through `180fcc6`
 2026-09-24 — Audited live v2 theme, verified checkout, fixed cart navigation, and synced homepage settings through `2b7927f`
 2026-09-24 — Aligned product description popup styling and entity rendering; pushed through `946252c`
 2026-09-24 — Aligned review dialog and header cart icon; pushed through `8b4e7c3`
