@@ -137,3 +137,43 @@
 2026-04-29 — License protection plan finalized (Kenso shell model), button radius fix, header dark bg
 2026-04-28 — Cart drawer built, header/footer complete
 2026-04-21 — Luke's full replication: header rebuild, hero bg image mode, color unification
+
+## Project and skills audit — 2026-10-01
+- Added local `AGENTS.md` to route Shopify work and establish current local instructions over historical external license/deployment notes.
+- Added `.gitignore` and `scripts/check-theme.sh` for JavaScript syntax, loader-mirror parity, Shopify JSON validation, and Theme Check.
+- Local checks pass: 18 JSON files and both loader assets; Theme Check reports zero errors and 10 warnings. These static checks do not establish visual or editor correctness.
+- Existing uncommitted storefront edits were preserved. No runtime bundle, storefront code, store settings, or deployed theme was changed by this audit.
+- Findings and skills/tool usage recommendations are in `../docs/PROJECT_AUDIT.md`; renderer/cart/editor issues remain follow-up work.
+
+## Product information button — 2026-10-01
+- Compared the live lukesvendors.com and OGSELL product JSON. The reference shows product descriptions; three of four OGSELL products currently have no description.
+- Product info, image, and title controls now share one body-level dialog, with full untruncated store descriptions, entity decoding, and editable store delivery/refund fallback text for empty descriptions.
+- Removed the renderer's duplicate/blank description overlay and section-owned modal. Product grids now read their own section JSON instead of the first global grid's data.
+- Added close/backdrop/Escape behavior, focus containment/return, scroll locking/restoration, and close-on-editor-section-unload. The dialog remains usable when the info icon is hidden or product JSON is malformed.
+- Rebuilt the external runtime source and synchronized its dist output with both theme loader assets. Existing uncommitted theme settings/layout/style changes were preserved.
+- Source and production-bundle DOM regression checks pass: multiple grids, full descriptions, empty content, nested SVG clicks, keyboard controls, text safety, updated JSON, and singleton behavior. Theme Check reports zero errors and 10 warnings.
+- Local fix only: not pushed or uploaded to Shopify. Browser preview remains unavailable through the current connector/native window binding, so viewport appearance has not been reverified in this session.
+
+## Local information-button preview — 2026-10-01
+- Started Shopify development preview at `http://127.0.0.1:9292/` using unpublished development theme `204351471957`. The live theme was not changed.
+- Verified HTTP 200, Product Grid fallback settings, and the new product-information handler in the served preview assets.
+
+## Softer configurable background glow — 2026-10-01
+- Reduced saved and default homepage glow intensity from 22% to 10% while preserving size, positions, and the green accent.
+- Added a dedicated Theme settings > Background glow group with enable/disable, independent color, overall strength, size, and individual left/right/lower strength controls. Existing intensity/spread IDs were retained so saved customization remains compatible.
+- Checkbox off forces zero overall opacity; numeric zero turns off individual glows. Hero/product section glows remain separately configured and disabled in the current homepage.
+- Cavecrew investigation and review completed. No review issues. Schema IDs/ranges and served local preview CSS variables/assets verified; Theme Check reports zero errors and 10 existing warnings.
+- Available at `http://127.0.0.1:9292/` in unpublished development theme `204351471957`. Live theme unchanged. No browser screenshot verification was available through the current connector.
+
+## Settings and performance — 2026-10-01
+- Added 46 global controls for product card details, button dimensions/shadows, header appearance, dialog styling, review form fields, and motion/accessibility. Added 47 controls across eight sections for background, heading alignment/scale, and optional mobile spacing. Existing section content controls remain available.
+- Restored previously ignored controls: hero headline width, header navigation color, review columns, product section glow color/intensity, and valid zero values. Optional Google font selections now load their selected family and supported weights; the default Clash Grotesk/Satoshi Fontshare request remains unchanged.
+- Removed the forced 850ms loading minimum; the saved/default minimum is now 0ms and fade is 200ms. Loading content uses visibility instead of display so layout measurement and prioritized product images can start before reveal.
+- Replaced runtime string obfuscation with Terser minification and removed the obfuscator dependency (76 packages). Removed the unused client-side results carousel, duplicate cart bootstrap, obsolete review form markup, and intercepted review submission/star handlers. The active Liquid results carousel remains intact; the review dialog is now created once on demand.
+- Renderer settings/data and CSS are scoped per section instance. Editor load rerenders only the changed section; unload/reload removes listeners and timers. Cart cleanup closes an open drawer, restores scrolling, and releases its API. Merchant section order is respected.
+- Loader size: 115,825 to 58,535 bytes (49% smaller). Local gzip comparison: 35,143 to 16,126 bytes (54% smaller). These are artifact measurements, not Lighthouse or real-user load timing claims. Both shipped bundles match the runtime build.
+- Verification: source/bundle DOM tests passed for duplicate sections, nested media styles, zero values, repeated editor events, FAQ isolation, review columns/lazy dialogs, image priorities, cart cleanup, and existing information-dialog regressions. HTTP preview serves the new controls and synchronized bundle with minimum 0/fade 200.
+- Native Chrome preview inspected at desktop 1280px and responsive 375px; information dialogs, mobile navigation, and lazy review dialog opened/closed successfully. Shopify editor lifecycle was tested with DOM events; an actual admin-editor reload has not been visually verified.
+- `bash scripts/check-theme.sh`: zero errors, 12 warnings. Optional remote font stylesheets account for the additional warnings; existing product form/routes and excessive section setting counts remain recorded.
+- Local development preview: http://127.0.0.1:9292/. Changes are not committed, pushed, or published.
+- Control locations are documented in SETTINGS.md.

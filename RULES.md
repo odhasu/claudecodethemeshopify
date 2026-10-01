@@ -1,9 +1,8 @@
 # Theme — Session Rules
 
 - Always work on v2 branch, never touch main
-- Push after every edit
-- Every visual value = theme setting (never hardcode colors, sizes, text)
-- No recaps, no summaries
+- Keep theme settings for values merchants should adjust; fixed reference-matching values may live in shared CSS where appropriate
+- Keep progress notes factual and concise
 - No emojis in .md files or responses
 - When visual unclear — check lukesvendors.com first, don't ask
-- Update BUILD.md and BUGS.md at end of every session
+- Update relevant Markdown status files at the end of a work session

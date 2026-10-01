@@ -56,10 +56,58 @@
   <link rel="preconnect" href="https://api.fontshare.com">
   <link href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@400,500,600,700&f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
 
-  <script>window.VexelConfig={colors:{accent1:{{ accent | json }},background:{{ bg | json }},text:{{ text_primary | json }},textMuted:{{ text_muted | json }},cardBg:{{ card_bg | json }},border:{{ border_color | json }}},brandName:{{ brand_name | json }},logoUrl:{% if settings.logo %}{{ settings.logo | image_url: width: 400 | json }}{% else %}null{% endif %}};</script>
+  {%- capture extra_fonts -%}
+    {%- unless heading_font == 'Clash Grotesk' or heading_font == 'Satoshi' -%}family={{ heading_font | replace: ' ', '+' }}{% unless heading_font == 'Anton' or heading_font == 'Bebas Neue' %}:wght@400;500;600;700{% endunless %}&{%- endunless -%}
+    {%- unless body_font == 'Satoshi' or body_font == 'Clash Grotesk' or body_font contains 'system-ui' or body_font == heading_font -%}family={{ body_font | replace: ' ', '+' }}:wght@400;500;600;700&{%- endunless -%}
+  {%- endcapture -%}
+  {%- if extra_fonts != blank -%}
+    <link href="https://fonts.googleapis.com/css2?{{ extra_fonts }}display=swap" rel="stylesheet">
+  {%- endif -%}
+
+  <script>window.VexelConfig={colors:{accent1:{{ accent | json }},background:{{ bg | json }},text:{{ text_primary | json }},textMuted:{{ text_muted | json }},cardBg:{{ card_bg | json }},border:{{ border_color | json }}},brandName:{{ brand_name | json }},logoUrl:{% if settings.logo %}{{ settings.logo | image_url: width: 400 | json }}{% else %}null{% endif %},loading:{minimum:{{ settings.loader_minimum_ms | default: 0 | json }},fallback:{{ settings.loader_fallback_ms | default: 3000 | json }},fade:{{ settings.loader_fade_ms | default: 200 | json }}}};</script>
 
   <style>
     :root {
+      --dialog-radius: {{ settings.dialog_radius | default: 16 }}px;
+      --dialog-padding: {{ settings.dialog_padding | default: 32 }}px;
+      --dialog-overlay-opacity: {{ settings.dialog_overlay_opacity | default: 50 | times: 0.01 }};
+      --dialog-title-size: {{ settings.dialog_title_size | default: 20 }}px;
+      --dialog-body-size: {{ settings.dialog_body_size | default: 15 }}px;
+      --dialog-bg: {{ settings.dialog_bg | default: '#111111' }};
+      --dialog-border: {{ settings.dialog_border | default: '#333333' }};
+      --product-title-size: {{ settings.product_title_size | default: 16 }}px;
+      --product-title-size-mobile: {{ settings.product_title_size_mobile | default: 14 }}px;
+      --product-price-size: {{ settings.product_price_size | default: 18 }}px;
+      --product-compare-size: {{ settings.product_compare_size | default: 14 }}px;
+      --product-image-fit: {{ settings.product_image_fit | default: 'cover' }};
+      --product-image-zoom: {{ settings.product_image_zoom | default: 103 | times: 0.01 }};
+      --product-description-lines: {{ settings.product_description_lines | default: 2 }};
+      --product-border-width: {{ settings.product_border_width | default: 1 }}px;
+      --info-button-bg: {{ settings.info_button_bg | default: '#2a2a2a' }};
+      --info-button-color: {{ settings.info_button_color | default: '#b3b3b3' }};
+      --info-button-radius: {{ settings.info_button_radius | default: 10 }}px;
+      --buy-button-height: {{ settings.buy_button_height | default: 48 }}px;
+      --buy-button-height-mobile: {{ settings.buy_button_height_mobile | default: 42 }}px;
+      --buy-button-size: {{ settings.buy_button_size | default: 22 }}px;
+      --buy-button-size-mobile: {{ settings.buy_button_size_mobile | default: 13 }}px;
+      --button-hover-lift: {{ settings.button_hover_lift | default: 2 }}px;
+      --hero-button-size: {{ settings.hero_button_size | default: 16 }}px;
+      --hero-button-padding-y: {{ settings.hero_button_padding_y | default: 16 }}px;
+      --hero-button-padding-x: {{ settings.hero_button_padding_x | default: 40 }}px;
+      --footer-button-size: {{ settings.footer_button_size | default: 12 }}px;
+      --footer-button-padding-y: {{ settings.footer_button_padding_y | default: 8 }}px;
+      --header-content-width: {{ settings.header_content_width | default: 1310 }}px;
+      --header-brand-size: {{ settings.header_brand_size | default: 22 }}px;
+      --header-nav-size: {{ settings.header_nav_size | default: 14 }}px;
+      --header-nav-opacity: {{ settings.header_nav_opacity | default: 50 | times: 0.01 }};
+      --header-initial-bg: {{ settings.header_initial_bg | default: '#000000' }};
+      --header-initial-opacity: {{ settings.header_initial_opacity | default: 0 | times: 0.01 }};
+      --reveal-duration: {{ settings.reveal_duration | default: 600 }}ms;
+      --reveal-distance: {{ settings.reveal_distance | default: 20 }}px;
+      --input-radius: {{ settings.input_radius | default: 10 }}px;
+      --input-background: {{ settings.input_background | default: '#1a1a1a' }};
+      --input-border: {{ settings.input_border | default: '#333333' }};
+      --smooth-scroll: {% if settings.smooth_scroll == false %}auto{% else %}smooth{% endif %};
       --color-accent: {{ accent }};
       --color-accent-hover: {{ accent_hover }};
       --color-accent-rgb: {{ accent | color_extract: 'red' }}, {{ accent | color_extract: 'green' }}, {{ accent | color_extract: 'blue' }};
@@ -72,7 +120,7 @@
       --color-text-subtle: {{ text_subtle }};
       --color-stars: {{ star_color }};
       --font-heading: '{{ heading_font }}', 'Clash Grotesk', sans-serif;
-      --font-body: '{{ body_font }}', 'Satoshi', sans-serif;
+      --font-body: {% if body_font contains 'system-ui' %}{{ body_font }}{% else %}'{{ body_font }}', 'Satoshi', sans-serif{% endif %};
       --radius-card: {{ settings.border_radius_card | default: 12 }}px;
       --radius-button: {{ settings.border_radius_button | default: 8 }}px;
       --max-width: {{ settings.max_page_width | default: 1200 }}px;
@@ -80,7 +128,26 @@
       --grid-gap: {{ settings.grid_gap | default: 16 }}px;
       --grid-gap-mobile: {{ settings.grid_gap_mobile | default: 16 }}px;
       --homepage-inline-padding: {{ settings.homepage_inline_padding | default: 16 }}px;
-      --homepage-glow-opacity: {{ settings.homepage_glow_intensity | default: 22 | times: 0.01 }};
+      --homepage-glow-rgb: {{ settings.homepage_glow_color | default: accent | color_extract: 'red' }}, {{ settings.homepage_glow_color | default: accent | color_extract: 'green' }}, {{ settings.homepage_glow_color | default: accent | color_extract: 'blue' }};
+      --homepage-glow-opacity: {% if settings.homepage_glow_enabled == false %}0{% else %}{{ settings.homepage_glow_intensity | default: 10 | times: 0.01 }}{% endif %};
+      --homepage-glow-opacity-left: calc(var(--homepage-glow-opacity) * {{ settings.homepage_glow_left_strength | default: 100 | times: 0.01 }});
+      --homepage-glow-opacity-right: calc(var(--homepage-glow-opacity) * {{ settings.homepage_glow_right_strength | default: 100 | times: 0.01 }});
+      --homepage-glow-opacity-bottom: calc(var(--homepage-glow-opacity) * {{ settings.homepage_glow_bottom_strength | default: 100 | times: 0.01 }});
+      --homepage-glow-width-1: {{ settings.homepage_glow_spread | default: 100 | times: 8 }}px;
+      --homepage-glow-height-1: {{ settings.homepage_glow_spread | default: 100 | times: 5 }}px;
+      --homepage-glow-width-2: {{ settings.homepage_glow_spread | default: 100 | times: 7 }}px;
+      --homepage-glow-height-2: {{ settings.homepage_glow_spread | default: 100 | times: 4.5 }}px;
+      --homepage-glow-width-3: {{ settings.homepage_glow_spread | default: 100 | times: 9 }}px;
+      --homepage-glow-height-3: {{ settings.homepage_glow_spread | default: 100 | times: 6 }}px;
+      --body-text-size: {{ settings.body_text_size | default: 16 }}px;
+      --body-line-height: {{ settings.body_line_height | default: 15 | times: 0.1 }};
+      --product-dialog-width: {{ settings.product_dialog_width | default: 480 }}px;
+      --product-dialog-blur: {{ settings.product_dialog_blur | default: 4 }}px;
+      --review-dialog-width: {{ settings.review_dialog_width | default: 480 }}px;
+      --review-dialog-blur: {{ settings.review_dialog_blur | default: 4 }}px;
+      --loader-spinner-size: {{ settings.loader_spinner_size | default: 48 }}px;
+      --loader-spinner-color: {{ settings.loader_spinner_color | default: '#19d400' }};
+      --loader-fade: {{ settings.loader_fade_ms | default: 200 }}ms;
       --urgency-bar-height: 0px;
       --radius-sm: 8px;
       --radius-md: 12px;
@@ -95,16 +162,17 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     html {
-      scroll-behavior: smooth;
-      scrollbar-width: none;
+      scroll-behavior: var(--smooth-scroll);
+      scrollbar-width: {% if settings.show_scrollbars %}auto{% else %}none{% endif %};
     }
-    html::-webkit-scrollbar { display: none; }
+    {% unless settings.show_scrollbars %}html::-webkit-scrollbar { display: none; }{% endunless %}
 
     body {
       font-family: var(--font-body);
       background-color: var(--color-bg);
       color: var(--color-text);
-      line-height: 1.5;
+      font-size: var(--body-text-size);
+      line-height: var(--body-line-height);
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       overflow-x: hidden;
@@ -134,7 +202,7 @@
 
     /* Loading overlay */
     body.is-loading { overflow: hidden !important; }
-    body.is-loading > *:not(.vx-loader) { display: none !important; }
+    body.is-loading > *:not(.vx-loader) { visibility: hidden; }
 
     .vx-loader {
       position: fixed;
@@ -145,7 +213,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.5s;
+      transition: opacity var(--loader-fade) cubic-bezier(0.4, 0, 0.2, 1), visibility var(--loader-fade);
     }
     .vx-loader.is-hidden {
       opacity: 0;
@@ -153,8 +221,8 @@
       pointer-events: none;
     }
     .vx-loader__spinner {
-      width: 48px;
-      height: 48px;
+      width: var(--loader-spinner-size);
+      height: var(--loader-spinner-size);
       position: relative;
     }
     .vx-loader__spinner::before {
@@ -163,8 +231,8 @@
       inset: 0;
       border-radius: 50%;
       border: 3px solid transparent;
-      border-top-color: var(--color-accent, #19d400);
-      border-right-color: var(--color-accent, #19d400);
+      border-top-color: var(--loader-spinner-color);
+      border-right-color: var(--loader-spinner-color);
       animation: vxSpin 1s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite;
     }
     .vx-loader__spinner::after {
@@ -173,8 +241,8 @@
       inset: 6px;
       border-radius: 50%;
       border: 2px solid transparent;
-      border-bottom-color: var(--color-accent, #19d400);
-      border-left-color: var(--color-accent, #19d400);
+      border-bottom-color: var(--loader-spinner-color);
+      border-left-color: var(--loader-spinner-color);
       animation: vxSpin 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite reverse;
     }
     @keyframes vxSpin {
@@ -194,7 +262,7 @@
   {%- endif -%}
 </head>
 
-<body class="template-{{ template.name }}{% if template.suffix %} template-{{ template.name }}-{{ template.suffix }}{% endif %} is-loading">
+<body class="template-{{ template.name }}{% if template.suffix %} template-{{ template.name }}-{{ template.suffix }}{% endif %} is-loading{% if settings.button_shadows == false %} no-button-shadows{% endif %}{% if settings.motion_enabled == false %} motion-disabled{% endif %}{% if settings.marquee_enabled == false %} marquee-disabled{% endif %}{% if settings.header_mobile_cart %} mobile-cart-visible{% endif %}{% if settings.header_nav_position == 'right' %} nav-position-right{% endif %}">
   <div class="vx-loader" id="vx-loader" aria-label="Loading"><div class="vx-loader__spinner"></div></div>
 
   <a class="sr-only" href="#MainContent">Skip to content</a>
@@ -213,7 +281,6 @@
 
   <script src="{{ 'scaled-loader-current.js' | asset_url }}" defer></script>
 
-  <script>window.VexelCart={get:function(){return fetch('/cart.js').then(function(r){return r.json()})},add:function(id,qty){return fetch('/cart/add.js',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({items:[{id:id,quantity:qty||1}]})}).then(function(r){return r.json()})},update:function(updates){return fetch('/cart/update.js',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({updates:updates})}).then(function(r){return r.json()})}};</script>
 
   <script src="{{ 'theme.js' | asset_url }}" defer></script>
 

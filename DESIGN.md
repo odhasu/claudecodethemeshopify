@@ -1,7 +1,7 @@
 # Theme — Design System
 
 ## Reference
-lukesvendors.com — check this first before building anything visual.
+lukesvendors.com — check the live page before building anything visual. The detailed `lukesvendors-reference.md` is a historical snapshot and may not describe the current site.
 
 ## Colors
 - Background: #000000
@@ -43,10 +43,8 @@ lukesvendors.com — check this first before building anything visual.
 - Height: 70px desktop / 58px mobile
 - Sits below urgency bar via top: var(--urgency-bar-height)
 
-## Hero (Luke's style)
-- Full-width background image with dark overlay (adjustable opacity)
-- Text centered over image
-- Headline: 110px desktop / 48px mobile, Clash Grotesk, uppercase
-- Green highlight on one word in the headline
-- Two CTA buttons: BUY NOW (green) + ADD TO CART (secondary)
-- Trust line and overlapping avatar stack beneath the headline; no badge or stats row
+## Hero (current Vexel implementation)
+- Centered text-first hero; optional store-owned image and CTA settings are available
+- Headline and spacing are responsive and aligned against the current reference
+- Trust line and overlapping avatar stack use store-owned content/settings
+- Recheck the live reference before changing copy, imagery, or layout assumptions

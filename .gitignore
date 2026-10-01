@@ -1,0 +1,15 @@
+# Local Shopify state and credentials
+.shopify/
+.env
+.env.*
+!.env.example
+
+# Dependencies and temporary editor files
+node_modules/
+.DS_Store
+*.swp
+*.swo
+*.log
+
+# Local preview output
+tmp/

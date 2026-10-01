@@ -11,6 +11,10 @@
   "brand_color": {{ section.settings.brand_color | default: '#ffffff' | json }},
   "nav_color": {{ section.settings.nav_color | default: '#d1d5db' | json }},
   "nav_hover_color": {{ section.settings.nav_hover_color | default: '#19d400' | json }},
+  "use_menu": {{ section.settings.use_menu | json }},
+  "home_label": {{ section.settings.home_label | default: 'Home' | json }},
+  "products_label": {{ section.settings.products_label | default: 'Products' | json }},
+  "products_url": {{ section.settings.products_url | default: '/' | json }},
   "scroll_bg": {{ section.settings.scroll_bg | default: '#000000' | json }},
   "scroll_border": {{ section.settings.scroll_border | default: '#1a1a1a' | json }},
   "dropdown_bg": {{ section.settings.dropdown_bg | default: '#0a0a0a' | json }},
@@ -18,6 +22,11 @@
   "badge_text_color": {{ section.settings.badge_text_color | default: '#000000' | json }},
   "header_height_desktop": {{ section.settings.header_height_desktop | default: 64 }},
   "header_height_mobile": {{ section.settings.header_height_mobile | default: 48 }},
+  "nav_gap": {{ section.settings.nav_gap | default: 32 }},
+  "side_padding_desktop": {{ section.settings.side_padding_desktop | default: 28 }},
+  "side_padding_mobile": {{ section.settings.side_padding_mobile | default: 16 }},
+  "scroll_threshold": {{ section.settings.scroll_threshold | default: 50 }},
+  "scroll_blur": {{ section.settings.scroll_blur | default: 12 }},
   "nav_links": [
     {%- if section.settings.menu != blank -%}
       {%- for link in section.settings.menu.links -%}
@@ -47,19 +56,28 @@
 
     { "type": "header", "content": "Navigation" },
     { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu" },
+    { "type": "checkbox", "id": "use_menu", "label": "Use selected menu links", "default": false },
+    { "type": "text", "id": "home_label", "label": "Home link label", "default": "Home" },
+    { "type": "text", "id": "products_label", "label": "Products link label", "default": "Products" },
+    { "type": "url", "id": "products_url", "label": "Products link destination" },
     { "type": "color", "id": "nav_color",       "label": "Nav link color",  "default": "#d1d5db" },
     { "type": "color", "id": "nav_hover_color", "label": "Nav hover color", "default": "#19d400" },
 
     { "type": "header", "content": "Colors" },
     { "type": "color", "id": "scroll_bg",     "label": "Scroll background",       "default": "#000000" },
     { "type": "color", "id": "scroll_border", "label": "Scroll border color",     "default": "#1a1a1a" },
+    { "type": "range", "id": "scroll_threshold", "label": "Solid header after (px)", "min": 10, "max": 200, "step": 10, "default": 50 },
+    { "type": "range", "id": "scroll_blur", "label": "Scrolled blur (px)", "min": 0, "max": 20, "step": 2, "default": 12 },
     { "type": "color", "id": "dropdown_bg",   "label": "Mobile dropdown bg",      "default": "#0a0a0a" },
     { "type": "color", "id": "badge_bg",      "label": "Cart badge background",   "default": "#19d400" },
     { "type": "color", "id": "badge_text_color", "label": "Cart badge text",      "default": "#000000" },
 
     { "type": "header", "content": "Layout" },
     { "type": "range", "id": "header_height_desktop", "label": "Height desktop (px)", "min": 50, "max": 120, "step": 2, "default": 64 },
-    { "type": "range", "id": "header_height_mobile",  "label": "Height mobile (px)",  "min": 44, "max": 90,  "step": 2, "default": 48 }
+    { "type": "range", "id": "header_height_mobile",  "label": "Height mobile (px)",  "min": 44, "max": 90,  "step": 2, "default": 48 },
+    { "type": "range", "id": "nav_gap", "label": "Desktop link gap (px)", "min": 12, "max": 48, "step": 2, "default": 32 },
+    { "type": "range", "id": "side_padding_desktop", "label": "Desktop side padding (px)", "min": 16, "max": 48, "step": 2, "default": 28 },
+    { "type": "range", "id": "side_padding_mobile", "label": "Mobile side padding (px)", "min": 8, "max": 32, "step": 2, "default": 16 }
   ],
   "presets": [{ "name": "Header" }]
 }

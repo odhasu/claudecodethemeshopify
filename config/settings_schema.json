@@ -10,109 +10,189 @@
   {
     "name": "Colors",
     "settings": [
-      { "type": "header", "content": "Primary Colors" },
-      { "type": "color", "id": "color_accent", "label": "Accent color", "default": "#19d400" },
-      { "type": "color", "id": "color_accent_hover", "label": "Accent hover", "default": "#15b800" },
-      { "type": "color", "id": "color_background", "label": "Page background", "default": "#0a0a0a" },
-      { "type": "color", "id": "color_card_bg", "label": "Card background", "default": "#111111" },
-      { "type": "color", "id": "color_card_elevated", "label": "Card elevated", "default": "#1a1a1a" },
-      { "type": "color", "id": "color_border", "label": "Borders", "default": "#2a2a2a" },
-      { "type": "header", "content": "Text Colors" },
-      { "type": "color", "id": "color_text_primary", "label": "Primary text", "default": "#ffffff" },
-      { "type": "color", "id": "color_text_muted", "label": "Muted text", "default": "#9ca3af" },
-      { "type": "color", "id": "color_text_subtle", "label": "Subtle text", "default": "#6b7280" },
-      { "type": "header", "content": "Misc Colors" },
-      { "type": "color", "id": "color_stars", "label": "Star rating color", "default": "#fbbf24" },
-      { "type": "color", "id": "color_success", "label": "Success color", "default": "#22c55e" },
-      { "type": "color", "id": "color_error", "label": "Error color", "default": "#ef4444" }
+      {"type": "header", "content": "Primary Colors"},
+      {"type": "color", "id": "color_accent", "label": "Accent color", "default": "#19d400"},
+      {"type": "color", "id": "color_accent_hover", "label": "Accent hover", "default": "#15b800"},
+      {"type": "color", "id": "color_background", "label": "Page background", "default": "#0a0a0a"},
+      {"type": "color", "id": "color_card_bg", "label": "Card background", "default": "#111111"},
+      {"type": "color", "id": "color_card_elevated", "label": "Card elevated", "default": "#1a1a1a"},
+      {"type": "color", "id": "color_border", "label": "Borders", "default": "#2a2a2a"},
+      {"type": "header", "content": "Text Colors"},
+      {"type": "color", "id": "color_text_primary", "label": "Primary text", "default": "#ffffff"},
+      {"type": "color", "id": "color_text_muted", "label": "Muted text", "default": "#9ca3af"},
+      {"type": "color", "id": "color_text_subtle", "label": "Subtle text", "default": "#6b7280"},
+      {"type": "header", "content": "Misc Colors"},
+      {"type": "color", "id": "color_stars", "label": "Star rating color", "default": "#fbbf24"},
+      {"type": "color", "id": "color_success", "label": "Success color", "default": "#22c55e"},
+      {"type": "color", "id": "color_error", "label": "Error color", "default": "#ef4444"}
     ]
   },
   {
     "name": "Typography",
     "settings": [
-      { "type": "select", "id": "heading_font", "label": "Heading font", "default": "Clash Grotesk", "options": [
-        { "value": "Clash Grotesk", "label": "Clash Grotesk (like Luke's)" },
-        { "value": "Satoshi", "label": "Satoshi" },
-        { "value": "Anton", "label": "Anton" },
-        { "value": "Inter", "label": "Inter" },
-        { "value": "Bebas Neue", "label": "Bebas Neue" },
-        { "value": "Poppins", "label": "Poppins" },
-        { "value": "Montserrat", "label": "Montserrat" },
-        { "value": "Oswald", "label": "Oswald" },
-        { "value": "Outfit", "label": "Outfit" },
-        { "value": "Space Grotesk", "label": "Space Grotesk" },
-        { "value": "DM Sans", "label": "DM Sans" },
-        { "value": "Rubik", "label": "Rubik" },
-        { "value": "Raleway", "label": "Raleway" }
-      ]},
-      { "type": "select", "id": "body_font", "label": "Body font", "default": "Satoshi", "options": [
-        { "value": "system-ui, -apple-system, sans-serif", "label": "System Default" },
-        { "value": "Inter", "label": "Inter" },
-        { "value": "DM Sans", "label": "DM Sans" },
-        { "value": "Poppins", "label": "Poppins" },
-        { "value": "Satoshi", "label": "Satoshi" },
-        { "value": "Rubik", "label": "Rubik" },
-        { "value": "Montserrat", "label": "Montserrat" },
-        { "value": "Space Grotesk", "label": "Space Grotesk" },
-        { "value": "Outfit", "label": "Outfit" },
-        { "value": "Raleway", "label": "Raleway" }
-      ]}
+      {"type": "range", "id": "body_text_size", "label": "Body text size (px)", "min": 14, "max": 20, "step": 1, "default": 16},
+      {"type": "range", "id": "body_line_height", "label": "Body line height (x10)", "min": 13, "max": 19, "step": 1, "default": 15},
+      {"type": "select", "id": "heading_font", "label": "Heading font", "default": "Clash Grotesk", "options": [{"value": "Clash Grotesk", "label": "Clash Grotesk (like Luke's)"}, {"value": "Satoshi", "label": "Satoshi"}, {"value": "Anton", "label": "Anton"}, {"value": "Inter", "label": "Inter"}, {"value": "Bebas Neue", "label": "Bebas Neue"}, {"value": "Poppins", "label": "Poppins"}, {"value": "Montserrat", "label": "Montserrat"}, {"value": "Oswald", "label": "Oswald"}, {"value": "Outfit", "label": "Outfit"}, {"value": "Space Grotesk", "label": "Space Grotesk"}, {"value": "DM Sans", "label": "DM Sans"}, {"value": "Rubik", "label": "Rubik"}, {"value": "Raleway", "label": "Raleway"}]},
+      {"type": "select", "id": "body_font", "label": "Body font", "default": "Satoshi", "options": [{"value": "system-ui, -apple-system, sans-serif", "label": "System Default"}, {"value": "Inter", "label": "Inter"}, {"value": "DM Sans", "label": "DM Sans"}, {"value": "Poppins", "label": "Poppins"}, {"value": "Satoshi", "label": "Satoshi"}, {"value": "Rubik", "label": "Rubik"}, {"value": "Montserrat", "label": "Montserrat"}, {"value": "Space Grotesk", "label": "Space Grotesk"}, {"value": "Outfit", "label": "Outfit"}, {"value": "Raleway", "label": "Raleway"}]}
     ]
   },
   {
     "name": "Layout",
     "settings": [
-      { "type": "range", "id": "max_page_width", "label": "Max page width (px)", "min": 900, "max": 1600, "step": 50, "default": 1200 },
-      { "type": "range", "id": "section_spacing", "label": "Section spacing (px)", "min": 20, "max": 120, "step": 10, "default": 60 },
-      { "type": "range", "id": "grid_gap", "label": "Grid gap (px)", "min": 8, "max": 32, "step": 4, "default": 16 },
-      { "type": "range", "id": "grid_gap_mobile", "label": "Mobile grid gap (px)", "min": 8, "max": 32, "step": 4, "default": 16 },
-      { "type": "range", "id": "homepage_inline_padding", "label": "Homepage content inset (px)", "min": 0, "max": 40, "step": 2, "default": 16 },
-      { "type": "range", "id": "homepage_glow_intensity", "label": "Homepage green glow (%)", "min": 0, "max": 30, "step": 1, "default": 22 },
-      { "type": "range", "id": "border_radius_card", "label": "Card border radius (px)", "min": 0, "max": 24, "step": 2, "default": 12 },
-      { "type": "range", "id": "border_radius_button", "label": "Button border radius (px)", "min": 0, "max": 24, "step": 2, "default": 8 }
+      {"type": "range", "id": "max_page_width", "label": "Max page width (px)", "min": 900, "max": 1600, "step": 50, "default": 1200},
+      {"type": "range", "id": "section_spacing", "label": "Section spacing (px)", "min": 20, "max": 120, "step": 10, "default": 60},
+      {"type": "range", "id": "grid_gap", "label": "Grid gap (px)", "min": 8, "max": 32, "step": 4, "default": 16},
+      {"type": "range", "id": "grid_gap_mobile", "label": "Mobile grid gap (px)", "min": 8, "max": 32, "step": 4, "default": 16},
+      {"type": "range", "id": "homepage_inline_padding", "label": "Homepage content inset (px)", "min": 0, "max": 40, "step": 2, "default": 16},
+      {"type": "range", "id": "border_radius_card", "label": "Card border radius (px)", "min": 0, "max": 24, "step": 2, "default": 12},
+      {"type": "range", "id": "border_radius_button", "label": "Button border radius (px)", "min": 0, "max": 24, "step": 2, "default": 8}
+    ]
+  },
+  {
+    "name": "Background glow",
+    "settings": [
+      {"type": "checkbox", "id": "homepage_glow_enabled", "label": "Enable homepage glow", "default": true},
+      {"type": "color", "id": "homepage_glow_color", "label": "Glow color", "default": "#19d400"},
+      {"type": "range", "id": "homepage_glow_intensity", "label": "Overall strength (%)", "min": 0, "max": 30, "step": 1, "default": 10},
+      {"type": "range", "id": "homepage_glow_spread", "label": "Glow size (%)", "min": 50, "max": 150, "step": 5, "default": 100},
+      {"type": "header", "content": "Individual glows"},
+      {"type": "paragraph", "content": "Each glow is a percentage of the overall strength. Set an individual glow to 0 to turn it off."},
+      {"type": "range", "id": "homepage_glow_left_strength", "label": "Left glow strength (%)", "min": 0, "max": 100, "step": 5, "default": 100},
+      {"type": "range", "id": "homepage_glow_right_strength", "label": "Right glow strength (%)", "min": 0, "max": 100, "step": 5, "default": 100},
+      {"type": "range", "id": "homepage_glow_bottom_strength", "label": "Lower glow strength (%)", "min": 0, "max": 100, "step": 5, "default": 100}
+    ]
+  },
+  {
+    "name": "Loading screen",
+    "settings": [
+      {"type": "range", "id": "loader_minimum_ms", "label": "Minimum display (ms)", "min": 0, "max": 2000, "step": 50, "default": 0},
+      {"type": "range", "id": "loader_fallback_ms", "label": "Maximum wait (ms)", "min": 1500, "max": 6000, "step": 100, "default": 3000},
+      {"type": "range", "id": "loader_fade_ms", "label": "Fade duration (ms)", "min": 0, "max": 800, "step": 50, "default": 200},
+      {"type": "range", "id": "loader_spinner_size", "label": "Spinner size (px)", "min": 32, "max": 72, "step": 4, "default": 48},
+      {"type": "color", "id": "loader_spinner_color", "label": "Spinner color", "default": "#19d400"}
+    ]
+  },
+  {
+    "name": "Dialogs",
+    "settings": [
+      {"type": "range", "id": "product_dialog_width", "label": "Product details width (px)", "min": 400, "max": 700, "step": 20, "default": 480},
+      {"type": "range", "id": "product_dialog_blur", "label": "Product backdrop blur (px)", "min": 0, "max": 12, "step": 1, "default": 4},
+      {"type": "range", "id": "review_dialog_width", "label": "Review form width (px)", "min": 400, "max": 700, "step": 20, "default": 480},
+      {"type": "range", "id": "review_dialog_blur", "label": "Review backdrop blur (px)", "min": 0, "max": 12, "step": 1, "default": 4},
+      {"type": "range", "id": "dialog_radius", "label": "Dialog corner radius (px)", "min": 0, "max": 32, "step": 1, "default": 16},
+      {"type": "range", "id": "dialog_padding", "label": "Dialog inner padding (px)", "min": 16, "max": 48, "step": 2, "default": 32},
+      {"type": "range", "id": "dialog_overlay_opacity", "label": "Backdrop darkness (%)", "min": 0, "max": 90, "step": 5, "default": 50},
+      {"type": "range", "id": "dialog_title_size", "label": "Dialog title size (px)", "min": 16, "max": 32, "step": 1, "default": 20},
+      {"type": "range", "id": "dialog_body_size", "label": "Product description size (px)", "min": 12, "max": 22, "step": 1, "default": 15},
+      {"type": "color", "id": "dialog_bg", "label": "Dialog background", "default": "#111111"},
+      {"type": "color", "id": "dialog_border", "label": "Dialog border", "default": "#333333"}
+    ]
+  },
+  {
+    "name": "Product card details",
+    "settings": [
+      {"type": "range", "id": "product_title_size", "label": "Title size (px)", "min": 12, "max": 28, "step": 1, "default": 16},
+      {"type": "range", "id": "product_title_size_mobile", "label": "Mobile title size (px)", "min": 12, "max": 24, "step": 1, "default": 14},
+      {"type": "range", "id": "product_price_size", "label": "Price size (px)", "min": 14, "max": 32, "step": 1, "default": 18},
+      {"type": "range", "id": "product_compare_size", "label": "Compare price size (px)", "min": 10, "max": 22, "step": 1, "default": 14},
+      {"type": "select", "id": "product_image_fit", "label": "Image fit", "default": "cover", "options": [{"value": "cover", "label": "Fill"}, {"value": "contain", "label": "Fit whole image"}]},
+      {"type": "range", "id": "product_image_zoom", "label": "Hover image zoom (%)", "min": 100, "max": 120, "step": 1, "default": 103},
+      {"type": "range", "id": "product_description_lines", "label": "Description lines", "min": 1, "max": 6, "step": 1, "default": 2},
+      {"type": "range", "id": "product_border_width", "label": "Card border width (px)", "min": 0, "max": 4, "step": 1, "default": 1},
+      {"type": "color", "id": "info_button_bg", "label": "Information button background", "default": "#2a2a2a"},
+      {"type": "color", "id": "info_button_color", "label": "Information icon color", "default": "#b3b3b3"},
+      {"type": "range", "id": "info_button_radius", "label": "Information button radius (px)", "min": 0, "max": 24, "step": 1, "default": 10}
+    ]
+  },
+  {
+    "name": "Buttons",
+    "settings": [
+      {"type": "range", "id": "buy_button_height", "label": "Buy button height (px)", "min": 40, "max": 64, "step": 2, "default": 48},
+      {"type": "range", "id": "buy_button_height_mobile", "label": "Mobile buy button height (px)", "min": 40, "max": 64, "step": 2, "default": 42},
+      {"type": "range", "id": "buy_button_size", "label": "Buy label size (px)", "min": 12, "max": 28, "step": 1, "default": 22},
+      {"type": "range", "id": "buy_button_size_mobile", "label": "Mobile buy label size (px)", "min": 12, "max": 24, "step": 1, "default": 13},
+      {"type": "checkbox", "id": "button_shadows", "label": "Enable button shadows", "default": true},
+      {"type": "range", "id": "button_hover_lift", "label": "Button hover lift (px)", "min": 0, "max": 6, "step": 1, "default": 2},
+      {"type": "range", "id": "hero_button_size", "label": "Hero button label size (px)", "min": 12, "max": 24, "step": 1, "default": 16},
+      {"type": "range", "id": "hero_button_padding_y", "label": "Hero button vertical padding (px)", "min": 8, "max": 28, "step": 1, "default": 16},
+      {"type": "range", "id": "hero_button_padding_x", "label": "Hero button horizontal padding (px)", "min": 12, "max": 60, "step": 2, "default": 40},
+      {"type": "range", "id": "footer_button_size", "label": "Footer button label size (px)", "min": 10, "max": 20, "step": 1, "default": 12},
+      {"type": "range", "id": "footer_button_padding_y", "label": "Footer button vertical padding (px)", "min": 4, "max": 20, "step": 1, "default": 8}
+    ]
+  },
+  {
+    "name": "Header appearance",
+    "settings": [
+      {"type": "range", "id": "header_content_width", "label": "Header content width (px)", "min": 900, "max": 1600, "step": 10, "default": 1310},
+      {"type": "range", "id": "header_brand_size", "label": "Text logo size (px)", "min": 14, "max": 36, "step": 1, "default": 22},
+      {"type": "range", "id": "header_nav_size", "label": "Navigation text size (px)", "min": 12, "max": 22, "step": 1, "default": 14},
+      {"type": "range", "id": "header_nav_opacity", "label": "Navigation text opacity (%)", "min": 20, "max": 100, "step": 5, "default": 50},
+      {"type": "select", "id": "header_nav_position", "label": "Desktop navigation position", "default": "center", "options": [{"value": "center", "label": "Centered"}, {"value": "right", "label": "Right"}]},
+      {"type": "checkbox", "id": "header_mobile_cart", "label": "Show cart icon on mobile", "default": false},
+      {"type": "color", "id": "header_initial_bg", "label": "Background before scrolling", "default": "#000000"},
+      {"type": "range", "id": "header_initial_opacity", "label": "Background before scrolling opacity (%)", "min": 0, "max": 100, "step": 5, "default": 0}
+    ]
+  },
+  {
+    "name": "Motion and accessibility",
+    "settings": [
+      {"type": "checkbox", "id": "motion_enabled", "label": "Enable decorative animation", "default": true},
+      {"type": "checkbox", "id": "smooth_scroll", "label": "Enable smooth scrolling", "default": true},
+      {"type": "checkbox", "id": "show_scrollbars", "label": "Show scrollbars", "default": false},
+      {"type": "range", "id": "reveal_duration", "label": "Scroll reveal duration (ms)", "min": 100, "max": 1200, "step": 50, "default": 600},
+      {"type": "range", "id": "reveal_distance", "label": "Scroll reveal distance (px)", "min": 0, "max": 40, "step": 2, "default": 20},
+      {"type": "checkbox", "id": "marquee_enabled", "label": "Enable moving testimonial and trust strips", "default": true}
+    ]
+  },
+  {
+    "name": "Forms",
+    "settings": [
+      {"type": "range", "id": "input_radius", "label": "Input radius (px)", "min": 0, "max": 24, "step": 1, "default": 10},
+      {"type": "color", "id": "input_background", "label": "Input background", "default": "#1a1a1a"},
+      {"type": "color", "id": "input_border", "label": "Input border", "default": "#333333"}
     ]
   },
   {
     "name": "Branding",
     "settings": [
-      { "type": "image_picker", "id": "favicon", "label": "Favicon" },
-      { "type": "image_picker", "id": "logo", "label": "Logo (used globally)" },
-      { "type": "text", "id": "brand_name", "label": "Brand name", "default": "OGSELL" }
+      {"type": "image_picker", "id": "favicon", "label": "Favicon"},
+      {"type": "image_picker", "id": "logo", "label": "Logo (used globally)"},
+      {"type": "text", "id": "brand_name", "label": "Brand name", "default": "OGSELL"}
     ]
   },
   {
     "name": "Social Links",
     "settings": [
-      { "type": "url", "id": "social_instagram", "label": "Instagram" },
-      { "type": "url", "id": "social_tiktok", "label": "TikTok" },
-      { "type": "url", "id": "social_youtube", "label": "YouTube" },
-      { "type": "url", "id": "social_twitter", "label": "Twitter / X" },
-      { "type": "url", "id": "social_facebook", "label": "Facebook" },
-      { "type": "url", "id": "social_snapchat", "label": "Snapchat" },
-      { "type": "url", "id": "social_discord", "label": "Discord" }
+      {"type": "url", "id": "social_instagram", "label": "Instagram"},
+      {"type": "url", "id": "social_tiktok", "label": "TikTok"},
+      {"type": "url", "id": "social_youtube", "label": "YouTube"},
+      {"type": "url", "id": "social_twitter", "label": "Twitter / X"},
+      {"type": "url", "id": "social_facebook", "label": "Facebook"},
+      {"type": "url", "id": "social_snapchat", "label": "Snapchat"},
+      {"type": "url", "id": "social_discord", "label": "Discord"}
     ]
   },
   {
     "name": "Live Sales Notification",
     "settings": [
-      { "type": "checkbox", "id": "live_sales_enabled", "label": "Enable live sales popup", "default": true },
-      { "type": "color", "id": "live_sales_bg", "label": "Notification background", "default": "#333333" },
-      { "type": "color", "id": "live_sales_text_color", "label": "Text color", "default": "#ffffff" },
-      { "type": "color", "id": "live_sales_name_color", "label": "Buyer name color", "default": "#cc3d3d" },
-      { "type": "text", "id": "live_sales_names", "label": "Buyer names (comma-separated)", "default": "Alex,Jordan,Sarah,Mike,Emily,Chris,Taylor,Sam,Morgan,Casey" },
-      { "type": "text", "id": "live_sales_products", "label": "Product names (comma-separated)", "default": "Elite Supplier List,Premium Vendor List,Starter Supplier Pack,Ultimate Supplier Bundle" },
-      { "type": "range", "id": "live_sales_delay", "label": "Initial delay (seconds)", "min": 1, "max": 30, "step": 1, "default": 5 },
-      { "type": "range", "id": "live_sales_duration", "label": "Show duration (seconds)", "min": 3, "max": 15, "step": 1, "default": 7 },
-      { "type": "range", "id": "live_sales_min_interval", "label": "Min interval (seconds)", "min": 5, "max": 30, "step": 1, "default": 8 },
-      { "type": "range", "id": "live_sales_max_interval", "label": "Max interval (seconds)", "min": 10, "max": 60, "step": 5, "default": 20 }
+      {"type": "checkbox", "id": "live_sales_enabled", "label": "Enable live sales popup", "default": true},
+      {"type": "color", "id": "live_sales_bg", "label": "Notification background", "default": "#333333"},
+      {"type": "color", "id": "live_sales_text_color", "label": "Text color", "default": "#ffffff"},
+      {"type": "color", "id": "live_sales_name_color", "label": "Buyer name color", "default": "#cc3d3d"},
+      {"type": "text", "id": "live_sales_names", "label": "Buyer names (comma-separated)", "default": "Alex,Jordan,Sarah,Mike,Emily,Chris,Taylor,Sam,Morgan,Casey"},
+      {"type": "text", "id": "live_sales_products", "label": "Product names (comma-separated)", "default": "Elite Supplier List,Premium Vendor List,Starter Supplier Pack,Ultimate Supplier Bundle"},
+      {"type": "range", "id": "live_sales_delay", "label": "Initial delay (seconds)", "min": 1, "max": 30, "step": 1, "default": 5},
+      {"type": "range", "id": "live_sales_duration", "label": "Show duration (seconds)", "min": 3, "max": 15, "step": 1, "default": 7},
+      {"type": "range", "id": "live_sales_min_interval", "label": "Min interval (seconds)", "min": 5, "max": 30, "step": 1, "default": 8},
+      {"type": "range", "id": "live_sales_max_interval", "label": "Max interval (seconds)", "min": 10, "max": 60, "step": 5, "default": 20}
     ]
   },
   {
     "name": "Custom Code",
     "settings": [
-      { "type": "textarea", "id": "custom_css", "label": "Custom CSS" },
-      { "type": "textarea", "id": "custom_js", "label": "Custom JavaScript" },
-      { "type": "textarea", "id": "custom_head_code", "label": "Custom head code (tracking pixels, etc.)" }
+      {"type": "textarea", "id": "custom_css", "label": "Custom CSS"},
+      {"type": "textarea", "id": "custom_js", "label": "Custom JavaScript"},
+      {"type": "textarea", "id": "custom_head_code", "label": "Custom head code (tracking pixels, etc.)"}
     ]
   }
 ]

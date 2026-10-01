@@ -3,12 +3,15 @@
 ## Active / verification
 - The reference uses a populated review feed; this theme's dialog now matches its appearance but does not persist or moderate submissions. Submit explicitly reports that reviews are unavailable, and media upload is disabled. Connect a review app for production reviews.
 - Add suitable store-owned customer portraits and real social links in Shopify Customize. Shopify Files has no clearly suitable hero portraits; its “OG’S SUPPLIERS” and older “Recuerdos Vividos” logos do not match the current OGSELL text wordmark. Reference assets and product catalog imagery were intentionally not copied.
-- Three of four current OGSELL products have empty descriptions. Their info controls now link to product pages; add store-owned descriptions to populate reference-style dialogs.
+- Three of four current OGSELL products have empty descriptions. The local information dialog now uses editable Product Grid delivery/refund text for these products; add store-owned product descriptions for product-specific details. This fix is available in the local development preview but has not been published to the live theme.
 
 ## Todo — Content
 - Add real social URLs to footer
 
 ## Fixed
+- Settings/performance pass: 93 additional controls; previously masked width/color/columns/glow and numeric-zero settings now work. Client-rendered sections refresh with scoped data/styles and release listeners/timers on editor unload. Cart unload restores scrolling.
+- Removed artificial loading wait, duplicate review/cart code, and unused runtime carousel; minified loader is 49% smaller (54% smaller gzip). Desktop and 375px development previews checked; live theme unchanged.
+- Homepage background glow reduced from 22% to 10% in the development preview; dedicated settings now control enable/disable, color, size, overall strength, and three individual glows. Live theme unchanged.
 - Abrupt scroll chrome — urgency bar no longer reads layout and writes header offset on every scroll event; header motion uses a transform and its scrolled appearance eases in
 - Loader reveal race — the runtime renderer no longer bypasses the balanced minimum intro; reveal now waits for rendered shells, with a 3s safety fallback
 - Removed the unwanted storefront chatbot, its settings, and its unused theme styles
@@ -45,3 +48,12 @@
 - Header pill — replaced with full-width fixed header
 - Buy button radius — was hardcoded 50px, now uses btn_radius setting
 - Header background — was transparent, now dark gradient by default
+
+## Audit follow-ups — 2026-10-01
+- Cart API/product-page handlers do not reject unsuccessful Shopify responses; confirm out-of-stock/422 behavior and prevent false success.
+- Product dynamic checkout references `form` outside a Shopify product form (`main-product.liquid`); Theme Check reports `UndefinedObject`.
+- Product-page review submission still shows a false success message without persistence; align with the homepage's honest unavailable behavior or integrate a reviews service.
+- Renderer shell lifecycle and instance scoping are fixed and covered by DOM tests. A visual reload in the actual Shopify admin editor remains to be checked; conventional Liquid section scripts are outside this runtime lifecycle.
+- Runtime source/build/lock are not self-contained in this repository; automate reproducible builds and copying both loader assets.
+- Check urgency/header height after loading reveal, presentment currency/localized cart routes, loader-failure fallback, and dialog focus handling.
+- Full evidence and priorities are in `../docs/PROJECT_AUDIT.md`. Findings are not marked fixed; existing storefront edits remain preserved.

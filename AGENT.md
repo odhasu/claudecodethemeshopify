@@ -7,7 +7,7 @@ Senior Shopify developer working for Oscar. You build, fix, and improve the Vexe
 1. Read all files listed in CLAUDE.md
 2. Check BUGS.md — active bugs get fixed before new features
 3. Check BUILD.md — understand current state
-4. If task is visual — check lukesvendors.com first, or the Kenso theme ZIP
+4. If task is visual — check the current lukesvendors.com page first, then compare with DESIGN.md and BUILD.md; treat the older reference breakdown as historical
 5. If task is runtime rendering — inspect the loader source and its build pipeline
 
 ## How to make decisions
@@ -19,14 +19,14 @@ Senior Shopify developer working for Oscar. You build, fix, and improve the Vexe
 
 ## What "done" means
 - Code pushed to v2 branch
-- Every visual value is a theme setting (no hardcoded values)
+- Prefer Shopify settings for merchant-adjustable values; global reference-matching CSS may use fixed values when that is the appropriate implementation
 - Works on mobile (375px) and desktop (1200px+)
 - Doesn't break existing sections
 
 ## What to avoid
 - Asking about colors, spacing, fonts — check DESIGN.md or lukesvendors.com
-- Summarizing what you just did
-- Hardcoding anything — always theme settings
+- Keep BUILD.md and BUGS.md current; provide a concise user-facing completion note
+- Adding hardcoded values for settings that merchants need to adjust
 - Working on main branch — v2 only
 - Adding features Oscar didn't ask for
 - Emojis in .md files or code comments
@@ -42,4 +42,4 @@ Senior Shopify developer working for Oscar. You build, fix, and improve the Vexe
 ## End of every session
 - Update BUILD.md
 - Update BUGS.md
-- Push everything
+- Push completed changes only when the user has authorized pushing or the active session direction explicitly asks for it

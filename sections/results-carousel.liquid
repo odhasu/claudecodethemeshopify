@@ -1,3 +1,4 @@
+{% render 'section-appearance', section: section %}
 {%- liquid
   assign title = section.settings.title | default: "What Our Customers Say"
   assign subtitle = section.settings.subtitle | default: "Real results from real resellers"
@@ -379,7 +380,14 @@
       "max": 120,
       "step": 10,
       "default": 60
-    }
+    },
+    {"type": "header", "content": "Extra appearance controls"},
+    {"type": "color", "id": "section_surface", "label": "Section background"},
+    {"type": "select", "id": "section_heading_align", "label": "Heading alignment", "default": "inherit", "options": [{"value": "inherit", "label": "Use section default"}, {"value": "left", "label": "Left"}, {"value": "center", "label": "Center"}, {"value": "right", "label": "Right"}]},
+    {"type": "select", "id": "mobile_spacing_mode", "label": "Mobile section spacing", "default": "inherit", "options": [{"value": "inherit", "label": "Use section spacing"}, {"value": "custom", "label": "Custom mobile spacing"}]},
+    {"type": "range", "id": "mobile_padding_top", "label": "Mobile top spacing (px)", "min": 0, "max": 160, "step": 4, "default": 40},
+    {"type": "range", "id": "mobile_bottom_override", "label": "Mobile bottom spacing (px; -1 = default)", "min": -1, "max": 199, "step": 2, "default": -1},
+    {"type": "range", "id": "mobile_padding_bottom", "label": "Mobile bottom spacing (px)", "min": 0, "max": 160, "step": 4, "default": 40}
   ],
   "blocks": [
     {

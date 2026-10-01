@@ -11,4 +11,6 @@ Read these files at the start of every session:
 
 Also read: ~/Desktop/ogresell/CLAUDE.md for Vexel business overview.
 
+If that external file is unavailable, continue with the repository notes and do not block the task.
+
 Update BUILD.md and BUGS.md at the end of every session.

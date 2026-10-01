@@ -3,7 +3,9 @@
 Full section-by-section breakdown of the lukesvendors.com homepage.
 Used as the design reference for Vexel theme v2.
 
-Historical snapshot: the live reference changed after this was written. The live page and current `BUILD.md` comparison notes take precedence, including the current text-only hero and product description popup.
+Historical snapshot: the live reference changed after this was written. The live page and current `BUILD.md` comparison notes take precedence, including the current text-first hero configuration and product description popup.
+
+This file preserves older measurements and copied reference content for historical comparison. Do not treat its product catalog, customer content, social destinations, imagery, or older hero description as current OGSELL requirements. Verify all current visual details on the live site.
 
 ---
 

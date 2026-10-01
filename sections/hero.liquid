@@ -1,9 +1,13 @@
+{%- unless section.settings.hero_font == 'Satoshi' or section.settings.hero_font == 'Clash Grotesk' or section.settings.hero_font == blank -%}
+<link href="https://fonts.googleapis.com/css2?family={{ section.settings.hero_font | replace: ' ', '+' }}{% unless section.settings.hero_font == 'Anton' or section.settings.hero_font == 'Bebas Neue' %}:wght@400;500;600;700{% endunless %}&display=swap" rel="stylesheet">
+{%- endunless -%}
+{% render 'section-appearance', section: section %}
 <style>
-  .vx-hero__content { align-items: center !important; text-align: center !important; }
-  .vx-hero__buttons { justify-content: center !important; }
-  .vx-hero__title { text-align: center !important; }
+  #shopify-section-{{ section.id }} .vx-hero__content { align-items: center !important; text-align: center !important; }
+  #shopify-section-{{ section.id }} .vx-hero__buttons { justify-content: center !important; }
+  #shopify-section-{{ section.id }} .vx-hero__title { text-align: center !important; }
   @media (max-width: 768px) {
-    .template-index .vx-hero { padding-bottom: {{ section.settings.padding_bottom_mobile | default: 35 }}px; }
+    #shopify-section-{{ section.id }} .vx-hero { padding-bottom: {{ section.settings.padding_bottom_mobile | default: 35 }}px; }
   }
 </style>
 <section class="vx-shell vx-shell--loading" data-vx-section="hero">
@@ -20,6 +24,7 @@
   "highlight_color": {{ section.settings.highlight_color | default: '#19d400' | json }},
   "title_size_desktop": {{ section.settings.title_size_desktop | default: 64 }},
   "title_size_mobile": {{ section.settings.title_size_mobile | default: 34 }},
+  "title_max_width": {{ section.settings.title_max_width | default: 1200 }},
   "bg_image": {% if section.settings.bg_image != blank %}{{ section.settings.bg_image | image_url: width: 1920 | json }}{% else %}null{% endif %},
   "bg_gradient_strength": {{ section.settings.bg_gradient_strength | default: 40 }},
   "bg_image_position": {{ section.settings.bg_image_position | default: 'center center' | json }},
@@ -36,12 +41,14 @@
   "btn_2_bg": {{ section.settings.btn_2_bg | default: 'transparent' | json }},
   "btn_2_text_color": {{ section.settings.btn_2_text_color | default: '#ffffff' | json }},
   "btn_layout": {{ section.settings.btn_layout | default: 'side-by-side' | json }},
+  "button_radius": {{ section.settings.button_radius | default: 50 }},
   "trust_prefix": {{ section.settings.trust_prefix | default: 'Trusted By' | json }},
   "trust_count": {{ section.settings.trust_count | default: '10,000+' | json }},
   "trust_suffix": {{ section.settings.trust_suffix | default: 'Resellers' | json }},
   "trust_count_color": {{ section.settings.trust_count_color | default: '#fbbf24' | json }},
   "trust_text_color": {{ section.settings.trust_text_color | default: '#9ca3af' | json }},
   "trust_font_size": {{ section.settings.trust_font_size | default: 15 }},
+  "trust_gap": {{ section.settings.trust_gap | default: 6 }},
   "show_avatars": {{ section.settings.show_avatars | json }},
   "avatar_size": {{ section.settings.avatar_size | default: 28 }},
   "avatar_1": {% if section.settings.avatar_1 != blank %}{{ section.settings.avatar_1 | image_url: width: 72 | json }}{% else %}null{% endif %},
@@ -99,8 +106,9 @@
     { "type": "color", "id": "highlight_color", "label": "Highlight color", "default": "#19d400" },
     { "type": "range", "id": "title_size_desktop", "label": "Title size desktop (px)", "min": 24, "max": 140, "step": 2, "default": 64 },
     { "type": "range", "id": "title_size_mobile", "label": "Title size mobile (px)", "min": 18, "max": 72, "step": 2, "default": 34 },
+    { "type": "range", "id": "title_max_width", "label": "Headline max width (px)", "min": 600, "max": 1200, "step": 20, "default": 1200 },
     { "type": "header", "content": "CTA Buttons" },
-    { "type": "checkbox", "id": "show_btn_1", "label": "Show button 1", "default": true },
+    { "type": "checkbox", "id": "show_btn_1", "label": "Show button 1", "default": false },
     { "type": "text", "id": "btn_1_text", "label": "Button 1 text", "default": "BUY NOW" },
     { "type": "url", "id": "btn_1_url", "label": "Button 1 link" },
     { "type": "select", "id": "btn_1_action", "label": "Button 1 action", "default": "scroll", "options": [
@@ -110,7 +118,7 @@
     ]},
     { "type": "color", "id": "btn_1_bg", "label": "Button 1 background", "default": "#19d400" },
     { "type": "color", "id": "btn_1_text_color", "label": "Button 1 text color", "default": "#000000" },
-    { "type": "checkbox", "id": "show_btn_2", "label": "Show button 2", "default": true },
+    { "type": "checkbox", "id": "show_btn_2", "label": "Show button 2", "default": false },
     { "type": "text", "id": "btn_2_text", "label": "Button 2 text", "default": "ADD TO CART" },
     { "type": "url", "id": "btn_2_url", "label": "Button 2 link" },
     { "type": "select", "id": "btn_2_action", "label": "Button 2 action", "default": "scroll", "options": [
@@ -124,6 +132,7 @@
       { "value": "side-by-side", "label": "Side by side" },
       { "value": "stacked", "label": "Stacked" }
     ]},
+    { "type": "range", "id": "button_radius", "label": "Button radius (px)", "min": 0, "max": 50, "step": 2, "default": 50 },
     { "type": "header", "content": "Trust Line" },
     { "type": "text", "id": "trust_prefix", "label": "Trust prefix", "default": "Trusted By" },
     { "type": "text", "id": "trust_count", "label": "Trust count", "default": "10,000+" },
@@ -131,6 +140,7 @@
     { "type": "color", "id": "trust_count_color", "label": "Count color", "default": "#fbbf24" },
     { "type": "color", "id": "trust_text_color", "label": "Trust text color", "default": "#9ca3af" },
     { "type": "range", "id": "trust_font_size", "label": "Trust font size (px)", "min": 12, "max": 22, "step": 1, "default": 15 },
+    { "type": "range", "id": "trust_gap", "label": "Trust line spacing (px)", "min": 0, "max": 20, "step": 2, "default": 6 },
     { "type": "header", "content": "Avatars" },
     { "type": "checkbox", "id": "show_avatars", "label": "Show avatar stack", "default": true },
     { "type": "range", "id": "avatar_size", "label": "Avatar size (px)", "min": 24, "max": 56, "step": 2, "default": 28 },
@@ -150,7 +160,14 @@
     { "type": "header", "content": "Spacing" },
     { "type": "range", "id": "padding_top", "label": "Top padding (px)", "min": 20, "max": 160, "step": 10, "default": 110 },
     { "type": "range", "id": "padding_bottom", "label": "Bottom padding (px)", "min": 20, "max": 160, "step": 10, "default": 20 },
-    { "type": "range", "id": "padding_bottom_mobile", "label": "Mobile bottom padding (px)", "min": 0, "max": 120, "step": 5, "default": 35 }
+    { "type": "range", "id": "padding_bottom_mobile", "label": "Mobile bottom padding (px)", "min": 0, "max": 120, "step": 5, "default": 35 },
+    {"type": "header", "content": "Extra appearance controls"},
+    {"type": "color", "id": "section_surface", "label": "Section background"},
+    {"type": "select", "id": "section_heading_align", "label": "Heading alignment", "default": "inherit", "options": [{"value": "inherit", "label": "Use section default"}, {"value": "left", "label": "Left"}, {"value": "center", "label": "Center"}, {"value": "right", "label": "Right"}]},
+    {"type": "select", "id": "mobile_spacing_mode", "label": "Mobile section spacing", "default": "inherit", "options": [{"value": "inherit", "label": "Use section spacing"}, {"value": "custom", "label": "Custom mobile spacing"}]},
+    {"type": "range", "id": "mobile_padding_top", "label": "Mobile top spacing (px)", "min": 0, "max": 160, "step": 4, "default": 40},
+    {"type": "range", "id": "mobile_bottom_override", "label": "Mobile bottom spacing (px; -1 = default)", "min": -1, "max": 199, "step": 2, "default": -1},
+    {"type": "range", "id": "mobile_padding_bottom", "label": "Mobile bottom spacing (px)", "min": 0, "max": 160, "step": 4, "default": 40}
   ],
   "presets": [
     { "name": "Hero" }
