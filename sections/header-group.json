@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "type": "header",
   "name": "Header Group",
@@ -30,18 +39,19 @@
         "rating_count": "2,400+",
         "viewers_text": "people viewing right now",
         "private_text": "Private suppliers not found anywhere else",
-        "personally_verified_text": "All suppliers personally verified",
-        "personally_verified_highlight": "verified"
+        "personally_verified_text": "All suppliers personally verified"
       }
     },
     "header": {
       "type": "header-pill",
       "name": "Header",
       "settings": {
+        "use_reference_logo": true,
         "logo_width_desktop": 90,
         "logo_width_mobile": 90,
         "brand_text": "Lin Resell",
         "brand_color": "#ffffff",
+        "show_products_link": false,
         "nav_color": "#808080",
         "nav_hover_color": "#ff86dd",
         "scroll_bg": "rgba(0,0,0,0.82)",
@@ -51,8 +61,6 @@
         "badge_text_color": "#000000",
         "header_height_desktop": 64,
         "header_height_mobile": 64,
-        "use_reference_logo": true,
-        "show_products_link": false,
         "side_padding_desktop": 24,
         "side_padding_mobile": 16
       }

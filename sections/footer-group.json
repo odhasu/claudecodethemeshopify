@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "type": "footer",
   "name": "Footer Group",
@@ -9,34 +18,41 @@
         "logo_height": 40,
         "brand_text": "Lin Resell",
         "brand_font_size": 20,
+        "brand_color": "#ffffff",
         "show_policies": true,
+        "refund_policy_label": "Refund Policy",
         "label_shipping": "Shipping",
         "label_privacy": "Privacy",
         "label_terms": "Terms",
         "link_gap": 16,
+        "link_color": "#9ca3af",
+        "link_hover_color": "#ffffff",
         "instagram_url": "",
         "tiktok_url": "",
         "youtube_url": "",
         "discord_url": "",
+        "social_size": 24,
         "social_icon_color": "#ff86dd",
-        "show_copyright": true,
-        "copyright_name": "Lin Resell",
-        "bg_color": "#000000",
-        "border_color": "#1a1a1a",
-        "brand_color": "#ffffff",
-        "link_color": "#9ca3af",
-        "link_hover_color": "#ffffff",
-        "copyright_color": "#9ca3af",
-        "padding_top": 48,
-        "padding_bottom": 32,
-        "refund_policy_label": "Refund Policy",
+        "show_cta": true,
+        "cta_text": "Get this store design",
+        "cta_url": "",
         "cta_color": "#ff86dd",
         "cta_text_color": "#000000",
-        "cta_url": "https://usekenso.com/",
-        "show_cta": true,
+        "cta_radius": 12,
+        "show_copyright": true,
+        "copyright_name": "Lin Resell",
+        "copyright_color": "#9ca3af",
+        "bg_color": "#000000",
+        "border_color": "#1a1a1a",
+        "padding_top": 48,
+        "padding_bottom": 32,
+        "section_surface": "",
+        "mobile_spacing_mode": "inherit",
+        "mobile_padding_top": 40,
+        "mobile_bottom_override": -1,
+        "mobile_padding_bottom": 40,
         "content_gap": 24,
-        "bottom_gap": 12,
-        "social_size": 24
+        "bottom_gap": 12
       }
     }
   },
