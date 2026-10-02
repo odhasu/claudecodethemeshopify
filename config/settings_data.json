@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "current": {
     "color_accent": "#ff86dd",
@@ -19,15 +28,28 @@
     "grid_gap": 24,
     "grid_gap_mobile": 12,
     "homepage_inline_padding": 16,
-    "homepage_glow_enabled": false,
-    "homepage_glow_color": "#ff86dd",
-    "homepage_glow_intensity": 10,
-    "homepage_glow_spread": 100,
+    "border_radius_card": 20,
+    "border_radius_button": 8,
+    "homepage_glow_enabled": true,
+    "homepage_glow_color": "#F4EEF2",
+    "homepage_glow_intensity": 29,
+    "homepage_glow_spread": 145,
     "homepage_glow_left_strength": 100,
     "homepage_glow_right_strength": 100,
     "homepage_glow_bottom_strength": 100,
-    "border_radius_card": 20,
-    "border_radius_button": 8,
+    "loader_minimum_ms": 150,
+    "loader_fade_ms": 200,
+    "loader_spinner_color": "#ff86dd",
+    "product_title_size_mobile": 15,
+    "product_image_zoom": 105,
+    "info_button_color": "#9ca3af",
+    "buy_button_size": 18,
+    "buy_button_size_mobile": 13,
+    "footer_button_size": 12,
+    "footer_button_padding_y": 8,
+    "header_content_width": 1280,
+    "header_nav_size": 14,
+    "header_nav_opacity": 100,
     "brand_name": "Lin Resell",
     "live_sales_enabled": false,
     "live_sales_bg": "#111111",
@@ -57,19 +79,6 @@
         }
       }
     },
-    "content_for_index": [],
-    "loader_minimum_ms": 0,
-    "loader_fade_ms": 200,
-    "header_content_width": 1280,
-    "header_nav_opacity": 100,
-    "header_nav_size": 14,
-    "buy_button_size": 18,
-    "buy_button_size_mobile": 13,
-    "product_title_size_mobile": 15,
-    "product_image_zoom": 105,
-    "info_button_color": "#9ca3af",
-    "footer_button_size": 12,
-    "footer_button_padding_y": 8,
-    "loader_spinner_color": "#ff86dd"
+    "content_for_index": []
   }
 }
