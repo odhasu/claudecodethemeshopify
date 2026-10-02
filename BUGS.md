@@ -2,7 +2,7 @@
 
 ## Lin replica — active / verification
 - Latest CLI observation on 2026-10-02: GitHub-connected Lin theme `204843778389` is live; previous `v2` theme `196616782165` is unpublished. Development preview remains `204351471957`. Recheck roles before uploads or theme-file pushes; commands are in `docs/SHOPIFY_CLI.md`.
-- The 11 imported products are drafts. Supply store-owned vendor delivery files/links and configure a digital delivery app before activation. Saved catalog cards display with Coming Soon controls on the live theme; the local user-requested label is now `BUY NOW`. Purchases remain disabled until the actual Shopify products are published and delivery is configured.
+- The 11 imported products are drafts. Supply store-owned vendor delivery files/links and configure a digital delivery app before activation. Saved catalog cards display the user-requested `BUY NOW` label on the live theme. Purchases remain disabled until the actual Shopify products are published and delivery is configured.
 - Actual Shopify admin editor reload still needs an authenticated Chrome profile. DOM tests and section unload/load events in the real storefront preview passed.
 - Theme Check has 10 warnings and zero errors. Existing account-route, remote-asset, preload and settings-count warnings remain. The undefined product form and its hardcoded add route are resolved on `linresell-replica`.
 - Reference font assets failed to load. The replica uses the observed system fallback; appearance can vary across operating systems.
@@ -16,7 +16,7 @@
 - Add real social URLs to footer
 
 ## Fixed
-- Local catalog button copy on `linresell`: saved `BUY NOW` through the existing preview label setting for all eleven cards. Source/bundle tests cover both layouts and section reloads; Theme Check has zero errors and 10 existing warnings. Not pushed or deployed; browser checks pending.
+- Catalog button copy on `linresell`: saved `BUY NOW` through the existing preview label setting for all eleven cards. Commit `7336178` deployed through GitHub to live theme `204843778389`; live Chrome checks at 375px/1440px passed for labels, images, dialogs, section reload, disabled purchases and no overflow/runtime errors. Source/bundle tests pass; Theme Check has zero errors and 10 existing warnings.
 - Published catalog visibility: removed the theme-role condition that hid the enabled Lin catalog on the live storefront. The explicit catalog setting now supplies all eleven cards with disabled, editable Coming Soon controls. Delivered through GitHub commit `a4be207`; preview and live 375px/1440px checks passed for cards, images, dialogs, label sizing and no overflow/page errors. The public Shopify catalog was empty when diagnosed; product activation remains separate.
 - Urgency bar on `linresell`: restored the pink “verified” highlight, white icons, correct plain reseller-count text and reference divider colors. Highlight and colors remain editable; repeated timer/viewer values stay synchronized. Chrome 375px/1440px and preview section reload checks passed; live publication remains pending.
 - Cart/product follow-up on `linresell-replica`: unsuccessful Cart API responses no longer report success or redirect to checkout; error text, control recovery, retries and draft guards are covered by regression tests and development-preview checks. Product quantity/accelerated payments use a native Shopify form; product review submission no longer claims persistence. Cart requests and purchase redirects respect Shopify's locale root. Live theme unchanged.

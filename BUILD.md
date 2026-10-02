@@ -4,7 +4,8 @@
 
 - On user-authorized `linresell`, saved the existing Product Grid preview button label as `BUY NOW` for all eleven catalog cards. Draft purchase controls remain disabled.
 - `npm test` passes for source and shipped bundle, including both layouts and section reloads. `bash scripts/check-theme.sh` passes with zero errors and 10 existing warnings. No renderer rebuild required; this uses the existing label setting.
-- Local change only; not pushed, uploaded or deployed. Browser viewport and actual admin editor checks were not performed in this session.
+- Deployed commit `7336178` through GitHub to the connected live theme `204843778389`, whose live role was rechecked before delivery. Compared current live files before pushing; other merchant settings were preserved.
+- Live headless Chrome checks at 375px and 1440px passed for all eleven `BUY NOW` labels, loaded product images, disabled purchase controls, info dialogs, section reload and no horizontal/button overflow or runtime errors. Screenshot appearance inspected at both widths. Actual admin editor checks were not performed.
 
 ## Current branch: Lin Resell replica — 2026-10-02
 
