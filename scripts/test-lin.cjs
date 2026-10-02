@@ -3,9 +3,11 @@ const fs = require('node:fs');
 const path = require('node:path');
 const {JSDOM, VirtualConsole} = require('jsdom');
 const root = path.resolve(__dirname, '..');
+// Shopify editor saves JSON templates/groups with a leading generated-file comment.
+const readShopifyJson = file => JSON.parse(fs.readFileSync(path.join(root, file), 'utf8').replace(/^\s*\/\*[\s\S]*?\*\//, ''));
 const products = JSON.parse(fs.readFileSync(path.join(root, 'imports/linresell/preview-products.json')));
-const settings = JSON.parse(fs.readFileSync(path.join(root, 'templates/index.json'))).sections['product-grid'].settings;
-const header = JSON.parse(fs.readFileSync(path.join(root, 'sections/header-group.json'))).sections.header.settings;
+const settings = readShopifyJson('templates/index.json').sections['product-grid'].settings;
+const header = readShopifyJson('sections/header-group.json').sections.header.settings;
 const json = value => JSON.stringify(value).replace(/</g, '\\u003c');
 const section = (type, value, data) => `<div class="shopify-section" id="${type}"><section class="vx-shell vx-shell--loading" data-vx-section="${type}"></section><script type="application/json" data-vx-settings="${type}">${json(value)}</script>${data ? `<script type="application/json" data-vx-products="${type}">${json(data)}</script>` : ''}</div>`;
 for (const file of ['runtime/loader.js','assets/scaled-loader-current.js']) {
@@ -20,6 +22,7 @@ for (const file of ['runtime/loader.js','assets/scaled-loader-current.js']) {
   d.dispatchEvent(new w.Event('DOMContentLoaded'));
   assert.equal(d.querySelectorAll('.vx-pc').length, 11);
   assert.equal(d.querySelectorAll('.vx-btn-buy:disabled').length, 11);
+  assert.ok([...d.querySelectorAll('.vx-btn-buy:disabled')].every(button => button.textContent === 'COMING SOON'));
   assert.equal(d.querySelectorAll('[href*="/cart/add"]').length, 0, 'Draft catalog cannot checkout');
   assert.equal(d.querySelector('h1').textContent, settings.headline);
   assert.equal(d.querySelector('h1 span').textContent, 'PERSONAL');
@@ -48,16 +51,25 @@ for (const file of ['runtime/loader.js','assets/scaled-loader-current.js']) {
   assert.equal(d.querySelector('h1').textContent,'Updated <heading>');
   assert.equal(d.querySelector('h1').querySelector('heading'),null);
   assert.match(d.querySelector('.vx-btn-buy').getAttribute('href'),new RegExp('id='+live.variantId+'(?:&|$)'));
+  grid.querySelector('[data-vx-products]').textContent = json(products);
+  grid.querySelector('[data-vx-settings]').textContent = json({...settings, max_products:1, preview_btn_label:'WAITLIST'});
+  grid.dispatchEvent(new w.Event('shopify:section:load',{bubbles:true}));
+  assert.equal(d.querySelector('.vx-btn-buy:disabled').textContent,'WAITLIST');
+  grid.querySelector('[data-vx-settings]').textContent = json({...settings, layout_style:'legacy', max_products:1});
+  grid.dispatchEvent(new w.Event('shopify:section:load',{bubbles:true}));
+  assert.equal(d.querySelectorAll('[href*="/cart/add"]').length,0,'Legacy layout must also keep draft purchases disabled');
+  assert.equal(d.querySelector('.vx-btn-buy:disabled').textContent,'COMING SOON');
   assert.deepEqual(errors,[]);
   dom.window.close();
   console.log(file+': Lin catalog order, draft purchase guard, info dialogs, header links, owned IDs, editor reload, escaping passed');
 }
-// Preview records are rendered only in non-live themes or the theme editor.
+// The explicit coming-soon catalog setting works on published themes too.
 const liquid = fs.readFileSync(path.join(root,'sections/product-grid.liquid'),'utf8');
 assert.match(liquid,/section\.settings\.replica_preview/);
 assert.match(liquid,/"max_products": \{\{ max_products \}\}/);
-assert.match(liquid,/request\.design_mode or theme\.role != 'main'/);
+assert.doesNotMatch(liquid,/theme\.role/);
 const preview = fs.readFileSync(path.join(root,'snippets/lin-preview-products.liquid'),'utf8');
 assert.equal((preview.match(/"previewOnly":true/g)||[]).length,11);
+assert.equal((preview.match(/"available":false/g)||[]).length,11);
 for(const p of products) assert.ok(preview.includes('"variantId":'+p.variantId));
-console.log('Liquid preview guard and destination variant map passed');
+console.log('Live catalog setting, disabled purchases and destination variant map passed');

@@ -13,18 +13,18 @@ The implementation is in `theme/` on `linresell`. GitHub delivery: [odhasu/claud
 - Verify the target's current role, then start a local preview with `shopify theme dev --store ogsellsz.myshopify.com --theme 204351471957 --path . --port 9292 --nodelete`.
 - Commands, remote comparison and delivery workflow: [SHOPIFY_CLI.md](SHOPIFY_CLI.md).
 
-Edit `runtime/loader.js`, then rebuild. The build generates both `assets/scaled-loader-current.js` and `assets/scaled-loader.js`. The latter is a mirror, not another network request. The current bundle is 70,944 bytes, or 19,194 bytes gzip. Fonts are local system fallbacks; no font requests are required with the saved configuration. There is no artificial minimum loading wait.
+Edit `runtime/loader.js`, then rebuild. The build generates both `assets/scaled-loader-current.js` and `assets/scaled-loader.js`. The latter is a mirror, not another network request. The current bundle is 71,302 bytes, or 19,282 bytes gzip. Fonts are local system fallbacks; no font requests are required with the saved configuration. There is no artificial minimum loading wait.
 
 ## Merchant controls
 
 In Shopify Customize, edit the development theme, not the live theme.
 
-- **Product Grid** has 66 controls: Lin/legacy layout, integrated headline/highlight/scale, spacing, collection or ordered product selection, maximum products, desktop/mobile columns, draft preview, card shape/colors/style/hover, image ratio, sale badge, prices, information fallback, purchase and secondary-button actions/destinations, stacked buttons, and section glow color/strength.
+- **Product Grid** has 67 controls: Lin/legacy layout, integrated headline/highlight/scale, spacing, collection or ordered product selection, maximum products, desktop/mobile columns, coming-soon catalog and label, card shape/colors/style/hover, image ratio, sale badge, prices, information fallback, purchase and secondary-button actions/destinations, stacked buttons, and section glow color/strength.
 - **Header** has 26 controls: uploaded or bundled reference logo, separate desktop/mobile width and height, navigation links/menu, spacing, colors, scroll threshold and blur. An uploaded logo takes precedence over the bundled logo.
 - **FAQ** has 35 controls: questions/answers, first-open and multiple-open behavior, desktop/mobile typography, width, heading gap, answer gap, card padding/gap, borders, colors and toggle appearance.
 - **Lin supplier access** has 38 controls: copy, destination, desktop/mobile typography, alignment, width, section/card spacing, colors, button size, radius and hover appearance.
 - **Footer** has 39 controls: brand or logo, links, social destinations, copyright, colors, spacing and attribution button.
-- Global Theme Settings control fonts, palette, page gutters/width, grid gaps, product typography/image zoom, buttons, information dialog, header/footer sizing, loading appearance and optional sales notifications. The prior global homepage glow is disabled; Product Grid owns the reference's pink glow.
+- Global Theme Settings control fonts, palette, page gutters/width, grid gaps, product typography/image zoom, buttons, information dialog, header/footer sizing, loading appearance and optional sales notifications. The merchant's latest editor settings enable the pale-pink global glow alongside the Product Grid glow; these settings were preserved during the catalog fix.
 
 The active homepage uses Product Grid, FAQ and Lin supplier access. Urgency/header and footer remain section groups. Existing Vexel sections and the legacy grid are available for later merchant use.
 
@@ -32,9 +32,9 @@ The active homepage uses Product Grid, FAQ and Lin supplier access. Urgency/head
 
 All 11 reference products were imported as **DRAFT**, with images processed successfully. The original nine products remain unchanged; the store contains 20 products. Authoritative destination IDs and source data are in `imports/linresell/`. Do not import the prepared CSV again without checking for duplicates.
 
-The Product Grid's **reference draft preview** supplies a local ordered snapshot for the development theme and editor. Its image/title/info controls work; purchasing is disabled. Preview data can only be used when the setting is enabled and the theme is not live, or the request is in design mode. Real purchase actions use this store's variant IDs.
+The Product Grid's **Show Lin catalog as coming soon** control (setting ID `replica_preview`) supplies the saved ordered eleven-product snapshot on development, editor and published storefronts. Image/title/info controls work; purchases stay disabled and display an editable Coming Soon label. This explicit setting no longer depends on the theme role. Real purchase actions use this store's published variant IDs when the saved catalog is turned off.
 
-Before selling, supply the store's vendor files/links and configure digital delivery. The imported descriptions promise instant email access, but this project has no delivery files or delivery app. After fulfillment is ready, activate the intended products, make them available to the Online Store, select them in Product Grid or a collection, and turn off reference draft preview. Theme publication is a separate action.
+Before selling, supply the store's vendor files/links and configure digital delivery. The imported descriptions promise instant email access, but this project has no delivery files or delivery app. After fulfillment is ready, activate the intended products, make them available to the Online Store, select them in Product Grid or a collection, and turn off the saved coming-soon catalog. The theme is already live; product publication and digital delivery remain separate store setup tasks.
 
 Policy links route to this store's Shopify policies. Policy text, payment options, taxes and checkout settings remain the destination store's configuration. Copied vendor fulfillment, foreign checkout and customer/order data are not part of the replica.
 
@@ -69,5 +69,7 @@ The 2026-10-02 follow-up adds checked Cart API requests, visible error text, ret
 `scripts/test-cart.cjs` covers source/bundle HTTP rejection, invalid JSON, network failures, locale paths, repeated clicks, retries, draft guards, product quantity and review status. Chrome checks at 375px and 1440px verified the existing homepage, grid unload/load, purchase failures, drawer rejection/retry, successful checkout redirects and conventional product controls. Cart requests and checkout destinations were intercepted with browser mocks; the checks did not mutate the real cart, create orders or test digital delivery. Evidence: `product-cart-error-375.png`, `product-cart-error-1440.png`, `cart-drawer-error-375.png` and `cart-drawer-error-1440.png` under `docs/design-references/linresell/`. Shopify changes synced to the existing development theme only; no live publication. GitHub delivery uses `linresell`.
 
 Urgency bar follow-up: “verified” now uses the pink accent (`#ff86dd`), with an editable highlight word. Saved colors and new-section defaults match the observed reference: white icons, plain white reseller total, gray dividers and the green viewer dot. Both marquee copies update their countdown/viewer values together. Chrome checks at 375px and 1440px passed for colors, changed settings, blank highlights, section reloads and timer synchronization. Screenshots: `urgency-colors-375.png` and `urgency-colors-1440.png`. Development preview synced; GitHub delivery uses `linresell`. No live publication.
+
+Published catalog visibility fix: the live homepage supplied `[]` for the product grid while the public Shopify catalog returned zero products. The saved catalog setting was enabled, but the old theme-role condition suppressed it after publication. The setting now displays all eleven cards as Coming Soon on published themes, with disabled purchases in both layouts. Development Chrome checks at 375px and 1440px passed for cards, images, dialogs and label sizing. Live verification follows the GitHub delivery.
 
 The reference's font files failed to load, so the replica matches its visible system fallback. Font rendering can vary by operating system. This is a close responsive reconstruction with measured geometry, not a claim of identical pixels across every environment.

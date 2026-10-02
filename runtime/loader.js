@@ -655,7 +655,9 @@
 
       // Buy button
       var buyBtnHtml = '';
-      if (btnAction === 'checkout') {
+      if (btnAction !== 'description' && (p.previewOnly || p.available === false || !p.variantId)) {
+        buyBtnHtml = '<button type="button" class="vx-btn-buy" disabled aria-disabled="true">' + esc(p.previewOnly ? s.preview_btn_label || 'COMING SOON' : 'SOLD OUT') + '</button>';
+      } else if (btnAction === 'checkout') {
         buyBtnHtml = '<a class="vx-btn-buy" data-vx-checkout="' + esc(p.variantId) + '" href="' + esc(cartRoute('cart/add') + '?id=' + encodeURIComponent(p.variantId) + '&return_to=' + cartRoute('checkout')) + '">' + esc(btnLabel) + '</a>';
       } else if (btnAction === 'add_to_cart') {
         buyBtnHtml = '<button class="vx-btn-buy" data-vx-add="' + p.variantId + '">' + esc(btnLabel) + '</button>';
@@ -729,7 +731,7 @@
       var text = icon ? infoIcon : esc(label);
       if (icon) attrs += ' aria-label="View product information"';
       if (action === 'description') return '<button type="button"' + attrs + ' data-vx-desc="' + esc(p.handle) + '" aria-haspopup="dialog">' + text + '</button>';
-      if (p.previewOnly || p.available === false || !p.variantId) return '<button type="button"' + attrs + ' disabled aria-disabled="true" title="This product is not available for purchase">' + text + '</button>';
+      if (p.previewOnly || p.available === false || !p.variantId) return '<button type="button"' + attrs + ' disabled aria-disabled="true" title="This product is not available for purchase">' + (icon ? text : esc(p.previewOnly ? s.preview_btn_label || 'COMING SOON' : 'SOLD OUT')) + '</button>';
       if (action === 'add_to_cart') return '<button type="button"' + attrs + ' data-vx-add="' + esc(p.variantId) + '" data-original-text="' + esc(label) + '">' + text + '</button>';
       if (action === 'checkout') attrs += ' data-vx-checkout="' + esc(p.variantId) + '"';
       var href = action === 'checkout' ? cartRoute('cart/add') + '?id=' + encodeURIComponent(p.variantId) + '&return_to=' + cartRoute('checkout') : action === 'custom' ? destination(customUrl) : destination(p.url);
@@ -769,7 +771,7 @@
       '.vx-pg--lin .vx-btn-info svg{width:20px;height:20px}' +
       '.vx-pg--lin.vx-pg--lin .vx-btn-buy{display:flex;flex:1;align-items:center;justify-content:center;min-width:0;height:var(--buy-button-height,48px);padding:0 24px;border:0;border-radius:' + btnRadius + 'px;background:' + btnBg + ';color:' + btnText + ';letter-spacing:-.3px;font:900 var(--buy-button-size,18px) var(--font-heading);text-decoration:none;text-transform:uppercase;white-space:nowrap;box-shadow:0 18px 40px -15px color-mix(in srgb,' + btnBg + ' 85%,transparent),inset 0 3px 6px rgba(255,255,255,.7),inset 0 -3px 6px rgba(0,0,0,.2);cursor:pointer;transition:transform .2s,background .2s}' +
       '.vx-pg--lin .vx-btn-buy:hover{background:color-mix(in srgb,' + btnBg + ',#fff 12%)}' +
-      '.vx-pg--lin .vx-btn-buy:disabled{cursor:default}' +
+      '.vx-pg--lin .vx-btn-buy:disabled{cursor:default;white-space:normal;overflow-wrap:anywhere;line-height:1.15;text-align:center}' +
       '@media(max-width:768px){.vx-pg--lin.vx-pg--lin .vx-pg-grid{--lin-gap:clamp(var(--grid-gap-mobile,12px),2.4vw,16px)}.vx-pg--lin .vx-pc{width:calc((100% - (var(--lin-gap) * ' + (colsMob - 1) + ')) / ' + colsMob + ')}.vx-pg--lin .vx-pc-info{padding:' + Math.max(10, cardPadding - 4) + 'px;gap:10px}.vx-pg--lin.vx-pg--lin .vx-pc-title{font-size:var(--product-title-size-mobile,15px)}.vx-pg--lin.vx-pg--lin .vx-price-sale{font-size:var(--product-price-size-mobile,17px)}.vx-pg--lin.vx-pg--lin .vx-btn-info{width:var(--buy-button-height-mobile,42px);height:var(--buy-button-height-mobile,42px)}.vx-pg--lin.vx-pg--lin .vx-btn-buy{height:var(--buy-button-height-mobile,42px);font-size:var(--buy-button-size-mobile,13px);padding-inline:4px}}' +
       '.vx-pg--lin.vx-pg--lin .vx-pc-actions--stacked .vx-btn-info{width:100%}.vx-pg--lin.vx-pg--lin .vx-pc-actions--stacked .vx-btn-buy{flex:none}' +
       '</style>';

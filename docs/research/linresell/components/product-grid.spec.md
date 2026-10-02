@@ -21,7 +21,7 @@ Exact computed desktop values:
 
 Keep existing classes/data-vx-desc for safe singleton dialog. Add merchant controls for integrated headline/highlight/size, card style, click action/custom URL, second-button label/action/custom URL/layout. Preserve existing legacy defaults for other theme instances. Extend renderer only when explicit Lin style selected. Draft preview products show images/prices/info with disabled purchase buttons (same BUY NOW label); no fake checkout IDs.
 
-Existing Liquid products can be replaced by isolated reference-preview JSON only if selected replica_preview setting is enabled AND request.design_mode or theme.role != 'main'. Preview JSON uses mapped OGSELL IDs and local asset URLs. Merchant-selectable product blocks may reference drafted products but public lookup can fail: do not depend on those for preview. Regular collection stays runtime source when preview disabled.
+When the explicit replica_preview setting is enabled, use the saved catalog JSON on any theme, including the published storefront. Every saved record must retain previewOnly:true and available:false; purchase controls show an editable Coming Soon label and stay disabled in both layouts. JSON uses mapped OGSELL IDs and local asset URLs. Draft products are not returned by public Liquid lookups. When the setting is disabled, the selected published products or collection supply the catalog.
 
 All labels/colors/dimensions must be adjustable using existing controls or new section settings. Keep HTML escaping. Do not embed licensed renderer, foreign tokens, or hardcoded foreign variant IDs. Edit only assigned files. Do not run build until main thread integrates.
 

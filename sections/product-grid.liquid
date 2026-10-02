@@ -8,9 +8,7 @@
   endif
   assign use_replica_preview = false
   if section.settings.replica_preview
-    if request.design_mode or theme.role != 'main'
-      assign use_replica_preview = true
-    endif
+    assign use_replica_preview = true
   endif
 -%}
 
@@ -21,6 +19,7 @@
 <script type="application/json" data-vx-settings="product-grid">
 {
   "max_products": {{ max_products }},
+  "preview_btn_label": {{ section.settings.preview_btn_label | default: 'COMING SOON' | json }},
   "layout_style": {{ section.settings.layout_style | json }},
   "headline": {{ section.settings.headline | json }},
   "headline_highlight": {{ section.settings.headline_highlight | json }},
@@ -130,9 +129,15 @@
     {
       "type": "checkbox",
       "id": "replica_preview",
-      "label": "Show checkpointed Lin catalog in preview",
+      "label": "Show Lin catalog as coming soon",
       "default": false,
-      "info": "Uses draft product data for development and unpublished themes only. Purchase buttons are disabled."
+      "info": "Shows the saved eleven-product catalog on any theme with purchases disabled. Turn off when your published Shopify products and delivery are ready."
+    },
+    {
+      "type": "text",
+      "id": "preview_btn_label",
+      "label": "Coming soon button label",
+      "default": "COMING SOON"
     },
     {
       "type": "product_list",
