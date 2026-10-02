@@ -1,0 +1,13 @@
+{
+  "name": "ogresell-shopify-theme",
+  "private": true,
+  "scripts": {
+    "build": "node scripts/build-loader.cjs",
+    "check": "bash scripts/check-theme.sh",
+    "test": "node scripts/test-info.cjs && node scripts/test-settings.cjs && node scripts/test-lin.cjs"
+  },
+  "devDependencies": {
+    "jsdom": "^26.1.0",
+    "terser": "^5.46.0"
+  }
+}

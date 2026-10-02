@@ -10,9 +10,9 @@
         "show_on_all_pages": false,
         "bg_color": "#000000",
         "text_color": "#ffffff",
-        "accent_color": "#19d400",
-        "icon_color": "#19d400",
-        "dot_color": "#19d400",
+        "accent_color": "#ff86dd",
+        "icon_color": "#aaaaaa",
+        "dot_color": "#22c55e",
         "divider_color": "#444444",
         "border_color": "#1a1a1a",
         "bar_height": 40,
@@ -37,21 +37,28 @@
       "type": "header-pill",
       "name": "Header",
       "settings": {
-        "logo_width_desktop": 120,
-        "logo_width_mobile": 120,
-        "brand_text": "OGSELL",
+        "logo_width_desktop": 90,
+        "logo_width_mobile": 90,
+        "brand_text": "Lin Resell",
         "brand_color": "#ffffff",
-        "nav_color": "#d1d5db",
-        "nav_hover_color": "#19d400",
+        "nav_color": "#808080",
+        "nav_hover_color": "#ff86dd",
         "scroll_bg": "rgba(0,0,0,0.82)",
         "scroll_border": "#1a1a1a",
         "dropdown_bg": "#0a0a0a",
-        "badge_bg": "#19d400",
+        "badge_bg": "#ff86dd",
         "badge_text_color": "#000000",
         "header_height_desktop": 64,
-        "header_height_mobile": 48
+        "header_height_mobile": 64,
+        "use_reference_logo": true,
+        "show_products_link": false,
+        "side_padding_desktop": 24,
+        "side_padding_mobile": 16
       }
     }
   },
-  "order": ["urgency-bar", "header"]
+  "order": [
+    "urgency-bar",
+    "header"
+  ]
 }

@@ -53,11 +53,13 @@
     assign body_font = settings.body_font | default: 'Satoshi'
   -%}
 
+  {% if heading_font == 'Clash Grotesk' or heading_font == 'Satoshi' or body_font == 'Clash Grotesk' or body_font == 'Satoshi' %}
   <link rel="preconnect" href="https://api.fontshare.com">
   <link href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@400,500,600,700&f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
+  {% endif %}
 
   {%- capture extra_fonts -%}
-    {%- unless heading_font == 'Clash Grotesk' or heading_font == 'Satoshi' -%}family={{ heading_font | replace: ' ', '+' }}{% unless heading_font == 'Anton' or heading_font == 'Bebas Neue' %}:wght@400;500;600;700{% endunless %}&{%- endunless -%}
+    {%- unless heading_font == 'Clash Grotesk' or heading_font == 'Satoshi' or heading_font contains 'system-ui' -%}family={{ heading_font | replace: ' ', '+' }}{% unless heading_font == 'Anton' or heading_font == 'Bebas Neue' %}:wght@400;500;600;700{% endunless %}&{%- endunless -%}
     {%- unless body_font == 'Satoshi' or body_font == 'Clash Grotesk' or body_font contains 'system-ui' or body_font == heading_font -%}family={{ body_font | replace: ' ', '+' }}:wght@400;500;600;700&{%- endunless -%}
   {%- endcapture -%}
   {%- if extra_fonts != blank -%}
@@ -77,6 +79,7 @@
       --dialog-border: {{ settings.dialog_border | default: '#333333' }};
       --product-title-size: {{ settings.product_title_size | default: 16 }}px;
       --product-title-size-mobile: {{ settings.product_title_size_mobile | default: 14 }}px;
+      --product-price-size-mobile: {{ settings.product_price_size_mobile | default: 17 }}px;
       --product-price-size: {{ settings.product_price_size | default: 18 }}px;
       --product-compare-size: {{ settings.product_compare_size | default: 14 }}px;
       --product-image-fit: {{ settings.product_image_fit | default: 'cover' }};
@@ -119,7 +122,7 @@
       --color-text-muted: {{ text_muted }};
       --color-text-subtle: {{ text_subtle }};
       --color-stars: {{ star_color }};
-      --font-heading: '{{ heading_font }}', 'Clash Grotesk', sans-serif;
+      --font-heading: {% if heading_font contains 'system-ui' %}{{ heading_font }}{% else %}'{{ heading_font }}', 'Clash Grotesk', sans-serif{% endif %};
       --font-body: {% if body_font contains 'system-ui' %}{{ body_font }}{% else %}'{{ body_font }}', 'Satoshi', sans-serif{% endif %};
       --radius-card: {{ settings.border_radius_card | default: 12 }}px;
       --radius-button: {{ settings.border_radius_button | default: 8 }}px;

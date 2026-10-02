@@ -11,11 +11,18 @@
   "card_border": {{ section.settings.card_border | default: '#2a2a2a' | json }},
   "card_border_open": {{ section.settings.card_border_open | default: '#28731f' | json }},
   "card_radius": {{ section.settings.card_radius | default: 16 }},
+  "title_size": {{ section.settings.title_size | default: 40 }},
+  "title_size_mobile": {{ section.settings.title_size_mobile | default: 30 }},
+  "title_gap": {{ section.settings.title_gap | default: 48 }},
+  "card_padding_x": {{ section.settings.card_padding_x | default: 32 }},
+  "card_padding_mobile": {{ section.settings.card_padding_mobile | default: 20 }},
   "card_padding": {{ section.settings.card_padding | default: 24 }},
+  "answer_gap": {{ section.settings.answer_gap | json }},
   "item_gap": {{ section.settings.item_gap | default: 12 }},
   "max_width": {{ section.settings.max_width | default: 720 }},
   "question_color": {{ section.settings.question_color | default: '#ffffff' | json }},
   "answer_color": {{ section.settings.answer_color | default: '#9ca3af' | json }},
+  "question_font_size_mobile": {{ section.settings.question_font_size_mobile | default: 15 }},
   "question_font_size": {{ section.settings.question_font_size | default: 15 }},
   "answer_font_size": {{ section.settings.answer_font_size | default: 14 }},
   "toggle_size": {{ section.settings.toggle_size | default: 32 }},
@@ -42,48 +49,342 @@
   "name": "FAQ",
   "tag": "section",
   "settings": [
-    { "type": "text", "id": "title", "label": "Title", "default": "Frequently Asked Questions" },
-    { "type": "color", "id": "title_color", "label": "Title color", "default": "#ffffff" },
-    { "type": "header", "content": "Card Styling" },
-    { "type": "color", "id": "card_bg", "label": "Card background", "default": "#111111" },
-    { "type": "color", "id": "card_border", "label": "Card border", "default": "#2a2a2a" },
-    { "type": "color", "id": "card_border_open", "label": "Card border (open)", "default": "#28731f" },
-    { "type": "range", "id": "card_radius", "label": "Border radius (px)", "min": 0, "max": 24, "step": 2, "default": 16 },
-    { "type": "range", "id": "card_padding", "label": "Card padding (px)", "min": 12, "max": 32, "step": 2, "default": 24 },
-    { "type": "range", "id": "item_gap", "label": "Gap between items (px)", "min": 4, "max": 24, "step": 2, "default": 12 },
-    { "type": "range", "id": "max_width", "label": "Max width (px)", "min": 400, "max": 900, "step": 10, "default": 720 },
-    { "type": "header", "content": "Text" },
-    { "type": "color", "id": "question_color", "label": "Question color", "default": "#ffffff" },
-    { "type": "color", "id": "answer_color", "label": "Answer color", "default": "#9ca3af" },
-    { "type": "range", "id": "question_font_size", "label": "Question font size (px)", "min": 13, "max": 22, "step": 1, "default": 15 },
-    { "type": "range", "id": "answer_font_size", "label": "Answer font size (px)", "min": 12, "max": 18, "step": 1, "default": 14 },
-    { "type": "header", "content": "Toggle Icon" },
-    { "type": "range", "id": "toggle_size", "label": "Toggle circle size (px)", "min": 24, "max": 44, "step": 2, "default": 32 },
-    { "type": "color", "id": "toggle_bg", "label": "Toggle background", "default": "#1a1a1a" },
-    { "type": "color", "id": "toggle_bg_open", "label": "Toggle background (open)", "default": "#19d400" },
-    { "type": "color", "id": "toggle_icon_color", "label": "Icon color", "default": "#ffffff" },
-    { "type": "color", "id": "toggle_icon_open", "label": "Icon color (open)", "default": "#1a1a1a" },
-    { "type": "header", "content": "Accordion behavior" },
-    { "type": "checkbox", "id": "open_first", "label": "Open first question initially", "default": true },
-    { "type": "checkbox", "id": "allow_multiple", "label": "Allow multiple open answers", "default": false },
-    { "type": "header", "content": "Spacing" },
-    { "type": "range", "id": "padding_top", "label": "Top padding (px)", "min": 0, "max": 120, "step": 10, "default": 60 },
-    { "type": "range", "id": "padding_bottom", "label": "Bottom padding (px)", "min": 0, "max": 120, "step": 10, "default": 60 },
-    {"type": "header", "content": "Extra appearance controls"},
-    {"type": "color", "id": "section_surface", "label": "Section background"},
-    {"type": "select", "id": "section_heading_align", "label": "Heading alignment", "default": "inherit", "options": [{"value": "inherit", "label": "Use section default"}, {"value": "left", "label": "Left"}, {"value": "center", "label": "Center"}, {"value": "right", "label": "Right"}]},
-    {"type": "select", "id": "mobile_spacing_mode", "label": "Mobile section spacing", "default": "inherit", "options": [{"value": "inherit", "label": "Use section spacing"}, {"value": "custom", "label": "Custom mobile spacing"}]},
-    {"type": "range", "id": "mobile_padding_top", "label": "Mobile top spacing (px)", "min": 0, "max": 160, "step": 4, "default": 40},
-    {"type": "range", "id": "mobile_bottom_override", "label": "Mobile bottom spacing (px; -1 = default)", "min": -1, "max": 199, "step": 2, "default": -1},
-    {"type": "range", "id": "mobile_padding_bottom", "label": "Mobile bottom spacing (px)", "min": 0, "max": 160, "step": 4, "default": 40}
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Frequently Asked Questions"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Card Styling"
+    },
+    {
+      "type": "color",
+      "id": "card_bg",
+      "label": "Card background",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "card_border",
+      "label": "Card border",
+      "default": "#2a2a2a"
+    },
+    {
+      "type": "color",
+      "id": "card_border_open",
+      "label": "Card border (open)",
+      "default": "#28731f"
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "label": "Border radius (px)",
+      "min": 0,
+      "max": 24,
+      "step": 2,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "card_padding",
+      "label": "Card padding (px)",
+      "min": 12,
+      "max": 32,
+      "step": 2,
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "item_gap",
+      "label": "Gap between items (px)",
+      "min": 4,
+      "max": 24,
+      "step": 2,
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Max width (px)",
+      "min": 400,
+      "max": 900,
+      "step": 10,
+      "default": 720
+    },
+    {
+      "type": "header",
+      "content": "Text"
+    },
+    {
+      "type": "color",
+      "id": "question_color",
+      "label": "Question color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "answer_color",
+      "label": "Answer color",
+      "default": "#9ca3af"
+    },
+    {
+      "type": "range",
+      "id": "question_font_size",
+      "label": "Question font size (px)",
+      "min": 13,
+      "max": 22,
+      "step": 1,
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "answer_font_size",
+      "label": "Answer font size (px)",
+      "min": 12,
+      "max": 18,
+      "step": 1,
+      "default": 14
+    },
+    {
+      "type": "header",
+      "content": "Toggle Icon"
+    },
+    {
+      "type": "range",
+      "id": "toggle_size",
+      "label": "Toggle circle size (px)",
+      "min": 24,
+      "max": 44,
+      "step": 2,
+      "default": 32
+    },
+    {
+      "type": "color",
+      "id": "toggle_bg",
+      "label": "Toggle background",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "color",
+      "id": "toggle_bg_open",
+      "label": "Toggle background (open)",
+      "default": "#19d400"
+    },
+    {
+      "type": "color",
+      "id": "toggle_icon_color",
+      "label": "Icon color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "toggle_icon_open",
+      "label": "Icon color (open)",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "header",
+      "content": "Accordion behavior"
+    },
+    {
+      "type": "checkbox",
+      "id": "open_first",
+      "label": "Open first question initially",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "allow_multiple",
+      "label": "Allow multiple open answers",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding (px)",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding (px)",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "default": 60
+    },
+    {
+      "type": "header",
+      "content": "Extra appearance controls"
+    },
+    {
+      "type": "color",
+      "id": "section_surface",
+      "label": "Section background"
+    },
+    {
+      "type": "select",
+      "id": "section_heading_align",
+      "label": "Heading alignment",
+      "default": "inherit",
+      "options": [
+        {
+          "value": "inherit",
+          "label": "Use section default"
+        },
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "mobile_spacing_mode",
+      "label": "Mobile section spacing",
+      "default": "inherit",
+      "options": [
+        {
+          "value": "inherit",
+          "label": "Use section spacing"
+        },
+        {
+          "value": "custom",
+          "label": "Custom mobile spacing"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_top",
+      "label": "Mobile top spacing (px)",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "mobile_bottom_override",
+      "label": "Mobile bottom spacing (px; -1 = default)",
+      "min": -1,
+      "max": 199,
+      "step": 2,
+      "default": -1
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_bottom",
+      "label": "Mobile bottom spacing (px)",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "label": "Title size desktop",
+      "min": 20,
+      "max": 60,
+      "step": 2,
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "title_size_mobile",
+      "label": "Title size mobile",
+      "min": 20,
+      "max": 40,
+      "step": 2,
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "title_gap",
+      "label": "Title bottom space",
+      "min": 16,
+      "max": 80,
+      "step": 2,
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "card_padding_x",
+      "label": "Horizontal card padding",
+      "min": 12,
+      "max": 48,
+      "step": 2,
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "card_padding_mobile",
+      "label": "Mobile card padding",
+      "min": 12,
+      "max": 32,
+      "step": 2,
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "question_font_size_mobile",
+      "label": "Mobile question size",
+      "min": 13,
+      "max": 22,
+      "step": 1,
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "answer_gap",
+      "label": "Question to answer gap (px)",
+      "min": 0,
+      "max": 48,
+      "step": 2,
+      "default": 24
+    }
   ],
   "blocks": [
     {
       "type": "question",
       "name": "FAQ Item",
       "settings": [
-        { "type": "text", "id": "question", "label": "Question", "default": "Is this legit?" },
-        { "type": "richtext", "id": "answer", "label": "Answer", "default": "<p>Yes! All vendors are personally verified and tested.</p>" }
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "Is this legit?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer",
+          "default": "<p>Yes! All vendors are personally verified and tested.</p>"
+        }
       ]
     }
   ],
@@ -91,10 +392,34 @@
     {
       "name": "FAQ",
       "blocks": [
-        { "type": "question", "settings": { "question": "Is this legit?", "answer": "<p>Yes! I personally use these suppliers and have verified every single one. These are real, working vendor contacts.</p>" } },
-        { "type": "question", "settings": { "question": "How will I receive the vendors?", "answer": "<p>Once you purchase, vendor links are INSTANTLY sent through email. You'll have access within minutes.</p>" } },
-        { "type": "question", "settings": { "question": "Can I get a refund?", "answer": "<p>Due to the digital nature of the product, all sales are final. However, we stand behind our product 100%.</p>" } },
-        { "type": "question", "settings": { "question": "How many vendors are included?", "answer": "<p>Each bundle contains multiple verified vendors with contact information and pricing details.</p>" } }
+        {
+          "type": "question",
+          "settings": {
+            "question": "Is this legit?",
+            "answer": "<p>Yes! I personally use these suppliers and have verified every single one. These are real, working vendor contacts.</p>"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "How will I receive the vendors?",
+            "answer": "<p>Once you purchase, vendor links are INSTANTLY sent through email. You'll have access within minutes.</p>"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "Can I get a refund?",
+            "answer": "<p>Due to the digital nature of the product, all sales are final. However, we stand behind our product 100%.</p>"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "How many vendors are included?",
+            "answer": "<p>Each bundle contains multiple verified vendors with contact information and pricing details.</p>"
+          }
+        }
       ]
     }
   ]

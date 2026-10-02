@@ -1,0 +1,607 @@
+[
+  {
+    "id": 9292358942955,
+    "title": "SHIRT VENDOR",
+    "handle": "shirt-vendor",
+    "body_html": "<p><span>Links are sent straight to your email instantly after purchase, please enter a valid email address at checkout.</span></p>",
+    "published_at": "2026-01-20T10:47:16-08:00",
+    "created_at": "2026-01-18T23:55:51-08:00",
+    "updated_at": "2026-10-01T12:37:05-07:00",
+    "vendor": "My Store",
+    "product_type": "",
+    "tags": [],
+    "variants": [
+      {
+        "id": 47352822956267,
+        "title": "Default Title",
+        "option1": "Default Title",
+        "option2": null,
+        "option3": null,
+        "sku": null,
+        "requires_shipping": false,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "9.99",
+        "grams": 0,
+        "compare_at_price": "15.99",
+        "position": 1,
+        "product_id": 9292358942955,
+        "created_at": "2026-01-18T23:55:51-08:00",
+        "updated_at": "2026-10-01T12:37:05-07:00"
+      }
+    ],
+    "images": [
+      {
+        "id": 47739555545323,
+        "created_at": "2026-01-20T10:45:26-08:00",
+        "position": 1,
+        "updated_at": "2026-01-20T10:45:28-08:00",
+        "product_id": 9292358942955,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0785/1858/3531/files/Shirt_Vendor.jpg?v=1768934728",
+        "width": 2000,
+        "height": 1400
+      }
+    ],
+    "options": [
+      {
+        "name": "Title",
+        "position": 1,
+        "values": [
+          "Default Title"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 9291642110187,
+    "title": "PURSE VENDOR",
+    "handle": "sandal-vendor",
+    "body_html": "<p><span>Links are sent straight to your email instantly after purchase, please enter a valid email address at checkout.</span></p>",
+    "published_at": "2026-01-18T02:05:48-08:00",
+    "created_at": "2026-01-18T01:53:48-08:00",
+    "updated_at": "2026-10-01T12:37:05-07:00",
+    "vendor": "My Store",
+    "product_type": "",
+    "tags": [],
+    "variants": [
+      {
+        "id": 47349797028075,
+        "title": "Default Title",
+        "option1": "Default Title",
+        "option2": null,
+        "option3": null,
+        "sku": null,
+        "requires_shipping": false,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "9.99",
+        "grams": 0,
+        "compare_at_price": "15.99",
+        "position": 1,
+        "product_id": 9291642110187,
+        "created_at": "2026-01-18T01:53:48-08:00",
+        "updated_at": "2026-10-01T12:37:05-07:00"
+      }
+    ],
+    "images": [
+      {
+        "id": 47721250881771,
+        "created_at": "2026-01-18T01:54:06-08:00",
+        "position": 1,
+        "updated_at": "2026-01-18T01:54:07-08:00",
+        "product_id": 9291642110187,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0785/1858/3531/files/Bag_Supplier.jpg?v=1768730047",
+        "width": 2000,
+        "height": 1400
+      }
+    ],
+    "options": [
+      {
+        "name": "Title",
+        "position": 1,
+        "values": [
+          "Default Title"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 9291643879659,
+    "title": "SANDAL VENDOR",
+    "handle": "sandal-vendor-1",
+    "body_html": "<p><span>Links are sent straight to your email instantly after purchase, please enter a valid email address at checkout.</span></p>",
+    "published_at": "2026-01-18T02:05:05-08:00",
+    "created_at": "2026-01-18T02:04:45-08:00",
+    "updated_at": "2026-10-01T12:37:05-07:00",
+    "vendor": "My Store",
+    "product_type": "",
+    "tags": [],
+    "variants": [
+      {
+        "id": 47349800173803,
+        "title": "Default Title",
+        "option1": "Default Title",
+        "option2": null,
+        "option3": null,
+        "sku": null,
+        "requires_shipping": false,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "9.99",
+        "grams": 0,
+        "compare_at_price": "15.99",
+        "position": 1,
+        "product_id": 9291643879659,
+        "created_at": "2026-01-18T02:04:46-08:00",
+        "updated_at": "2026-10-01T12:37:05-07:00"
+      }
+    ],
+    "images": [
+      {
+        "id": 47721277391083,
+        "created_at": "2026-01-18T02:04:54-08:00",
+        "position": 1,
+        "updated_at": "2026-01-18T02:04:56-08:00",
+        "product_id": 9291643879659,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0785/1858/3531/files/SandalVendor.jpg?v=1768730696",
+        "width": 2000,
+        "height": 1400
+      }
+    ],
+    "options": [
+      {
+        "name": "Title",
+        "position": 1,
+        "values": [
+          "Default Title"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 9291557372139,
+    "title": "PREMIUM VENDOR BUNDLE",
+    "handle": "premium-vendor-bundle",
+    "body_html": "<p><span>Links are sent straight to your email instantly after purchase, please enter a valid email address at checkout.</span></p>",
+    "published_at": "2026-01-17T22:35:48-08:00",
+    "created_at": "2026-01-17T22:29:48-08:00",
+    "updated_at": "2026-10-01T12:37:05-07:00",
+    "vendor": "My Store",
+    "product_type": "",
+    "tags": [],
+    "variants": [
+      {
+        "id": 47349137735915,
+        "title": "Default Title",
+        "option1": "Default Title",
+        "option2": null,
+        "option3": null,
+        "sku": null,
+        "requires_shipping": false,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "34.99",
+        "grams": 0,
+        "compare_at_price": "50.00",
+        "position": 1,
+        "product_id": 9291557372139,
+        "created_at": "2026-01-17T22:29:48-08:00",
+        "updated_at": "2026-10-01T12:37:05-07:00"
+      }
+    ],
+    "images": [
+      {
+        "id": 47720258896107,
+        "created_at": "2026-01-18T00:59:32-08:00",
+        "position": 1,
+        "updated_at": "2026-01-18T00:59:33-08:00",
+        "product_id": 9291557372139,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0785/1858/3531/files/ewE.jpg?v=1768726773",
+        "width": 2000,
+        "height": 1400
+      }
+    ],
+    "options": [
+      {
+        "name": "Title",
+        "position": 1,
+        "values": [
+          "Default Title"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 9291554783467,
+    "title": "MOISSANITE VENDOR",
+    "handle": "moissanite-vendor",
+    "body_html": "<p><span>Links are sent straight to your email instantly after purchase, please enter a valid email address at checkout.</span></p>",
+    "published_at": "2026-01-17T22:17:17-08:00",
+    "created_at": "2026-01-17T22:12:13-08:00",
+    "updated_at": "2026-10-01T12:37:05-07:00",
+    "vendor": "My Store",
+    "product_type": "",
+    "tags": [],
+    "variants": [
+      {
+        "id": 47349133082859,
+        "title": "Default Title",
+        "option1": "Default Title",
+        "option2": null,
+        "option3": null,
+        "sku": null,
+        "requires_shipping": false,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "9.99",
+        "grams": 0,
+        "compare_at_price": "15.99",
+        "position": 1,
+        "product_id": 9291554783467,
+        "created_at": "2026-01-17T22:12:13-08:00",
+        "updated_at": "2026-10-01T12:37:05-07:00"
+      }
+    ],
+    "images": [
+      {
+        "id": 47719875313899,
+        "created_at": "2026-01-17T22:15:15-08:00",
+        "position": 1,
+        "updated_at": "2026-01-17T22:15:17-08:00",
+        "product_id": 9291554783467,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0785/1858/3531/files/212122112.jpg?v=1768716917",
+        "width": 2000,
+        "height": 1400
+      }
+    ],
+    "options": [
+      {
+        "name": "Title",
+        "position": 1,
+        "values": [
+          "Default Title"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 9104764961003,
+    "title": "LULU VENDOR",
+    "handle": "lulu-supplier",
+    "body_html": "<p><span>Links are sent straight to your email instantly after purchase, please enter a valid email address at checkout.</span></p>",
+    "published_at": "2025-09-30T08:53:47-07:00",
+    "created_at": "2025-09-30T08:53:47-07:00",
+    "updated_at": "2026-10-01T12:37:05-07:00",
+    "vendor": "My Store",
+    "product_type": "",
+    "tags": [],
+    "variants": [
+      {
+        "id": 46930873417963,
+        "title": "Default Title",
+        "option1": "Default Title",
+        "option2": null,
+        "option3": null,
+        "sku": null,
+        "requires_shipping": false,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "9.99",
+        "grams": 0,
+        "compare_at_price": "15.99",
+        "position": 1,
+        "product_id": 9104764961003,
+        "created_at": "2025-09-30T08:53:47-07:00",
+        "updated_at": "2026-10-01T12:37:05-07:00"
+      }
+    ],
+    "images": [
+      {
+        "id": 47720676950251,
+        "created_at": "2026-01-18T01:30:28-08:00",
+        "position": 1,
+        "updated_at": "2026-01-18T01:30:29-08:00",
+        "product_id": 9104764961003,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0785/1858/3531/files/Lulu_Supplier_5eff2c07-31df-4aa1-8430-f87188ff9c26.jpg?v=1768728629",
+        "width": 2000,
+        "height": 1400
+      }
+    ],
+    "options": [
+      {
+        "name": "Title",
+        "position": 1,
+        "values": [
+          "Default Title"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 9104764895467,
+    "title": "ALL VENDOR\u200e \u200e \u200e \u200e \u200e \u200e \u200e BUNDLE",
+    "handle": "elite-supplier-bundle",
+    "body_html": "<p><span>Links are sent straight to your email instantly after purchase, please enter a valid email address at checkout.</span></p>",
+    "published_at": "2025-09-30T08:53:45-07:00",
+    "created_at": "2025-09-30T08:53:45-07:00",
+    "updated_at": "2026-10-01T12:37:05-07:00",
+    "vendor": "My Store",
+    "product_type": "",
+    "tags": [],
+    "variants": [
+      {
+        "id": 46930873352427,
+        "title": "Default Title",
+        "option1": "Default Title",
+        "option2": null,
+        "option3": null,
+        "sku": null,
+        "requires_shipping": false,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "24.99",
+        "grams": 0,
+        "compare_at_price": "39.00",
+        "position": 1,
+        "product_id": 9104764895467,
+        "created_at": "2025-09-30T08:53:45-07:00",
+        "updated_at": "2026-10-01T12:37:05-07:00"
+      }
+    ],
+    "images": [
+      {
+        "id": 47720546468075,
+        "created_at": "2026-01-18T01:15:54-08:00",
+        "position": 1,
+        "updated_at": "2026-01-18T01:15:56-08:00",
+        "product_id": 9104764895467,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0785/1858/3531/files/All_Vendor_Bundle.jpg?v=1768727756",
+        "width": 2000,
+        "height": 1400
+      }
+    ],
+    "options": [
+      {
+        "name": "Title",
+        "position": 1,
+        "values": [
+          "Default Title"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 9104764862699,
+    "title": "ELECTRONIC VENDOR",
+    "handle": "electronics-supplier",
+    "body_html": "<p><span>Links are sent straight to your email instantly after purchase, please enter a valid email address at checkout.</span></p>",
+    "published_at": "2025-09-30T08:53:44-07:00",
+    "created_at": "2025-09-30T08:53:44-07:00",
+    "updated_at": "2026-10-01T12:37:05-07:00",
+    "vendor": "My Store",
+    "product_type": "",
+    "tags": [],
+    "variants": [
+      {
+        "id": 46930873319659,
+        "title": "Default Title",
+        "option1": "Default Title",
+        "option2": null,
+        "option3": null,
+        "sku": null,
+        "requires_shipping": false,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "9.99",
+        "grams": 0,
+        "compare_at_price": "15.99",
+        "position": 1,
+        "product_id": 9104764862699,
+        "created_at": "2025-09-30T08:53:44-07:00",
+        "updated_at": "2026-10-01T12:37:05-07:00"
+      }
+    ],
+    "images": [
+      {
+        "id": 46813045653739,
+        "created_at": "2025-09-30T08:48:23-07:00",
+        "position": 1,
+        "updated_at": "2025-09-30T08:48:25-07:00",
+        "product_id": 9104764862699,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0785/1858/3531/files/Lulu_Supplier_2.jpg?v=1759247305",
+        "width": 2000,
+        "height": 1400
+      }
+    ],
+    "options": [
+      {
+        "name": "Title",
+        "position": 1,
+        "values": [
+          "Default Title"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 9104764698859,
+    "title": "HOODIE VENDOR",
+    "handle": "designer-hoodie-supplier",
+    "body_html": "<p><span>Links are sent straight to your email instantly after purchase, please enter a valid email address at checkout.</span></p>",
+    "published_at": "2025-09-30T08:53:40-07:00",
+    "created_at": "2025-09-30T08:53:41-07:00",
+    "updated_at": "2026-10-01T12:37:05-07:00",
+    "vendor": "My Store",
+    "product_type": "",
+    "tags": [],
+    "variants": [
+      {
+        "id": 46930873123051,
+        "title": "Default Title",
+        "option1": "Default Title",
+        "option2": null,
+        "option3": null,
+        "sku": null,
+        "requires_shipping": false,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "9.99",
+        "grams": 0,
+        "compare_at_price": "15.99",
+        "position": 1,
+        "product_id": 9104764698859,
+        "created_at": "2025-09-30T08:53:41-07:00",
+        "updated_at": "2026-10-01T12:37:05-07:00"
+      }
+    ],
+    "images": [
+      {
+        "id": 47721307668715,
+        "created_at": "2026-01-18T02:09:24-08:00",
+        "position": 1,
+        "updated_at": "2026-01-18T02:09:25-08:00",
+        "product_id": 9104764698859,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0785/1858/3531/files/HoodieVendor.jpg?v=1768730965",
+        "width": 2000,
+        "height": 1400
+      }
+    ],
+    "options": [
+      {
+        "name": "Title",
+        "position": 1,
+        "values": [
+          "Default Title"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 9104764666091,
+    "title": "ALLO VENDOR",
+    "handle": "bubu-supplier",
+    "body_html": "<p><span>Links are sent straight to your email instantly after purchase, please enter a valid email address at checkout.</span></p>",
+    "published_at": "2025-09-30T08:53:39-07:00",
+    "created_at": "2025-09-30T08:53:39-07:00",
+    "updated_at": "2026-10-01T12:37:05-07:00",
+    "vendor": "My Store",
+    "product_type": "",
+    "tags": [],
+    "variants": [
+      {
+        "id": 46930873090283,
+        "title": "Default Title",
+        "option1": "Default Title",
+        "option2": null,
+        "option3": null,
+        "sku": null,
+        "requires_shipping": false,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "9.99",
+        "grams": 0,
+        "compare_at_price": "15.99",
+        "position": 1,
+        "product_id": 9104764666091,
+        "created_at": "2025-09-30T08:53:39-07:00",
+        "updated_at": "2026-10-01T12:37:05-07:00"
+      }
+    ],
+    "images": [
+      {
+        "id": 48149673967851,
+        "created_at": "2026-02-19T23:15:52-08:00",
+        "position": 1,
+        "updated_at": "2026-02-19T23:15:53-08:00",
+        "product_id": 9104764666091,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0785/1858/3531/files/Alo_Vendor.jpg?v=1771571753",
+        "width": 2000,
+        "height": 1400
+      }
+    ],
+    "options": [
+      {
+        "name": "Title",
+        "position": 1,
+        "values": [
+          "Default Title"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 9104606003435,
+    "title": "PERFUME  \u200e \u200e \u200e \u200e \u200e \u200e VENDOR",
+    "handle": "cologne-supplier",
+    "body_html": "<p><span>Links are sent straight to your email instantly after purchase, please enter a valid email address at checkout.</span></p>",
+    "published_at": "2025-09-29T23:58:40-07:00",
+    "created_at": "2025-09-29T23:58:39-07:00",
+    "updated_at": "2026-10-01T12:37:05-07:00",
+    "vendor": "My Store",
+    "product_type": "",
+    "tags": [],
+    "variants": [
+      {
+        "id": 46930366955755,
+        "title": "Default Title",
+        "option1": "Default Title",
+        "option2": null,
+        "option3": null,
+        "sku": null,
+        "requires_shipping": false,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "9.99",
+        "grams": 0,
+        "compare_at_price": "15.99",
+        "position": 1,
+        "product_id": 9104606003435,
+        "created_at": "2025-09-29T23:58:39-07:00",
+        "updated_at": "2026-10-01T12:37:05-07:00"
+      }
+    ],
+    "images": [
+      {
+        "id": 47720253849835,
+        "created_at": "2026-01-18T00:57:40-08:00",
+        "position": 1,
+        "updated_at": "2026-01-18T00:57:42-08:00",
+        "product_id": 9104606003435,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0785/1858/3531/files/heel.jpg?v=1768726662",
+        "width": 2000,
+        "height": 1400
+      }
+    ],
+    "options": [
+      {
+        "name": "Title",
+        "position": 1,
+        "values": [
+          "Default Title"
+        ]
+      }
+    ]
+  }
+]

@@ -1,5 +1,19 @@
 # Theme — Build Status
 
+## Current branch: Lin Resell replica — 2026-10-02
+
+- Work is in `theme/` on `linresell-replica`. The sections below this entry describe the earlier Luke's/Vexel storefront.
+- Homepage: integrated Lin product grid/headline, five-question FAQ, supplier-access CTA, compact header/footer, pink palette and bundled reference logo/images. Legacy section renderers remain available. Merchant settings cover typography, spacing, colors, card/button actions, product selection, glow, and CTA content.
+- Repo-local `runtime/loader.js`, locked dependencies and `npm run build` reproduce both shipped loader mirrors. Bundle: 69,553 bytes, 18,529 bytes gzip. System fonts avoid the reference's broken font requests; the loading wait remains zero.
+- Eleven reference products imported as drafts with ready images. Original nine products preserved. Draft preview displays all eleven with disabled purchase controls and destination-store IDs. Supplier files/links and delivery integration remain required before selling.
+- Native Chrome comparisons at 1440px and 375px: headline, first-card dimensions/positions, FAQ and final CTA positions match the observed reference. Tablet 768px checked for image loading and overflow. All 33 image/title/info triggers, FAQ, mobile menu, settings changes and section reload checked in the development preview.
+- `npm run build` and `npm test` pass for source and bundle. `bash scripts/check-theme.sh`: zero errors, 12 warnings across seven files. Actual Shopify admin editor verification is pending login in the selected Chrome profile; native preview section-event reload passed.
+- Local preview: http://127.0.0.1:9292/. Development theme: `204351471957`. Live theme remains `196616782165`. No Git push or live publication.
+- Before-change checkpoint: `cdb48051ac92cb3914336665242ee708acc1bb4e`, tag `checkpoint/ogresell-before-linresell-2026-10-01`. Backup manifest: 386 files, all hashes verified. Selected old theme `194628288853` was backed up and removed.
+- Setup, settings, evidence and limitations: `docs/LIN_REPLICA.md`.
+
+## Historical Vexel build
+
 ## Section order (matches the reference layout)
 1. Urgency bar — header group
 2. Hero

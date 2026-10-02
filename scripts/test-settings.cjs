@@ -1,0 +1,34 @@
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const {JSDOM,VirtualConsole} = require('jsdom');
+const runtime=require('node:path').resolve(__dirname,'..');
+const theme=runtime;
+const json=JSON.stringify;
+const faq=(allow,color)=>({allow_multiple:allow,card_radius:0,padding_top:0,padding_bottom:0,title_color:color,blocks:[1,2].map(n=>({type:'question',settings:{question:'Question '+n,answer:'Answer '+n}}))});
+const section=(id,type,settings,data)=>`<div class="shopify-section" id="${id}"><section class="vx-shell vx-shell--loading" data-vx-section="${type}"></section><script data-vx-settings="${type}" type="application/json">${json(settings)}</script>${data?`<script data-vx-products="${type}" type="application/json">${json(data)}</script>`:''}</div>`;
+for(const file of ['/runtime/loader.js','/assets/scaled-loader-current.js']){
+ const errors=[];const vc=new VirtualConsole();vc.on('jsdomError',e=>errors.push(e.message));
+ const dom=new JSDOM('<!doctype html><html><body>'+section('faq-one','faq',faq(false,'#abcdef'))+section('faq-two','faq',faq(true,'#123456'))+section('hero','hero',{padding_top:0,title_max_width:600,show_avatars:false,show_glow:false})+section('review','reviews',{columns:3,initial_reviews:1,blocks:[1,2,3].map(n=>({type:'review',settings:{name:'Person '+n,text:'Review '+n,stars:5}}))})+section('empty','faq',{})+section('cart','cart-drawer',{})+section('grid','product-grid',{buy_btn_radius:0,show_glow:true,glow_color:'#ff0000',glow_intensity:0},[1,2,3,4,5].map(n=>({id:n,variantId:n,handle:'item-'+n,title:'Item '+n,image:'/img.jpg',price:1000})))+'</body></html>',{url:'https://fixture.invalid/',runScripts:'outside-only',virtualConsole:vc});
+ const {window:w}=dom,{document:d}=w;
+ w.fetch=async()=>({ok:true,json:async()=>({items:[],item_count:0,total_price:0})});w.matchMedia=()=>({matches:false});
+ w.eval(fs.readFileSync(runtime+file,'utf8'));w.eval(fs.readFileSync(theme+'/assets/theme.js','utf8'));d.dispatchEvent(new w.Event('DOMContentLoaded'));
+ const one=d.getElementById('faq-one'),two=d.getElementById('faq-two');
+ let styles=[...one.querySelector('style').sheet.cssRules];
+ assert.ok(styles.filter(r=>r.selectorText).every(r=>r.selectorText.startsWith('[data-vx-instance=')),'Each section selector must be scoped');
+ assert.match(styles.find(r=>r.selectorText && r.selectorText.endsWith('.vx-faq')).style.padding,/^0px/);
+ assert.equal(styles.find(r=>r.selectorText && r.selectorText.endsWith('.vx-faq-item')).style.getPropertyValue('border-radius'),'0px');
+ two.querySelectorAll('button')[1].click();assert.equal(two.querySelectorAll('.open').length,2);assert.equal(one.querySelectorAll('.open').length,1);
+ for(let i=0;i<3;i++)one.dispatchEvent(new w.Event('shopify:section:load',{bubbles:true}));
+ one.querySelectorAll('button')[1].click();assert.equal(one.querySelectorAll('.open').length,1);assert.ok(one.querySelectorAll('.vx-faq-item')[1].classList.contains('open'),'One click after reload must toggle once');
+ d.querySelector('#faq-one script').textContent=json(faq(true,'#fedcba'));one.dispatchEvent(new w.Event('shopify:section:load',{bubbles:true}));one.querySelectorAll('button')[1].click();assert.equal(one.querySelectorAll('.open').length,2,'New section settings must be applied');
+ assert.ok(d.querySelector('#empty .vx-shell--loaded'),'Empty sections complete rendering');
+ const grid=d.getElementById('grid');const sheet=grid.querySelector('style').sheet;const mobile=Array.from(sheet.cssRules).find(r=>r.type===4);assert.ok(Array.from(mobile.cssRules).every(r=>r.selectorText.startsWith('[data-vx-instance=')),'Nested media selectors scoped');
+ assert.match(Array.from(sheet.cssRules).find(r=>r.selectorText && r.selectorText.endsWith('.vx-btn-buy')).style.getPropertyValue('border-radius'),/0px/);
+ const glow=Array.from(sheet.cssRules).find(r=>r.selectorText && r.selectorText.endsWith('.vx-pg::before'));assert.match(glow.cssText,/#ff0000 0%/,'Glow color and valid zero strength honored');
+ const images=grid.querySelectorAll('img');assert.equal(images[0].loading,undefined);assert.equal(images[0].getAttribute('loading'),'eager');assert.equal(images[0].getAttribute('fetchpriority'),'high');assert.equal(images[4].getAttribute('loading'),'lazy');
+ const review=d.getElementById('review');assert.equal(Array.from(review.querySelector('style').sheet.cssRules).find(r=>r.selectorText && r.selectorText.endsWith('.vx-reviews__grid')).style.getPropertyValue('grid-template-columns'),'repeat(3,minmax(0,1fr))');
+ assert.equal(d.querySelector('#vx-review-modal'),null,'Review dialog should stay lazy');review.querySelector('[data-vx-open-review]').click();const modal=d.querySelector('#vx-review-modal');assert.equal(modal.parentElement,d.body);assert.equal(modal.style.display,'flex');modal.querySelector('[data-vx-close-review]').click();assert.equal(modal.style.display,'none');review.dispatchEvent(new w.Event('shopify:section:load',{bubbles:true}));review.querySelector('[data-vx-open-review]').click();assert.equal(d.querySelectorAll('#vx-review-modal').length,1);assert.equal(modal.style.display,'flex');modal.click();assert.equal(modal.style.display,'none');
+ w.CartDrawer.open();assert.equal(d.body.style.overflow,'hidden');d.getElementById('cart').dispatchEvent(new w.Event('shopify:section:load',{bubbles:true}));assert.notEqual(d.body.style.overflow,'hidden','Rerender closes drawer and restores body scroll');
+ w.CartDrawer.open();d.getElementById('cart').dispatchEvent(new w.Event('shopify:section:unload',{bubbles:true}));assert.notEqual(d.body.style.overflow,'hidden');assert.equal(w.CartDrawer,undefined,'Unloaded drawer API must be released');
+ assert.deepEqual(errors,[]);dom.window.close();console.log(file+': scoped styles/data, media queries, zero values, editor reload, FAQ isolation, review columns/lazy singleton, image priorities, cart cleanup passed');
+}

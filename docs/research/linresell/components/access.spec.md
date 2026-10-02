@@ -1,0 +1,4 @@
+# Access section
+Target `sections/lin-access.liquid`. Reference: centered heading Access My Personal Suppliers 💕, body Reliable & Quick!, pink Get Access link /.
+Static flow block between FAQ and footer. Visible desktop screenshot: heading32px700, body18px muted#9ca3af, heading margin-bottom15px, body margin-bottom15px; CTA16px600 pink#ff86dd black text padding16px32px radius8px. Reference source CSS confirms these values; container40px padding, black background, radius12px. Mobile breakpoint749px heading25.6px, body16.2px. Button hover#ff60ae and translateY(-2px) transitionall .3s ease.
+Use merchant heading/text/button destination/label/background/text color/radius plus desktop/mobile typography and spacing controls; width1200 incl16px gutters. Plain Liquid markup, no runtime needed. No external libraries. Respect existing global CSS/body fonts. Do not alter runtime or template; main assembles template. Validate schema JSON. Return terse.

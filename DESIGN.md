@@ -1,5 +1,17 @@
 # Theme — Design System
 
+## Active Lin reference — 2026-10-02
+
+Reference: https://linresell.com/. Branch: `linresell-replica`. The remaining sections describe the historical green Vexel design.
+
+Black background, pink `#ff86dd` accent, hover `#ff60ae`, cards `#111111`, 20px card radius and glass inset shadows. System fonts match the reference's visible fallback. Header is 64px tall with a 90px bundled logo at desktop/mobile. Four desktop columns, two mobile columns, centered final row. Grid width 1200px including 16px gutters; gaps 24px desktop and 12px at 375px. Headline letter spacing -1px; product title spacing .02em. FAQ answer gap is 16px.
+
+At 1440px: headline top 112px, 52.8px/58.08px; first card top 226.0703125px, 274 x 435.3984375px; FAQ heading top 1692.265625px; access heading top 2473.015625px. At 375px: headline top 112px, 30.8px/33.88px; first card top 235.75px, 165.5 x 327px; FAQ top 2306.75px; access top 3218.5px. Positions are at scroll zero with the first FAQ open.
+
+Specs and native Chrome screenshots: `docs/research/linresell/` and `docs/design-references/linresell/`. Settings remain adjustable; observed geometry is evidence, not a claim of pixel perfection across browsers.
+
+## Historical Vexel design
+
 ## Reference
 lukesvendors.com — check the live page before building anything visual. The detailed `lukesvendors-reference.md` is a historical snapshot and may not describe the current site.
 

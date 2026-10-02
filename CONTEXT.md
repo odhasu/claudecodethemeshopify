@@ -1,5 +1,10 @@
 # Theme — Context
 
+## Active reconstruction
+
+`linresell-replica` recreates https://linresell.com/ in this Shopify repository. `v2` preserves the earlier live storefront. Runtime source is `runtime/loader.js`; `npm run build` writes both shipped bundles. The external runtime paths below are historical. No license gate or copied vendor loader is used. Draft catalog, settings and verification are documented in `docs/LIN_REPLICA.md`.
+
+
 ## What it is
 Vexel — a Shopify theme product for resellers. Built from scratch, replicating lukesvendors.com design. The theme renders its shell sections client-side without a license check.
 

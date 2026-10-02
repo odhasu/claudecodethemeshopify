@@ -1,6 +1,12 @@
 # Theme — Bugs & Todo
 
-## Active / verification
+## Lin replica — active / verification
+- The 11 imported products are drafts. Supply store-owned vendor delivery files/links and configure a digital delivery app before activation. Preview purchase controls are disabled.
+- Actual Shopify admin editor reload still needs an authenticated Chrome profile. DOM tests and section unload/load events in the real storefront preview passed.
+- Theme Check has 12 warnings and zero errors. Existing product-form, route, remote-asset and settings-count warnings remain; this pass does not claim to fix those unrelated pages.
+- Reference font assets failed to load. The replica uses the observed system fallback; appearance can vary across operating systems.
+
+## Historical Vexel verification
 - The reference uses a populated review feed; this theme's dialog now matches its appearance but does not persist or moderate submissions. Submit explicitly reports that reviews are unavailable, and media upload is disabled. Connect a review app for production reviews.
 - Add suitable store-owned customer portraits and real social links in Shopify Customize. Shopify Files has no clearly suitable hero portraits; its “OG’S SUPPLIERS” and older “Recuerdos Vividos” logos do not match the current OGSELL text wordmark. Reference assets and product catalog imagery were intentionally not copied.
 - Three of four current OGSELL products have empty descriptions. The local information dialog now uses editable Product Grid delivery/refund text for these products; add store-owned product descriptions for product-specific details. This fix is available in the local development preview but has not been published to the live theme.
@@ -54,6 +60,6 @@
 - Product dynamic checkout references `form` outside a Shopify product form (`main-product.liquid`); Theme Check reports `UndefinedObject`.
 - Product-page review submission still shows a false success message without persistence; align with the homepage's honest unavailable behavior or integrate a reviews service.
 - Renderer shell lifecycle and instance scoping are fixed and covered by DOM tests. A visual reload in the actual Shopify admin editor remains to be checked; conventional Liquid section scripts are outside this runtime lifecycle.
-- Runtime source/build/lock are not self-contained in this repository; automate reproducible builds and copying both loader assets.
+- Resolved on `linresell-replica`: source/build/lock are repo-local; `npm run build` generates both assets. The earlier Vexel checkpoint retains its external runtime.
 - Check urgency/header height after loading reveal, presentment currency/localized cart routes, loader-failure fallback, and dialog focus handling.
 - Full evidence and priorities are in `../docs/PROJECT_AUDIT.md`. Findings are not marked fixed; existing storefront edits remain preserved.
