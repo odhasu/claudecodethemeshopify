@@ -4,7 +4,7 @@
   "scripts": {
     "build": "node scripts/build-loader.cjs",
     "check": "bash scripts/check-theme.sh",
-    "test": "node scripts/test-info.cjs && node scripts/test-settings.cjs && node scripts/test-lin.cjs"
+    "test": "node scripts/test-info.cjs && node scripts/test-settings.cjs && node scripts/test-lin.cjs && node scripts/test-cart.cjs"
   },
   "devDependencies": {
     "jsdom": "^26.1.0",

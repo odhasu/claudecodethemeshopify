@@ -1,6 +1,6 @@
 # Vexel theme instructions
 
-This is the Shopify storefront repository, not the Next.js site in `../kenso`. The active user-authorized reconstruction branch is `linresell-replica`; `v2` and tag `checkpoint/ogresell-before-linresell-2026-10-01` preserve the previous storefront. Preserve existing edits. Do not push or change the connected live theme unless the active user request authorizes it.
+This is the Shopify storefront repository, not the Next.js site in `../kenso`. The active user-authorized reconstruction branch is `linresell`; `v2` and tag `checkpoint/ogresell-before-linresell-2026-10-01` preserve the previous storefront. Preserve existing edits. Do not push or change the connected live theme unless the active user request authorizes it.
 
 Read `AGENT.md`, `CONTEXT.md`, `RULES.md`, `GOALS.md`, `BUILD.md`, and the active items in `BUGS.md` before implementation. Local instructions and the active user request take precedence over historical guidance in `~/Desktop/ogresell/CLAUDE.md`; that external file is optional business context, not current license or deployment policy.
 

@@ -2,7 +2,7 @@
 
 ## Active Lin reference — 2026-10-02
 
-Reference: https://linresell.com/. Branch: `linresell-replica`. The remaining sections describe the historical green Vexel design.
+Reference: https://linresell.com/. Branch: `linresell`. The remaining sections describe the historical green Vexel design.
 
 Black background, pink `#ff86dd` accent, hover `#ff60ae`, cards `#111111`, 20px card radius and glass inset shadows. System fonts match the reference's visible fallback. Header is 64px tall with a 90px bundled logo at desktop/mobile. Four desktop columns, two mobile columns, centered final row. Grid width 1200px including 16px gutters; gaps 24px desktop and 12px at 375px. Headline letter spacing -1px; product title spacing .02em. FAQ answer gap is 16px.
 

@@ -2,15 +2,24 @@
 
 ## Current branch: Lin Resell replica — 2026-10-02
 
-- Work is in `theme/` on `linresell-replica`. The sections below this entry describe the earlier Luke's/Vexel storefront.
+- Work is in `theme/` on `linresell`. The earlier reconstruction branch `linresell-replica` is preserved locally. The sections below this entry describe the earlier Luke's/Vexel storefront.
 - Homepage: integrated Lin product grid/headline, five-question FAQ, supplier-access CTA, compact header/footer, pink palette and bundled reference logo/images. Legacy section renderers remain available. Merchant settings cover typography, spacing, colors, card/button actions, product selection, glow, and CTA content.
-- Repo-local `runtime/loader.js`, locked dependencies and `npm run build` reproduce both shipped loader mirrors. Bundle: 69,553 bytes, 18,529 bytes gzip. System fonts avoid the reference's broken font requests; the loading wait remains zero.
+- Repo-local `runtime/loader.js`, locked dependencies and `npm run build` reproduce both shipped loader mirrors. Bundle: 70,569 bytes, 19,061 bytes gzip. System fonts avoid the reference's broken font requests; the loading wait remains zero.
 - Eleven reference products imported as drafts with ready images. Original nine products preserved. Draft preview displays all eleven with disabled purchase controls and destination-store IDs. Supplier files/links and delivery integration remain required before selling.
 - Native Chrome comparisons at 1440px and 375px: headline, first-card dimensions/positions, FAQ and final CTA positions match the observed reference. Tablet 768px checked for image loading and overflow. All 33 image/title/info triggers, FAQ, mobile menu, settings changes and section reload checked in the development preview.
-- `npm run build` and `npm test` pass for source and bundle. `bash scripts/check-theme.sh`: zero errors, 12 warnings across seven files. Actual Shopify admin editor verification is pending login in the selected Chrome profile; native preview section-event reload passed.
-- Local preview: http://127.0.0.1:9292/. Development theme: `204351471957`. Live theme remains `196616782165`. No Git push or live publication.
+- `npm run build` and `npm test` pass for source and bundle. `bash scripts/check-theme.sh`: zero errors, 10 warnings across six files. Actual Shopify admin editor verification is pending login in the selected Chrome profile; native preview section-event reload passed.
+- Local preview: http://127.0.0.1:9292/. Development theme: `204351471957`. Live theme remains `196616782165`. GitHub delivery targets `odhasu/claudecodethemeshopify`, branch `linresell`; no live publication.
 - Before-change checkpoint: `cdb48051ac92cb3914336665242ee708acc1bb4e`, tag `checkpoint/ogresell-before-linresell-2026-10-01`. Backup manifest: 386 files, all hashes verified. Selected old theme `194628288853` was backed up and removed.
 - Setup, settings, evidence and limitations: `docs/LIN_REPLICA.md`.
+
+## Cart and product follow-up — 2026-10-02
+
+- Cart reads/adds/updates/changes reject unsuccessful HTTP responses and malformed JSON. Failed purchases show Shopify's message as text, restore controls and remain on the current page. Pending controls prevent repeated requests; drawer failures preserve the last displayed quantities and allow retry.
+- Cart API requests and purchase redirects use Shopify's locale root. Hero checkout skips draft/unavailable products. Lin and legacy checkout links retain a native fallback and use checked AJAX requests when the loader runs.
+- Product quantity and accelerated payment now sit inside a native Shopify product form. More payment options adds the selected quantity before redirecting; rejected adds keep the form intact. Product-page review submission reports that nothing was sent or saved.
+- Added `scripts/test-cart.cjs` to `npm test`, covering source/bundle rejection, network/malformed responses, retries, duplicate clicks, locale paths, draft guards, product quantity and review status.
+- Chrome development-preview checks at 375px and 1440px passed for homepage cards/dialogs, grid reloads, rejected product/grid purchases, drawer rejection/retry, successful checkout redirects, native payment markup, quantity and review behavior. Cart responses and checkout destinations were mocked in the browser; no real cart mutation, order or supplier fulfillment was tested. Screenshots are in `docs/design-references/linresell/`.
+- Changes synced only to development theme `204351471957`. GitHub delivery uses branch `linresell`; no live publication. Admin editor login and digital delivery remain pending.
 
 ## Historical Vexel build
 

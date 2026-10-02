@@ -26,29 +26,97 @@
   }
 
   // ─── Cart API ──────────────────────────────────────────────────
-  window.VexelCart = {
-    get: function() { return fetch('/cart.js').then(function(r) { return r.json(); }); },
-    add: function(id, qty) {
-      return fetch('/cart/add.js', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ items: [{ id: id, quantity: qty || 1 }] })
-      }).then(function(r) { return r.json(); }).then(function(data) {
-        document.dispatchEvent(new CustomEvent('cart:refresh'));
+  function cartRoute(path) {
+    var root = window.Shopify && window.Shopify.routes && window.Shopify.routes.root || '/';
+    return root + path;
+  }
+
+  function cartRequest(path, body) {
+    var options = body ? {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    } : {};
+    return fetch(cartRoute(path), options).then(function(response) {
+      return response.json().catch(function() { return null; }).then(function(data) {
+        if (!response.ok || !data) {
+          throw new Error(data && (data.description || data.message || (typeof data.errors === 'string' && data.errors)) || 'Unable to update your cart. Please try again.');
+        }
         return data;
       });
+    }, function() {
+      throw new Error('Unable to reach the store. Please try again.');
+    });
+  }
+
+  function cartMutation(path, body) {
+    return cartRequest(path, body).then(function(data) {
+      document.dispatchEvent(new CustomEvent('cart:refresh'));
+      return data;
+    });
+  }
+
+  window.VexelCart = {
+    get: function() { return cartRequest('cart.js'); },
+    add: function(id, qty) {
+      return cartMutation('cart/add.js', { items: [{ id: id, quantity: qty || 1 }] });
     },
     update: function(updates) {
-      return fetch('/cart/update.js', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ updates: updates })
-      }).then(function(r) { return r.json(); }).then(function(data) {
-        document.dispatchEvent(new CustomEvent('cart:refresh'));
-        return data;
-      });
+      return cartMutation('cart/update.js', { updates: updates });
+    },
+    change: function(id, qty) {
+      return cartRequest('cart/change.js', { id: id, quantity: qty });
     }
   };
+
+  function purchaseError(container, message) {
+    var error = container.querySelector('[data-vx-purchase-error]');
+    if (!error && message) {
+      error = document.createElement('p');
+      error.setAttribute('data-vx-purchase-error', '');
+      error.setAttribute('role', 'alert');
+      error.style.cssText = 'margin:12px 0;font-size:14px;color:var(--color-text);line-height:1.5';
+      container.appendChild(error);
+    }
+    if (error) {
+      error.textContent = message || '';
+      error.hidden = !message;
+    }
+  }
+
+  function purchase(btn, variantId, checkout) {
+    if (btn.disabled || btn.getAttribute('aria-disabled') === 'true' || btn.dataset.cartBusy) return;
+    var container = btn.closest('.vx-pc, .vx-hero') || btn.parentElement;
+    var originalHtml = btn.innerHTML;
+    btn.dataset.cartBusy = 'true';
+    btn.disabled = true;
+    btn.setAttribute('aria-disabled', 'true');
+    btn.textContent = 'ADDING...';
+    purchaseError(container, '');
+    function restore() {
+      btn.innerHTML = originalHtml;
+      btn.disabled = false;
+      btn.removeAttribute('aria-disabled');
+      delete btn.dataset.cartBusy;
+    }
+    window.VexelCart.add(Number(variantId)).then(function() {
+      if (!btn.isConnected) return;
+      if (checkout) {
+        window.location.href = cartRoute('checkout');
+        return;
+      }
+      btn.textContent = 'ADDED!';
+      setTimeout(restore, 1500);
+      window.VexelCart.get().then(function(cart) {
+        var badge = document.getElementById('vx-cart-badge');
+        if (badge) { badge.textContent = cart.item_count; badge.classList.toggle('has-items', cart.item_count > 0); }
+      }).catch(function() {});
+      if (window.CartDrawer) window.CartDrawer.open();
+    }).catch(function(error) {
+      restore();
+      if (btn.isConnected) purchaseError(container, error.message);
+    });
+  }
 
 
   // ═══════════════════════════════════════════════════════════════
@@ -317,7 +385,7 @@
     }
 
     // Cart count
-    fetch('/cart.js').then(function(r) { return r.json(); }).then(function(c) {
+    window.VexelCart.get().then(function(c) {
       var badge = document.getElementById('vx-cart-badge');
       if (root.isConnected && badge && c.item_count > 0) {
         badge.textContent = c.item_count;
@@ -462,13 +530,9 @@
         if (productsEl) {
           try {
             var prods = JSON.parse(productsEl.textContent);
-            if (prods && prods.length && prods[0].variantId) {
-              fetch('/cart/add.js', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ items: [{ id: Number(prods[0].variantId), quantity: 1 }] })
-              }).then(function() { window.location.href = '/checkout'; });
-            }
+            var product = prods.find(function(p) { return p.variantId && !p.previewOnly && p.available !== false; });
+            if (product) purchase(btn, product.variantId, true);
+            else purchaseError(root, 'No products are available for purchase.');
           } catch(ex) {}
         }
       });
@@ -589,7 +653,7 @@
       // Buy button
       var buyBtnHtml = '';
       if (btnAction === 'checkout') {
-        buyBtnHtml = '<a class="vx-btn-buy" href="/cart/add?id=' + encodeURIComponent(p.variantId) + '&amp;return_to=/checkout">' + esc(btnLabel) + '</a>';
+        buyBtnHtml = '<a class="vx-btn-buy" data-vx-checkout="' + esc(p.variantId) + '" href="' + esc(cartRoute('cart/add') + '?id=' + encodeURIComponent(p.variantId) + '&return_to=' + cartRoute('checkout')) + '">' + esc(btnLabel) + '</a>';
       } else if (btnAction === 'add_to_cart') {
         buyBtnHtml = '<button class="vx-btn-buy" data-vx-add="' + p.variantId + '">' + esc(btnLabel) + '</button>';
       } else if (btnAction === 'description') {
@@ -664,7 +728,8 @@
       if (action === 'description') return '<button type="button"' + attrs + ' data-vx-desc="' + esc(p.handle) + '" aria-haspopup="dialog">' + text + '</button>';
       if (p.previewOnly || p.available === false || !p.variantId) return '<button type="button"' + attrs + ' disabled aria-disabled="true" title="This product is not available for purchase">' + text + '</button>';
       if (action === 'add_to_cart') return '<button type="button"' + attrs + ' data-vx-add="' + esc(p.variantId) + '" data-original-text="' + esc(label) + '">' + text + '</button>';
-      var href = action === 'checkout' ? '/cart/add?id=' + encodeURIComponent(p.variantId) + '&return_to=/checkout' : action === 'custom' ? destination(customUrl) : destination(p.url);
+      if (action === 'checkout') attrs += ' data-vx-checkout="' + esc(p.variantId) + '"';
+      var href = action === 'checkout' ? cartRoute('cart/add') + '?id=' + encodeURIComponent(p.variantId) + '&return_to=' + cartRoute('checkout') : action === 'custom' ? destination(customUrl) : destination(p.url);
       return '<a' + attrs + ' href="' + esc(href) + '">' + text + '</a>';
     }
     function cardControl(p, className, content, label) {
@@ -723,20 +788,7 @@
       var addBtn = e.target.closest('[data-vx-add]');
       if (addBtn) {
         e.preventDefault();
-        var vid = addBtn.getAttribute('data-vx-add');
-        addBtn.textContent = 'ADDING...';
-        addBtn.disabled = true;
-        window.VexelCart.add(Number(vid)).then(function() {
-          addBtn.textContent = 'ADDED!';
-          setTimeout(function() { addBtn.textContent = addBtn.getAttribute('data-original-text') || 'ADD TO CART'; addBtn.disabled = false; }, 1500);
-          // Update badge
-          window.VexelCart.get().then(function(c) {
-            var badge = document.getElementById('vx-cart-badge');
-            if (badge) { badge.textContent = c.item_count; badge.classList.toggle('has-items', c.item_count > 0); }
-          });
-          // Open cart drawer
-          if (window.CartDrawer) window.CartDrawer.open();
-        }).catch(function() { addBtn.textContent = 'ERROR'; addBtn.disabled = false; });
+        purchase(addBtn, addBtn.getAttribute('data-vx-add'), false);
         return;
       }
 
@@ -744,12 +796,7 @@
       var checkBtn = e.target.closest('[data-vx-checkout]');
       if (checkBtn) {
         e.preventDefault();
-        var vid2 = checkBtn.getAttribute('data-vx-checkout');
-        fetch('/cart/add.js', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ items: [{ id: Number(vid2), quantity: 1 }] })
-        }).then(function() { window.location.href = '/checkout'; }).catch(function(err) { console.error(err); });
+        purchase(checkBtn, checkBtn.getAttribute('data-vx-checkout'), true);
         return;
       }
 
@@ -1148,6 +1195,7 @@
           '<div style="display:flex;align-items:baseline"><span class="vx-cart-drawer__title">' + esc(drawerTitle) + '</span><span class="vx-cart-drawer__count" id="vx-cart-count"></span></div>' +
           '<button class="vx-cart-drawer__close" id="vx-cart-close" aria-label="Close cart"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>' +
         '</div>' +
+        '<p data-vx-cart-error role="alert" hidden style="margin:16px 24px;color:' + textColor + ';font-size:14px;line-height:1.5"></p>' +
         '<div class="vx-cart-drawer__body" id="vx-cart-body"></div>' +
         '<div class="vx-cart-drawer__footer" id="vx-cart-footer" style="display:none">' +
           '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px"><span style="font-size:14px;font-weight:500;color:' + mutedColor + ';text-transform:uppercase;letter-spacing:0.05em">Subtotal</span><span style="font-family:' + cv('font-heading') + ';font-size:20px;font-weight:700;color:' + textColor + '" id="vx-cart-subtotal"></span></div>' +
@@ -1164,6 +1212,7 @@
     var footer = root.querySelector('#vx-cart-footer');
     var countEl = root.querySelector('#vx-cart-count');
     var subtotalEl = root.querySelector('#vx-cart-subtotal');
+    var errorEl = root.querySelector('[data-vx-cart-error]');
 
     if (!drawer) return;
 
@@ -1187,7 +1236,14 @@
     life.listen(document, 'keydown', function(e) { if (e.key === 'Escape') close(); });
 
     function refreshCart() {
-      fetch('/cart.js').then(function(r) { return r.json(); }).then(function(cart) { renderCart(cart); }).catch(function() {});
+      showError('');
+      window.VexelCart.get().then(function(cart) { if (root.isConnected) renderCart(cart); }).catch(function(error) { showError(error.message); });
+    }
+
+    function showError(message) {
+      if (!root.isConnected) return;
+      errorEl.textContent = message;
+      errorEl.hidden = !message;
     }
 
     function renderCart(cart) {
@@ -1234,6 +1290,7 @@
       var btn = e.target.closest('[data-action]');
       if (!btn) return;
       var item = btn.closest('.vx-cart-item');
+      if (item.classList.contains('is-loading')) return;
       var key = item.dataset.key;
       var action = btn.dataset.action;
       var qtySpan = item.querySelector('.vx-cart-item__qty span');
@@ -1242,11 +1299,15 @@
       else if (action === 'plus') qty += 1;
       else if (action === 'remove') qty = 0;
       item.classList.add('is-loading');
-      fetch('/cart/change.js', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id: key, quantity: qty })
-      }).then(function(r) { return r.json(); }).then(function(cart) { renderCart(cart); }).catch(function() { item.classList.remove('is-loading'); });
+      item.querySelectorAll('button').forEach(function(control) { control.disabled = true; });
+      showError('');
+      window.VexelCart.change(key, qty).then(function(cart) {
+        if (root.isConnected) renderCart(cart);
+      }).catch(function(error) {
+        item.classList.remove('is-loading');
+        item.querySelectorAll('button').forEach(function(control) { control.disabled = false; });
+        showError(error.message);
+      });
     });
 
     life.listen(document, 'cart:open', open);

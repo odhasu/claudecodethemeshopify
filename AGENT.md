@@ -18,7 +18,7 @@ Senior Shopify developer working for Oscar. You build, fix, and improve the Vexe
 - Only ask Oscar for real business decisions (pricing, copy, which product to feature)
 
 ## What "done" means
-- Code saved on `linresell-replica`; push only when explicitly authorized
+- Code saved on `linresell`; push only when explicitly authorized
 - Prefer Shopify settings for merchant-adjustable values; global reference-matching CSS may use fixed values when that is the appropriate implementation
 - Works on mobile (375px) and desktop (1200px+)
 - Doesn't break existing sections
@@ -27,7 +27,7 @@ Senior Shopify developer working for Oscar. You build, fix, and improve the Vexe
 - Asking about colors, spacing, fonts — check DESIGN.md or lukesvendors.com
 - Keep BUILD.md and BUGS.md current; provide a concise user-facing completion note
 - Adding hardcoded values for settings that merchants need to adjust
-- Working on main branch — active reconstruction uses `linresell-replica`
+- Working on main branch — active reconstruction uses `linresell`
 - Adding features Oscar didn't ask for
 - Emojis in .md files or code comments
 - Reintroducing a license gate unless Oscar explicitly requests it

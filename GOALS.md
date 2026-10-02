@@ -2,7 +2,7 @@
 
 ## Active user direction
 
-Reconstruct https://linresell.com/ on `linresell-replica`, preserve the prior store checkpoint and original catalog, and import the eleven reference products as drafts. The homepage and merchant controls are implemented and previewed. Digital delivery setup and actual admin editor login remain outstanding; no live publication or Git push is authorized by this continuation. See `docs/LIN_REPLICA.md`. The goals below describe the earlier Vexel storefront.
+Reconstruct https://linresell.com/ on `linresell`, preserve the prior store checkpoint and original catalog, and import the eleven reference products as drafts. The homepage and merchant controls are implemented and previewed. Digital delivery setup and actual admin editor login remain outstanding; GitHub delivery to `linresell` is authorized; live publication remains unauthorized. See `docs/LIN_REPLICA.md`. The goals below describe the earlier Vexel storefront.
 
 
 ## What we're building

@@ -477,20 +477,19 @@
       {%- endif -%}
     </div>
 
+    {%- form 'product', product, id: 'pp-form' -%}
     <!-- Quantity -->
     <div class="pp-qty-row">
       <span class="pp-qty-label">Quantity</span>
       <div class="pp-qty-controls">
         <button class="pp-qty-btn" type="button" onclick="ppQty(-1)" aria-label="Decrease quantity for {{ product.title | escape }}">−</button>
-        <input class="pp-qty-input" type="number" id="pp-qty" value="1" min="1" max="{{ product.selected_or_first_available_variant.inventory_quantity | default: 99 }}">
+        <input class="pp-qty-input" type="number" id="pp-qty" name="quantity" value="1" min="1" step="1" aria-label="Quantity for {{ product.title | escape }}">
         <button class="pp-qty-btn" type="button" onclick="ppQty(1)" aria-label="Increase quantity for {{ product.title | escape }}">+</button>
       </div>
     </div>
 
     <!-- Add to Cart + Dynamic Checkout -->
-    <form id="pp-form" action="/cart/add" method="post">
       <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
-      <input type="hidden" name="quantity" value="1" id="pp-form-qty">
 
       <div class="pp-actions">
         <button type="submit" class="pp-add-cart" id="pp-add-cart-btn" {% unless product.available %}disabled{% endunless %}>
@@ -501,17 +500,18 @@
           {%- endif -%}
         </button>
       </div>
+      <p id="pp-cart-error" role="alert" hidden></p>
 
       {%- if section.settings.show_dynamic_checkout and product.available -%}
         <div class="pp-dynamic-checkout">
           {{ form | payment_button }}
         </div>
       {%- endif -%}
-    </form>
+    {%- endform -%}
 
     {%- if section.settings.show_more_payment and product.available -%}
       <div class="pp-more-payment">
-        <a href="/checkout" onclick="event.preventDefault(); document.getElementById('pp-form').action='/checkout'; document.getElementById('pp-form').submit();">More payment options</a>
+        <a href="{{ routes.root_url }}{% unless routes.root_url == '/' %}/{% endunless %}checkout" id="pp-more-payment">More payment options</a>
       </div>
     {%- endif -%}
 
@@ -584,6 +584,7 @@
     <input type="text" id="pp-review-name" placeholder="Your name">
     <label for="pp-review-body">Review</label>
     <textarea id="pp-review-body" placeholder="Share your experience..."></textarea>
+    <p id="pp-review-status" role="status" hidden></p>
     <button class="pp-btn-submit" onclick="ppSubmitReview()">Submit Review</button>
   </div>
 </div>
@@ -603,28 +604,44 @@
     var val = parseInt(input.value) || 1;
     val = Math.max(1, val + delta);
     input.value = val;
-    document.getElementById('pp-form-qty').value = val;
   };
   var qtyInput = document.getElementById('pp-qty');
   if (qtyInput) {
     qtyInput.addEventListener('change', function() {
       var v = Math.max(1, parseInt(this.value) || 1);
       this.value = v;
-      document.getElementById('pp-form-qty').value = v;
     });
   }
 
   /* AJAX Add to Cart */
   var form = document.getElementById('pp-form');
+  var checkoutRequested = false;
+  var morePayment = document.getElementById('pp-more-payment');
+  if (morePayment) {
+    morePayment.addEventListener('click', function(e) {
+      e.preventDefault();
+      if (!form || !form.reportValidity() || document.getElementById('pp-add-cart-btn').disabled) return;
+      checkoutRequested = true;
+      form.requestSubmit();
+    });
+  }
   if (form) {
     form.addEventListener('submit', function(e) {
       e.preventDefault();
       var btn = document.getElementById('pp-add-cart-btn');
+      if (btn.disabled) return;
+      var goToCheckout = checkoutRequested;
+      checkoutRequested = false;
       var origText = btn.textContent;
+      var errorEl = document.getElementById('pp-cart-error');
+      errorEl.hidden = true;
+      errorEl.textContent = '';
       btn.textContent = 'ADDING...';
       btn.disabled = true;
 
-      fetch('/cart/add.js', {
+      var root = window.Shopify && window.Shopify.routes && window.Shopify.routes.root || {{ routes.root_url | json }};
+      if (root.slice(-1) !== '/') root += '/';
+      fetch(root + 'cart/add.js', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -633,22 +650,36 @@
             quantity: parseInt(document.getElementById('pp-qty').value) || 1
           }]
         })
-      }).then(function(r) { return r.json(); }).then(function() {
+      }).then(function(r) {
+        return r.json().catch(function() { return null; }).then(function(data) {
+          if (!r.ok || !data) throw new Error(data && (data.description || data.message) || 'Unable to add this product. Please try again.');
+          return data;
+        });
+      }, function() {
+        throw new Error('Unable to reach the store. Please try again.');
+      }).then(function() {
+        document.dispatchEvent(new CustomEvent('cart:refresh'));
+        if (goToCheckout) {
+          window.location.href = root + 'checkout';
+          return;
+        }
         btn.textContent = 'ADDED ✓';
         btn.style.background = '#22c55e';
         /* Update header badge */
-        fetch('/cart.js').then(function(r){return r.json()}).then(function(c){
-          var badge = document.getElementById('cart-count-badge');
-          if(badge){ badge.textContent = c.item_count; badge.classList.add('has-items'); }
-        });
+        fetch(root + 'cart.js').then(function(r){ if (!r.ok) throw new Error('Cart unavailable'); return r.json(); }).then(function(c){
+          var badge = document.getElementById('vx-cart-badge');
+          if(badge){ badge.textContent = c.item_count; badge.classList.toggle('has-items', c.item_count > 0); }
+        }).catch(function() {});
         setTimeout(function() {
           btn.textContent = origText;
           btn.style.background = '';
           btn.disabled = false;
         }, 2000);
-      }).catch(function() {
+      }).catch(function(error) {
         btn.textContent = origText;
         btn.disabled = false;
+        errorEl.textContent = error.message;
+        errorEl.hidden = false;
       });
     });
   }
@@ -696,8 +727,9 @@
   ppSelectStar(5);
 
   window.ppSubmitReview = function() {
-    alert('Thank you for your review!');
-    document.getElementById('pp-review-modal').classList.remove('open');
+    var status = document.getElementById('pp-review-status');
+    status.textContent = 'Reviews are not available yet. Your review has not been sent or saved.';
+    status.hidden = false;
   };
 
   /* Close modal on Escape */

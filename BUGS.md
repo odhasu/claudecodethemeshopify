@@ -3,7 +3,7 @@
 ## Lin replica — active / verification
 - The 11 imported products are drafts. Supply store-owned vendor delivery files/links and configure a digital delivery app before activation. Preview purchase controls are disabled.
 - Actual Shopify admin editor reload still needs an authenticated Chrome profile. DOM tests and section unload/load events in the real storefront preview passed.
-- Theme Check has 12 warnings and zero errors. Existing product-form, route, remote-asset and settings-count warnings remain; this pass does not claim to fix those unrelated pages.
+- Theme Check has 10 warnings and zero errors. Existing account-route, remote-asset, preload and settings-count warnings remain. The undefined product form and its hardcoded add route are resolved on `linresell-replica`.
 - Reference font assets failed to load. The replica uses the observed system fallback; appearance can vary across operating systems.
 
 ## Historical Vexel verification
@@ -15,6 +15,7 @@
 - Add real social URLs to footer
 
 ## Fixed
+- Cart/product follow-up on `linresell-replica`: unsuccessful Cart API responses no longer report success or redirect to checkout; error text, control recovery, retries and draft guards are covered by regression tests and development-preview checks. Product quantity/accelerated payments use a native Shopify form; product review submission no longer claims persistence. Cart requests and purchase redirects respect Shopify's locale root. Live theme unchanged.
 - Settings/performance pass: 93 additional controls; previously masked width/color/columns/glow and numeric-zero settings now work. Client-rendered sections refresh with scoped data/styles and release listeners/timers on editor unload. Cart unload restores scrolling.
 - Removed artificial loading wait, duplicate review/cart code, and unused runtime carousel; minified loader is 49% smaller (54% smaller gzip). Desktop and 375px development previews checked; live theme unchanged.
 - Homepage background glow reduced from 22% to 10% in the development preview; dedicated settings now control enable/disable, color, size, overall strength, and three individual glows. Live theme unchanged.
@@ -56,10 +57,8 @@
 - Header background — was transparent, now dark gradient by default
 
 ## Audit follow-ups — 2026-10-01
-- Cart API/product-page handlers do not reject unsuccessful Shopify responses; confirm out-of-stock/422 behavior and prevent false success.
-- Product dynamic checkout references `form` outside a Shopify product form (`main-product.liquid`); Theme Check reports `UndefinedObject`.
-- Product-page review submission still shows a false success message without persistence; align with the homepage's honest unavailable behavior or integrate a reviews service.
+- Cart rejection handling, native product form and honest product-page review status are resolved on `linresell-replica`. Browser checks used mocked 422/success responses; actual inventory failures, accelerated checkout transactions and delivery remain untested.
 - Renderer shell lifecycle and instance scoping are fixed and covered by DOM tests. A visual reload in the actual Shopify admin editor remains to be checked; conventional Liquid section scripts are outside this runtime lifecycle.
 - Resolved on `linresell-replica`: source/build/lock are repo-local; `npm run build` generates both assets. The earlier Vexel checkpoint retains its external runtime.
-- Check urgency/header height after loading reveal, presentment currency/localized cart routes, loader-failure fallback, and dialog focus handling.
-- Full evidence and priorities are in `../docs/PROJECT_AUDIT.md`. Findings are not marked fixed; existing storefront edits remain preserved.
+- Check urgency/header height after loading reveal, presentment currency/remaining localized navigation routes, loader-failure fallback, and dialog focus handling outside the tested product information dialog.
+- The original audit and priorities are in `../docs/PROJECT_AUDIT.md`; current branch fixes and evidence are recorded above and in `docs/LIN_REPLICA.md`.
