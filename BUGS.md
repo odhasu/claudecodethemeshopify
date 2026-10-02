@@ -15,6 +15,7 @@
 - Add real social URLs to footer
 
 ## Fixed
+- Urgency bar on `linresell`: restored the pink “verified” highlight, white icons, correct plain reseller-count text and reference divider colors. Highlight and colors remain editable; repeated timer/viewer values stay synchronized. Chrome 375px/1440px and preview section reload checks passed; live publication remains pending.
 - Cart/product follow-up on `linresell-replica`: unsuccessful Cart API responses no longer report success or redirect to checkout; error text, control recovery, retries and draft guards are covered by regression tests and development-preview checks. Product quantity/accelerated payments use a native Shopify form; product review submission no longer claims persistence. Cart requests and purchase redirects respect Shopify's locale root. Live theme unchanged.
 - Settings/performance pass: 93 additional controls; previously masked width/color/columns/glow and numeric-zero settings now work. Client-rendered sections refresh with scoped data/styles and release listeners/timers on editor unload. Cart unload restores scrolling.
 - Removed artificial loading wait, duplicate review/cart code, and unused runtime carousel; minified loader is 49% smaller (54% smaller gzip). Desktop and 375px development previews checked; live theme unchanged.

@@ -11,9 +11,9 @@
         "bg_color": "#000000",
         "text_color": "#ffffff",
         "accent_color": "#ff86dd",
-        "icon_color": "#aaaaaa",
+        "icon_color": "#ffffff",
         "dot_color": "#22c55e",
-        "divider_color": "#444444",
+        "divider_color": "#9ca3af",
         "border_color": "#1a1a1a",
         "bar_height": 40,
         "font_size": 13,
@@ -30,7 +30,8 @@
         "rating_count": "2,400+",
         "viewers_text": "people viewing right now",
         "private_text": "Private suppliers not found anywhere else",
-        "personally_verified_text": "All suppliers personally verified"
+        "personally_verified_text": "All suppliers personally verified",
+        "personally_verified_highlight": "verified"
       }
     },
     "header": {

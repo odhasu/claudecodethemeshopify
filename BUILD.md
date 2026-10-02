@@ -4,13 +4,19 @@
 
 - Work is in `theme/` on `linresell`. The earlier reconstruction branch `linresell-replica` is preserved locally. The sections below this entry describe the earlier Luke's/Vexel storefront.
 - Homepage: integrated Lin product grid/headline, five-question FAQ, supplier-access CTA, compact header/footer, pink palette and bundled reference logo/images. Legacy section renderers remain available. Merchant settings cover typography, spacing, colors, card/button actions, product selection, glow, and CTA content.
-- Repo-local `runtime/loader.js`, locked dependencies and `npm run build` reproduce both shipped loader mirrors. Bundle: 70,569 bytes, 19,061 bytes gzip. System fonts avoid the reference's broken font requests; the loading wait remains zero.
+- Repo-local `runtime/loader.js`, locked dependencies and `npm run build` reproduce both shipped loader mirrors. Bundle: 70,944 bytes, 19,194 bytes gzip. System fonts avoid the reference's broken font requests; the loading wait remains zero.
 - Eleven reference products imported as drafts with ready images. Original nine products preserved. Draft preview displays all eleven with disabled purchase controls and destination-store IDs. Supplier files/links and delivery integration remain required before selling.
 - Native Chrome comparisons at 1440px and 375px: headline, first-card dimensions/positions, FAQ and final CTA positions match the observed reference. Tablet 768px checked for image loading and overflow. All 33 image/title/info triggers, FAQ, mobile menu, settings changes and section reload checked in the development preview.
 - `npm run build` and `npm test` pass for source and bundle. `bash scripts/check-theme.sh`: zero errors, 10 warnings across six files. Actual Shopify admin editor verification is pending login in the selected Chrome profile; native preview section-event reload passed.
 - Local preview: http://127.0.0.1:9292/. Development theme: `204351471957`. Live theme remains `196616782165`. GitHub delivery targets `odhasu/claudecodethemeshopify`, branch `linresell`; no live publication.
 - Before-change checkpoint: `cdb48051ac92cb3914336665242ee708acc1bb4e`, tag `checkpoint/ogresell-before-linresell-2026-10-01`. Backup manifest: 386 files, all hashes verified. Selected old theme `194628288853` was backed up and removed.
 - Setup, settings, evidence and limitations: `docs/LIN_REPLICA.md`.
+
+## Urgency bar colors — 2026-10-02
+
+- Restored pink `#ff86dd` on “verified”; the highlight word is merchant-adjustable. Icons are white, rating/countdown/viewer highlights stay pink, the reseller total uses normal white text, and dividers use the reference gray. Updated saved colors and new-section defaults.
+- Both scrolling copies now share the current countdown and viewer count; removed duplicate timer/viewer IDs.
+- Compared the live reference and checked the development preview in Chrome at 375px and 1440px, including changed color/highlight settings, blank highlight, section unload/load, timer updates and no horizontal overflow. Screenshots: `urgency-colors-375.png` and `urgency-colors-1440.png`. Build/tests pass; Theme Check has zero errors and 10 warnings. Development theme synced; GitHub delivery uses `linresell`. No live publication; actual admin editor verification remains pending.
 
 ## Cart and product follow-up — 2026-10-02
 

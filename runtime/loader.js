@@ -145,12 +145,12 @@
 
   // ─── 1. Urgency Bar ────────────────────────────────────────────
   function renderUrgencyBar(s) {
-    var accent = s.accent_color || '#19d400';
+    var accent = s.accent_color || colors.accent1 || '#ff86dd';
     var bgColor = s.bg_color || '#000000';
     var textColor = s.text_color || '#ffffff';
-    var iconColor = s.icon_color || accent;
-    var dotColor = s.dot_color || '#39ff14';
-    var dividerColor = s.divider_color || '#333';
+    var iconColor = s.icon_color || textColor;
+    var dotColor = s.dot_color || '#22c55e';
+    var dividerColor = s.divider_color || '#9ca3af';
     var dividerStyle = s.divider_style || 'asterisk';
     var borderColor = s.border_color || '#1a1a1a';
     var speed = s.scroll_speed != null ? s.scroll_speed : 30;
@@ -171,16 +171,20 @@
       addItem('<span class="vx-urgency-icon">' + icons.lock + '</span>' + esc(s.private_text || 'Private suppliers not found anywhere else'));
     }
     if (s.show_personally_verified) {
-      addItem('<span class="vx-urgency-icon">' + icons.check + '</span>' + esc(s.personally_verified_text || 'All suppliers personally verified'));
+      var verifiedText = String(s.personally_verified_text || 'All suppliers personally verified');
+      var highlight = s.personally_verified_highlight != null ? String(s.personally_verified_highlight) : 'verified';
+      var highlightIndex = highlight ? verifiedText.indexOf(highlight) : -1;
+      var verifiedHtml = highlightIndex < 0 ? esc(verifiedText) : esc(verifiedText.slice(0, highlightIndex)) + '<strong class="accent">' + esc(highlight) + '</strong>' + esc(verifiedText.slice(highlightIndex + highlight.length));
+      addItem('<span class="vx-urgency-icon">' + icons.check + '</span><span>' + verifiedHtml + '</span>');
     }
     if (s.show_rating) {
-      addItem('<span class="vx-urgency-icon vx-urgency-icon--filled">' + icons.starFilled + '</span>Rated <span class="accent">' + esc(s.rating_value || '4.96/5') + '</span> by <span class="accent">' + esc(s.rating_count || '2,400+') + '</span> resellers');
+      addItem('<span class="vx-urgency-icon vx-urgency-icon--filled">' + icons.starFilled + '</span><span>Rated <strong class="accent">' + esc(s.rating_value || '4.96/5') + '</strong> by ' + esc(s.rating_count || '2,400+') + ' resellers</span>');
     }
     if (s.show_countdown) {
-      addItem('<span class="vx-urgency-icon">' + icons.clock + '</span>' + esc(s.countdown_prefix || 'Price goes up in') + ' <span class="accent" id="vx-countdown">0m 00s</span>');
+      addItem('<span class="vx-urgency-icon">' + icons.clock + '</span><span>' + esc(s.countdown_prefix || 'Price goes up in') + ' <strong class="accent" data-vx-countdown>0m 00s</strong></span>');
     }
     if (s.show_viewers) {
-      addItem('<span class="vx-urgency-dot"></span><span class="accent" id="vx-viewers">' + minV + '</span> ' + esc(s.viewers_text || 'people viewing right now'));
+      addItem('<span class="vx-urgency-dot"></span><span><strong class="accent" data-vx-viewers>' + minV + '</strong> ' + esc(s.viewers_text || 'people viewing right now') + '</span>');
     }
     if (s.blocks) {
       s.blocks.forEach(function(b) {
@@ -201,9 +205,9 @@
       '.vx-urgency-item{display:inline-flex;align-items:center;gap:6px;padding:0 24px;font-size:' + fontSize + 'px;font-weight:500;letter-spacing:0.02em}' +
       '.vx-urgency-item .accent{color:' + accent + ';font-weight:700}' +
       '.vx-urgency-icon{display:inline-flex;align-items:center;flex-shrink:0}.vx-urgency-icon svg{width:14px;height:14px;stroke:' + iconColor + ';fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}' +
-      '.vx-urgency-icon--filled svg{fill:' + iconColor + ';stroke:' + iconColor + '}' +
+      '.vx-urgency-icon--filled svg{fill:' + iconColor + ';stroke:none}' +
       '.vx-urgency-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:' + dotColor + ';animation:vxPulseDot 1.5s ease-in-out infinite}' +
-      '.vx-urgency-divider{display:inline-flex;align-items:center;justify-content:center;color:' + dividerColor + ';font-size:11px;margin:0 8px;flex-shrink:0}' +
+      '.vx-urgency-divider{display:inline-flex;align-items:center;justify-content:center;color:' + dividerColor + ';opacity:.4;font-size:11px;margin:0 8px;flex-shrink:0}' +
       '@keyframes vxUrgScroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}' +
       '@keyframes vxPulseDot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.5;transform:scale(1.4)}}' +
       '</style>';
@@ -244,24 +248,23 @@
       var m = Math.floor(diff / 60000);
       var sec = Math.floor((diff % 60000) / 1000);
       var str = m + 'm ' + String(sec).padStart(2, '0') + 's';
-      var el = root.querySelector('#vx-countdown');
-      if (el) el.textContent = str;
+      root.querySelectorAll('[data-vx-countdown]').forEach(function(el) { el.textContent = str; });
     }
-    if (root.querySelector('#vx-countdown')) {
+    if (root.querySelector('[data-vx-countdown]')) {
       updateCountdown();
       life.interval(updateCountdown, 1000);
     }
 
     // Viewer count drift
     var viewers = Math.floor(Math.random() * (maxV - minV + 1)) + minV;
-    var viewerEl = root.querySelector('#vx-viewers');
-    if (viewerEl) {
-      viewerEl.textContent = viewers;
+    var viewerEls = root.querySelectorAll('[data-vx-viewers]');
+    if (viewerEls.length) {
+      viewerEls.forEach(function(el) { el.textContent = viewers; });
       function driftViewers() {
         var change = Math.floor(Math.random() * 4) - 1;
         if (Math.random() < 0.3) change = -Math.abs(change);
         viewers = Math.max(minV, Math.min(maxV, viewers + change));
-        if (viewerEl) viewerEl.textContent = viewers;
+        viewerEls.forEach(function(el) { el.textContent = viewers; });
         life.timeout(driftViewers, (60 + Math.floor(Math.random() * 120)) * 1000);
       }
       life.timeout(driftViewers, (60 + Math.floor(Math.random() * 120)) * 1000);
