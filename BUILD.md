@@ -16,7 +16,7 @@
 
 - The live homepage supplied an empty product array and `/products.json` returned zero public products. The enabled saved Lin catalog was suppressed by a Liquid `theme.role` check after publication.
 - The existing `replica_preview` setting now means “Show Lin catalog as coming soon” and works on published themes. All eleven saved cards remain unavailable for purchase, with an editable Coming Soon label. Both Lin and legacy layouts guard draft purchases; mobile labels wrap within the buttons.
-- Development Chrome checks at 375px and 1440px passed for all eleven cards/images, Coming Soon labels, info dialogs and no page/button overflow. Build/tests pass; Theme Check has zero errors and 10 warnings. Delivery targets the existing GitHub-connected live theme via `linresell`; live verification is pending this push.
+- Development and public-storefront Chrome checks at 375px and 1440px passed for all eleven cards/images, Coming Soon labels, info dialogs and no page/button overflow or page errors. Build/tests pass; Theme Check has zero errors and 10 warnings. Commit `a4be207` was pushed to `linresell` and delivered to existing live theme `204843778389` through GitHub. Live screenshots: `docs/design-references/linresell/live-catalog-375.png` and `live-catalog-1440.png`.
 - This change displays catalog cards. It does not activate Admin products, publish them to a sales channel or configure digital delivery.
 - Merged Shopify's latest editor commits before delivery, preserving merchant settings including the enabled pale-pink global glow and 150ms loading minimum. Test fixtures accept Shopify's generated JSON comment headers.
 
