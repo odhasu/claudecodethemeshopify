@@ -10,8 +10,11 @@ Vexel — a Shopify theme product for resellers. Built from scratch, replicating
 
 ## Repo
 GitHub: odhasu/claudecodethemeshopify
-- main — V1 branch, never touch
-- v2 — active development branch; Shopify currently marks its connected theme as live
+- linresell — active branch; Shopify theme `204843778389` is connected and was verified live on 2026-10-02
+- v2 — preserved previous storefront; theme `196616782165` is now unpublished
+- main — historical V1 branch, never develop on it
+
+Development preview is theme `204351471957`. Theme roles can change; verify with the CLI before uploads. Commands and workflow are in `docs/SHOPIFY_CLI.md`.
 
 Working dir: /Users/oscargraafmans/Desktop/ogresell main/theme
 
@@ -51,17 +54,18 @@ sections/
   header-group.json    — header sections + order
   footer-group.json    — footer sections + order
 
-## Related projects
+## Historical external runtime paths
 - Runtime work directory (renderer source and build script): /Users/oscargraafmans/Desktop/ogresell/runtime/work/runtime-theme/
 - Dashboard + store: /Users/oscargraafmans/Desktop/ogresell/store/
 - Loader source: runtime/work/runtime-theme/src/loader.js -> runtime/work/runtime-theme/dist/scaled-loader.js -> theme loader assets
 
-## Current state (2026-09-24)
+## Historical state (2026-09-24)
 - Recent visual work is recorded in BUILD.md: homepage, cart/404, review dialog, header cart glyph, and product description dialog.
 - Shopify Theme Check last reported zero errors and 11 warnings after the cart/404 and review-dialog changes.
 - The earlier 20px Product Grid padding edit was committed as `2b7927f`, and the live Shopify template matches `v2`.
 - Use `ogsellsz.myshopify.com` for storefront work. See BUGS.md for content and review-service follow-ups.
 
 ## Design reference
-lukesvendors.com — check before building anything visual
+linresell.com — active reference; see DESIGN.md and docs/LIN_REPLICA.md
+lukesvendors.com — historical Vexel reference
 Kenso theme — /tmp/kenso-extract/ — architecture reference for shell model

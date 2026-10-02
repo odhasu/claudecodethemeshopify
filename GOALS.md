@@ -2,7 +2,7 @@
 
 ## Active user direction
 
-Reconstruct https://linresell.com/ on `linresell`, preserve the prior store checkpoint and original catalog, and import the eleven reference products as drafts. The homepage and merchant controls are implemented and previewed. Digital delivery setup and actual admin editor login remain outstanding; GitHub delivery to `linresell` is authorized; live publication remains unauthorized. See `docs/LIN_REPLICA.md`. The goals below describe the earlier Vexel storefront.
+Reconstruct https://linresell.com/ on `linresell`, preserve the prior store checkpoint and original catalog, and import the eleven reference products as drafts. The homepage and merchant controls are implemented and previewed. User-requested GitHub branch delivery is complete. Shopify now reports the GitHub-connected Lin theme `204843778389` as live; the agent did not issue a publication command. Further theme-file pushes or store changes must follow the active user's authorization. Digital delivery setup and actual admin editor verification remain outstanding. See `docs/LIN_REPLICA.md` and `docs/SHOPIFY_CLI.md`. The goals below describe the earlier Vexel storefront.
 
 
 ## What we're building

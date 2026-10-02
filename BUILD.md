@@ -8,9 +8,15 @@
 - Eleven reference products imported as drafts with ready images. Original nine products preserved. Draft preview displays all eleven with disabled purchase controls and destination-store IDs. Supplier files/links and delivery integration remain required before selling.
 - Native Chrome comparisons at 1440px and 375px: headline, first-card dimensions/positions, FAQ and final CTA positions match the observed reference. Tablet 768px checked for image loading and overflow. All 33 image/title/info triggers, FAQ, mobile menu, settings changes and section reload checked in the development preview.
 - `npm run build` and `npm test` pass for source and bundle. `bash scripts/check-theme.sh`: zero errors, 10 warnings across six files. Actual Shopify admin editor verification is pending login in the selected Chrome profile; native preview section-event reload passed.
-- Local preview: http://127.0.0.1:9292/. Development theme: `204351471957`. Live theme remains `196616782165`. GitHub delivery targets `odhasu/claudecodethemeshopify`, branch `linresell`; no live publication.
+- Local preview: http://127.0.0.1:9292/. Development theme: `204351471957`. Latest CLI observation on 2026-10-02: GitHub-connected Lin theme `204843778389` is live; previous `v2` theme `196616782165` is unpublished. GitHub delivery targets `odhasu/claudecodethemeshopify`, branch `linresell`. The agent did not run a publication command.
 - Before-change checkpoint: `cdb48051ac92cb3914336665242ee708acc1bb4e`, tag `checkpoint/ogresell-before-linresell-2026-10-01`. Backup manifest: 386 files, all hashes verified. Selected old theme `194628288853` was backed up and removed.
 - Setup, settings, evidence and limitations: `docs/LIN_REPLICA.md`.
+
+## Saved CLI and agent workflow — 2026-10-02
+
+- Added `docs/SHOPIFY_CLI.md`: verified CLI version, current store/theme IDs and roles, build/check commands, development preview, remote comparison, editor settings sync and GitHub/Shopify delivery behavior.
+- Updated agent/context notes and the replica guide to reflect the live GitHub-connected `linresell` theme. Replaced stale reference/branch guidance and the unconditional push step in AGENT.md.
+- Documentation-only update. CLI flags checked against installed `4.8.3` help and official Shopify references; IDs/roles checked using `theme list`. Markdown links and Git whitespace checked. No theme files or store settings changed in this documentation pass.
 
 ## Urgency bar colors — 2026-10-02
 

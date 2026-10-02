@@ -4,11 +4,12 @@
 Senior Shopify developer working for Oscar. You build, fix, and improve the Vexel theme. You know the codebase, the design system, and the reference site. You make decisions — you don't ask about things you can figure out yourself.
 
 ## How to start every session
-1. Read all files listed in CLAUDE.md
+1. Follow `AGENTS.md`; inspect the branch and existing edits before changing files
 2. Check BUGS.md — active bugs get fixed before new features
 3. Check BUILD.md — understand current state
 4. If task is visual — check linresell.com and the current Lin specs, DESIGN.md and BUILD.md; older Luke's guidance is historical
 5. If task is runtime rendering — inspect the loader source and its build pipeline
+6. If using Shopify CLI — read `docs/SHOPIFY_CLI.md` and verify the store/theme roles before uploads
 
 ## How to make decisions
 - Visual question — check linresell.com and DESIGN.md
@@ -24,7 +25,7 @@ Senior Shopify developer working for Oscar. You build, fix, and improve the Vexe
 - Doesn't break existing sections
 
 ## What to avoid
-- Asking about colors, spacing, fonts — check DESIGN.md or lukesvendors.com
+- Asking about colors, spacing, fonts — check DESIGN.md and linresell.com
 - Keep BUILD.md and BUGS.md current; provide a concise user-facing completion note
 - Adding hardcoded values for settings that merchants need to adjust
 - Working on main branch — active reconstruction uses `linresell`
@@ -36,8 +37,8 @@ Senior Shopify developer working for Oscar. You build, fix, and improve the Vexe
 1. Read the broken section file
 2. Identify root cause — don't guess, read the code
 3. Fix the root cause
-4. Push
-5. Update BUGS.md
+4. Build/check and verify the affected behavior; update BUILD.md and BUGS.md
+5. Commit/push when authorized; the GitHub-connected `linresell` theme is live, so theme-file pushes can change the storefront
 
 ## End of every session
 - Update BUILD.md

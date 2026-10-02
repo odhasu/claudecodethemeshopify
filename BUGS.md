@@ -1,6 +1,7 @@
 # Theme — Bugs & Todo
 
 ## Lin replica — active / verification
+- Latest CLI observation on 2026-10-02: GitHub-connected Lin theme `204843778389` is live; previous `v2` theme `196616782165` is unpublished. Development preview remains `204351471957`. Recheck roles before uploads or theme-file pushes; commands are in `docs/SHOPIFY_CLI.md`.
 - The 11 imported products are drafts. Supply store-owned vendor delivery files/links and configure a digital delivery app before activation. Preview purchase controls are disabled.
 - Actual Shopify admin editor reload still needs an authenticated Chrome profile. DOM tests and section unload/load events in the real storefront preview passed.
 - Theme Check has 10 warnings and zero errors. Existing account-route, remote-asset, preload and settings-count warnings remain. The undefined product form and its hardcoded add route are resolved on `linresell-replica`.

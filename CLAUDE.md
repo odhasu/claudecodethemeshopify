@@ -9,7 +9,9 @@ Read these files at the start of every session:
 - [RULES.md](RULES.md) — session rules
 - [GOALS.md](GOALS.md) — what we're building toward
 
-Also read: ~/Desktop/ogresell/CLAUDE.md for Vexel business overview.
+For Shopify CLI work, read [docs/SHOPIFY_CLI.md](docs/SHOPIFY_CLI.md) for targets, commands and the GitHub/live-theme connection. Follow [AGENTS.md](AGENTS.md) for current authorization and repository rules.
+
+Optional historical business context: ~/Desktop/ogresell/CLAUDE.md. Local instructions and the current user request take precedence.
 
 If that external file is unavailable, continue with the repository notes and do not block the task.
 

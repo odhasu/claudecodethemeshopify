@@ -5,11 +5,13 @@ The implementation is in `theme/` on `linresell`. GitHub delivery: [odhasu/claud
 ## Preview and build
 
 - Local preview: http://127.0.0.1:9292/
-- Development theme: `204351471957`; live theme remains `196616782165`.
+- Development theme: `204351471957`. On 2026-10-02 the CLI reported GitHub-connected Lin theme `204843778389` live, with previous `v2` theme `196616782165` unpublished.
+- Live editor: https://ogsellsz.myshopify.com/admin/themes/204843778389/editor
 - Shopify preview: https://ogsellsz.myshopify.com/?preview_theme_id=204351471957
 - Editor: https://ogsellsz.myshopify.com/admin/themes/204351471957/editor
 - Run `npm ci`, `npm run build`, `npm test`, and `npm run check` inside `theme/`.
-- Start a fresh local preview with `shopify theme dev --store ogsellsz.myshopify.com --path . --port 9292 --nodelete`.
+- Verify the target's current role, then start a local preview with `shopify theme dev --store ogsellsz.myshopify.com --theme 204351471957 --path . --port 9292 --nodelete`.
+- Commands, remote comparison and delivery workflow: [SHOPIFY_CLI.md](SHOPIFY_CLI.md).
 
 Edit `runtime/loader.js`, then rebuild. The build generates both `assets/scaled-loader-current.js` and `assets/scaled-loader.js`. The latter is a mirror, not another network request. The current bundle is 70,944 bytes, or 19,194 bytes gzip. Fonts are local system fallbacks; no font requests are required with the saved configuration. There is no artificial minimum loading wait.
 
@@ -44,7 +46,7 @@ Policy links route to this store's Shopify policies. Policy text, payment option
 - The backup contains local source, previous external runtime, live theme, the selected removed theme, and all nine original Admin products. All 386 manifest hashes were verified on 2026-10-02.
 - Selected old theme `194628288853` was backed up and deleted. Other old themes were preserved.
 
-The earlier reconstruction branch `linresell-replica` is preserved locally. GitHub delivery uses the new `linresell` branch. The replica has not been published live.
+The earlier reconstruction branch `linresell-replica` is preserved locally. GitHub delivery uses `linresell`; Shopify now reports its connected theme as live. The agent did not issue a publication command. Pushing theme-file changes to this branch can update the live storefront, so authorization must cover that effect.
 
 ## Verification
 

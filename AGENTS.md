@@ -2,6 +2,8 @@
 
 This is the Shopify storefront repository, not the Next.js site in `../kenso`. The active user-authorized reconstruction branch is `linresell`; `v2` and tag `checkpoint/ogresell-before-linresell-2026-10-01` preserve the previous storefront. Preserve existing edits. Do not push or change the connected live theme unless the active user request authorizes it.
 
+For Shopify commands, read [docs/SHOPIFY_CLI.md](docs/SHOPIFY_CLI.md). As verified on 2026-10-02, live theme `204843778389` is connected to GitHub branch `linresell`; development preview is `204351471957`; previous `v2` theme `196616782165` is unpublished. Recheck roles with `shopify theme list` before uploads. Pushing theme-file changes to the connected branch can update the live storefront; authorization must cover that effect.
+
 Read `AGENT.md`, `CONTEXT.md`, `RULES.md`, `GOALS.md`, `BUILD.md`, and the active items in `BUGS.md` before implementation. Local instructions and the active user request take precedence over historical guidance in `~/Desktop/ogresell/CLAUDE.md`; that external file is optional business context, not current license or deployment policy.
 
 For visual work, read `DESIGN.md` and check the active reference https://linresell.com/. `lukesvendors-reference.md` is historical. The current task authorizes reproducing the reference catalog, copy, and imagery; preserve original OGSELL products in the checkpoint; use Shopify settings for merchant-adjustable values.
