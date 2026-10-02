@@ -22,7 +22,7 @@ for (const file of ['runtime/loader.js','assets/scaled-loader-current.js']) {
   d.dispatchEvent(new w.Event('DOMContentLoaded'));
   assert.equal(d.querySelectorAll('.vx-pc').length, 11);
   assert.equal(d.querySelectorAll('.vx-btn-buy:disabled').length, 11);
-  assert.ok([...d.querySelectorAll('.vx-btn-buy:disabled')].every(button => button.textContent === 'COMING SOON'));
+  assert.ok([...d.querySelectorAll('.vx-btn-buy:disabled')].every(button => button.textContent === 'BUY NOW'));
   assert.equal(d.querySelectorAll('[href*="/cart/add"]').length, 0, 'Draft catalog cannot checkout');
   assert.equal(d.querySelector('h1').textContent, settings.headline);
   assert.equal(d.querySelector('h1 span').textContent, 'PERSONAL');
@@ -58,7 +58,7 @@ for (const file of ['runtime/loader.js','assets/scaled-loader-current.js']) {
   grid.querySelector('[data-vx-settings]').textContent = json({...settings, layout_style:'legacy', max_products:1});
   grid.dispatchEvent(new w.Event('shopify:section:load',{bubbles:true}));
   assert.equal(d.querySelectorAll('[href*="/cart/add"]').length,0,'Legacy layout must also keep draft purchases disabled');
-  assert.equal(d.querySelector('.vx-btn-buy:disabled').textContent,'COMING SOON');
+  assert.equal(d.querySelector('.vx-btn-buy:disabled').textContent,'BUY NOW');
   assert.deepEqual(errors,[]);
   dom.window.close();
   console.log(file+': Lin catalog order, draft purchase guard, info dialogs, header links, owned IDs, editor reload, escaping passed');

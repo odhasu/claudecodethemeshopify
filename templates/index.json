@@ -14,6 +14,7 @@
       "settings": {
         "layout_style": "lin",
         "replica_preview": true,
+        "preview_btn_label": "BUY NOW",
         "product_list": "{{ section.settings.collection.products }}",
         "headline": "ACCESS MY PERSONAL VENDORS 💕",
         "headline_highlight": "PERSONAL",

@@ -1,5 +1,11 @@
 # Theme — Build Status
 
+## Buy now catalog label — 2026-10-02
+
+- On user-authorized `linresell`, saved the existing Product Grid preview button label as `BUY NOW` for all eleven catalog cards. Draft purchase controls remain disabled.
+- `npm test` passes for source and shipped bundle, including both layouts and section reloads. `bash scripts/check-theme.sh` passes with zero errors and 10 existing warnings. No renderer rebuild required; this uses the existing label setting.
+- Local change only; not pushed, uploaded or deployed. Browser viewport and actual admin editor checks were not performed in this session.
+
 ## Current branch: Lin Resell replica — 2026-10-02
 
 - Work is in `theme/` on `linresell`. The earlier reconstruction branch `linresell-replica` is preserved locally. The sections below this entry describe the earlier Luke's/Vexel storefront.
