@@ -13,9 +13,21 @@
       "type": "product-grid",
       "settings": {
         "layout_style": "lin",
-        "replica_preview": true,
+        "replica_preview": false,
         "preview_btn_label": "BUY NOW",
-        "product_list": "{{ section.settings.collection.products }}",
+        "product_list": [
+          "premium-vendor-bundle",
+          "elite-supplier-bundle",
+          "electronics-supplier",
+          "cologne-supplier",
+          "lulu-supplier",
+          "designer-hoodie-supplier",
+          "bubu-supplier",
+          "sandal-vendor",
+          "sandal-vendor-1",
+          "shirt-vendor",
+          "moissanite-vendor"
+        ],
         "headline": "ACCESS MY PERSONAL VENDORS 💕",
         "headline_highlight": "PERSONAL",
         "headline_highlight_color": "#ff86dd",
